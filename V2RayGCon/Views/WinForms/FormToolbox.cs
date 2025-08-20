@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NeoLuna.Misc;
+using Newtonsoft.Json.Linq;
 using ScintillaNET;
 using V2RayGCon.Controllers.FormTextConfigEditorComponent;
 using V2RayGCon.Properties;
@@ -155,42 +156,34 @@ namespace V2RayGCon.Views.WinForms
             DoFiveTimes("UUID v4", () => Guid.NewGuid().ToString());
         }
 
+        readonly string numbers = @"1234567890";
+        readonly string alphabets = @"abcdefghijklmnopqrstuvwxyz";
+        readonly string symbols = "/!&#^?,(*'<[.~$:_\"{`%;)|+>=-\\}@]";
+
         private void numberToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoFiveTimes("Number", () => VgcApis.Misc.Utils.PickRandomChars("1234567890", 32));
-        }
-
-        private void alphabetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DoFiveTimes(
-                "Number",
-                () => VgcApis.Misc.Utils.PickRandomChars("abcdefghijklmnopqrstuvwxyz", 32)
-            );
+            DoFiveTimes("Number", () => VgcApis.Misc.Utils.PickRandomChars(numbers, 64));
         }
 
         private void numAlphabetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoFiveTimes(
-                "Number + Alphabet",
-                () => VgcApis.Misc.Utils.PickRandomChars("1234567890abcdefghijklmnopqrstuvwxyz", 32)
-            );
+            var chars = $"{numbers}{alphabets}";
+            DoFiveTimes("Number + Alphabet", () => VgcApis.Misc.Utils.PickRandomChars(chars, 64));
         }
 
         private void numAlphabetSymbolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoFiveTimes(
-                "Number + Alphabet + Symbol",
-                () =>
-                    VgcApis.Misc.Utils.PickRandomChars(
-                        "1234567890abcdefghijklmnopqrstuvwxyz/!&#^?,(*'<[.~$:_\"{`%;)|+>=-\\}@]",
-                        32
-                    )
-            );
+            var a = alphabets;
+            var n = numbers;
+            var chars = $"{symbols}{n}{n}{a}{a}{a}{a}{a}";
+
+            var password = VgcApis.Misc.Utils.PickRandomChars(chars, 1024);
+            SetResult("Number + Alphabet + Symbol", password);
         }
 
         private void hexToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoFiveTimes("Number", () => VgcApis.Misc.Utils.RandomHex(32));
+            DoFiveTimes("Hex", () => VgcApis.Misc.Utils.RandomHex(64));
         }
 
         #endregion
@@ -217,8 +210,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void decodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // vmess://abc... -> vmess:::abc...
-            var content = (rtBoxOutput.Text ?? "").Replace("://", ":::");
+            var content = rtBoxOutput.Text ?? "";
             var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 8);
             var r = new List<string>();
             foreach (var b64 in b64s)
@@ -230,6 +222,33 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
             SetResults("Decode - Base64", r);
+        }
+
+        private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // vmess://abc... -> vmess:::abc...
+            var content = (rtBoxOutput.Text ?? "").Replace("://", ":::");
+            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 64);
+            var r = new List<string>();
+            foreach (var b64 in b64s)
+            {
+                var config = VgcApis.Misc.Utils.Base64DecodeToString(b64);
+                try
+                {
+                    var s = VgcApis.Misc.Utils.FormatConfig(config);
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        r.Add(s);
+                        continue;
+                    }
+                }
+                catch { }
+                if (!string.IsNullOrEmpty(config))
+                {
+                    r.Add(config);
+                }
+            }
+            SetResults("Decode - vmess://...", r);
         }
 
         private void decodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)

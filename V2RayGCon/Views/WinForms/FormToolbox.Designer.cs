@@ -46,7 +46,6 @@
             this.uUIDV4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.alphabetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numAlphabetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numAlphabetSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +59,7 @@
             this.uRIToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.scanQRCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
+            this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,7 +160,6 @@
             this.uUIDV4ToolStripMenuItem,
             this.hexToolStripMenuItem,
             this.numberToolStripMenuItem,
-            this.alphabetToolStripMenuItem,
             this.numAlphabetToolStripMenuItem,
             this.numAlphabetSymbolToolStripMenuItem});
             this.passwordToolStripMenuItem.Name = "passwordToolStripMenuItem";
@@ -183,12 +182,6 @@
             this.numberToolStripMenuItem.Name = "numberToolStripMenuItem";
             resources.ApplyResources(this.numberToolStripMenuItem, "numberToolStripMenuItem");
             this.numberToolStripMenuItem.Click += new System.EventHandler(this.numberToolStripMenuItem_Click);
-            // 
-            // alphabetToolStripMenuItem
-            // 
-            this.alphabetToolStripMenuItem.Name = "alphabetToolStripMenuItem";
-            resources.ApplyResources(this.alphabetToolStripMenuItem, "alphabetToolStripMenuItem");
-            this.alphabetToolStripMenuItem.Click += new System.EventHandler(this.alphabetToolStripMenuItem_Click);
             // 
             // numAlphabetToolStripMenuItem
             // 
@@ -216,7 +209,8 @@
             this.decodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.base64ToolStripMenuItem,
             this.unicodeToolStripMenuItem,
-            this.uRIToolStripMenuItem});
+            this.uRIToolStripMenuItem,
+            this.vmessToolStripMenuItem});
             this.decodeToolStripMenuItem.Name = "decodeToolStripMenuItem";
             resources.ApplyResources(this.decodeToolStripMenuItem, "decodeToolStripMenuItem");
             // 
@@ -273,8 +267,15 @@
             // 
             // rtBoxOutput
             // 
+            this.rtBoxOutput.DetectUrls = false;
             resources.ApplyResources(this.rtBoxOutput, "rtBoxOutput");
             this.rtBoxOutput.Name = "rtBoxOutput";
+            // 
+            // vmessToolStripMenuItem
+            // 
+            this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
+            resources.ApplyResources(this.vmessToolStripMenuItem, "vmessToolStripMenuItem");
+            this.vmessToolStripMenuItem.Click += new System.EventHandler(this.vmessToolStripMenuItem_Click);
             // 
             // FormToolbox
             // 
@@ -308,7 +309,6 @@
         private System.Windows.Forms.ToolStripMenuItem passwordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uUIDV4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem numberToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem alphabetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem numAlphabetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem numAlphabetSymbolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hexToolStripMenuItem;
@@ -324,5 +324,6 @@
         private System.Windows.Forms.ToolStripMenuItem uRIToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPaste;
         private VgcApis.UserControls.ExRichTextBox rtBoxOutput;
+        private System.Windows.Forms.ToolStripMenuItem vmessToolStripMenuItem;
     }
 }

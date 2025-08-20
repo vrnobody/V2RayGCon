@@ -94,7 +94,7 @@ namespace V2RayGCon.Services
             // Views.WinForms.FormLog.ShowForm();
             // Views.WinForms.FormMain.ShowForm();
             Views.WinForms.FormToolbox.ShowForm();
-            Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
+            // Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",

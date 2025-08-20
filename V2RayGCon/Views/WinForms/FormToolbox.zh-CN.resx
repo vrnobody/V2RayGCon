@@ -118,23 +118,38 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="toolStripMenuItemPaste.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 22</value>
+  </data>
+  <data name="toolStripMenuItemPaste.Text" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 22</value>
+  </data>
+  <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 6</value>
+  </data>
+  <data name="closeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 22</value>
+  </data>
+  <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>文件</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>复制</value>
-  </data>
-  <data name="toolStripMenuItemPaste.Text" xml:space="preserve">
-    <value>粘贴</value>
-  </data>
-  <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
-    <value>另存为</value>
-  </data>
-  <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
-    <value>关闭</value>
   </data>
   <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
@@ -142,20 +157,29 @@
   <data name="generateToolStripMenuItem.Text" xml:space="preserve">
     <value>密钥</value>
   </data>
-  <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
   </data>
-  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="hexToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
   </data>
-  <data name="x25519ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="numberToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
   </data>
-  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="numberToolStripMenuItem.Text" xml:space="preserve">
+    <value>数字</value>
   </data>
-  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="numAlphabetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
+  </data>
+  <data name="numAlphabetToolStripMenuItem.Text" xml:space="preserve">
+    <value>数字 + 字母</value>
+  </data>
+  <data name="numAlphabetSymbolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
+  </data>
+  <data name="numAlphabetSymbolToolStripMenuItem.Text" xml:space="preserve">
+    <value>数字 + 字母 + 符号</value>
   </data>
   <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
@@ -163,62 +187,29 @@
   <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
     <value>密码</value>
   </data>
-  <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="hexToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>解码</value>
+  </data>
+  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="numberToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="numberToolStripMenuItem.Text" xml:space="preserve">
-    <value>数字</value>
-  </data>
-  <data name="alphabetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="alphabetToolStripMenuItem.Text" xml:space="preserve">
-    <value>字母</value>
-  </data>
-  <data name="numAlphabetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="numAlphabetToolStripMenuItem.Text" xml:space="preserve">
-    <value>字母 + 数字</value>
-  </data>
-  <data name="numAlphabetSymbolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="numAlphabetSymbolToolStripMenuItem.Text" xml:space="preserve">
-    <value>字母 + 数字 +符号</value>
-  </data>
-  <data name="fragmentToolStripMenuItem.Text" xml:space="preserve">
-    <value>分片</value>
+  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>扫描二维码</value>
   </data>
   <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
   <data name="toolToolStripMenuItem.Text" xml:space="preserve">
     <value>工具</value>
-  </data>
-  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 22</value>
-  </data>
-  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>解码</value>
-  </data>
-  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 22</value>
-  </data>
-  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>编码</value>
-  </data>
-  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 22</value>
-  </data>
-  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>扫描二维码</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>工具箱</value>

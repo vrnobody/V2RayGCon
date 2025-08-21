@@ -37,7 +37,7 @@ namespace VgcApis.Libs.Infr
         }
 
         /// <summary>
-        /// Returns a nonnegative random number less than the specified maximum.
+        /// Returns a nonnegative random number less than maxValue.
         /// </summary>
         public static int Next(int maxValue)
         {
@@ -48,7 +48,7 @@ namespace VgcApis.Libs.Infr
         }
 
         /// <summary>
-        /// Returns a random number within a specified range.
+        /// Returns a random number within [minValue, maxValue).
         /// </summary>
         public static int Next(int minValue, int maxValue)
         {

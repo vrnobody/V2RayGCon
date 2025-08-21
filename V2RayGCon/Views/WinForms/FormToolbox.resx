@@ -121,97 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 21</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 21</value>
-  </data>
-  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Key</value>
-  </data>
-  <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 21</value>
-  </data>
-  <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="base64ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="base64ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Base64</value>
-  </data>
-  <data name="unicodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="unicodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Unicode</value>
-  </data>
-  <data name="uRIToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="uRIToolStripMenuItem.Text" xml:space="preserve">
-    <value>URI</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vmess://...</value>
-  </data>
-  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Decode</value>
-  </data>
-  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
-  </data>
-  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Encode</value>
-  </data>
-  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
-  </data>
-  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Scan QR code</value>
-  </data>
-  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 21</value>
-  </data>
-  <data name="toolToolStripMenuItem.Text" xml:space="preserve">
-    <value>Tool</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>582, 25</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
   </data>
@@ -238,6 +147,12 @@
   </data>
   <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 21</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>142, 22</value>
@@ -268,6 +183,12 @@
   </data>
   <data name="mLDSA65ToolStripMenuItem.Text" xml:space="preserve">
     <value>ML-DSA-65</value>
+  </data>
+  <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 21</value>
+  </data>
+  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Key</value>
   </data>
   <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 22</value>
@@ -305,6 +226,48 @@
   <data name="numAlphabetSymbolToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Alphabet + Number + Symbol</value>
   </data>
+  <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 21</value>
+  </data>
+  <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Scan QR code</value>
+  </data>
+  <data name="base64ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="base64ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Base64</value>
+  </data>
+  <data name="unicodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="unicodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Unicode</value>
+  </data>
+  <data name="uRIToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="uRIToolStripMenuItem.Text" xml:space="preserve">
+    <value>URI</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
+    <value>vmess://...</value>
+  </data>
+  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Decode</value>
+  </data>
   <data name="base64ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
@@ -323,32 +286,93 @@
   <data name="uRIToolStripMenuItem1.Text" xml:space="preserve">
     <value>URI</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="rtBoxOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="rtBoxOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
+  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Encode</value>
   </data>
-  <data name="rtBoxOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>582, 361</value>
+  <data name="upperCaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="rtBoxOutput.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="upperCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>To upper case</value>
   </data>
-  <data name="rtBoxOutput.Text" xml:space="preserve">
-    <value />
+  <data name="lowerCaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="&gt;&gt;rtBoxOutput.Name" xml:space="preserve">
-    <value>rtBoxOutput</value>
+  <data name="lowerCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>To lower case</value>
   </data>
-  <data name="&gt;&gt;rtBoxOutput.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.ExRichTextBox, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="mixedCaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="&gt;&gt;rtBoxOutput.Parent" xml:space="preserve">
+  <data name="mixedCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>To mixed case</value>
+  </data>
+  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="convertToolStripMenuItem.Text" xml:space="preserve">
+    <value>Convert letter</value>
+  </data>
+  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 21</value>
+  </data>
+  <data name="toolToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tool</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>582, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;rtBoxOutput.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="rtboxOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="rtboxOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="rtboxOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>582, 361</value>
+  </data>
+  <data name="rtboxOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="rtboxOutput.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;rtboxOutput.Name" xml:space="preserve">
+    <value>rtboxOutput</value>
+  </data>
+  <data name="&gt;&gt;rtboxOutput.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.ExRichTextBox, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rtboxOutput.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rtboxOutput.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -480,6 +504,12 @@
   <data name="&gt;&gt;toolToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Name" xml:space="preserve">
+    <value>scanQRCodeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;decodeToolStripMenuItem.Name" xml:space="preserve">
     <value>decodeToolStripMenuItem</value>
   </data>
@@ -502,6 +532,12 @@
     <value>uRIToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;uRIToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;vmessToolStripMenuItem.Name" xml:space="preserve">
+    <value>vmessToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;vmessToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;encodeToolStripMenuItem.Name" xml:space="preserve">
@@ -528,16 +564,28 @@
   <data name="&gt;&gt;uRIToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Name" xml:space="preserve">
-    <value>scanQRCodeToolStripMenuItem</value>
+  <data name="&gt;&gt;convertToolStripMenuItem.Name" xml:space="preserve">
+    <value>convertToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;convertToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;vmessToolStripMenuItem.Name" xml:space="preserve">
-    <value>vmessToolStripMenuItem</value>
+  <data name="&gt;&gt;upperCaseToolStripMenuItem.Name" xml:space="preserve">
+    <value>upperCaseToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;vmessToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;upperCaseToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Name" xml:space="preserve">
+    <value>lowerCaseToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mixedCaseToolStripMenuItem.Name" xml:space="preserve">
+    <value>mixedCaseToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;mixedCaseToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

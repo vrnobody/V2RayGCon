@@ -49,17 +49,21 @@
             this.numAlphabetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numAlphabetSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scanQRCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.base64ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unicodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uRIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.encodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.base64ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.unicodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.uRIToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.scanQRCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
-            this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upperCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lowerCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mixedCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rtboxOutput = new VgcApis.UserControls.ExRichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -198,11 +202,18 @@
             // toolToolStripMenuItem
             // 
             this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.scanQRCodeToolStripMenuItem,
             this.decodeToolStripMenuItem,
             this.encodeToolStripMenuItem,
-            this.scanQRCodeToolStripMenuItem});
+            this.convertToolStripMenuItem});
             this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
             resources.ApplyResources(this.toolToolStripMenuItem, "toolToolStripMenuItem");
+            // 
+            // scanQRCodeToolStripMenuItem
+            // 
+            this.scanQRCodeToolStripMenuItem.Name = "scanQRCodeToolStripMenuItem";
+            resources.ApplyResources(this.scanQRCodeToolStripMenuItem, "scanQRCodeToolStripMenuItem");
+            this.scanQRCodeToolStripMenuItem.Click += new System.EventHandler(this.scanQRCodeToolStripMenuItem_Click);
             // 
             // decodeToolStripMenuItem
             // 
@@ -232,6 +243,12 @@
             resources.ApplyResources(this.uRIToolStripMenuItem, "uRIToolStripMenuItem");
             this.uRIToolStripMenuItem.Click += new System.EventHandler(this.decodeUriToolStripMenuItem_Click);
             // 
+            // vmessToolStripMenuItem
+            // 
+            this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
+            resources.ApplyResources(this.vmessToolStripMenuItem, "vmessToolStripMenuItem");
+            this.vmessToolStripMenuItem.Click += new System.EventHandler(this.vmessToolStripMenuItem_Click);
+            // 
             // encodeToolStripMenuItem
             // 
             this.encodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -259,29 +276,44 @@
             resources.ApplyResources(this.uRIToolStripMenuItem1, "uRIToolStripMenuItem1");
             this.uRIToolStripMenuItem1.Click += new System.EventHandler(this.encodeUriToolStripMenuItem_Click);
             // 
-            // scanQRCodeToolStripMenuItem
+            // convertToolStripMenuItem
             // 
-            this.scanQRCodeToolStripMenuItem.Name = "scanQRCodeToolStripMenuItem";
-            resources.ApplyResources(this.scanQRCodeToolStripMenuItem, "scanQRCodeToolStripMenuItem");
-            this.scanQRCodeToolStripMenuItem.Click += new System.EventHandler(this.scanQRCodeToolStripMenuItem_Click);
+            this.convertToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.upperCaseToolStripMenuItem,
+            this.lowerCaseToolStripMenuItem,
+            this.mixedCaseToolStripMenuItem});
+            this.convertToolStripMenuItem.Name = "convertToolStripMenuItem";
+            resources.ApplyResources(this.convertToolStripMenuItem, "convertToolStripMenuItem");
             // 
-            // rtBoxOutput
+            // upperCaseToolStripMenuItem
             // 
-            this.rtBoxOutput.DetectUrls = false;
-            resources.ApplyResources(this.rtBoxOutput, "rtBoxOutput");
-            this.rtBoxOutput.Name = "rtBoxOutput";
+            this.upperCaseToolStripMenuItem.Name = "upperCaseToolStripMenuItem";
+            resources.ApplyResources(this.upperCaseToolStripMenuItem, "upperCaseToolStripMenuItem");
+            this.upperCaseToolStripMenuItem.Click += new System.EventHandler(this.upperCaseToolStripMenuItem_Click);
             // 
-            // vmessToolStripMenuItem
+            // lowerCaseToolStripMenuItem
             // 
-            this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
-            resources.ApplyResources(this.vmessToolStripMenuItem, "vmessToolStripMenuItem");
-            this.vmessToolStripMenuItem.Click += new System.EventHandler(this.vmessToolStripMenuItem_Click);
+            this.lowerCaseToolStripMenuItem.Name = "lowerCaseToolStripMenuItem";
+            resources.ApplyResources(this.lowerCaseToolStripMenuItem, "lowerCaseToolStripMenuItem");
+            this.lowerCaseToolStripMenuItem.Click += new System.EventHandler(this.lowerCaseToolStripMenuItem_Click);
+            // 
+            // mixedCaseToolStripMenuItem
+            // 
+            this.mixedCaseToolStripMenuItem.Name = "mixedCaseToolStripMenuItem";
+            resources.ApplyResources(this.mixedCaseToolStripMenuItem, "mixedCaseToolStripMenuItem");
+            this.mixedCaseToolStripMenuItem.Click += new System.EventHandler(this.mixedCaseToolStripMenuItem_Click);
+            // 
+            // rtboxOutput
+            // 
+            this.rtboxOutput.DetectUrls = false;
+            resources.ApplyResources(this.rtboxOutput, "rtboxOutput");
+            this.rtboxOutput.Name = "rtboxOutput";
             // 
             // FormToolbox
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.rtBoxOutput);
+            this.Controls.Add(this.rtboxOutput);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormToolbox";
@@ -323,7 +355,11 @@
         private System.Windows.Forms.ToolStripMenuItem unicodeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem uRIToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPaste;
-        private VgcApis.UserControls.ExRichTextBox rtBoxOutput;
+        private VgcApis.UserControls.ExRichTextBox rtboxOutput;
         private System.Windows.Forms.ToolStripMenuItem vmessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convertToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem upperCaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lowerCaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mixedCaseToolStripMenuItem;
     }
 }

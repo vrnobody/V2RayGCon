@@ -151,6 +151,9 @@
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>文件</value>
   </data>
+  <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
+    <value>TLS 证书</value>
+  </data>
   <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
@@ -187,6 +190,12 @@
   <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>扫描二维码</value>
+  </data>
   <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
@@ -199,11 +208,20 @@
   <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
     <value>编码</value>
   </data>
-  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="upperCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>全大写</value>
+  </data>
+  <data name="lowerCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>全小写</value>
+  </data>
+  <data name="mixedCaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>混合大小写</value>
+  </data>
+  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>扫描二维码</value>
+  <data name="convertToolStripMenuItem.Text" xml:space="preserve">
+    <value>字符转换</value>
   </data>
   <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>

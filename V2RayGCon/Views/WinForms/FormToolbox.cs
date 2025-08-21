@@ -43,6 +43,11 @@ namespace V2RayGCon.Views.WinForms
 
         #region helpers
 
+        string GetContent()
+        {
+            return rtboxOutput.Text ?? "";
+        }
+
         void SetTitle(string keyType)
         {
             this.Text = $"{formTitle} - {keyType}";
@@ -50,13 +55,13 @@ namespace V2RayGCon.Views.WinForms
 
         void SetResult(string title, string result)
         {
-            rtBoxOutput.Text = result;
+            rtboxOutput.Text = result;
             SetTitle(title);
         }
 
         void SetResults(string title, IEnumerable<string> results)
         {
-            rtBoxOutput.Text = string.Join(Environment.NewLine, results);
+            rtboxOutput.Text = string.Join(Environment.NewLine, results);
             SetTitle(title);
         }
 
@@ -90,8 +95,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 return;
             }
-            rtBoxOutput.Text = result;
-            SetTitle(keyType);
+            SetResult(keyType, result);
         }
         #endregion
 
@@ -128,7 +132,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text;
+            var content = GetContent();
             Misc.Utils.CopyToClipboardAndPrompt(content);
         }
 
@@ -140,7 +144,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text;
+            var content = GetContent();
             VgcApis.Misc.UI.SaveToFileAndPrompt(VgcApis.Models.Consts.Files.TxtExt, content);
         }
 
@@ -193,11 +197,7 @@ namespace V2RayGCon.Views.WinForms
         {
             void ok(string result)
             {
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    rtBoxOutput.Text = result;
-                    SetTitle("Scan QR code");
-                });
+                VgcApis.Misc.UI.Invoke(() => SetResult("Scan QR code", result));
             }
 
             void fail()
@@ -210,7 +210,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void decodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 8);
             var r = new List<string>();
             foreach (var b64 in b64s)
@@ -227,7 +227,7 @@ namespace V2RayGCon.Views.WinForms
         private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // vmess://abc... -> vmess:::abc...
-            var content = (rtBoxOutput.Text ?? "").Replace("://", ":::");
+            var content = GetContent().Replace("://", ":::");
             var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 64);
             var r = new List<string>();
             foreach (var b64 in b64s)
@@ -253,21 +253,21 @@ namespace V2RayGCon.Views.WinForms
 
         private void decodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             var r = VgcApis.Misc.Utils.UnescapeUnicode(content);
             SetResult("Decode - Unicode", r);
         }
 
         private void decodeUriToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             var r = VgcApis.Misc.Utils.UriDecode(content);
             SetResult("Decode - URI", r);
         }
 
         private void encodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             try
             {
                 var b64 = VgcApis.Misc.Utils.Base64EncodeString(content);
@@ -281,16 +281,51 @@ namespace V2RayGCon.Views.WinForms
 
         private void encodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             var r = VgcApis.Misc.Utils.EscapeUnicode(content);
             SetResult("Encode - Unicode", r);
         }
 
         private void encodeUriToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var content = rtBoxOutput.Text ?? "";
+            var content = GetContent();
             var r = VgcApis.Misc.Utils.UriEncode(content);
             SetResult("Encode - URI", r);
+        }
+
+        private void upperCaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var c = GetContent();
+            SetResult("Convert - Upper case", c.ToUpper());
+        }
+
+        private void lowerCaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var c = GetContent();
+            SetResult("Convert - Lower case", c.ToLower());
+        }
+
+        private void mixedCaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = GetContent();
+            var sb = new StringBuilder();
+            foreach (var c in content)
+            {
+                if (!char.IsLetter(c))
+                {
+                    sb.Append(c);
+                    continue;
+                }
+                if (VgcApis.Libs.Infr.PseudoRandom.Next(2) == 1)
+                {
+                    sb.Append(char.ToUpper(c));
+                }
+                else
+                {
+                    sb.Append(char.ToLower(c));
+                }
+            }
+            SetResult("Convert - Mixed case", sb.ToString());
         }
         #endregion
     }

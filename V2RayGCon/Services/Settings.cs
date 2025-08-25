@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -1263,37 +1264,28 @@ namespace V2RayGCon.Services
             }
         }
 
-        void WriteMemoryStreamToFile(Stream source, string filename)
+        void StreamUserSettingsToFile(List<string> parts, string filename)
         {
             // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
             var bufferSize = VgcApis.Models.Consts.Libs.FilestreamBufferSize;
-            using (var fs = File.Create(filename, bufferSize, FileOptions.WriteThrough))
+            using (var stream = File.Create(filename, bufferSize, FileOptions.WriteThrough))
+            using (var w = new StreamWriter(stream))
             {
-                source.Position = 0;
-                source.CopyTo(fs);
-            }
-        }
-
-        void SerializeUserSettingsPartsToMemStream(
-            Stream stream,
-            StreamWriter w,
-            List<string> parts
-        )
-        {
-            foreach (var part in parts)
-            {
-                if (placeHolderLookupTable.TryGetValue(part, out var name))
+                foreach (var part in parts)
                 {
-                    var o = GetTargetByPlaceHolderName(name);
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(
-                        stream,
-                        o
-                    );
-                }
-                else
-                {
-                    w.Write(part);
-                    w.Flush();
+                    if (placeHolderLookupTable.TryGetValue(part, out var name))
+                    {
+                        var o = GetTargetByPlaceHolderName(name);
+                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(
+                            stream,
+                            o
+                        );
+                    }
+                    else
+                    {
+                        w.Write(part);
+                        w.Flush();
+                    }
                 }
             }
         }
@@ -1302,18 +1294,10 @@ namespace V2RayGCon.Services
         {
             try
             {
-                using (var stream = new VgcApis.Libs.Streams.ArrayPoolMemoryStream())
-                using (var w = new StreamWriter(stream))
-                {
-                    VgcApis.Libs.Sys.FileLogger.Info(
-                        $"Assembling user setting parts to memory stream"
-                    );
-                    SerializeUserSettingsPartsToMemStream(stream, w, parts);
-                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
-                    WriteMemoryStreamToFile(stream, main);
-                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
-                    WriteMemoryStreamToFile(stream, bak);
-                }
+                VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
+                StreamUserSettingsToFile(parts, main);
+                VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
+                StreamUserSettingsToFile(parts, bak);
                 return true;
             }
             catch

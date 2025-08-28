@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfigNameIsEmpty" xml:space="preserve">
+    <value>Config name is empty!</value>
+  </data>
+  <data name="ConfirmDeleteConfig" xml:space="preserve">
+    <value>Delete config [{0}]?</value>
+  </data>
+  <data name="CopyFail" xml:space="preserve">
+    <value>Copy failed.</value>
+  </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>Copy success.</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>(WIP) Command-line tools helper.</value>
+  </data>
+  <data name="ModifyArgs" xml:space="preserve">
+    <value>Modify arguments:</value>
+  </data>
+  <data name="ModifyEnvVars" xml:space="preserve">
+    <value>Modify enviroment variables:</value>
+  </data>
+  <data name="NewConfigName" xml:space="preserve">
+    <value>New config name:</value>
   </data>
   <data name="RemoveFailed" xml:space="preserve">
     <value>Remove [{0}] failed!</value>

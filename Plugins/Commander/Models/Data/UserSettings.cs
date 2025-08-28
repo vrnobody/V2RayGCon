@@ -5,13 +5,12 @@ namespace Commander.Models.Data
     public class UserSettings
     {
         #region public properties
-        public List<ProcParam> procParams;
-
+        public List<CmderParam> cmderParams;
         #endregion
 
         public UserSettings()
         {
-            procParams = new List<ProcParam>();
+            cmderParams = new List<CmderParam>();
         }
     }
 }

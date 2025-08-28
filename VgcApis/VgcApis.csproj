@@ -209,6 +209,12 @@
     <Compile Include="WinForms\FormInput.Designer.cs">
       <DependentUpon>FormInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\FormMultiLineInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\FormMultiLineInput.Designer.cs">
+      <DependentUpon>FormMultiLineInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +245,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\FormInput.zh-CN.resx">
       <DependentUpon>FormInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormMultiLineInput.resx">
+      <DependentUpon>FormMultiLineInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormMultiLineInput.zh-CN.resx">
+      <DependentUpon>FormMultiLineInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\FormSearch.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>

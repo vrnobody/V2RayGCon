@@ -591,6 +591,28 @@ namespace VgcApis.Misc
             return false;
         }
 
+        public static void GetUserMultiLineInput(
+            string title,
+            string content,
+            Action<string> onOk,
+            Action onCancel = null
+        )
+        {
+            var form = new WinForms.FormMultiLineInput(title, content);
+            form.Show();
+            form.FormClosed += (_, __) =>
+            {
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    onOk?.Invoke(form.Content);
+                }
+                else
+                {
+                    onCancel?.Invoke();
+                }
+            };
+        }
+
         public static void GetUserInput(string title, Action<string> onOk, Action onCancel = null)
         {
             var form = new WinForms.FormInput(title);

@@ -61,11 +61,74 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Config name is empty! 的本地化字符串。
+        /// </summary>
+        internal static string ConfigNameIsEmpty {
+            get {
+                return ResourceManager.GetString("ConfigNameIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete config [{0}]? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmDeleteConfig {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Copy failed. 的本地化字符串。
+        /// </summary>
+        internal static string CopyFail {
+            get {
+                return ResourceManager.GetString("CopyFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Copy success. 的本地化字符串。
+        /// </summary>
+        internal static string CopySuccess {
+            get {
+                return ResourceManager.GetString("CopySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 (WIP) Command-line tools helper. 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Modify arguments: 的本地化字符串。
+        /// </summary>
+        internal static string ModifyArgs {
+            get {
+                return ResourceManager.GetString("ModifyArgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Modify enviroment variables: 的本地化字符串。
+        /// </summary>
+        internal static string ModifyEnvVars {
+            get {
+                return ResourceManager.GetString("ModifyEnvVars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New config name: 的本地化字符串。
+        /// </summary>
+        internal static string NewConfigName {
+            get {
+                return ResourceManager.GetString("NewConfigName", resourceCulture);
             }
         }
         

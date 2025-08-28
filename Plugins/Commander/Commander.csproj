@@ -52,8 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commander.cs" />
-    <Compile Include="Controllers\FormMainCtrl.cs" />
-    <Compile Include="Models\Data\ProcParam.cs" />
+    <Compile Include="Misc\UI.cs" />
+    <Compile Include="Misc\Utils.cs" />
+    <Compile Include="Models\Data\CmderParam.cs" />
     <Compile Include="Models\Data\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Langs\I18N.zh-CN.Designer.cs">
@@ -123,7 +124,9 @@
       <Name>VgcApis</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons\Console_16x.png" />
   </ItemGroup>

@@ -1,20 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using NeoLuna.Misc;
-using Newtonsoft.Json.Linq;
-using ScintillaNET;
-using V2RayGCon.Controllers.FormTextConfigEditorComponent;
-using V2RayGCon.Properties;
 using V2RayGCon.Resources.Resx;
-using static ScintillaNET.Style;
 
 namespace V2RayGCon.Views.WinForms
 {

@@ -50,6 +50,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpToSocks5Proxy", "3rd\Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoLunaTests", "Plugins\NeoLunaTests\NeoLunaTests.csproj", "{624360E8-DEF7-4B4A-A08F-811BB0C57103}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander", "Plugins\Commander\Commander.csproj", "{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{624360E8-DEF7-4B4A-A08F-811BB0C57103}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{624360E8-DEF7-4B4A-A08F-811BB0C57103}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{624360E8-DEF7-4B4A-A08F-811BB0C57103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{2D29F9E2-F358-4B07-8F50-1CBE4291EED8} = {DFBD2D2B-0418-4C19-9527-FF6260F541AC}
 		{6F0B0A4C-FF9C-4B6E-99C8-451CBB03EC18} = {DFBD2D2B-0418-4C19-9527-FF6260F541AC}
 		{624360E8-DEF7-4B4A-A08F-811BB0C57103} = {AAA70B17-54E7-4366-BC8E-467169010D30}
+		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24} = {AAA70B17-54E7-4366-BC8E-467169010D30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E9C5F7-B4F0-4978-BD02-6F1FF74A184A}

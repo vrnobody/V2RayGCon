@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web.UI;
 using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents

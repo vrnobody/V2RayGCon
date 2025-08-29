@@ -120,8 +120,26 @@
   <data name="groupBox1.Text" xml:space="preserve">
     <value>配置列表</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>设置</value>
+  <data name="btnEnvVars.Text" xml:space="preserve">
+    <value>环境变量</value>
+  </data>
+  <data name="btnEnvVars.ToolTip" xml:space="preserve">
+    <value>点击修改环境变量，逗号分隔或者每个一行</value>
+  </data>
+  <data name="btnArgs.Text" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="btnArgs.ToolTip" xml:space="preserve">
+    <value>点击选择工作目录</value>
+  </data>
+  <data name="btnWrkDir.Text" xml:space="preserve">
+    <value>工作目录</value>
+  </data>
+  <data name="btnWrkDir.ToolTip" xml:space="preserve">
+    <value>点击选择工作目录</value>
+  </data>
+  <data name="btnExe.ToolTip" xml:space="preserve">
+    <value>点击选择可执行文件</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkWriteStdIn.Size" type="System.Drawing.Size, System.Drawing">
@@ -157,8 +175,23 @@
   <data name="lbEnvVar.ToolTip" xml:space="preserve">
     <value>点击修改环境变量，逗号分隔或者每个一行</value>
   </data>
+  <data name="lbStdOutEncoding.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 158</value>
+  </data>
+  <data name="lbStdOutEncoding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 12</value>
+  </data>
+  <data name="lbStdOutEncoding.Text" xml:space="preserve">
+    <value>STDOUT 编码</value>
+  </data>
   <data name="lbStdOutEncoding.ToolTip" xml:space="preserve">
     <value>STDOUT 编码</value>
+  </data>
+  <data name="lbStdInEncoding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 12</value>
+  </data>
+  <data name="lbStdInEncoding.Text" xml:space="preserve">
+    <value>STDIN 编码</value>
   </data>
   <data name="lbStdInEncoding.ToolTip" xml:space="preserve">
     <value>STDIN 编码</value>
@@ -178,14 +211,11 @@
   <data name="lbWrkDir.ToolTip" xml:space="preserve">
     <value>点击选择工作目录</value>
   </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
   <data name="groupBox4.Text" xml:space="preserve">
     <value>日志</value>
-  </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>编辑</value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 22</value>
@@ -235,14 +265,14 @@
   <data name="closeToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>关闭这个窗口</value>
   </data>
-  <data name="runToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
-  <data name="runToolStripMenuItem.Text" xml:space="preserve">
-    <value>运行</value>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>编辑</value>
   </data>
   <data name="executeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="executeToolStripMenuItem.Text" xml:space="preserve">
     <value>执行当前配置</value>
@@ -251,25 +281,31 @@
     <value>执行当前配置</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>145, 6</value>
   </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>启动</value>
   </data>
   <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="stopToolStripMenuItem.Text" xml:space="preserve">
     <value>停止</value>
   </data>
   <data name="killToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="killToolStripMenuItem.Text" xml:space="preserve">
     <value>强制终止</value>
+  </data>
+  <data name="runToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="runToolStripMenuItem.Text" xml:space="preserve">
+    <value>运行</value>
   </data>
   <data name="clearContentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 22</value>
@@ -289,12 +325,6 @@
   <data name="pasteFromClipboardToolStripMenuItem.Text" xml:space="preserve">
     <value>粘贴</value>
   </data>
-  <data name="logToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
-  </data>
-  <data name="logToolStripMenuItem.Text" xml:space="preserve">
-    <value>日志</value>
-  </data>
   <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 22</value>
   </data>
@@ -312,5 +342,11 @@
   </data>
   <data name="copyToClipboardToolStripMenuItem.Text" xml:space="preserve">
     <value>复制</value>
+  </data>
+  <data name="logToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="logToolStripMenuItem.Text" xml:space="preserve">
+    <value>日志</value>
   </data>
 </root>

@@ -68,6 +68,19 @@ namespace Commander.Views
         }
 
         #region private methods
+        void GenSubMenu(ToolStripMenuItem root, IEnumerable<string> names, Action<string> action)
+        {
+            var c = root.DropDownItems;
+            c.Clear();
+            foreach (var name in names)
+            {
+                var n = name;
+                var mi = new ToolStripMenuItem(n);
+                mi.Click += (s, a) => action?.Invoke(name);
+                c.Add(mi);
+            }
+        }
+
         void UpdateLog()
         {
             var timestamp = server.GetLogTimestamp();
@@ -168,26 +181,6 @@ namespace Commander.Views
             UpdateStdInContentBackgroundColor();
         }
 
-        private void lbExe_Click(object sender, EventArgs e)
-        {
-            var exe = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
-            if (string.IsNullOrEmpty(exe))
-            {
-                return;
-            }
-            tboxExe.Text = exe;
-        }
-
-        private void lbWrkDir_Click(object sender, EventArgs e)
-        {
-            var dir = VgcApis.Misc.UI.ShowSelectFolderDialog();
-            if (string.IsNullOrEmpty(dir))
-            {
-                return;
-            }
-            tboxWrkDir.Text = dir;
-        }
-
         private void chkUseShell_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.useShell = chkUseShell.Checked;
@@ -201,30 +194,6 @@ namespace Commander.Views
         private void rtboxStdInContent_TextChanged(object sender, EventArgs e)
         {
             currentParam.stdInContent = rtboxStdInContent.Text;
-        }
-
-        private void lbArgs_Click(object sender, EventArgs e)
-        {
-            var onOk = WrapUserInputHandler(
-                (s) =>
-                {
-                    currentParam.args = s;
-                    UpdateUiElements();
-                }
-            );
-            VgcApis.Misc.UI.GetUserMultiLineInput(I18N.ModifyArgs, currentParam.args, onOk);
-        }
-
-        private void lbEnvVar_Click(object sender, EventArgs e)
-        {
-            var onOk = WrapUserInputHandler(
-                (s) =>
-                {
-                    currentParam.envVars = s;
-                    UpdateUiElements();
-                }
-            );
-            VgcApis.Misc.UI.GetUserMultiLineInput(I18N.ModifyEnvVars, currentParam.envVars, onOk);
         }
 
         private void tboxExe_TextChanged(object sender, EventArgs e)
@@ -250,19 +219,6 @@ namespace Commander.Views
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             server.Start(currentParam);
-        }
-
-        void GenSubMenu(ToolStripMenuItem root, IEnumerable<string> names, Action<string> action)
-        {
-            var c = root.DropDownItems;
-            c.Clear();
-            foreach (var name in names)
-            {
-                var n = name;
-                var mi = new ToolStripMenuItem(n);
-                mi.Click += (s, a) => action?.Invoke(name);
-                c.Add(mi);
-            }
         }
 
         private void runToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -381,6 +337,50 @@ namespace Commander.Views
         {
             currentParam = new Models.Data.CmderParam();
             UpdateUiElements();
+        }
+
+        private void btnExe_Click(object sender, EventArgs e)
+        {
+            var exe = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
+            if (string.IsNullOrEmpty(exe))
+            {
+                return;
+            }
+            tboxExe.Text = exe;
+        }
+
+        private void btnWrkDir_Click(object sender, EventArgs e)
+        {
+            var dir = VgcApis.Misc.UI.ShowSelectFolderDialog();
+            if (string.IsNullOrEmpty(dir))
+            {
+                return;
+            }
+            tboxWrkDir.Text = dir;
+        }
+
+        private void btnArgs_Click(object sender, EventArgs e)
+        {
+            var onOk = WrapUserInputHandler(
+                (s) =>
+                {
+                    currentParam.args = s;
+                    UpdateUiElements();
+                }
+            );
+            VgcApis.Misc.UI.GetUserMultiLineInput(I18N.ModifyArgs, currentParam.args, onOk);
+        }
+
+        private void btnEnvVars_Click(object sender, EventArgs e)
+        {
+            var onOk = WrapUserInputHandler(
+                (s) =>
+                {
+                    currentParam.envVars = s;
+                    UpdateUiElements();
+                }
+            );
+            VgcApis.Misc.UI.GetUserMultiLineInput(I18N.ModifyEnvVars, currentParam.envVars, onOk);
         }
         #endregion
     }

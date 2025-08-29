@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -23,17 +24,39 @@ namespace V2RayGCon.Controllers.OptionComponent
             pluginServ = Services.PluginsServer.Instance;
 
             this.flyPanel = flyPanel;
+            curPluginInfos = GentCurPluginInfos();
+            MarkdownCurOption();
+            InitControls(btnRefreshPluginsPanel, chkIsLoad3rdPartyPlugins);
+        }
 
-            curPluginInfos = setting.GetPluginInfoItems();
-            if (curPluginInfos.Count < 1)
+        private List<Models.Datas.PluginInfoItem> GentCurPluginInfos()
+        {
+            var r = setting.GetPluginInfoItems();
+            if (r.Count < 1)
             {
                 // for safty reason
                 setting.isLoad3rdPartyPlugins = false;
-                curPluginInfos = pluginServ.GatherAllPluginInfos();
             }
 
-            MarkdownCurOption();
-            InitControls(btnRefreshPluginsPanel, chkIsLoad3rdPartyPlugins);
+            // house keeping
+            var names = r.Select(info => info.name).ToList();
+            var intrInfos = pluginServ.GatherInternalPluginInfos();
+            foreach (var info in intrInfos)
+            {
+                var old = r.FirstOrDefault(item => item.name == info.name);
+                if (old == null)
+                {
+                    r.Add(info);
+                }
+                else
+                {
+                    // update infos
+                    old.version = info.version;
+                    old.description = info.description;
+                    old.filename = info.filename;
+                }
+            }
+            return r.OrderBy(info => info.name).ToList();
         }
 
         #region public method

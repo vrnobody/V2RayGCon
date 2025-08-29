@@ -30,21 +30,26 @@ namespace V2RayGCon.Services.PluginsComponents
         #endregion
 
         #region public methods
-        public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos()
+        public List<Models.Datas.PluginInfoItem> GatherInternalPluginInfos()
         {
             var enabled = GetEnabledPluginFileNames();
-
             var r = new List<Models.Datas.PluginInfoItem>();
             foreach (var name in internalPluginNames)
             {
                 var info = ToPluginInfoItem(cache[name], name, enabled.Contains(name));
                 r.Add(info);
             }
+            return r;
+        }
 
+        public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos()
+        {
+            var r = GatherInternalPluginInfos();
             var extPlugins = settings.isLoad3rdPartyPlugins
                 ? LoadAllPluginFromDir()
                 : new Dictionary<string, VgcApis.Interfaces.IPlugin>();
 
+            var enabled = GetEnabledPluginFileNames();
             foreach (var kv in extPlugins)
             {
                 var name = kv.Key;
@@ -234,29 +239,6 @@ namespace V2RayGCon.Services.PluginsComponents
                 .Where(pi => pi.isUse)
                 .Select(pi => pi.filename)
                 .ToList();
-        }
-
-        void RemovePlugins(List<string> filenames)
-        {
-            List<VgcApis.Interfaces.IPlugin> ps = null;
-
-            lock (locker)
-            {
-                ps = cache.Where(kv => filenames.Contains(kv.Key)).Select(kv => kv.Value).ToList();
-
-                foreach (var name in filenames)
-                {
-                    cache.Remove(name);
-                }
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                foreach (var p in ps)
-                {
-                    p.Dispose();
-                }
-            });
         }
 
         Models.Datas.PluginInfoItem ToPluginInfoItem(

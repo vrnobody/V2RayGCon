@@ -106,7 +106,7 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 (WIP) Command-line tools helper. 的本地化字符串。
+        ///   查找类似 Command-line tools launcher. 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {

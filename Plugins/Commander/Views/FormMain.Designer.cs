@@ -38,17 +38,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lsboxNames = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnEnvVars = new System.Windows.Forms.Button();
+            this.btnArgs = new System.Windows.Forms.Button();
+            this.btnWrkDir = new System.Windows.Forms.Button();
+            this.btnExe = new System.Windows.Forms.Button();
             this.chkWriteStdIn = new System.Windows.Forms.CheckBox();
             this.chkUseShell = new System.Windows.Forms.CheckBox();
             this.chkHideWindow = new System.Windows.Forms.CheckBox();
-            this.lbEnvVar = new System.Windows.Forms.Label();
             this.cboxStdOutEncoding = new System.Windows.Forms.ComboBox();
             this.lbStdOutEncoding = new System.Windows.Forms.Label();
             this.lbStdInEncoding = new System.Windows.Forms.Label();
             this.cboxStdInEncoding = new System.Windows.Forms.ComboBox();
-            this.lbArgs = new System.Windows.Forms.Label();
-            this.lbExe = new System.Windows.Forms.Label();
-            this.lbWrkDir = new System.Windows.Forms.Label();
             this.tboxEnvVar = new System.Windows.Forms.TextBox();
             this.tboxArgs = new System.Windows.Forms.TextBox();
             this.tboxExe = new System.Windows.Forms.TextBox();
@@ -98,36 +98,17 @@
             // 
             // toolStripContainer1
             // 
-            resources.ApplyResources(this.toolStripContainer1, "toolStripContainer1");
-            // 
-            // toolStripContainer1.BottomToolStripPanel
-            // 
-            resources.ApplyResources(this.toolStripContainer1.BottomToolStripPanel, "toolStripContainer1.BottomToolStripPanel");
-            this.toolTip1.SetToolTip(this.toolStripContainer1.BottomToolStripPanel, resources.GetString("toolStripContainer1.BottomToolStripPanel.ToolTip"));
             // 
             // toolStripContainer1.ContentPanel
             // 
-            resources.ApplyResources(this.toolStripContainer1.ContentPanel, "toolStripContainer1.ContentPanel");
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolTip1.SetToolTip(this.toolStripContainer1.ContentPanel, resources.GetString("toolStripContainer1.ContentPanel.ToolTip"));
-            // 
-            // toolStripContainer1.LeftToolStripPanel
-            // 
-            resources.ApplyResources(this.toolStripContainer1.LeftToolStripPanel, "toolStripContainer1.LeftToolStripPanel");
-            this.toolTip1.SetToolTip(this.toolStripContainer1.LeftToolStripPanel, resources.GetString("toolStripContainer1.LeftToolStripPanel.ToolTip"));
+            resources.ApplyResources(this.toolStripContainer1.ContentPanel, "toolStripContainer1.ContentPanel");
+            resources.ApplyResources(this.toolStripContainer1, "toolStripContainer1");
             this.toolStripContainer1.Name = "toolStripContainer1";
-            // 
-            // toolStripContainer1.RightToolStripPanel
-            // 
-            resources.ApplyResources(this.toolStripContainer1.RightToolStripPanel, "toolStripContainer1.RightToolStripPanel");
-            this.toolTip1.SetToolTip(this.toolStripContainer1.RightToolStripPanel, resources.GetString("toolStripContainer1.RightToolStripPanel.ToolTip"));
-            this.toolTip1.SetToolTip(this.toolStripContainer1, resources.GetString("toolStripContainer1.ToolTip"));
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            resources.ApplyResources(this.toolStripContainer1.TopToolStripPanel, "toolStripContainer1.TopToolStripPanel");
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            this.toolTip1.SetToolTip(this.toolStripContainer1.TopToolStripPanel, resources.GetString("toolStripContainer1.TopToolStripPanel.ToolTip"));
             // 
             // splitContainer1
             // 
@@ -136,25 +117,19 @@
             // 
             // splitContainer1.Panel1
             // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
             this.splitContainer1.Panel1.Controls.Add(this.panelLeft);
-            this.toolTip1.SetToolTip(this.splitContainer1.Panel1, resources.GetString("splitContainer1.Panel1.ToolTip"));
             // 
             // splitContainer1.Panel2
             // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
             this.splitContainer1.Panel2.Controls.Add(this.panelRight);
-            this.toolTip1.SetToolTip(this.splitContainer1.Panel2, resources.GetString("splitContainer1.Panel2.ToolTip"));
-            this.toolTip1.SetToolTip(this.splitContainer1, resources.GetString("splitContainer1.ToolTip"));
             // 
             // panelLeft
             // 
-            resources.ApplyResources(this.panelLeft, "panelLeft");
             this.panelLeft.Controls.Add(this.groupBox3);
             this.panelLeft.Controls.Add(this.groupBox1);
             this.panelLeft.Controls.Add(this.groupBox2);
+            resources.ApplyResources(this.panelLeft, "panelLeft");
             this.panelLeft.Name = "panelLeft";
-            this.toolTip1.SetToolTip(this.panelLeft, resources.GetString("panelLeft.ToolTip"));
             // 
             // groupBox3
             // 
@@ -162,13 +137,11 @@
             this.groupBox3.Controls.Add(this.rtboxStdInContent);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // rtboxStdInContent
             // 
             resources.ApplyResources(this.rtboxStdInContent, "rtboxStdInContent");
             this.rtboxStdInContent.Name = "rtboxStdInContent";
-            this.toolTip1.SetToolTip(this.rtboxStdInContent, resources.GetString("rtboxStdInContent.ToolTip"));
             this.rtboxStdInContent.TextChanged += new System.EventHandler(this.rtboxStdInContent_TextChanged);
             // 
             // groupBox1
@@ -177,36 +150,65 @@
             this.groupBox1.Controls.Add(this.lsboxNames);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // lsboxNames
             // 
             resources.ApplyResources(this.lsboxNames, "lsboxNames");
             this.lsboxNames.FormattingEnabled = true;
             this.lsboxNames.Name = "lsboxNames";
-            this.toolTip1.SetToolTip(this.lsboxNames, resources.GetString("lsboxNames.ToolTip"));
             // 
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.btnEnvVars);
+            this.groupBox2.Controls.Add(this.btnArgs);
+            this.groupBox2.Controls.Add(this.btnWrkDir);
+            this.groupBox2.Controls.Add(this.btnExe);
             this.groupBox2.Controls.Add(this.chkWriteStdIn);
             this.groupBox2.Controls.Add(this.chkUseShell);
             this.groupBox2.Controls.Add(this.chkHideWindow);
-            this.groupBox2.Controls.Add(this.lbEnvVar);
             this.groupBox2.Controls.Add(this.cboxStdOutEncoding);
             this.groupBox2.Controls.Add(this.lbStdOutEncoding);
             this.groupBox2.Controls.Add(this.lbStdInEncoding);
             this.groupBox2.Controls.Add(this.cboxStdInEncoding);
-            this.groupBox2.Controls.Add(this.lbArgs);
-            this.groupBox2.Controls.Add(this.lbExe);
-            this.groupBox2.Controls.Add(this.lbWrkDir);
             this.groupBox2.Controls.Add(this.tboxEnvVar);
             this.groupBox2.Controls.Add(this.tboxArgs);
             this.groupBox2.Controls.Add(this.tboxExe);
             this.groupBox2.Controls.Add(this.tboxWrkDir);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
+            // 
+            // btnEnvVars
+            // 
+            resources.ApplyResources(this.btnEnvVars, "btnEnvVars");
+            this.btnEnvVars.Name = "btnEnvVars";
+            this.toolTip1.SetToolTip(this.btnEnvVars, resources.GetString("btnEnvVars.ToolTip"));
+            this.btnEnvVars.UseVisualStyleBackColor = true;
+            this.btnEnvVars.Click += new System.EventHandler(this.btnEnvVars_Click);
+            // 
+            // btnArgs
+            // 
+            resources.ApplyResources(this.btnArgs, "btnArgs");
+            this.btnArgs.Name = "btnArgs";
+            this.toolTip1.SetToolTip(this.btnArgs, resources.GetString("btnArgs.ToolTip"));
+            this.btnArgs.UseVisualStyleBackColor = true;
+            this.btnArgs.Click += new System.EventHandler(this.btnArgs_Click);
+            // 
+            // btnWrkDir
+            // 
+            resources.ApplyResources(this.btnWrkDir, "btnWrkDir");
+            this.btnWrkDir.Name = "btnWrkDir";
+            this.toolTip1.SetToolTip(this.btnWrkDir, resources.GetString("btnWrkDir.ToolTip"));
+            this.btnWrkDir.UseVisualStyleBackColor = true;
+            this.btnWrkDir.Click += new System.EventHandler(this.btnWrkDir_Click);
+            // 
+            // btnExe
+            // 
+            resources.ApplyResources(this.btnExe, "btnExe");
+            this.btnExe.Name = "btnExe";
+            this.toolTip1.SetToolTip(this.btnExe, resources.GetString("btnExe.ToolTip"));
+            this.btnExe.UseVisualStyleBackColor = true;
+            this.btnExe.Click += new System.EventHandler(this.btnExe_Click);
             // 
             // chkWriteStdIn
             // 
@@ -232,13 +234,6 @@
             this.chkHideWindow.UseVisualStyleBackColor = true;
             this.chkHideWindow.CheckedChanged += new System.EventHandler(this.chkHideWindow_CheckedChanged);
             // 
-            // lbEnvVar
-            // 
-            resources.ApplyResources(this.lbEnvVar, "lbEnvVar");
-            this.lbEnvVar.Name = "lbEnvVar";
-            this.toolTip1.SetToolTip(this.lbEnvVar, resources.GetString("lbEnvVar.ToolTip"));
-            this.lbEnvVar.Click += new System.EventHandler(this.lbEnvVar_Click);
-            // 
             // cboxStdOutEncoding
             // 
             resources.ApplyResources(this.cboxStdOutEncoding, "cboxStdOutEncoding");
@@ -249,7 +244,6 @@
             resources.GetString("cboxStdOutEncoding.Items2"),
             resources.GetString("cboxStdOutEncoding.Items3")});
             this.cboxStdOutEncoding.Name = "cboxStdOutEncoding";
-            this.toolTip1.SetToolTip(this.cboxStdOutEncoding, resources.GetString("cboxStdOutEncoding.ToolTip"));
             this.cboxStdOutEncoding.TextChanged += new System.EventHandler(this.cboxStdOutEncoding_TextChanged);
             // 
             // lbStdOutEncoding
@@ -274,64 +268,37 @@
             resources.GetString("cboxStdInEncoding.Items2"),
             resources.GetString("cboxStdInEncoding.Items3")});
             this.cboxStdInEncoding.Name = "cboxStdInEncoding";
-            this.toolTip1.SetToolTip(this.cboxStdInEncoding, resources.GetString("cboxStdInEncoding.ToolTip"));
             this.cboxStdInEncoding.TextChanged += new System.EventHandler(this.cboxStdInEncoding_TextChanged);
-            // 
-            // lbArgs
-            // 
-            resources.ApplyResources(this.lbArgs, "lbArgs");
-            this.lbArgs.Name = "lbArgs";
-            this.toolTip1.SetToolTip(this.lbArgs, resources.GetString("lbArgs.ToolTip"));
-            this.lbArgs.Click += new System.EventHandler(this.lbArgs_Click);
-            // 
-            // lbExe
-            // 
-            resources.ApplyResources(this.lbExe, "lbExe");
-            this.lbExe.Name = "lbExe";
-            this.toolTip1.SetToolTip(this.lbExe, resources.GetString("lbExe.ToolTip"));
-            this.lbExe.Click += new System.EventHandler(this.lbExe_Click);
-            // 
-            // lbWrkDir
-            // 
-            resources.ApplyResources(this.lbWrkDir, "lbWrkDir");
-            this.lbWrkDir.Name = "lbWrkDir";
-            this.toolTip1.SetToolTip(this.lbWrkDir, resources.GetString("lbWrkDir.ToolTip"));
-            this.lbWrkDir.Click += new System.EventHandler(this.lbWrkDir_Click);
             // 
             // tboxEnvVar
             // 
             resources.ApplyResources(this.tboxEnvVar, "tboxEnvVar");
             this.tboxEnvVar.Name = "tboxEnvVar";
             this.tboxEnvVar.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.tboxEnvVar, resources.GetString("tboxEnvVar.ToolTip"));
             // 
             // tboxArgs
             // 
             resources.ApplyResources(this.tboxArgs, "tboxArgs");
             this.tboxArgs.Name = "tboxArgs";
             this.tboxArgs.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.tboxArgs, resources.GetString("tboxArgs.ToolTip"));
             // 
             // tboxExe
             // 
             resources.ApplyResources(this.tboxExe, "tboxExe");
             this.tboxExe.Name = "tboxExe";
-            this.toolTip1.SetToolTip(this.tboxExe, resources.GetString("tboxExe.ToolTip"));
             this.tboxExe.TextChanged += new System.EventHandler(this.tboxExe_TextChanged);
             // 
             // tboxWrkDir
             // 
             resources.ApplyResources(this.tboxWrkDir, "tboxWrkDir");
             this.tboxWrkDir.Name = "tboxWrkDir";
-            this.toolTip1.SetToolTip(this.tboxWrkDir, resources.GetString("tboxWrkDir.ToolTip"));
             this.tboxWrkDir.TextChanged += new System.EventHandler(this.tboxWrkDir_TextChanged);
             // 
             // panelRight
             // 
-            resources.ApplyResources(this.panelRight, "panelRight");
             this.panelRight.Controls.Add(this.groupBox4);
+            resources.ApplyResources(this.panelRight, "panelRight");
             this.panelRight.Name = "panelRight";
-            this.toolTip1.SetToolTip(this.panelRight, resources.GetString("panelRight.ToolTip"));
             // 
             // groupBox4
             // 
@@ -339,15 +306,13 @@
             this.groupBox4.Controls.Add(this.rtboxLogs);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox4, resources.GetString("groupBox4.ToolTip"));
             // 
             // rtboxLogs
             // 
-            resources.ApplyResources(this.rtboxLogs, "rtboxLogs");
             this.rtboxLogs.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.rtboxLogs, "rtboxLogs");
             this.rtboxLogs.Name = "rtboxLogs";
             this.rtboxLogs.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.rtboxLogs, resources.GetString("rtboxLogs.ToolTip"));
             // 
             // menuStrip1
             // 
@@ -358,11 +323,9 @@
             this.sTDINToolStripMenuItem,
             this.logToolStripMenuItem});
             this.menuStrip1.Name = "menuStrip1";
-            this.toolTip1.SetToolTip(this.menuStrip1, resources.GetString("menuStrip1.ToolTip"));
             // 
             // editToolStripMenuItem
             // 
-            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -372,50 +335,50 @@
             this.toolStripMenuItem4,
             this.closeToolStripMenuItem1});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             // 
             // newToolStripMenuItem
             // 
-            resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // saveToolStripMenuItem1
             // 
-            resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // saveAsToolStripMenuItem1
             // 
-            resources.ApplyResources(this.saveAsToolStripMenuItem1, "saveAsToolStripMenuItem1");
             this.saveAsToolStripMenuItem1.Name = "saveAsToolStripMenuItem1";
+            resources.ApplyResources(this.saveAsToolStripMenuItem1, "saveAsToolStripMenuItem1");
             this.saveAsToolStripMenuItem1.Click += new System.EventHandler(this.saveAsToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
-            resources.ApplyResources(this.deleteToolStripMenuItem1, "deleteToolStripMenuItem1");
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            resources.ApplyResources(this.deleteToolStripMenuItem1, "deleteToolStripMenuItem1");
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem4
             // 
-            resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
             // 
             // closeToolStripMenuItem1
             // 
-            resources.ApplyResources(this.closeToolStripMenuItem1, "closeToolStripMenuItem1");
             this.closeToolStripMenuItem1.Name = "closeToolStripMenuItem1";
+            resources.ApplyResources(this.closeToolStripMenuItem1, "closeToolStripMenuItem1");
             this.closeToolStripMenuItem1.Click += new System.EventHandler(this.closeToolStripMenuItem1_Click);
             // 
             // runToolStripMenuItem
             // 
-            resources.ApplyResources(this.runToolStripMenuItem, "runToolStripMenuItem");
             this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.executeToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -423,86 +386,87 @@
             this.stopToolStripMenuItem,
             this.killToolStripMenuItem});
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            resources.ApplyResources(this.runToolStripMenuItem, "runToolStripMenuItem");
             this.runToolStripMenuItem.DropDownOpening += new System.EventHandler(this.runToolStripMenuItem_DropDownOpening);
             // 
             // executeToolStripMenuItem
             // 
-            resources.ApplyResources(this.executeToolStripMenuItem, "executeToolStripMenuItem");
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
+            resources.ApplyResources(this.executeToolStripMenuItem, "executeToolStripMenuItem");
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             // 
             // startToolStripMenuItem
             // 
-            resources.ApplyResources(this.startToolStripMenuItem, "startToolStripMenuItem");
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            resources.ApplyResources(this.startToolStripMenuItem, "startToolStripMenuItem");
             // 
             // stopToolStripMenuItem
             // 
-            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             // 
             // killToolStripMenuItem
             // 
-            resources.ApplyResources(this.killToolStripMenuItem, "killToolStripMenuItem");
             this.killToolStripMenuItem.Name = "killToolStripMenuItem";
+            resources.ApplyResources(this.killToolStripMenuItem, "killToolStripMenuItem");
             // 
             // sTDINToolStripMenuItem
             // 
-            resources.ApplyResources(this.sTDINToolStripMenuItem, "sTDINToolStripMenuItem");
             this.sTDINToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearContentToolStripMenuItem,
             this.copyToClipboardToolStripMenuItem1,
             this.pasteFromClipboardToolStripMenuItem});
             this.sTDINToolStripMenuItem.Name = "sTDINToolStripMenuItem";
+            resources.ApplyResources(this.sTDINToolStripMenuItem, "sTDINToolStripMenuItem");
             // 
             // clearContentToolStripMenuItem
             // 
-            resources.ApplyResources(this.clearContentToolStripMenuItem, "clearContentToolStripMenuItem");
             this.clearContentToolStripMenuItem.Name = "clearContentToolStripMenuItem";
+            resources.ApplyResources(this.clearContentToolStripMenuItem, "clearContentToolStripMenuItem");
             this.clearContentToolStripMenuItem.Click += new System.EventHandler(this.clearContentToolStripMenuItem_Click);
             // 
             // copyToClipboardToolStripMenuItem1
             // 
-            resources.ApplyResources(this.copyToClipboardToolStripMenuItem1, "copyToClipboardToolStripMenuItem1");
             this.copyToClipboardToolStripMenuItem1.Name = "copyToClipboardToolStripMenuItem1";
+            resources.ApplyResources(this.copyToClipboardToolStripMenuItem1, "copyToClipboardToolStripMenuItem1");
             this.copyToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem1_Click);
             // 
             // pasteFromClipboardToolStripMenuItem
             // 
-            resources.ApplyResources(this.pasteFromClipboardToolStripMenuItem, "pasteFromClipboardToolStripMenuItem");
             this.pasteFromClipboardToolStripMenuItem.Name = "pasteFromClipboardToolStripMenuItem";
+            resources.ApplyResources(this.pasteFromClipboardToolStripMenuItem, "pasteFromClipboardToolStripMenuItem");
             this.pasteFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.pasteFromClipboardToolStripMenuItem_Click);
             // 
             // logToolStripMenuItem
             // 
-            resources.ApplyResources(this.logToolStripMenuItem, "logToolStripMenuItem");
             this.logToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pauseToolStripMenuItem,
             this.clearToolStripMenuItem,
             this.copyToClipboardToolStripMenuItem});
             this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+            resources.ApplyResources(this.logToolStripMenuItem, "logToolStripMenuItem");
             // 
             // pauseToolStripMenuItem
             // 
-            resources.ApplyResources(this.pauseToolStripMenuItem, "pauseToolStripMenuItem");
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            resources.ApplyResources(this.pauseToolStripMenuItem, "pauseToolStripMenuItem");
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
-            resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // copyToClipboardToolStripMenuItem
             // 
-            resources.ApplyResources(this.copyToClipboardToolStripMenuItem, "copyToClipboardToolStripMenuItem");
             this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
+            resources.ApplyResources(this.copyToClipboardToolStripMenuItem, "copyToClipboardToolStripMenuItem");
             this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
             // 
             // FormMain
@@ -512,7 +476,6 @@
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -545,13 +508,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lsboxNames;
-        private System.Windows.Forms.Label lbExe;
-        private System.Windows.Forms.Label lbWrkDir;
         private System.Windows.Forms.TextBox tboxExe;
         private System.Windows.Forms.TextBox tboxWrkDir;
         private System.Windows.Forms.Label lbStdInEncoding;
-        private System.Windows.Forms.Label lbEnvVar;
-        private System.Windows.Forms.Label lbArgs;
         private System.Windows.Forms.TextBox tboxEnvVar;
         private System.Windows.Forms.TextBox tboxArgs;
         private VgcApis.UserControls.ExRichTextBox rtboxStdInContent;
@@ -589,5 +548,9 @@
         private System.Windows.Forms.ToolStripMenuItem pasteFromClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.Button btnEnvVars;
+        private System.Windows.Forms.Button btnArgs;
+        private System.Windows.Forms.Button btnWrkDir;
+        private System.Windows.Forms.Button btnExe;
     }
 }

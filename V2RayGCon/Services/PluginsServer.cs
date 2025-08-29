@@ -47,6 +47,9 @@ namespace V2RayGCon.Services
             RefreshMenuItems();
         }
 
+        public List<Models.Datas.PluginInfoItem> GatherInternalPluginInfos() =>
+            pluginsMgr.GatherInternalPluginInfos();
+
         public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos() =>
             pluginsMgr.GatherAllPluginInfos();
         #endregion

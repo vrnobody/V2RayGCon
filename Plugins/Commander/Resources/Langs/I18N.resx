@@ -133,7 +133,7 @@
     <value>Copy success.</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>(WIP) Command-line tools helper.</value>
+    <value>Command-line tools launcher.</value>
   </data>
   <data name="DisableLogInWindowMode" xml:space="preserve">
     <value>[{0}] Disable logging in window mode.</value>

@@ -133,7 +133,7 @@
     <value>复制成功。</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>（开发中）命令行工具助手。</value>
+    <value>命令行工具执行器。</value>
   </data>
   <data name="DisableLogInWindowMode" xml:space="preserve">
     <value>[{0}] 窗口模式下不显示日志输出</value>

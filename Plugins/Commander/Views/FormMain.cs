@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Commander.Resources.Langs;
@@ -9,34 +11,40 @@ namespace Commander.Views
     public partial class FormMain : Form
     {
         readonly Services.Settings settings;
+        readonly Services.Server server;
         readonly string formTitle;
         Models.Data.CmderParam currentParam;
         bool isClosed = false;
+        readonly VgcApis.Libs.Tasks.Routine logUpdater;
+        long lastLogUpdateTimestamp = 0;
 
-        public static FormMain CreateForm(Services.Settings setting)
+        public static FormMain CreateForm(Services.Settings setting, Services.Server server)
         {
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormMain(setting);
+                r = new FormMain(setting, server);
             });
             return r;
         }
 
-        FormMain(Services.Settings settings)
+        FormMain(Services.Settings settings, Services.Server server)
         {
             this.settings = settings;
+            this.server = server;
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             formTitle = Properties.Resources.Name + " v" + Properties.Resources.Version;
-            this.Text = formTitle;
-            rtboxLogs.BackColor = tboxArgs.BackColor;
+            logUpdater = new VgcApis.Libs.Tasks.Routine(UpdateLog, 1000);
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            currentParam = settings.GetCurrentCmderParam();
+            this.Text = formTitle;
+            rtboxLogs.BackColor = tboxArgs.BackColor;
+
+            currentParam = settings.GetFirstCmderParam();
             UpdateCmderNames();
             UpdateUiElements();
 
@@ -47,21 +55,36 @@ namespace Commander.Views
                 {
                     return;
                 }
-                currentParam = settings.GetCmderParamByName(name);
+                currentParam = settings.GetCmderParamByName(name) ?? new Models.Data.CmderParam();
                 UpdateUiElements();
             };
+            logUpdater.Restart();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.isClosed = true;
+            logUpdater.Dispose();
         }
 
-        #region public methods
-        #endregion
-
         #region private methods
-        void SaveCurrentConfig(string name)
+        void UpdateLog()
+        {
+            var timestamp = server.GetLogTimestamp();
+            if (lastLogUpdateTimestamp == timestamp)
+            {
+                return;
+            }
+            lastLogUpdateTimestamp = timestamp;
+            var logs = server.GetLogs();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                rtboxLogs.Text = logs;
+                VgcApis.Misc.UI.ScrollToBottom(rtboxLogs);
+            });
+        }
+
+        void OverwriteCurrentConfig(string name)
         {
             settings.SaveCmderParam(currentParam);
             SetTitle(name);
@@ -74,7 +97,7 @@ namespace Commander.Views
                 (name) =>
                 {
                     currentParam.name = name;
-                    SaveCurrentConfig(name);
+                    OverwriteCurrentConfig(name);
                 }
             );
             VgcApis.Misc.UI.GetUserInput(I18N.NewConfigName, onOk);
@@ -88,7 +111,7 @@ namespace Commander.Views
                 {
                     return;
                 }
-                action?.Invoke(s);
+                VgcApis.Misc.UI.Invoke(() => action?.Invoke(s));
             };
         }
 
@@ -115,6 +138,7 @@ namespace Commander.Views
             cboxStdInEncoding.Text = p.stdInEncoding;
             cboxStdOutEncoding.Text = p.stdOutEncoding;
             chkHideWindow.Checked = p.hideWindow;
+            chkUseShell.Checked = p.useShell;
             chkWriteStdIn.Checked = p.writeToStdIn;
             rtboxStdInContent.Text = p.stdInContent;
             UpdateStdInContentBackgroundColor();
@@ -130,41 +154,18 @@ namespace Commander.Views
 
         void UpdateStdInContentBackgroundColor()
         {
-            rtboxStdInContent.BackColor = currentParam.writeToStdIn
-                ? tboxExe.BackColor
-                : tboxArgs.BackColor;
+            var enabled = currentParam.writeToStdIn;
+            rtboxStdInContent.ReadOnly = !enabled;
+            rtboxStdInContent.BackColor = enabled ? tboxExe.BackColor : tboxArgs.BackColor;
         }
         #endregion
 
         #region UI events
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void chkWriteStdIn_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.writeToStdIn = chkWriteStdIn.Checked;
             UpdateStdInContentBackgroundColor();
-        }
-
-        private void pasteToSTDINToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var c = VgcApis.Misc.Utils.ReadFromClipboard();
-            rtboxStdInContent.Text = c;
-        }
-
-        private void copySTDINToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var c = rtboxStdInContent.Text;
-            Misc.UI.CopyToClipboardAndPrompt(c);
-        }
-
-        private void copyLogsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var c = rtboxLogs.Text;
-            Misc.UI.CopyToClipboardAndPrompt(c);
         }
 
         private void lbExe_Click(object sender, EventArgs e)
@@ -185,6 +186,11 @@ namespace Commander.Views
                 return;
             }
             tboxWrkDir.Text = dir;
+        }
+
+        private void chkUseShell_CheckedChanged(object sender, EventArgs e)
+        {
+            currentParam.useShell = chkUseShell.Checked;
         }
 
         private void chkHideWindow_CheckedChanged(object sender, EventArgs e)
@@ -241,12 +247,63 @@ namespace Commander.Views
             currentParam.stdOutEncoding = cboxStdOutEncoding.Text;
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveAsNewConfig();
+            server.Start(currentParam);
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        void GenSubMenu(ToolStripMenuItem root, IEnumerable<string> names, Action<string> action)
+        {
+            var c = root.DropDownItems;
+            c.Clear();
+            foreach (var name in names)
+            {
+                var n = name;
+                var mi = new ToolStripMenuItem(n);
+                mi.Click += (s, a) => action?.Invoke(name);
+                c.Add(mi);
+            }
+        }
+
+        private void runToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            var cfgs = settings.GetCmderParamNames();
+            startToolStripMenuItem.Enabled = cfgs.Count > 0;
+            GenSubMenu(startToolStripMenuItem, cfgs, (name) => server.Start(name));
+
+            var procs = server.GetNames();
+            stopToolStripMenuItem.Enabled = procs.Count > 0;
+            killToolStripMenuItem.Enabled = procs.Count > 0;
+            GenSubMenu(stopToolStripMenuItem, procs, (name) => server.Stop(name));
+            GenSubMenu(killToolStripMenuItem, procs, (name) => server.Kill(name));
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var paused = pauseToolStripMenuItem.Checked;
+            pauseToolStripMenuItem.Checked = !paused;
+            if (paused)
+            {
+                logUpdater.Restart();
+            }
+            else
+            {
+                logUpdater.Stop();
+            }
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearLogs))
+            {
+                server.ClearLogs();
+
+                // incase log updater is paused
+                rtboxLogs.Text = "";
+            }
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var name = currentParam.name;
             if (string.IsNullOrEmpty(name))
@@ -256,11 +313,16 @@ namespace Commander.Views
             }
             else
             {
-                SaveCurrentConfig(name);
+                OverwriteCurrentConfig(name);
             }
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveAsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveAsNewConfig();
+        }
+
+        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var name = currentParam.name;
             if (string.IsNullOrEmpty(name))
@@ -274,11 +336,52 @@ namespace Commander.Views
             {
                 return;
             }
-            settings.RemoveCmderParamByName(name);
-            SetTitle("");
-            UpdateCmderNames();
+            var ok = settings.RemoveCmderParamByName(name);
+            if (ok)
+            {
+                SetTitle("");
+                UpdateCmderNames();
+            }
+            else
+            {
+                msg = string.Format(I18N.FindNoConfigWihtName, name);
+                VgcApis.Misc.UI.MsgBox(msg);
+            }
         }
 
+        private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void copyToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var c = rtboxLogs.Text;
+            Misc.UI.CopyToClipboardAndPrompt(c);
+        }
+
+        private void clearContentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtboxStdInContent.Text = "";
+        }
+
+        private void copyToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var c = rtboxStdInContent.Text;
+            Misc.UI.CopyToClipboardAndPrompt(c);
+        }
+
+        private void pasteFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var c = VgcApis.Misc.Utils.ReadFromClipboard();
+            rtboxStdInContent.Text = c;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentParam = new Models.Data.CmderParam();
+            UpdateUiElements();
+        }
         #endregion
     }
 }

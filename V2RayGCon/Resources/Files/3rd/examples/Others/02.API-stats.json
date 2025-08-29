@@ -1,0 +1,49 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "api": {
+        "tag": "api",
+        "listen": "127.0.0.1:2025",
+        "services": [
+            "HandlerService",
+            "StatsService"
+        ]
+    },
+    "inbounds": [
+        {
+            "tag": "agentin",
+            "protocol": "vless",
+            "listen": "127.0.0.1",
+            "port": 2001,
+            "settings": {
+                "decryption": "none",
+                "clients": [
+                    {
+                        "id": "e5ff7291-3a34-47c3-a9cb-4c47fb19b8d7",
+                        "email": "dev@xray.com"
+                    }
+                ]
+            }
+        }
+    ],
+    "policy": {
+        "levels": {
+            "0": {
+                "statsUserUplink": true,
+                "statsUserDownlink": true
+            }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true
+        }
+    },
+    "stats": {},
+    "outbounds": [
+        {
+            "tag": "agentout",
+            "protocol": "freedom"
+        }
+    ]
+}

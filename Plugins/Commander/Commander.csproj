@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StrConst.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Server.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="Views\FormMain.cs">
       <SubType>Form</SubType>
@@ -102,6 +103,9 @@
       <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormMain.zh-CN.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

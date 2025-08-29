@@ -70,6 +70,15 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Clear logs? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearLogs {
+            get {
+                return ResourceManager.GetString("ConfirmClearLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Delete config [{0}]? 的本地化字符串。
         /// </summary>
         internal static string ConfirmDeleteConfig {
@@ -106,6 +115,60 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 [{0}] Disable logging in window mode. 的本地化字符串。
+        /// </summary>
+        internal static string DisableLogInWindowMode {
+            get {
+                return ResourceManager.GetString("DisableLogInWindowMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error 的本地化字符串。
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: config is null! 的本地化字符串。
+        /// </summary>
+        internal static string ErrorConfigIsNull {
+            get {
+                return ResourceManager.GetString("ErrorConfigIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exited 的本地化字符串。
+        /// </summary>
+        internal static string Exited {
+            get {
+                return ResourceManager.GetString("Exited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Find no config with name [{0}]! 的本地化字符串。
+        /// </summary>
+        internal static string FindNoConfigWihtName {
+            get {
+                return ResourceManager.GetString("FindNoConfigWihtName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Kill 的本地化字符串。
+        /// </summary>
+        internal static string Kill {
+            get {
+                return ResourceManager.GetString("Kill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Modify arguments: 的本地化字符串。
         /// </summary>
         internal static string ModifyArgs {
@@ -133,11 +196,20 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Remove [{0}] failed! 的本地化字符串。
+        ///   查找类似 Send stop signal to 的本地化字符串。
         /// </summary>
-        internal static string RemoveFailed {
+        internal static string SendStopSignal {
             get {
-                return ResourceManager.GetString("RemoveFailed", resourceCulture);
+                return ResourceManager.GetString("SendStopSignal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Start 的本地化字符串。
+        /// </summary>
+        internal static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
     }

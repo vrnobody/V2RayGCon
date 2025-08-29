@@ -1762,10 +1762,9 @@ namespace VgcApis.Misc
         public static Dictionary<string, string> ParseEnvString(string envs)
         {
             var r = new Dictionary<string, string>();
-            var kvs =
-                envs?.Replace(", ", ",")
-                    ?.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                ?? new string[0];
+            var kvs = (envs ?? "")
+                .Replace(", ", ",")
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var kvp in kvs)
             {
                 var kv = kvp.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
@@ -3235,6 +3234,37 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
+        public static Encoding TranslateEncoding(string encoding)
+        {
+            var enc = encoding?.ToLower() ?? "";
+            if (string.IsNullOrEmpty(enc) || enc == "utf8")
+            {
+                return Encoding.UTF8;
+            }
+
+            if (enc.StartsWith("cp") && enc.Length > 2)
+            {
+                if (int.TryParse(enc.Substring(2), out var num))
+                {
+                    try
+                    {
+                        return Encoding.GetEncoding(num);
+                    }
+                    catch { }
+                }
+            }
+
+            switch (encoding)
+            {
+                case "unicode":
+                    return Encoding.Unicode;
+                case "ascii":
+                    return Encoding.ASCII;
+                default:
+                    return Encoding.UTF8;
+            }
+        }
+
         public static bool TryParseVersionString(string versionString, out Version version)
         {
             try

@@ -20,21 +20,10 @@ namespace Commander.Services
         }
 
         #region public methods
-        public Models.Data.CmderParam GetCurrentCmderParam()
+        public Models.Data.CmderParam GetFirstCmderParam()
         {
-            var empty = new Models.Data.CmderParam();
-            var names = GetCmderParamNames();
-            if (names.Count < 1)
-            {
-                return empty;
-            }
-            var name = names.First();
-            var r = userSettings.cmderParams.FirstOrDefault(p => p.name == name);
-            if (r == null)
-            {
-                return empty;
-            }
-            return VgcApis.Misc.Utils.Clone(r);
+            var first = userSettings.cmderParams.OrderBy(p => p.name).FirstOrDefault();
+            return VgcApis.Misc.Utils.Clone(first) ?? new Models.Data.CmderParam();
         }
 
         public List<string> GetCmderParamNames()
@@ -46,24 +35,21 @@ namespace Commander.Services
 
         public Models.Data.CmderParam GetCmderParamByName(string name)
         {
-            var empty = new Models.Data.CmderParam();
             var r = userSettings.cmderParams.FirstOrDefault(p => p.name == name);
-            if (r == null)
-            {
-                return empty;
-            }
             return VgcApis.Misc.Utils.Clone(r);
         }
 
-        public void RemoveCmderParamByName(string name)
+        public bool RemoveCmderParamByName(string name)
         {
-            var num = userSettings.cmderParams.RemoveAll(p => p.name == name);
-            SaveUserSettings();
-            if (num <= 0)
+            var src = userSettings.cmderParams;
+            var trimed = src.Where(p => p.name != name).ToList();
+            var ok = src.Count > trimed.Count;
+            if (ok)
             {
-                var msg = string.Format(I18N.RemoveFailed, name);
-                VgcApis.Misc.UI.MsgBox(msg);
+                userSettings.cmderParams = trimed;
+                SaveUserSettings();
             }
+            return ok;
         }
 
         public void SaveCmderParam(Models.Data.CmderParam cmderParam)
@@ -73,10 +59,10 @@ namespace Commander.Services
                 return;
             }
 
-            var pps = userSettings.cmderParams;
-            pps.RemoveAll(pp => pp.name == cmderParam.name);
+            var list = userSettings.cmderParams.Where(p => p.name != cmderParam.name).ToList();
             var clone = VgcApis.Misc.Utils.Clone(cmderParam);
-            pps.Add(clone);
+            list.Add(clone);
+            userSettings.cmderParams = list;
             SaveUserSettings();
         }
 

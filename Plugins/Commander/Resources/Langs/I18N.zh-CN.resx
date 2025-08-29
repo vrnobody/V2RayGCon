@@ -120,6 +120,9 @@
   <data name="ConfigNameIsEmpty" xml:space="preserve">
     <value>配置名为空！</value>
   </data>
+  <data name="ConfirmClearLogs" xml:space="preserve">
+    <value>确定要清空日志吗？</value>
+  </data>
   <data name="ConfirmDeleteConfig" xml:space="preserve">
     <value>删除配置 [{0}] 吗？</value>
   </data>
@@ -132,6 +135,24 @@
   <data name="Description" xml:space="preserve">
     <value>（开发中）命令行工具助手。</value>
   </data>
+  <data name="DisableLogInWindowMode" xml:space="preserve">
+    <value>[{0}] 窗口模式下不显示日志输出</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="ErrorConfigIsNull" xml:space="preserve">
+    <value>错误：配置为空！</value>
+  </data>
+  <data name="Exited" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="FindNoConfigWihtName" xml:space="preserve">
+    <value>找不到名为 [{0}] 的配置！</value>
+  </data>
+  <data name="Kill" xml:space="preserve">
+    <value>终止</value>
+  </data>
   <data name="ModifyArgs" xml:space="preserve">
     <value>修改命令行参数：</value>
   </data>
@@ -141,7 +162,10 @@
   <data name="NewConfigName" xml:space="preserve">
     <value>新配置名：</value>
   </data>
-  <data name="RemoveFailed" xml:space="preserve">
-    <value>删除 [{0}] 失败！</value>
+  <data name="SendStopSignal" xml:space="preserve">
+    <value>发送停止信号</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>启动</value>
   </data>
 </root>

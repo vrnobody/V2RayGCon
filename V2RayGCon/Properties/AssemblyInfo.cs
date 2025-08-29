@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
-v2.1.5.4 (WIP) Commander plug-in.
+v2.1.5.4 Add commander plug-in. Need to click refresh button in plug-in panel.
 v2.1.5.3 Reduce memory usage while serializing user settings to file.
 v2.1.5.2 Add upper/lower case converter to FormToolbox.
 v2.1.5.1 Add vmess link body decoder to FormToolbox.

@@ -1,0 +1,240 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using Commander.Resources.Langs;
+using VgcApis.Models.Consts;
+
+namespace Commander.Services
+{
+    public class Server
+    {
+        public class ProcInfo
+        {
+            public string name;
+            public Process proc;
+        }
+
+        readonly object locker = new object();
+        List<ProcInfo> procInfos = new List<ProcInfo>();
+        readonly VgcApis.Libs.Sys.QueueLogger logger = new VgcApis.Libs.Sys.QueueLogger(1000);
+        private readonly Settings settings;
+
+        public Server(Settings settings)
+        {
+            this.settings = settings;
+        }
+
+        #region public methods
+
+        public void ClearLogs() => logger.Clear();
+
+        public long GetLogTimestamp() => logger.GetTimestamp();
+
+        public string GetLogs() => logger.GetLogAsString(true);
+
+        public List<string> GetNames()
+        {
+            lock (locker)
+            {
+                return procInfos.Where(pi => !pi.proc.HasExited).Select(pi => pi.name).ToList();
+            }
+        }
+
+        public void Stop(string name)
+        {
+            if (TryGetProcByName(name, out var proc))
+            {
+                logger.Log($"{I18N.SendStopSignal} [{name}]");
+                VgcApis.Misc.Utils.SendStopSignal(proc);
+            }
+        }
+
+        public void Cleanup()
+        {
+            var names = GetNames();
+            foreach (var name in names)
+            {
+                Kill(name);
+            }
+        }
+
+        public void Kill(string name)
+        {
+            if (TryGetProcByName(name, out var proc))
+            {
+                logger.Log($"{I18N.Kill} [{name}]");
+                try
+                {
+                    proc.Kill();
+                }
+                catch { }
+            }
+        }
+
+        public void Start(string name)
+        {
+            var config = settings.GetCmderParamByName(name);
+            if (config != null)
+            {
+                Start(config);
+                return;
+            }
+            var msg = string.Format(I18N.FindNoConfigWihtName, name);
+            logger.Log(msg);
+        }
+
+        public void Start(Models.Data.CmderParam config)
+        {
+            if (config == null)
+            {
+                logger.Log(I18N.ErrorConfigIsNull);
+                return;
+            }
+            var name = config.name;
+            try
+            {
+                logger.Log($"[{name}] {I18N.Start}");
+                var proc = CreateProcess(config);
+                proc.Exited += (s, a) =>
+                {
+                    logger.Log($"[{config.name}] {I18N.Exited}");
+                    RemoveClosedProcess();
+                };
+                if (config.hideWindow)
+                {
+                    BindLoggerEvents(proc);
+                }
+                else
+                {
+                    var msg = string.Format(I18N.DisableLogInWindowMode, name);
+                    logger.Log(msg);
+                }
+
+                proc.Start();
+                if (config.writeToStdIn)
+                {
+                    var encIn = VgcApis.Misc.Utils.TranslateEncoding(config.stdInEncoding);
+                    WriteToStandardInput(proc, config.stdInContent, encIn);
+                }
+
+                lock (locker)
+                {
+                    procInfos.Add(new ProcInfo() { name = name, proc = proc });
+                }
+
+                if (config.hideWindow)
+                {
+                    proc.BeginErrorReadLine();
+                    proc.BeginOutputReadLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Log($"{I18N.Error}: {ex.Message}");
+            }
+        }
+        #endregion
+
+        #region private methods
+        bool TryGetProcByName(string name, out Process proc)
+        {
+            proc = null;
+            var procInfo = procInfos.FirstOrDefault(pi => pi.name == name);
+            if (procInfo == null)
+            {
+                var msg = string.Format(I18N.FindNoConfigWihtName, name);
+                logger.Log(msg);
+                return false;
+            }
+            proc = procInfo.proc;
+            return true;
+        }
+
+        void RemoveClosedProcess()
+        {
+            var list = procInfos.Where(pi => !pi.proc.HasExited).ToList();
+            lock (locker)
+            {
+                procInfos = list;
+            }
+        }
+
+        void SendLogHandler(object sender, DataReceivedEventArgs args)
+        {
+            var msg = args.Data;
+            if (string.IsNullOrEmpty(msg))
+            {
+                return;
+            }
+            logger.Log(msg);
+        }
+
+        void BindLoggerEvents(Process proc)
+        {
+            proc.ErrorDataReceived += SendLogHandler;
+            proc.OutputDataReceived += SendLogHandler;
+            proc.Exited += (s, a) =>
+            {
+                proc.ErrorDataReceived -= SendLogHandler;
+                proc.OutputDataReceived -= SendLogHandler;
+            };
+        }
+
+        void WriteToStandardInput(Process proc, string content, Encoding encoding)
+        {
+            using (var s = proc.StandardInput.BaseStream)
+            using (var w = new StreamWriter(s, encoding))
+            {
+                w.Write(content);
+            }
+        }
+
+        Process CreateProcess(Models.Data.CmderParam config)
+        {
+            var args = Misc.Utils.ReplaceNewLines(config.args);
+            var redirect = config.hideWindow;
+
+            var p = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = config.exe,
+                    Arguments = args,
+                    CreateNoWindow = redirect,
+                    UseShellExecute = config.useShell,
+                    RedirectStandardOutput = redirect,
+                    RedirectStandardError = redirect,
+                    RedirectStandardInput = config.writeToStdIn,
+                },
+            };
+
+            if (redirect)
+            {
+                var encOut = VgcApis.Misc.Utils.TranslateEncoding(config.stdOutEncoding);
+                p.StartInfo.StandardOutputEncoding = encOut;
+                p.StartInfo.StandardErrorEncoding = encOut;
+            }
+
+            if (!string.IsNullOrEmpty(config.wrkDir))
+            {
+                p.StartInfo.WorkingDirectory = config.wrkDir;
+            }
+
+            p.EnableRaisingEvents = true;
+            if (!string.IsNullOrEmpty(config.envVars))
+            {
+                var trimed = Misc.Utils.ReplaceNewLines(config.envVars);
+                VgcApis.Misc.Utils.SetProcessEnvs(p, trimed);
+            }
+            return p;
+        }
+        #endregion
+    }
+}

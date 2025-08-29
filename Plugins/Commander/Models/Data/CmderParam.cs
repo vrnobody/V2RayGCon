@@ -8,11 +8,12 @@
 
         public string args = "";
         public string envVars = "";
-        public string stdInEncoding = "";
-        public string stdOutEncoding = "";
+        public string stdInEncoding = "cp936";
+        public string stdOutEncoding = "cp936";
 
         public bool hideWindow = true;
         public bool writeToStdIn = false;
+        public bool useShell = false;
 
         public string stdInContent = "";
     }

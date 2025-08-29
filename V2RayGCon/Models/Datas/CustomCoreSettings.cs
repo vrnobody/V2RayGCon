@@ -35,7 +35,7 @@ namespace V2RayGCon.Models.Datas
             "utf8",
             "unicode",
             "ascii",
-            "cp936"
+            "cp936",
         };
 
         public static List<string> GetEncodings() => encodings;
@@ -44,46 +44,16 @@ namespace V2RayGCon.Models.Datas
         {
             return string.IsNullOrEmpty(stdInEncoding)
                 ? Encoding.Default
-                : TranslateEncoding(stdInEncoding);
+                : VgcApis.Misc.Utils.TranslateEncoding(stdInEncoding);
         }
 
         public Encoding GetStdOutEncoding()
         {
             return string.IsNullOrEmpty(stdInEncoding)
                 ? Encoding.UTF8
-                : TranslateEncoding(stdOutEncoding);
+                : VgcApis.Misc.Utils.TranslateEncoding(stdOutEncoding);
         }
 
-        public static Encoding TranslateEncoding(string encoding)
-        {
-            var enc = encoding?.ToLower() ?? "";
-            if (string.IsNullOrEmpty(enc) || enc == "utf8")
-            {
-                return Encoding.UTF8;
-            }
-
-            if (enc.StartsWith("cp") && enc.Length > 2)
-            {
-                if (int.TryParse(enc.Substring(2), out var num))
-                {
-                    try
-                    {
-                        return Encoding.GetEncoding(num);
-                    }
-                    catch { }
-                }
-            }
-
-            switch (encoding)
-            {
-                case "unicode":
-                    return Encoding.Unicode;
-                case "ascii":
-                    return Encoding.ASCII;
-                default:
-                    return Encoding.UTF8;
-            }
-        }
         #endregion
 
         #region private methods

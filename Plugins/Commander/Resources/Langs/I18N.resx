@@ -120,6 +120,9 @@
   <data name="ConfigNameIsEmpty" xml:space="preserve">
     <value>Config name is empty!</value>
   </data>
+  <data name="ConfirmClearLogs" xml:space="preserve">
+    <value>Clear logs?</value>
+  </data>
   <data name="ConfirmDeleteConfig" xml:space="preserve">
     <value>Delete config [{0}]?</value>
   </data>
@@ -132,6 +135,24 @@
   <data name="Description" xml:space="preserve">
     <value>(WIP) Command-line tools helper.</value>
   </data>
+  <data name="DisableLogInWindowMode" xml:space="preserve">
+    <value>[{0}] Disable logging in window mode.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorConfigIsNull" xml:space="preserve">
+    <value>Error: config is null!</value>
+  </data>
+  <data name="Exited" xml:space="preserve">
+    <value>Exited</value>
+  </data>
+  <data name="FindNoConfigWihtName" xml:space="preserve">
+    <value>Find no config with name [{0}]!</value>
+  </data>
+  <data name="Kill" xml:space="preserve">
+    <value>Kill</value>
+  </data>
   <data name="ModifyArgs" xml:space="preserve">
     <value>Modify arguments:</value>
   </data>
@@ -141,7 +162,10 @@
   <data name="NewConfigName" xml:space="preserve">
     <value>New config name:</value>
   </data>
-  <data name="RemoveFailed" xml:space="preserve">
-    <value>Remove [{0}] failed!</value>
+  <data name="SendStopSignal" xml:space="preserve">
+    <value>Send stop signal to</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
   </data>
 </root>

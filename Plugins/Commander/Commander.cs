@@ -6,6 +6,7 @@ namespace Commander
     public class Commander : VgcApis.BaseClasses.Plugin
     {
         Services.Settings settings;
+        Services.Server server;
         Views.FormMain formMain = null;
 
         // form=null;
@@ -35,7 +36,7 @@ namespace Commander
                     return;
                 }
 
-                formMain = Views.FormMain.CreateForm(settings);
+                formMain = Views.FormMain.CreateForm(settings, server);
                 formMain.FormClosed += (s, a) => formMain = null;
                 formMain.Show();
             });
@@ -50,6 +51,7 @@ namespace Commander
 
             settings = new Services.Settings();
             settings.Run(api);
+            server = new Services.Server(settings);
         }
 
         public override void Stop()
@@ -60,6 +62,7 @@ namespace Commander
             }
 
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
+            server?.Cleanup();
             settings?.Cleanup();
         }
         #endregion

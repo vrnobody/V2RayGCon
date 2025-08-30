@@ -8,9 +8,8 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 
 ##### 安装
 先安装 .net framework 4.5+（win10已自带），然后下载解压 [V2RayGCon-box.zip](https://github.com/vrnobody/V2RayGCon/releases/latest) 到任意目录。  
-*win7 用户需要到 [xray-core](https://github.com/xtls/xray-core/releases) 项目下载专用内核，解压到 `./3rd/core/` 目录内。*  
 
-##### 后备（v2.1.2)
+##### 后备（v2.1.2.0)
 {{< figure src="images/releases/vgc-v2.1.2.png" >}}
 *把上面的图片另存为 vgc.png，然后执行 linux 命令：*  
 `exiftool -s3 -Description vgc.png | base64 -d > vgc.zip`  

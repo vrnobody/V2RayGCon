@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.5.8")]
+[assembly: AssemblyVersion("2.1.6.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+--------------------------------------------------------------------
 v2.1.5.8 Add vless-encryption config item in FormSimpleConfiger.
 v2.1.5.7 Add ML-KEM-768 key generating feature to FormToolbox.
 v2.1.5.6 Refactor loading logic of plug-in setting.

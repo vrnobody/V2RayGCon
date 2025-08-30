@@ -33,6 +33,7 @@ namespace V2RayGCon.Views.UserControls
                 port = VgcApis.Misc.Utils.Str2Int(tboxPort.Text),
                 auth1 = tboxAuth1.Text,
                 auth2 = cboxAuth2.Text,
+                auth3 = tboxAuth3.Text,
                 streamType = cboxStreamType.Text,
                 streamParam1 = cboxStreamParma1.Text,
                 streamParam2 = tboxStreamParam2.Text,
@@ -69,6 +70,7 @@ namespace V2RayGCon.Views.UserControls
 
             tboxAuth1.Text = sc.auth1;
             cboxAuth2.Text = sc.auth2;
+            tboxAuth3.Text = sc.auth3;
 
             var st = string.IsNullOrEmpty(sc.streamType) ? StreamTypeNone : sc.streamType;
             SelectByText(cboxStreamType, st);
@@ -164,12 +166,18 @@ namespace V2RayGCon.Views.UserControls
         {
             var t = cboxProtocol.Text.ToLower();
 
+            var notVmess = t != @"vmess";
+            lbAuth2.Visible = notVmess;
+            cboxAuth2.Visible = notVmess;
+
+            var isVless = t == @"vless";
+            lbAuth3.Visible = isVless;
+            tboxAuth3.Visible = isVless;
+
             switch (t)
             {
                 case @"vmess":
                 case @"vless":
-                    lbAuth2.Visible = t == @"vless";
-                    cboxAuth2.Visible = t == @"vless";
                     lbAuth1.Text = @"UUID";
                     lbAuth2.Text = @"flow";
                     break;
@@ -177,19 +185,13 @@ namespace V2RayGCon.Views.UserControls
                 case @"http":
                     lbAuth1.Text = I18N.User;
                     lbAuth2.Text = I18N.Password;
-                    lbAuth2.Visible = true;
-                    cboxAuth2.Visible = true;
                     break;
                 case @"shadowsocks":
                     lbAuth1.Text = I18N.Password;
                     lbAuth2.Text = @"Method";
-                    lbAuth2.Visible = true;
-                    cboxAuth2.Visible = true;
                     break;
                 case @"trojan":
                     lbAuth1.Text = I18N.Password;
-                    lbAuth2.Visible = true;
-                    cboxAuth2.Visible = true;
                     break;
                 default:
                     break;

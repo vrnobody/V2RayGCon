@@ -70,6 +70,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             vc.auth2 = GetValue("flow", "");
+            vc.auth3 = GetValue("encryption", "none");
             vc.streamType = GetValue("type", "tcp");
             vc.tlsType = GetValue("security", "none");
             vc.tlsServName = GetValue("sni", "");
@@ -237,6 +238,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     prefix += ".users.0";
                     meta.auth1 = GetStr(prefix, "id");
                     meta.auth2 = GetStr(prefix, "flow");
+                    meta.auth3 = GetStr(prefix, "encryption");
                     break;
                 case "trojan":
                     meta.auth1 = GetStr(prefix, "password");

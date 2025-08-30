@@ -129,7 +129,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnClient.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 500</value>
+    <value>85, 526</value>
   </data>
   <data name="btnClient.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 21</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnServer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 500</value>
+    <value>175, 526</value>
   </data>
   <data name="btnServer.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 21</value>
@@ -196,7 +196,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>265, 500</value>
+    <value>265, 526</value>
   </data>
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 21</value>
@@ -232,7 +232,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="SimpleConfigerUI1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 480</value>
+    <value>382, 506</value>
   </data>
   <data name="SimpleConfigerUI1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -241,7 +241,7 @@
     <value>SimpleConfigerUI1</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.1.3.6, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.1.5.6, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>
@@ -256,7 +256,7 @@
     <value>8, 8, 8, 8</value>
   </data>
   <data name="panelVeeImporter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 480</value>
+    <value>382, 506</value>
   </data>
   <data name="panelVeeImporter.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -280,7 +280,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>406, 531</value>
+    <value>406, 557</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>400, 425</value>

@@ -49,7 +49,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 node["users"][0]["flow"] = vee.auth2;
             }
-            node["users"][0]["encryption"] = "none";
+            node["users"][0]["encryption"] = string.IsNullOrEmpty(vee.auth3) ? "none" : vee.auth3;
             var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outVmess);
         }

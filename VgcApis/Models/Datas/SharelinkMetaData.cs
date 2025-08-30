@@ -12,6 +12,7 @@ namespace VgcApis.Models.Datas
         public int port = 0;
         public string auth1 = string.Empty;
         public string auth2 = string.Empty;
+        public string auth3 = string.Empty;
 
         public string streamType = string.Empty;
         public string streamParam1 = string.Empty;
@@ -208,6 +209,7 @@ namespace VgcApis.Models.Datas
             var ps = new Dictionary<string, string>();
             EncodeTlsSettings(ps);
             ps["flow"] = auth2;
+            ps["encryption"] = auth3;
             EncodeStreamSettings(ps);
 
             var pms = ps.Where(kv => !string.IsNullOrEmpty(kv.Value))
@@ -251,36 +253,6 @@ namespace VgcApis.Models.Datas
                 ps["sni"] = tlsServName;
             }
         }
-        #endregion
-
-        #region protected methods
-        protected void CopyFrom(SharelinkMetaData source)
-        {
-            name = source.name;
-            proto = source.proto;
-            host = source.host;
-            port = source.port;
-            auth1 = source.auth1;
-            auth2 = source.auth2;
-
-            streamType = source.streamType;
-            streamParam1 = source.streamParam1;
-            streamParam2 = source.streamParam2;
-            streamParam3 = source.streamParam3;
-
-            tlsType = source.tlsType;
-            useSelfSignCert = source.useSelfSignCert;
-            tlsServName = source.tlsServName;
-
-            tlsAlpn = source.tlsAlpn;
-            tlsFingerPrint = source.tlsFingerPrint;
-
-            tlsParam1 = source.tlsParam1;
-            tlsParam2 = source.tlsParam2;
-            tlsParam3 = source.tlsParam3;
-            tlsParam4 = source.tlsParam4;
-        }
-
         #endregion
     }
 }

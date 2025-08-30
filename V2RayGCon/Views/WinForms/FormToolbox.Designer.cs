@@ -64,6 +64,7 @@
             this.lowerCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mixedCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtboxOutput = new VgcApis.UserControls.ExRichTextBox();
+            this.mLKEM768ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,8 @@
             this.tLSCertToolStripMenuItem,
             this.x25519ToolStripMenuItem,
             this.wireGuardToolStripMenuItem,
-            this.mLDSA65ToolStripMenuItem});
+            this.mLDSA65ToolStripMenuItem,
+            this.mLKEM768ToolStripMenuItem});
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
             resources.ApplyResources(this.generateToolStripMenuItem, "generateToolStripMenuItem");
             // 
@@ -309,6 +311,12 @@
             resources.ApplyResources(this.rtboxOutput, "rtboxOutput");
             this.rtboxOutput.Name = "rtboxOutput";
             // 
+            // mLKEM768ToolStripMenuItem
+            // 
+            this.mLKEM768ToolStripMenuItem.Name = "mLKEM768ToolStripMenuItem";
+            resources.ApplyResources(this.mLKEM768ToolStripMenuItem, "mLKEM768ToolStripMenuItem");
+            this.mLKEM768ToolStripMenuItem.Click += new System.EventHandler(this.mLKEM768ToolStripMenuItem_Click);
+            // 
             // FormToolbox
             // 
             resources.ApplyResources(this, "$this");
@@ -361,5 +369,6 @@
         private System.Windows.Forms.ToolStripMenuItem upperCaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lowerCaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mixedCaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mLKEM768ToolStripMenuItem;
     }
 }

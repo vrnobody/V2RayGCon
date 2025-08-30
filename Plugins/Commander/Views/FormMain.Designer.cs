@@ -312,7 +312,6 @@
             this.rtboxLogs.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.rtboxLogs, "rtboxLogs");
             this.rtboxLogs.Name = "rtboxLogs";
-            this.rtboxLogs.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -477,7 +476,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();

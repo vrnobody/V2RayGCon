@@ -39,10 +39,11 @@ namespace Commander.Views
             logUpdater = new VgcApis.Libs.Tasks.Routine(UpdateLog, 1000);
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
+        private void FormMain_Shown(object sender, EventArgs e)
         {
             this.Text = formTitle;
             rtboxLogs.BackColor = tboxArgs.BackColor;
+            rtboxLogs.ReadOnly = true;
 
             currentParam = settings.GetFirstCmderParam();
             UpdateCmderNames();
@@ -154,7 +155,7 @@ namespace Commander.Views
             chkUseShell.Checked = p.useShell;
             chkWriteStdIn.Checked = p.writeToStdIn;
             rtboxStdInContent.Text = p.stdInContent;
-            UpdateStdInContentBackgroundColor();
+            UpdateStdInContentBoxLater();
         }
 
         void UpdateCmderNames()
@@ -165,11 +166,14 @@ namespace Commander.Views
             c.AddRange(names.ToArray());
         }
 
-        void UpdateStdInContentBackgroundColor()
+        void UpdateStdInContentBoxLater()
         {
-            var enabled = currentParam.writeToStdIn;
-            rtboxStdInContent.ReadOnly = !enabled;
-            rtboxStdInContent.BackColor = enabled ? tboxExe.BackColor : tboxArgs.BackColor;
+            // readonly will block color changing
+            rtboxStdInContent.ReadOnly = false;
+
+            var disabled = !currentParam.writeToStdIn;
+            rtboxStdInContent.BackColor = disabled ? tboxArgs.BackColor : tboxExe.BackColor;
+            rtboxStdInContent.ReadOnly = disabled;
         }
         #endregion
 
@@ -178,7 +182,7 @@ namespace Commander.Views
         private void chkWriteStdIn_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.writeToStdIn = chkWriteStdIn.Checked;
-            UpdateStdInContentBackgroundColor();
+            UpdateStdInContentBoxLater();
         }
 
         private void chkUseShell_CheckedChanged(object sender, EventArgs e)

@@ -33,14 +33,15 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.5.6")]
+[assembly: AssemblyVersion("2.1.5.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.5.7 Add ML-KEM-768 key generating feature to FormToolbox.
 v2.1.5.6 Refactor loading logic of plug-in setting.
 v2.1.5.5 Update plug-in list while initializing plug-in option tab.
-v2.1.5.4 Add commander plug-in. Need to click refresh button in plug-in panel.
+v2.1.5.4 Add commander plug-in.
 v2.1.5.3 Reduce memory usage while serializing user settings to file.
 v2.1.5.2 Add upper/lower case converter to FormToolbox.
 v2.1.5.1 Add vmess link body decoder to FormToolbox.

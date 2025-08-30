@@ -115,6 +115,11 @@ namespace V2RayGCon.Views.WinForms
             TryExecCoreCmd("ML-DSA-65", "mldsa65");
         }
 
+        private void mLKEM768ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TryExecCoreCmd("ML-KEM-768", "mlkem768");
+        }
+
         #endregion
 
         #region file menu

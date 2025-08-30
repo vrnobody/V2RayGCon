@@ -1,0 +1,40 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "tag": "agentin",
+            "port": 1080,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "settings": {}
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "127.0.0.1",
+                        "port": 2025,
+                        "users": [
+                            {
+                                "id": "4ee845c4-87d6-4f33-87f7-010eb8bcfe15",
+                                "_enc_format_": "(mlkem768x25519plus).(native/xorpub/random).(1rtt/0rtt).(X25519 Password).(ML-KEM-768 Client)...",
+                                "encryption": "mlkem768x25519plus.native.1rtt.jnDsH0bcxoFvcMIOzeDnrTXsHA3Z2fViH_IXF97QjBE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "tag": "agentout",
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "tcpSettings": {}
+            }
+        }
+    ]
+}

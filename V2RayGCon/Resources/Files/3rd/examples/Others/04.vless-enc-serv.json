@@ -1,0 +1,33 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "tag": "agentin",
+            "protocol": "vless",
+            "listen": "127.0.0.1",
+            "port": 2025,
+            "settings": {
+                "_dec_format_": "(mlkem768x25519plus).(native/xorpub/random).(1rtt/600s).(X25519 PrivateKey).(ML-KEM-768 Seed)...",
+                "decryption": "mlkem768x25519plus.native.1rtt.QI3qEPE-OB-plUsG8Nqug51g7loahSZgk_F1k3cSDU0",
+                "clients": [
+                    {
+                        "id": "4ee845c4-87d6-4f33-87f7-010eb8bcfe15"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "tcpSettings": {}
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "agentout",
+            "protocol": "freedom"
+        }
+    ]
+}

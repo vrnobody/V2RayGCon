@@ -180,6 +180,8 @@
     </Compile>
     <None Include="Resources\Files\3rd\examples\Others\01.MITM.jsonc" />
     <None Include="Resources\Files\3rd\examples\Others\02.API-stats.json" />
+    <None Include="Resources\Files\3rd\examples\Others\03.vless-enc-client.json" />
+    <None Include="Resources\Files\3rd\examples\Others\04.vless-enc-serv.json" />
     <None Include="Resources\Files\3rd\examples\Routing\01.CN-direct.json" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>

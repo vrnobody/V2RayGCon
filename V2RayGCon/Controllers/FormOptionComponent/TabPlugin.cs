@@ -31,32 +31,21 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private List<Models.Datas.PluginInfoItem> GentCurPluginInfos()
         {
-            var r = setting.GetPluginInfoItems();
-            if (r.Count < 1)
+            var all = setting.GetPluginInfoItems();
+            if (all.Count < 1)
             {
                 // for safty reason
                 setting.isLoad3rdPartyPlugins = false;
             }
 
-            // house keeping
-            var names = r.Select(info => info.name).ToList();
-            var intrInfos = pluginServ.GatherInternalPluginInfos();
-            foreach (var info in intrInfos)
-            {
-                var old = r.FirstOrDefault(item => item.name == info.name);
-                if (old == null)
-                {
-                    r.Add(info);
-                }
-                else
-                {
-                    // update infos
-                    old.version = info.version;
-                    old.description = info.description;
-                    old.filename = info.filename;
-                }
-            }
-            return r.OrderBy(info => info.name).ToList();
+            // do house keeping
+
+            // for internal plug-in, .name == .filename
+            var intr = pluginServ.GatherInternalPluginInfos();
+            var names = intr.Select(info => info.filename).ToList();
+            var remains = all.Where(info => !names.Contains(info.filename))
+                .OrderBy(info => info.name);
+            return intr.Concat(remains).ToList();
         }
 
         #region public method

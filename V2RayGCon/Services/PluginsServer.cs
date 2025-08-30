@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace V2RayGCon.Services
 {
@@ -50,8 +51,14 @@ namespace V2RayGCon.Services
         public List<Models.Datas.PluginInfoItem> GatherInternalPluginInfos() =>
             pluginsMgr.GatherInternalPluginInfos();
 
-        public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos() =>
-            pluginsMgr.GatherAllPluginInfos();
+        public List<Models.Datas.PluginInfoItem> GatherExtPluginInfos() =>
+            pluginsMgr.GatherExtPluginInfos();
+
+        public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos()
+        {
+            return GatherInternalPluginInfos().Concat(GatherExtPluginInfos()).ToList();
+        }
+
         #endregion
 
         #region private methods

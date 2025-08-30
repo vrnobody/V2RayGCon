@@ -32,6 +32,7 @@ namespace V2RayGCon.Services.PluginsComponents
         #region public methods
         public List<Models.Datas.PluginInfoItem> GatherInternalPluginInfos()
         {
+            // for internal plug-in, .name == .filename
             var enabled = GetEnabledPluginFileNames();
             var r = new List<Models.Datas.PluginInfoItem>();
             foreach (var name in internalPluginNames)
@@ -39,26 +40,25 @@ namespace V2RayGCon.Services.PluginsComponents
                 var info = ToPluginInfoItem(cache[name], name, enabled.Contains(name));
                 r.Add(info);
             }
-            return r;
+            return r.OrderBy(info => info.name).ToList();
         }
 
-        public List<Models.Datas.PluginInfoItem> GatherAllPluginInfos()
+        public List<Models.Datas.PluginInfoItem> GatherExtPluginInfos()
         {
-            var r = GatherInternalPluginInfos();
             var extPlugins = settings.isLoad3rdPartyPlugins
                 ? LoadAllPluginFromDir()
                 : new Dictionary<string, VgcApis.Interfaces.IPlugin>();
 
             var enabled = GetEnabledPluginFileNames();
+            var extInfos = new List<Models.Datas.PluginInfoItem>();
             foreach (var kv in extPlugins)
             {
                 var name = kv.Key;
                 var p = kv.Value;
                 var info = ToPluginInfoItem(p, name, enabled.Contains(name));
-                r.Add(info);
+                extInfos.Add(info);
             }
-
-            return r;
+            return extInfos.OrderBy(info => info.name).ToList();
         }
 
         public List<ToolStripMenuItem> GetEnabledPluginMenus()

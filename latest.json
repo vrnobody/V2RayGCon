@@ -1,12 +1,12 @@
 {
-  "version": "2.1.5.0",
-  "md5": "405FC9773563F1B588CD453E7F39A1A5",
+  "version": "2.1.6.0",
+  "md5": "0BF9ED61D6D17F6FA743D54B8B39A5E3",
   "warnings": [],
   "changes": [
-    "修复 win7 扫描二维码会崩溃的问题",
-    "修复 std.Misc:Choice() 传入空列表会崩溃的问题",
-    "添加工具箱窗口，用于生成密钥对、密码等",
-    "添加 std.Misc:ShowFormToolbox()",
-    "Text 编辑器添加示例菜单"
+    "添加 Commander 插件，用于调用命令行 API",
+    "添加 vless 协议的 encryption 配置项支持",
+    "工具箱添加解码 vmess://... 功能",
+    "工具箱添加字符串大小写转换功能",
+    "降低写盘配置文件时的内存占用"
   ]
 }

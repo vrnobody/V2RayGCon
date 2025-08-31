@@ -51,7 +51,7 @@ namespace Commander.Services
         {
             if (TryGetProcByName(name, out var proc))
             {
-                logger.Log($"{I18N.SendStopSignal} [{name}]");
+                LogWithTag(name, I18N.SendStopSignal);
                 VgcApis.Misc.Utils.SendStopSignal(proc);
             }
         }
@@ -69,7 +69,7 @@ namespace Commander.Services
         {
             if (TryGetProcByName(name, out var proc))
             {
-                logger.Log($"{I18N.Kill} [{name}]");
+                LogWithTag(name, I18N.Kill);
                 try
                 {
                     proc.Kill();
@@ -87,24 +87,24 @@ namespace Commander.Services
                 return;
             }
             var msg = string.Format(I18N.FindNoConfigWihtName, name);
-            logger.Log(msg);
+            LogWithTag(I18N.Error, msg);
         }
 
         public void Start(Models.Data.CmderParam config)
         {
             if (config == null)
             {
-                logger.Log(I18N.ErrorConfigIsNull);
+                LogWithTag(I18N.Error, I18N.ConfigIsNull);
                 return;
             }
             var name = config.name;
             try
             {
-                logger.Log($"[{name}] {I18N.Start}");
+                LogWithTag(name, I18N.Start);
                 var proc = CreateProcess(config);
                 proc.Exited += (s, a) =>
                 {
-                    logger.Log($"[{config.name}] {I18N.Exited}");
+                    LogWithTag(config.name, I18N.Exited);
                     RemoveClosedProcess();
                 };
                 if (config.hideWindow)
@@ -113,8 +113,7 @@ namespace Commander.Services
                 }
                 else
                 {
-                    var msg = string.Format(I18N.DisableLogInWindowMode, name);
-                    logger.Log(msg);
+                    LogWithTag(name, I18N.DisableLogInWindowMode);
                 }
 
                 proc.Start();
@@ -137,12 +136,17 @@ namespace Commander.Services
             }
             catch (Exception ex)
             {
-                logger.Log($"{I18N.Error}: {ex.Message}");
+                LogWithTag(I18N.Error, ex.Message);
             }
         }
         #endregion
 
         #region private methods
+        void LogWithTag(string tag, string msg)
+        {
+            logger.Log($"{DateTime.Now} [{tag}] {msg}");
+        }
+
         bool TryGetProcByName(string name, out Process proc)
         {
             proc = null;
@@ -150,7 +154,7 @@ namespace Commander.Services
             if (procInfo == null)
             {
                 var msg = string.Format(I18N.FindNoConfigWihtName, name);
-                logger.Log(msg);
+                LogWithTag(I18N.Error, msg);
                 return false;
             }
             proc = procInfo.proc;

@@ -61,6 +61,15 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Config is null! 的本地化字符串。
+        /// </summary>
+        internal static string ConfigIsNull {
+            get {
+                return ResourceManager.GetString("ConfigIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Config name is empty! 的本地化字符串。
         /// </summary>
         internal static string ConfigNameIsEmpty {
@@ -115,7 +124,7 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 [{0}] Disable logging in window mode. 的本地化字符串。
+        ///   查找类似 Disable logging under window mode. 的本地化字符串。
         /// </summary>
         internal static string DisableLogInWindowMode {
             get {
@@ -129,15 +138,6 @@ namespace Commander.Resources.Langs {
         internal static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Error: config is null! 的本地化字符串。
-        /// </summary>
-        internal static string ErrorConfigIsNull {
-            get {
-                return ResourceManager.GetString("ErrorConfigIsNull", resourceCulture);
             }
         }
         

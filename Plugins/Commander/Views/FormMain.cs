@@ -68,7 +68,25 @@ namespace Commander.Views
             logUpdater.Dispose();
         }
 
+        #region hotkeys
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F5)
+            {
+                RunCurrentConfig();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        #endregion
+
         #region private methods
+        void RunCurrentConfig()
+        {
+            server.Start(currentParam);
+        }
+
         void GenSubMenu(ToolStripMenuItem root, IEnumerable<string> names, Action<string> action)
         {
             var c = root.DropDownItems;
@@ -178,7 +196,6 @@ namespace Commander.Views
         #endregion
 
         #region UI events
-
         private void chkWriteStdIn_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.writeToStdIn = chkWriteStdIn.Checked;
@@ -222,7 +239,7 @@ namespace Commander.Views
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            server.Start(currentParam);
+            RunCurrentConfig();
         }
 
         private void runToolStripMenuItem_DropDownOpening(object sender, EventArgs e)

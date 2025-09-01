@@ -53,7 +53,11 @@ namespace V2RayGCon.Views.WinForms
                     lastText = s;
                     contents.Add(s);
                     var text = string.Join("\n", contents);
-                    VgcApis.Misc.UI.Invoke(() => SetResult("Clipboard", text));
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        SetResult("Clipboard", text);
+                        VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
+                    });
                 }
                 VgcApis.Misc.Utils.Sleep(500);
             }

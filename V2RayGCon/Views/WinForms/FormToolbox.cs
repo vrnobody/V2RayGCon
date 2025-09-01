@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -19,6 +20,8 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         readonly string formTitle;
+        CancellationTokenSource clipboardWatcherCts;
+        bool formClosed = false;
 
         public FormToolbox()
         {
@@ -30,28 +33,48 @@ namespace V2RayGCon.Views.WinForms
             this.formTitle = this.Text;
         }
 
+        private void FormToolbox_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            formClosed = true;
+            clipboardWatcherCts?.Cancel();
+        }
+
         #region helpers
+        void StartClipboardWatcher(CancellationToken token)
+        {
+            var contents = new List<string>();
+            while (!token.IsCancellationRequested)
+            {
+                string s = "";
+                VgcApis.Misc.UI.Invoke(() => s = VgcApis.Misc.Utils.ReadFromClipboard());
+                if (!string.IsNullOrEmpty(s) && !contents.Contains(s))
+                {
+                    contents.Add(s);
+                    var text = string.Join("\n", contents);
+                    VgcApis.Misc.UI.Invoke(() => SetResult("Clipboard", text));
+                }
+                VgcApis.Misc.Utils.Sleep(500);
+            }
+        }
 
         string GetContent()
         {
             return rtboxOutput.Text ?? "";
         }
 
-        void SetTitle(string keyType)
-        {
-            this.Text = $"{formTitle} - {keyType}";
-        }
-
         void SetResult(string title, string result)
         {
+            if (formClosed)
+            {
+                return;
+            }
+            this.Text = $"{formTitle} - {title}";
             rtboxOutput.Text = result;
-            SetTitle(title);
         }
 
         void SetResults(string title, IEnumerable<string> results)
         {
-            rtboxOutput.Text = string.Join(Environment.NewLine, results);
-            SetTitle(title);
+            SetResult(title, string.Join("\n", results));
         }
 
         void DoFiveTimes(string keyType, Func<string> gen)
@@ -186,21 +209,7 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
-        #region menu tool
-        private void scanQRCodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            void ok(string result)
-            {
-                VgcApis.Misc.UI.Invoke(() => SetResult("Scan QR code", result));
-            }
-
-            void fail()
-            {
-                VgcApis.Misc.UI.MsgBox(I18N.NoQRCode);
-            }
-
-            Libs.QRCode.QRCode.ScanQRCode(ok, fail);
-        }
+        #region menu translate
 
         private void decodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -320,6 +329,40 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
             SetResult("Convert - Mixed case", sb.ToString());
+        }
+        #endregion
+
+        #region menu tool
+        private void scanQRCodeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            void ok(string result)
+            {
+                VgcApis.Misc.UI.Invoke(() => SetResult("Scan QR code", result));
+            }
+
+            void fail()
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.NoQRCode);
+            }
+
+            Libs.QRCode.QRCode.ScanQRCode(ok, fail);
+        }
+
+        private void watchClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var isChecked = watchClipboardToolStripMenuItem.Checked;
+            watchClipboardToolStripMenuItem.Checked = !isChecked;
+
+            if (isChecked)
+            {
+                clipboardWatcherCts?.Cancel();
+                return;
+            }
+
+            var cts = new CancellationTokenSource();
+            clipboardWatcherCts = cts;
+            SetResult("Clipboard", "");
+            VgcApis.Misc.Utils.RunInBackground(() => StartClipboardWatcher(cts.Token));
         }
         #endregion
     }

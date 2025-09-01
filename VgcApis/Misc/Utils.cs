@@ -3726,6 +3726,9 @@ namespace VgcApis.Misc
             return Path.Combine(appDir, path);
         }
 
+        /// <summary>
+        /// Must call from UI thread!
+        /// </summary>
         public static string ReadFromClipboard()
         {
             try

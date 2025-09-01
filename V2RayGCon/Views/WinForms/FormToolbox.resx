@@ -155,37 +155,37 @@
     <value>File</value>
   </data>
   <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="tLSECHToolStripMenuItem.Text" xml:space="preserve">
     <value>TLS ECH</value>
   </data>
   <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
     <value>TLS Cert</value>
   </data>
   <data name="x25519ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="x25519ToolStripMenuItem.Text" xml:space="preserve">
     <value>x25519</value>
   </data>
   <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="wireGuardToolStripMenuItem.Text" xml:space="preserve">
     <value>WireGuard</value>
   </data>
   <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="mLDSA65ToolStripMenuItem.Text" xml:space="preserve">
     <value>ML-DSA-65</value>
   </data>
   <data name="mLKEM768ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="mLKEM768ToolStripMenuItem.Text" xml:space="preserve">
     <value>ML-KEM-768</value>
@@ -238,12 +238,6 @@
   <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="scanQRCodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
-  </data>
-  <data name="scanQRCodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Scan QR code</value>
-  </data>
   <data name="base64ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 22</value>
   </data>
@@ -269,7 +263,7 @@
     <value>vmess://...</value>
   </data>
   <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
     <value>Decode</value>
@@ -293,7 +287,7 @@
     <value>URI</value>
   </data>
   <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
     <value>Encode</value>
@@ -317,15 +311,36 @@
     <value>To mixed case</value>
   </data>
   <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="convertToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert letter</value>
   </data>
   <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 21</value>
+    <value>73, 21</value>
   </data>
   <data name="toolToolStripMenuItem.Text" xml:space="preserve">
+    <value>Translate</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="scanQRCodeToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Scan QR code</value>
+  </data>
+  <data name="watchClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="watchClipboardToolStripMenuItem.Text" xml:space="preserve">
+    <value>Watch clipboard</value>
+  </data>
+  <data name="watchClipboardToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Record clipboard changes every half second.</value>
+  </data>
+  <data name="toolToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 21</value>
+  </data>
+  <data name="toolToolStripMenuItem1.Text" xml:space="preserve">
     <value>Tool</value>
   </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
@@ -468,6 +483,12 @@
   <data name="&gt;&gt;mLDSA65ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Name" xml:space="preserve">
+    <value>mLKEM768ToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;passwordToolStripMenuItem.Name" xml:space="preserve">
     <value>passwordToolStripMenuItem</value>
   </data>
@@ -508,12 +529,6 @@
     <value>toolToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;toolToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Name" xml:space="preserve">
-    <value>scanQRCodeToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;scanQRCodeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;decodeToolStripMenuItem.Name" xml:space="preserve">
@@ -594,10 +609,22 @@
   <data name="&gt;&gt;mixedCaseToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Name" xml:space="preserve">
-    <value>mLKEM768ToolStripMenuItem</value>
+  <data name="&gt;&gt;toolToolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolToolStripMenuItem1</value>
   </data>
-  <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;scanQRCodeToolStripMenuItem1.Name" xml:space="preserve">
+    <value>scanQRCodeToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;scanQRCodeToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;watchClipboardToolStripMenuItem.Name" xml:space="preserve">
+    <value>watchClipboardToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;watchClipboardToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

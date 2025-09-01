@@ -43,12 +43,14 @@ namespace V2RayGCon.Views.WinForms
         void StartClipboardWatcher(CancellationToken token)
         {
             var contents = new List<string>();
+            var lastText = "";
             while (!token.IsCancellationRequested)
             {
                 string s = "";
                 VgcApis.Misc.UI.Invoke(() => s = VgcApis.Misc.Utils.ReadFromClipboard());
-                if (!string.IsNullOrEmpty(s) && !contents.Contains(s))
+                if (!string.IsNullOrEmpty(s) && s != lastText && !contents.Contains(s))
                 {
+                    lastText = s;
                     contents.Add(s);
                     var text = string.Join("\n", contents);
                     VgcApis.Misc.UI.Invoke(() => SetResult("Clipboard", text));

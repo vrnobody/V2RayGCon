@@ -1272,8 +1272,9 @@ namespace VgcApis.Misc
         }
 
         public static WebClient CreateWebClient(
+            string url,
             bool isSocks5,
-            string host,
+            string proxyHost,
             int proxyPort,
             string username,
             string password
@@ -1281,6 +1282,27 @@ namespace VgcApis.Misc
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
             wc.Headers.Add(Webs.UserAgent);
+
+            // add credential on-demand
+            try
+            {
+                // http://username:password@bing.com/
+                var uri = new Uri(url);
+                var auths = (uri.UserInfo ?? "").Split(
+                    new char[] { ':' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
+
+                if (auths.Length > 0)
+                {
+                    var authLogon = auths[0];
+                    var authPsw = auths.Length > 1 ? auths[1] : "";
+                    var netCred = new NetworkCredential(authLogon, authPsw);
+                    wc.Credentials = netCred;
+                }
+            }
+            catch { }
+
             if (proxyPort < 0 || proxyPort > 65535)
             {
                 return wc;
@@ -1291,20 +1313,21 @@ namespace VgcApis.Misc
             {
                 // throw exception if username or password is empty
                 wc.Proxy = needAuth
-                    ? new MihaZupan.HttpToSocks5Proxy(host, proxyPort, username, password)
-                    : new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
+                    ? new MihaZupan.HttpToSocks5Proxy(proxyHost, proxyPort, username, password)
+                    : new MihaZupan.HttpToSocks5Proxy(proxyHost, proxyPort);
             }
             else
             {
                 wc.Proxy = needAuth
                     ? new WebProxy(
-                        new Uri(string.Format("http://{0}:{1}", host, proxyPort)),
+                        new Uri(string.Format("http://{0}:{1}", proxyHost, proxyPort)),
                         true,
                         null,
                         new NetworkCredential(username, password)
                     )
-                    : new WebProxy(host, proxyPort);
+                    : new WebProxy(proxyHost, proxyPort);
             }
+
             return wc;
         }
 
@@ -1330,7 +1353,7 @@ namespace VgcApis.Misc
             long expectedSizeInBytes = expectedSizeInKiB * 1024;
             timeout = timeout > 0 ? timeout : Intervals.DefaultSpeedTestTimeout;
             var localhost = Webs.LoopBackIP;
-            var wc = CreateWebClient(isSocks5, localhost, port, username, password);
+            var wc = CreateWebClient(url, isSocks5, localhost, port, username, password);
             DoItLater(() => CancelWebClientAsync(wc), timeout);
 
             long size = 0;
@@ -1523,7 +1546,7 @@ namespace VgcApis.Misc
                 proxyPort = -1;
             }
 
-            var wc = CreateWebClient(false, host, proxyPort, null, null);
+            var wc = CreateWebClient(url, false, host, proxyPort, null, null);
 
             if (timeout >= 0)
             {
@@ -1564,8 +1587,7 @@ namespace VgcApis.Misc
                 proxyPort = -1;
             }
 
-            var wc = CreateWebClient(isSocks5, host, proxyPort, username, password);
-
+            var wc = CreateWebClient(url, isSocks5, host, proxyPort, username, password);
             if (timeout >= 0)
             {
                 timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;

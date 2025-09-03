@@ -248,6 +248,7 @@ namespace V2RayGCon.Libs.Nets
             }
 
             var wc = VgcApis.Misc.Utils.CreateWebClient(
+                url,
                 isSocks5,
                 VgcApis.Models.Consts.Webs.LoopBackIP,
                 proxyPort,

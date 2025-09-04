@@ -88,13 +88,13 @@ namespace V2RayGCon.Services
         [System.Diagnostics.Conditional("DEBUG")]
         void This_Function_Is_Used_For_Debugging()
         {
-            ShowPlugin(@"Commander");
+            // ShowPlugin(@"Commander");
             // ShowPlugin(@"NeoLuna");
             // ShowPlugin(@"ProxySetter");
 
             // Views.WinForms.FormLog.ShowForm();
             // Views.WinForms.FormMain.ShowForm();
-            // Views.WinForms.FormToolbox.ShowForm();
+            Views.WinForms.FormToolbox.ShowForm();
             // Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(

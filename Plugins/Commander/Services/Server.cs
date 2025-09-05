@@ -172,12 +172,7 @@ namespace Commander.Services
 
         void SendLogHandler(object sender, DataReceivedEventArgs args)
         {
-            var msg = args.Data;
-            if (string.IsNullOrEmpty(msg))
-            {
-                return;
-            }
-            logger.Log(msg);
+            logger.Log(args.Data);
         }
 
         void BindLoggerEvents(Process proc)

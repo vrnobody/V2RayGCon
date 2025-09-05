@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="toolStripContainer1.BottomToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rtboxStdInContent.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lsboxNames.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>配置列表</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>设置</value>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnEnvVars.Text" xml:space="preserve">
     <value>环境变量</value>
@@ -172,6 +184,9 @@
   <data name="chkHideWindow.ToolTip" xml:space="preserve">
     <value>不创建窗口</value>
   </data>
+  <data name="cboxStdOutEncoding.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lbStdOutEncoding.Text" xml:space="preserve">
     <value>STDOUT 编码</value>
   </data>
@@ -184,14 +199,62 @@
   <data name="lbStdInEncoding.ToolTip" xml:space="preserve">
     <value>Windows 中文版默认是 cp936</value>
   </data>
+  <data name="cboxStdInEncoding.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxEnvVar.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxArgs.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxExe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxWrkDir.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panelLeft.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="splitContainer1.Panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rtboxLogs.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox4.Text" xml:space="preserve">
     <value>日志</value>
   </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>编辑</value>
+  <data name="panelRight.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="splitContainer1.Panel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="splitContainer1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.ContentPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.LeftToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.RightToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 22</value>
@@ -241,56 +304,83 @@
   <data name="closeToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>关闭这个窗口</value>
   </data>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="executeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 22</value>
+  </data>
+  <data name="executeToolStripMenuItem.Text" xml:space="preserve">
+    <value>执行当前配置（F5）</value>
+  </data>
+  <data name="executeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>执行当前配置</value>
+  </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 6</value>
+  </data>
+  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 22</value>
+  </data>
+  <data name="startToolStripMenuItem.Text" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 22</value>
+  </data>
+  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="killToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 22</value>
+  </data>
+  <data name="killToolStripMenuItem.Text" xml:space="preserve">
+    <value>强制终止</value>
+  </data>
   <data name="runToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
   <data name="runToolStripMenuItem.Text" xml:space="preserve">
     <value>运行</value>
   </data>
-  <data name="executeToolStripMenuItem.Text" xml:space="preserve">
-    <value>执行当前配置(F5)</value>
-  </data>
-  <data name="executeToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>执行当前配置</value>
-  </data>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="startToolStripMenuItem.Text" xml:space="preserve">
-    <value>启动</value>
-  </data>
-  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
-    <value>停止</value>
-  </data>
-  <data name="killToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="killToolStripMenuItem.Text" xml:space="preserve">
-    <value>强制终止</value>
-  </data>
   <data name="clearContentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="clearContentToolStripMenuItem.Text" xml:space="preserve">
     <value>清除</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem1.Text" xml:space="preserve">
     <value>复制</value>
   </data>
   <data name="pasteFromClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="pasteFromClipboardToolStripMenuItem.Text" xml:space="preserve">
     <value>粘贴</value>
+  </data>
+  <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="pauseToolStripMenuItem.Text" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
+    <value>清除（F8）</value>
+  </data>
+  <data name="copyToClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="copyToClipboardToolStripMenuItem.Text" xml:space="preserve">
+    <value>复制</value>
   </data>
   <data name="logToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
@@ -298,22 +388,13 @@
   <data name="logToolStripMenuItem.Text" xml:space="preserve">
     <value>日志</value>
   </data>
-  <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+  <data name="menuStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="pauseToolStripMenuItem.Text" xml:space="preserve">
-    <value>暂停</value>
+  <data name="toolStripContainer1.TopToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
-    <value>清除</value>
-  </data>
-  <data name="copyToClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="copyToClipboardToolStripMenuItem.Text" xml:space="preserve">
-    <value>复制</value>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

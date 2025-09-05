@@ -67,6 +67,7 @@
             this.scanQRCodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.watchClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtboxOutput = new VgcApis.UserControls.ExRichTextBox();
+            this.vlessencToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,7 +130,8 @@
             this.x25519ToolStripMenuItem,
             this.wireGuardToolStripMenuItem,
             this.mLDSA65ToolStripMenuItem,
-            this.mLKEM768ToolStripMenuItem});
+            this.mLKEM768ToolStripMenuItem,
+            this.vlessencToolStripMenuItem});
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
             resources.ApplyResources(this.generateToolStripMenuItem, "generateToolStripMenuItem");
             // 
@@ -334,6 +336,12 @@
             resources.ApplyResources(this.rtboxOutput, "rtboxOutput");
             this.rtboxOutput.Name = "rtboxOutput";
             // 
+            // vlessencToolStripMenuItem
+            // 
+            this.vlessencToolStripMenuItem.Name = "vlessencToolStripMenuItem";
+            resources.ApplyResources(this.vlessencToolStripMenuItem, "vlessencToolStripMenuItem");
+            this.vlessencToolStripMenuItem.Click += new System.EventHandler(this.vlessencToolStripMenuItem_Click);
+            // 
             // FormToolbox
             // 
             resources.ApplyResources(this, "$this");
@@ -390,5 +398,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem scanQRCodeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem watchClipboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vlessencToolStripMenuItem;
     }
 }

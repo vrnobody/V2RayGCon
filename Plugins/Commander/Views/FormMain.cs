@@ -71,10 +71,14 @@ namespace Commander.Views
         #region hotkeys
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.F5)
+            switch (keyData)
             {
-                RunCurrentConfig();
-                return true;
+                case Keys.F5:
+                    RunCurrentConfig();
+                    return true;
+                case Keys.F8:
+                    ClearLogs();
+                    return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -82,6 +86,13 @@ namespace Commander.Views
         #endregion
 
         #region private methods
+        void ClearLogs()
+        {
+            server.ClearLogs();
+            // incase log updater is paused
+            VgcApis.Misc.UI.Invoke(() => rtboxLogs.Text = "");
+        }
+
         void RunCurrentConfig()
         {
             server.Start(currentParam);
@@ -273,10 +284,7 @@ namespace Commander.Views
         {
             if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearLogs))
             {
-                server.ClearLogs();
-
-                // incase log updater is paused
-                rtboxLogs.Text = "";
+                ClearLogs();
             }
         }
 

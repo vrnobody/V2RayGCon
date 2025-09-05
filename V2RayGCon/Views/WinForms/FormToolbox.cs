@@ -149,6 +149,11 @@ namespace V2RayGCon.Views.WinForms
             TryExecCoreCmd("ML-KEM-768", "mlkem768");
         }
 
+        private void vlessencToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TryExecCoreCmd("vless encryption", "vlessenc");
+        }
+
         #endregion
 
         #region file menu

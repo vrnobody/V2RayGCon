@@ -6,17 +6,30 @@
         {
             "tag": "direct",
             "protocol": "freedom"
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole"
         }
     ],
     "routing": {
         "rules": [
             {
-                "domain": [
-                    "geosite:cn"
-                ],
                 "ip": [
                     "geoip:cn",
                     "geoip:private"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "domain": [
+                    "geosite:category-ads-all"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "domain": [
+                    "geosite:cn"
                 ],
                 "outboundTag": "direct"
             }

@@ -51,6 +51,7 @@
             // 
             // rtboxContent
             // 
+            this.rtboxContent.AcceptsTab = true;
             resources.ApplyResources(this.rtboxContent, "rtboxContent");
             this.rtboxContent.Name = "rtboxContent";
             // 

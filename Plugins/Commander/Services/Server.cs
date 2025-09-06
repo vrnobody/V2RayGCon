@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -197,7 +198,7 @@ namespace Commander.Services
 
         Process CreateProcess(Models.Data.CmderParam config)
         {
-            var args = Misc.Utils.ReplaceNewLines(config.args);
+            var args = Misc.Utils.TrimComments(config.args);
             var redirect = config.hideWindow;
 
             var p = new Process
@@ -229,8 +230,8 @@ namespace Commander.Services
             p.EnableRaisingEvents = true;
             if (!string.IsNullOrEmpty(config.envVars))
             {
-                var trimed = Misc.Utils.ReplaceNewLines(config.envVars);
-                VgcApis.Misc.Utils.SetProcessEnvs(p, trimed);
+                var envVars = Misc.Utils.ToEnvVarDict(config.envVars);
+                VgcApis.Misc.Utils.SetProcessEnvs(p, envVars);
             }
             return p;
         }

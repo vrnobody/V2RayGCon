@@ -166,6 +166,7 @@
             // 
             // rtboxStdInContent
             // 
+            this.rtboxStdInContent.AcceptsTab = true;
             resources.ApplyResources(this.rtboxStdInContent, "rtboxStdInContent");
             this.rtboxStdInContent.Name = "rtboxStdInContent";
             this.toolTip1.SetToolTip(this.rtboxStdInContent, resources.GetString("rtboxStdInContent.ToolTip"));

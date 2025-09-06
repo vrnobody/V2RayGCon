@@ -176,8 +176,8 @@ namespace Commander.Views
             SetTitle(p.name);
             tboxExe.Text = p.exe;
             tboxWrkDir.Text = p.wrkDir;
-            tboxArgs.Text = Misc.Utils.ReplaceNewLines(p.args);
-            tboxEnvVar.Text = Misc.Utils.ReplaceNewLines(p.envVars);
+            tboxArgs.Text = Misc.Utils.TrimComments(p.args);
+            tboxEnvVar.Text = Misc.Utils.TrimComments(p.envVars);
             cboxStdInEncoding.Text = p.stdInEncoding;
             cboxStdOutEncoding.Text = p.stdOutEncoding;
             chkHideWindow.Checked = p.hideWindow;

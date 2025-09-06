@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.7.0")]
+[assembly: AssemblyVersion("2.1.7.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.7.1 FormMultiLineInput support TAB key.
+         Command plug-in support comment in args and env-vars.
 --------------------------------------------------------------------
 v2.1.6.6 Add vlessenc to FormToolbox.
 v2.1.6.5 Support basic authentification in std.Web:Fetch().

@@ -139,13 +139,13 @@
     <value>环境变量</value>
   </data>
   <data name="btnEnvVars.ToolTip" xml:space="preserve">
-    <value>逗号分隔或者每个一行。变量名和值都不可以包含逗号。</value>
+    <value>格式 KEY=VALUE 必需单独一行。// 开头表示注释。等号后面所有内容包括双引号和空格都视为 VALUE。</value>
   </data>
   <data name="btnArgs.Text" xml:space="preserve">
     <value>参数</value>
   </data>
   <data name="btnArgs.ToolTip" xml:space="preserve">
-    <value>可写多行，自动合并成一行。</value>
+    <value>多行自动合并成一行。// 开头表示注释。</value>
   </data>
   <data name="btnWrkDir.Text" xml:space="preserve">
     <value>工作目录</value>
@@ -347,37 +347,37 @@
     <value>运行</value>
   </data>
   <data name="clearContentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>100, 22</value>
   </data>
   <data name="clearContentToolStripMenuItem.Text" xml:space="preserve">
     <value>清除</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>100, 22</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem1.Text" xml:space="preserve">
     <value>复制</value>
   </data>
   <data name="pasteFromClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>100, 22</value>
   </data>
   <data name="pasteFromClipboardToolStripMenuItem.Text" xml:space="preserve">
     <value>粘贴</value>
   </data>
   <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>137, 22</value>
   </data>
   <data name="pauseToolStripMenuItem.Text" xml:space="preserve">
     <value>暂停</value>
   </data>
   <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>137, 22</value>
   </data>
   <data name="clearToolStripMenuItem.Text" xml:space="preserve">
     <value>清除（F8）</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>137, 22</value>
   </data>
   <data name="copyToClipboardToolStripMenuItem.Text" xml:space="preserve">
     <value>复制</value>
@@ -393,6 +393,10 @@
   </data>
   <data name="toolStripContainer1.TopToolStripPanel.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />

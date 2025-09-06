@@ -177,7 +177,7 @@
     <value />
   </data>
   <data name="executeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>173, 22</value>
   </data>
   <data name="tboxArgs.ToolTip" xml:space="preserve">
     <value />
@@ -223,7 +223,7 @@
     <value>toolStripContainer1</value>
   </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>173, 22</value>
   </data>
   <data name="btnArgs.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -276,14 +276,17 @@
   <data name="toolStripContainer1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="btnExe.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lsboxNames.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="rtboxStdInContent.WordWrap" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
-    <value>stopToolStripMenuItem</value>
+  <data name="btnWrkDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 10, 10, 3</value>
@@ -306,8 +309,8 @@
   <data name="tboxExe.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="pasteFromClipboardToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste from clipboard</value>
+  <data name="chkHideWindow.Text" xml:space="preserve">
+    <value>No window</value>
   </data>
   <data name="&gt;&gt;toolStripContainer1.RightToolStripPanel.Name" xml:space="preserve">
     <value>toolStripContainer1.RightToolStripPanel</value>
@@ -346,7 +349,7 @@
     <value>120, 22</value>
   </data>
   <data name="btnEnvVars.ToolTip" xml:space="preserve">
-    <value>Edit enviroment variables. Seperate by comma or one line for each. Variable name and value can not contains comma.</value>
+    <value>Each variable must be in a separate line. Lines starts with // will be ignored.</value>
   </data>
   <data name="&gt;&gt;saveAsToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -411,14 +414,17 @@
   <data name="btnWrkDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 21</value>
   </data>
-  <data name="chkHideWindow.Text" xml:space="preserve">
-    <value>No window</value>
+  <data name="lbStdOutEncoding.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 158</value>
   </data>
   <data name="&gt;&gt;chkUseShell.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
   </data>
   <data name="&gt;&gt;toolStripContainer1.BottomToolStripPanel.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -432,8 +438,8 @@
   <data name="&gt;&gt;tboxArgs.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnEnvVars.Name" xml:space="preserve">
-    <value>btnEnvVars</value>
+  <data name="lbStdOutEncoding.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="toolStripContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -484,7 +490,7 @@
     <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="killToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>173, 22</value>
   </data>
   <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
     <value>Close</value>
@@ -512,6 +518,9 @@
   </data>
   <data name="&gt;&gt;tboxExe.Name" xml:space="preserve">
     <value>tboxExe</value>
+  </data>
+  <data name="pasteFromClipboardToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste from clipboard</value>
   </data>
   <data name="closeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
@@ -606,8 +615,8 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 6</value>
   </data>
   <data name="cboxStdOutEncoding.Size" type="System.Drawing.Size, System.Drawing">
     <value>259, 20</value>
@@ -642,6 +651,9 @@
   <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
     <value>panelLeft</value>
   </data>
+  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
+    <value>stopToolStripMenuItem</value>
+  </data>
   <data name="panelRight.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -654,9 +666,6 @@
   <data name="&gt;&gt;tboxWrkDir.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;panelRight.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="btnEnvVars.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 101</value>
   </data>
@@ -665,6 +674,9 @@
   </data>
   <data name="btnWrkDir.ToolTip" xml:space="preserve">
     <value>Select working directory.</value>
+  </data>
+  <data name="panelRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="rtboxLogs.Text" xml:space="preserve">
     <value />
@@ -684,8 +696,8 @@
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="&gt;&gt;killToolStripMenuItem.Name" xml:space="preserve">
-    <value>killToolStripMenuItem</value>
+  <data name="tboxExe.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="rtboxStdInContent.Text" xml:space="preserve">
     <value />
@@ -707,6 +719,9 @@
   </data>
   <data name="&gt;&gt;tboxArgs.Parent" xml:space="preserve">
     <value>groupBox2</value>
+  </data>
+  <data name="chkWriteStdIn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="killToolStripMenuItem.Text" xml:space="preserve">
     <value>Kill</value>
@@ -822,9 +837,6 @@
   <data name="cboxStdInEncoding.Items1" xml:space="preserve">
     <value>unicode</value>
   </data>
-  <data name="lbStdOutEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 158</value>
-  </data>
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -910,7 +922,7 @@
     <value>117, 6</value>
   </data>
   <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>173, 22</value>
   </data>
   <data name="lsboxNames.ItemHeight" type="System.Int32, mscorlib">
     <value>12</value>
@@ -921,8 +933,8 @@
   <data name="&gt;&gt;chkWriteStdIn.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="panelRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="panelRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;clearToolStripMenuItem.Name" xml:space="preserve">
     <value>clearToolStripMenuItem</value>
@@ -981,6 +993,9 @@
   <data name="chkWriteStdIn.Location" type="System.Drawing.Point, System.Drawing">
     <value>166, 180</value>
   </data>
+  <data name="chkHideWindow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="&gt;&gt;logToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -989,9 +1004,6 @@
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>187, 212</value>
-  </data>
-  <data name="panelRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;clearContentToolStripMenuItem.Name" xml:space="preserve">
     <value>clearContentToolStripMenuItem</value>
@@ -1010,6 +1022,9 @@
   </data>
   <data name="&gt;&gt;panelRight.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEnvVars.Name" xml:space="preserve">
+    <value>btnEnvVars</value>
   </data>
   <data name="executeToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Start current config.</value>
@@ -1040,6 +1055,9 @@
   </data>
   <data name="chkWriteStdIn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
+  </data>
+  <data name="chkUseShell.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="rtboxStdInContent.ToolTip" xml:space="preserve">
     <value />
@@ -1120,7 +1138,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="btnArgs.ToolTip" xml:space="preserve">
-    <value>Edit arguments. Multiple-line content will be merged into single line.</value>
+    <value>Multiple-line content will be merged into single line. Lines starts with // will be ignored.</value>
   </data>
   <data name="&gt;&gt;closeToolStripMenuItem1.Name" xml:space="preserve">
     <value>closeToolStripMenuItem1</value>
@@ -1157,9 +1175,6 @@
   </data>
   <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
     <value>toolStripMenuItem2</value>
-  </data>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
     <value>splitContainer1.Panel1</value>
@@ -1206,7 +1221,7 @@
   <data name="&gt;&gt;tboxWrkDir.Name" xml:space="preserve">
     <value>tboxWrkDir</value>
   </data>
-  <data name="tboxExe.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;panelRight.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="toolStripContainer1.ToolTip" xml:space="preserve">
@@ -1319,6 +1334,9 @@
   </data>
   <data name="&gt;&gt;sTDINToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;killToolStripMenuItem.Name" xml:space="preserve">
+    <value>killToolStripMenuItem</value>
   </data>
   <data name="chkHideWindow.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

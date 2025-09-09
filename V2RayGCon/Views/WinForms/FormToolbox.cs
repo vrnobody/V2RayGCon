@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.WinForms
@@ -378,6 +381,56 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region menu tool
+        void CalcFileHash(string path)
+        {
+            try
+            {
+                using (var fs = File.OpenRead(path))
+                {
+                    var hashes = CalcHashesFromStream(fs);
+                    var j = VgcApis.Misc.Utils.ToJson(hashes);
+                    VgcApis.Misc.UI.Invoke(() => SetResult("Hashes", j));
+                }
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
+            }
+        }
+
+        Dictionary<string, string> CalcHashesFromStream(Stream stream)
+        {
+            int size = 256 * 1024;
+            var r = new Dictionary<string, string>();
+            var buff = new byte[size];
+            using (var md5 = MD5.Create())
+            using (var sha256 = new SHA256Managed())
+            using (var sha512 = new SHA512Managed())
+            {
+                while (true)
+                {
+                    var len = stream.Read(buff, 0, size);
+                    if (len == 0)
+                    {
+                        break;
+                    }
+                    md5.TransformBlock(buff, 0, len, null, 0);
+                    sha256.TransformBlock(buff, 0, len, null, 0);
+                    sha512.TransformBlock(buff, 0, len, null, 0);
+                }
+                md5.TransformFinalBlock(buff, 0, 0);
+                r["md5"] = VgcApis.Misc.Utils.ToHexString(md5.Hash);
+
+                sha256.TransformFinalBlock(buff, 0, 0);
+                r["sha256"] = VgcApis.Misc.Utils.ToHexString(sha256.Hash);
+
+                sha512.TransformFinalBlock(buff, 0, 0);
+                r["sha512"] = VgcApis.Misc.Utils.ToHexString(sha512.Hash);
+            }
+
+            return r;
+        }
+
         private void scanQRCodeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             void ok(string result)
@@ -408,6 +461,41 @@ namespace V2RayGCon.Views.WinForms
             clipboardWatcherCts = cts;
             SetResult("Clipboard", "");
             VgcApis.Misc.Utils.RunInBackground(() => StartClipboardWatcher(cts.Token));
+        }
+
+        private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            SetResult("Hashing", "calculating...");
+            VgcApis.Misc.Utils.RunInBackground(() => CalcFileHash(path));
+        }
+
+        private void currentTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = GetContent();
+            if (string.IsNullOrEmpty(content))
+            {
+                return;
+            }
+            try
+            {
+                var ec = new UTF8Encoding(false);
+                using (var ms = new MemoryStream(ec.GetBytes(content)))
+                {
+                    var hashes = CalcHashesFromStream(ms);
+                    var j = VgcApis.Misc.Utils.ToJson(hashes);
+                    SetResult("Hashes", j);
+                }
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
+            }
         }
         #endregion
     }

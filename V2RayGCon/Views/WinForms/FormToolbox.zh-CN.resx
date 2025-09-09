@@ -190,8 +190,14 @@
   <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
     <value>解码</value>
+  </data>
+  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
     <value>编码</value>
@@ -214,6 +220,9 @@
   <data name="mixedCaseToolStripMenuItem.Text" xml:space="preserve">
     <value>混合大小写</value>
   </data>
+  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="convertToolStripMenuItem.Text" xml:space="preserve">
     <value>字符转换</value>
   </data>
@@ -232,11 +241,24 @@
   <data name="watchClipboardToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>每半秒记录一次剪切板内容</value>
   </data>
+  <data name="fromFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>选择文件</value>
+  </data>
+  <data name="currentTextToolStripMenuItem.Text" xml:space="preserve">
+    <value>当前文本</value>
+  </data>
+  <data name="hashesToolStripMenuItem.Text" xml:space="preserve">
+    <value>计算 Hash</value>
+  </data>
   <data name="toolToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
   <data name="toolToolStripMenuItem1.Text" xml:space="preserve">
     <value>工具</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>工具箱</value>

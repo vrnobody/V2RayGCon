@@ -973,22 +973,6 @@ namespace VgcApis.Misc
             }
         }
 
-        public static string GetSha256SumFromFile(string file)
-        {
-            // http://peterkellner.net/2010/11/24/efficiently-generating-sha256-checksum-for-files-using-csharp/
-            try
-            {
-                using (FileStream stream = File.OpenRead(file))
-                {
-                    var sha = new SHA256Managed();
-                    byte[] checksum = sha.ComputeHash(stream);
-                    return BitConverter.ToString(checksum).Replace("-", String.Empty).ToLower();
-                }
-            }
-            catch { }
-            return string.Empty;
-        }
-
         public static byte[] Sha256Hash(string text)
         {
             if (string.IsNullOrEmpty(text))

@@ -43,6 +43,7 @@
             this.wireGuardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mLDSA65ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mLKEM768ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vlessencToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.passwordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uUIDV4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@
             this.scanQRCodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.watchClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtboxOutput = new VgcApis.UserControls.ExRichTextBox();
-            this.vlessencToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -170,6 +170,12 @@
             this.mLKEM768ToolStripMenuItem.Name = "mLKEM768ToolStripMenuItem";
             resources.ApplyResources(this.mLKEM768ToolStripMenuItem, "mLKEM768ToolStripMenuItem");
             this.mLKEM768ToolStripMenuItem.Click += new System.EventHandler(this.mLKEM768ToolStripMenuItem_Click);
+            // 
+            // vlessencToolStripMenuItem
+            // 
+            this.vlessencToolStripMenuItem.Name = "vlessencToolStripMenuItem";
+            resources.ApplyResources(this.vlessencToolStripMenuItem, "vlessencToolStripMenuItem");
+            this.vlessencToolStripMenuItem.Click += new System.EventHandler(this.vlessencToolStripMenuItem_Click);
             // 
             // passwordToolStripMenuItem
             // 
@@ -335,12 +341,7 @@
             this.rtboxOutput.DetectUrls = false;
             resources.ApplyResources(this.rtboxOutput, "rtboxOutput");
             this.rtboxOutput.Name = "rtboxOutput";
-            // 
-            // vlessencToolStripMenuItem
-            // 
-            this.vlessencToolStripMenuItem.Name = "vlessencToolStripMenuItem";
-            resources.ApplyResources(this.vlessencToolStripMenuItem, "vlessencToolStripMenuItem");
-            this.vlessencToolStripMenuItem.Click += new System.EventHandler(this.vlessencToolStripMenuItem_Click);
+            this.rtboxOutput.TextChanged += new System.EventHandler(this.rtboxOutput_TextChanged);
             // 
             // FormToolbox
             // 

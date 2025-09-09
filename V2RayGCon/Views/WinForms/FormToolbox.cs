@@ -22,6 +22,7 @@ namespace V2RayGCon.Views.WinForms
         readonly string formTitle;
         CancellationTokenSource clipboardWatcherCts;
         bool formClosed = false;
+        readonly VgcApis.Libs.Infr.Undoer<string> undoer = new VgcApis.Libs.Infr.Undoer<string>();
 
         public FormToolbox()
         {
@@ -38,6 +39,39 @@ namespace V2RayGCon.Views.WinForms
             formClosed = true;
             clipboardWatcherCts?.Cancel();
         }
+
+        #region UI event handlers
+        private void rtboxOutput_TextChanged(object sender, EventArgs e)
+        {
+            undoer.Push(GetContent());
+        }
+        #endregion
+
+        #region hotkeys
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            string s;
+            switch (keyData)
+            {
+                case (Keys.Control | Keys.Z):
+                    if (undoer.TryUndo(out s))
+                    {
+                        rtboxOutput.Text = s;
+                    }
+                    return true;
+                case (Keys.Control | Keys.Shift | Keys.Z):
+                    if (undoer.TryRedo(out s))
+                    {
+                        rtboxOutput.Text = s;
+                    }
+                    return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        #endregion
 
         #region helpers
         void StartClipboardWatcher(CancellationToken token)

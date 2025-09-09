@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
+    <Compile Include="LibsTests\UndoerTests.cs" />
     <Compile Include="LibsTests\BoolExprFilterTests.cs" />
     <Compile Include="LibsTests\MrePoolTest.cs" />
     <Compile Include="LibsTests\WaiterTest.cs" />

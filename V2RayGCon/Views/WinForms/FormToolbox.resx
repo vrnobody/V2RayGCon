@@ -121,103 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 21</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="tLSECHToolStripMenuItem.Text" xml:space="preserve">
-    <value>TLS ECH</value>
-  </data>
-  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
-    <value>TLS Cert</value>
-  </data>
-  <data name="x25519ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="x25519ToolStripMenuItem.Text" xml:space="preserve">
-    <value>x25519</value>
-  </data>
-  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="wireGuardToolStripMenuItem.Text" xml:space="preserve">
-    <value>WireGuard</value>
-  </data>
-  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="mLDSA65ToolStripMenuItem.Text" xml:space="preserve">
-    <value>ML-DSA-65</value>
-  </data>
-  <data name="mLKEM768ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="mLKEM768ToolStripMenuItem.Text" xml:space="preserve">
-    <value>ML-KEM-768</value>
-  </data>
-  <data name="vlessencToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="vlessencToolStripMenuItem.Text" xml:space="preserve">
-    <value>vless-enc</value>
-  </data>
-  <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 21</value>
-  </data>
-  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Key</value>
-  </data>
-  <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 21</value>
-  </data>
-  <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 21</value>
-  </data>
-  <data name="toolToolStripMenuItem.Text" xml:space="preserve">
-    <value>Transform</value>
-  </data>
-  <data name="toolToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 21</value>
-  </data>
-  <data name="toolToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Tool</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>582, 25</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
   </data>
@@ -244,6 +147,60 @@
   </data>
   <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 21</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tLSECHToolStripMenuItem.Text" xml:space="preserve">
+    <value>TLS ECH</value>
+  </data>
+  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
+    <value>TLS Cert</value>
+  </data>
+  <data name="x25519ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="x25519ToolStripMenuItem.Text" xml:space="preserve">
+    <value>x25519</value>
+  </data>
+  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="wireGuardToolStripMenuItem.Text" xml:space="preserve">
+    <value>WireGuard</value>
+  </data>
+  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="mLDSA65ToolStripMenuItem.Text" xml:space="preserve">
+    <value>ML-DSA-65</value>
+  </data>
+  <data name="mLKEM768ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="mLKEM768ToolStripMenuItem.Text" xml:space="preserve">
+    <value>ML-KEM-768</value>
+  </data>
+  <data name="vlessencToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="vlessencToolStripMenuItem.Text" xml:space="preserve">
+    <value>vless-enc</value>
+  </data>
+  <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 21</value>
+  </data>
+  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Key</value>
   </data>
   <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 22</value>
@@ -281,11 +238,11 @@
   <data name="numAlphabetSymbolToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Alphabet + Number + Symbol</value>
   </data>
-  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+  <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 21</value>
   </data>
-  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Decode</value>
+  <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
+    <value>Password</value>
   </data>
   <data name="base64ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 22</value>
@@ -311,11 +268,11 @@
   <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
     <value>vmess://...</value>
   </data>
-  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
   </data>
-  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Encode</value>
+  <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Decode</value>
   </data>
   <data name="base64ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
@@ -335,11 +292,11 @@
   <data name="uRIToolStripMenuItem1.Text" xml:space="preserve">
     <value>URI</value>
   </data>
-  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
   </data>
-  <data name="convertToolStripMenuItem.Text" xml:space="preserve">
-    <value>Convert letter</value>
+  <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Encode</value>
   </data>
   <data name="upperCaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 22</value>
@@ -359,6 +316,18 @@
   <data name="mixedCaseToolStripMenuItem.Text" xml:space="preserve">
     <value>To mixed case</value>
   </data>
+  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 22</value>
+  </data>
+  <data name="convertToolStripMenuItem.Text" xml:space="preserve">
+    <value>Convert letter</value>
+  </data>
+  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 21</value>
+  </data>
+  <data name="toolToolStripMenuItem.Text" xml:space="preserve">
+    <value>Transform</value>
+  </data>
   <data name="scanQRCodeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
   </data>
@@ -373,6 +342,37 @@
   </data>
   <data name="watchClipboardToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Record clipboard changes every half second.</value>
+  </data>
+  <data name="toolToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 21</value>
+  </data>
+  <data name="toolToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Tool</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>582, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="rtboxOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -496,6 +496,12 @@
     <value>mLKEM768ToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;vlessencToolStripMenuItem.Name" xml:space="preserve">
+    <value>vlessencToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;vlessencToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;passwordToolStripMenuItem.Name" xml:space="preserve">
@@ -634,12 +640,6 @@
     <value>watchClipboardToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;watchClipboardToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;vlessencToolStripMenuItem.Name" xml:space="preserve">
-    <value>vlessencToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;vlessencToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

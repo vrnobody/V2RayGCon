@@ -1,9 +1,10 @@
 ﻿namespace VgcApis.Libs.Infr
 {
-    public class Undoer
+    public class Undoer<T>
     {
+        private readonly object locker = new object();
         private readonly int capacity;
-        private readonly string[] cache;
+        private readonly T[] cache;
         int head = 0;
         int tail = 0;
         int cur = 0;
@@ -16,55 +17,68 @@
         /// </summary>
         public Undoer(int capacity)
         {
-            this.capacity = Misc.Utils.Clamp(capacity, 2, 1024);
-            this.cache = new string[capacity];
+            this.capacity = Misc.Utils.Clamp(capacity, 2, 1024) + 1;
+            this.cache = new T[this.capacity];
         }
-
-        #region private methods
-        void Forward()
-        {
-            if (cur == tail)
-            {
-                tail = (tail + 1) % capacity;
-            }
-            cur = (cur + 1) % capacity;
-            head = cur;
-        }
-
-        #endregion
 
         #region public methods
-        public int Count() => (this.head + capacity - this.tail) % capacity;
+        public int Count() => (head + capacity - tail) % capacity;
 
         public int Position() => (cur + capacity - tail) % capacity;
 
-        public void Push(string text)
+        public bool Push(T text)
         {
-            Forward();
-            cache[cur] = text;
-        }
-
-        public bool TryRedo(out string content)
-        {
-            content = "";
-            if (Position() >= Count())
+            if (text == null)
             {
                 return false;
             }
-            cur = (cur + 1) % capacity;
-            content = cache[cur];
+            lock (locker)
+            {
+                if (Position() > 0 && text.Equals(cache[cur - 1]))
+                {
+                    return false;
+                }
+                cache[cur] = text;
+                cur = (cur + 1) % capacity;
+                head = cur;
+                if (tail == cur)
+                {
+                    tail = (tail + 1) % capacity;
+                }
+            }
             return true;
         }
 
-        public bool TryUndo(out string content)
+        public bool TryRedo(out T content)
         {
-            content = "";
-            if (Position() < 1)
+            content = default;
+            lock (locker)
             {
-                return false;
+                var p = Position();
+                var c = Count();
+                if (p >= c)
+                {
+                    return false;
+                }
+                content = cache[cur];
+                cur = (cur + 1) % capacity;
             }
-            cur = (cur - 1 + capacity) % capacity;
-            content = cache[cur];
+            return true;
+        }
+
+        public bool TryUndo(out T content)
+        {
+            content = default;
+            lock (locker)
+            {
+                var p = Position();
+                if (p < 2)
+                {
+                    return false;
+                }
+                cur = (cur - 1 + capacity) % capacity;
+                content = cache[cur - 1];
+            }
             return true;
         }
         #endregion

@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Commander.Resources.Langs;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Commander.Views
 {
@@ -73,6 +74,9 @@ namespace Commander.Views
         {
             switch (keyData)
             {
+                case (Keys.Control | Keys.K):
+                    TryFormatStdIn();
+                    return true;
                 case Keys.F5:
                     RunCurrentConfig();
                     return true;
@@ -86,6 +90,19 @@ namespace Commander.Views
         #endregion
 
         #region private methods
+        void TryFormatStdIn()
+        {
+            try
+            {
+                var text = VgcApis.Misc.Utils.FormatConfig(rtboxStdInContent.Text);
+                rtboxStdInContent.Text = text;
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
+            }
+        }
+
         void ClearLogs()
         {
             server.ClearLogs();

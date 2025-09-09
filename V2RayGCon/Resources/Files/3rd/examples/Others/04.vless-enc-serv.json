@@ -11,7 +11,7 @@
             "settings": {
                 "_ref_": "https://github.com/XTLS/Xray-core/pull/5067",
                 "_dec_format_": "(mlkem768x25519plus).(native/xorpub/random).(0s/300-600s).(X25519 PrivateKey).(ML-KEM-768 Seed)...",
-                "decryption": "mlkem768x25519plus.native.1rtt.QI3qEPE-OB-plUsG8Nqug51g7loahSZgk_F1k3cSDU0",
+                "decryption": "mlkem768x25519plus.native.0s.QI3qEPE-OB-plUsG8Nqug51g7loahSZgk_F1k3cSDU0",
                 "clients": [
                     {
                         "id": "4ee845c4-87d6-4f33-87f7-010eb8bcfe15"

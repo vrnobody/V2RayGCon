@@ -385,6 +385,7 @@ namespace Luna.Interfaces
         #region encode decode
         string ToJson(object o);
         string Md5(string str);
+        string Sha1(string str);
         string Sha256(string str);
         string Sha512(string str);
 

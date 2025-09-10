@@ -966,10 +966,10 @@ namespace VgcApis.Misc
             {
                 return null;
             }
-            using (SHA512 shaM = new SHA512Managed())
+            using (var sha512 = new SHA512Managed())
             {
                 var bytes = Encoding.UTF8.GetBytes(text);
-                return shaM.ComputeHash(bytes);
+                return sha512.ComputeHash(bytes);
             }
         }
 
@@ -979,10 +979,23 @@ namespace VgcApis.Misc
             {
                 return null;
             }
-            using (SHA256 shaM = new SHA256Managed())
+            using (var sha256 = new SHA256Managed())
             {
                 var bytes = Encoding.UTF8.GetBytes(text);
-                return shaM.ComputeHash(bytes);
+                return sha256.ComputeHash(bytes);
+            }
+        }
+
+        public static byte[] Sha1Hash(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+            using (var sha1 = new SHA1Managed())
+            {
+                var bytes = Encoding.UTF8.GetBytes(text);
+                return sha1.ComputeHash(bytes);
             }
         }
 
@@ -995,6 +1008,12 @@ namespace VgcApis.Misc
         public static string Sha256Hex(string text)
         {
             var b = Sha256Hash(text);
+            return ToHexString(b);
+        }
+
+        public static string Sha1Hex(string text)
+        {
+            var b = Sha1Hash(text);
             return ToHexString(b);
         }
 

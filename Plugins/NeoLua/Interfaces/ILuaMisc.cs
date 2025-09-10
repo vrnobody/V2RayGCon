@@ -416,6 +416,8 @@ namespace NeoLuna.Interfaces
         string DecompressFromBase64(string str);
 
         string Md5(string str);
+
+        string Sha1(string str);
         string Sha256(string str);
         string Sha512(string str);
 

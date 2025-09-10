@@ -23,7 +23,8 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         readonly string formTitle;
-        CancellationTokenSource clipboardWatcherCts;
+        CancellationTokenSource clipboardWatcherCts,
+            hasherCts;
         bool formClosed = false;
         readonly VgcApis.Libs.Infr.Undoer<string> undoer = new VgcApis.Libs.Infr.Undoer<string>();
 
@@ -41,6 +42,7 @@ namespace V2RayGCon.Views.WinForms
         {
             formClosed = true;
             clipboardWatcherCts?.Cancel();
+            hasherCts?.Cancel();
         }
 
         #region UI event handlers
@@ -77,6 +79,70 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region helpers
+        CancellationToken UpdateHasherToken()
+        {
+            var cts = new CancellationTokenSource();
+            hasherCts?.Cancel();
+            hasherCts = cts;
+            return cts.Token;
+        }
+
+        void CalcFileHash(string path)
+        {
+            try
+            {
+                using (var fs = File.OpenRead(path))
+                {
+                    var token = UpdateHasherToken();
+                    var hashes = CalcHashesFromStream(fs, token);
+                    hashes["file"] = path;
+                    var j = VgcApis.Misc.Utils.ToJson(hashes);
+                    VgcApis.Misc.UI.Invoke(() => SetResult("Hashes - file", j));
+                }
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
+            }
+        }
+
+        Dictionary<string, string> CalcHashesFromStream(Stream stream, CancellationToken token)
+        {
+            int size = 256 * 1024;
+            var r = new Dictionary<string, string>();
+            var buff = new byte[size];
+            using (var md5 = MD5.Create())
+            using (var sha1 = new SHA1Managed())
+            using (var sha256 = new SHA256Managed())
+            {
+                while (true)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        return r;
+                    }
+                    var len = stream.Read(buff, 0, size);
+                    if (len == 0)
+                    {
+                        break;
+                    }
+                    md5.TransformBlock(buff, 0, len, null, 0);
+                    sha1.TransformBlock(buff, 0, len, null, 0);
+                    sha256.TransformBlock(buff, 0, len, null, 0);
+                }
+                md5.TransformFinalBlock(buff, 0, 0);
+                r["md5"] = VgcApis.Misc.Utils.ToHexString(md5.Hash);
+
+                sha1.TransformFinalBlock(buff, 0, 0);
+                r["sha1"] = VgcApis.Misc.Utils.ToHexString(sha1.Hash);
+
+                sha256.TransformFinalBlock(buff, 0, 0);
+                r["sha256"] = VgcApis.Misc.Utils.ToHexString(sha256.Hash);
+            }
+
+            return r;
+        }
+
         void StartClipboardWatcher(CancellationToken token)
         {
             var contents = new List<string>();
@@ -381,55 +447,6 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region menu tool
-        void CalcFileHash(string path)
-        {
-            try
-            {
-                using (var fs = File.OpenRead(path))
-                {
-                    var hashes = CalcHashesFromStream(fs);
-                    var j = VgcApis.Misc.Utils.ToJson(hashes);
-                    VgcApis.Misc.UI.Invoke(() => SetResult("Hashes", j));
-                }
-            }
-            catch (Exception ex)
-            {
-                VgcApis.Misc.UI.MsgBox(ex.Message);
-            }
-        }
-
-        Dictionary<string, string> CalcHashesFromStream(Stream stream)
-        {
-            int size = 256 * 1024;
-            var r = new Dictionary<string, string>();
-            var buff = new byte[size];
-            using (var md5 = MD5.Create())
-            using (var sha256 = new SHA256Managed())
-            using (var sha512 = new SHA512Managed())
-            {
-                while (true)
-                {
-                    var len = stream.Read(buff, 0, size);
-                    if (len == 0)
-                    {
-                        break;
-                    }
-                    md5.TransformBlock(buff, 0, len, null, 0);
-                    sha256.TransformBlock(buff, 0, len, null, 0);
-                    sha512.TransformBlock(buff, 0, len, null, 0);
-                }
-                md5.TransformFinalBlock(buff, 0, 0);
-                r["md5"] = VgcApis.Misc.Utils.ToHexString(md5.Hash);
-
-                sha256.TransformFinalBlock(buff, 0, 0);
-                r["sha256"] = VgcApis.Misc.Utils.ToHexString(sha256.Hash);
-
-                sha512.TransformFinalBlock(buff, 0, 0);
-                r["sha512"] = VgcApis.Misc.Utils.ToHexString(sha512.Hash);
-            }
-
-            return r;
-        }
 
         private void scanQRCodeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -478,18 +495,15 @@ namespace V2RayGCon.Views.WinForms
         private void currentTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var content = GetContent();
-            if (string.IsNullOrEmpty(content))
-            {
-                return;
-            }
             try
             {
                 var ec = new UTF8Encoding(false);
                 using (var ms = new MemoryStream(ec.GetBytes(content)))
                 {
-                    var hashes = CalcHashesFromStream(ms);
+                    var token = UpdateHasherToken();
+                    var hashes = CalcHashesFromStream(ms, token);
                     var j = VgcApis.Misc.Utils.ToJson(hashes);
-                    SetResult("Hashes", j);
+                    SetResult("Hashes - string", j);
                 }
             }
             catch (Exception ex)

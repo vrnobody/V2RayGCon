@@ -159,6 +159,11 @@ namespace Luna.Models.Apis.Components
             return VgcApis.Misc.Utils.Md5Hex(str);
         }
 
+        public string Sha1(string str)
+        {
+            return VgcApis.Misc.Utils.Sha1Hex(str);
+        }
+
         public string Sha256(string str)
         {
             return VgcApis.Misc.Utils.Sha256Hex(str);

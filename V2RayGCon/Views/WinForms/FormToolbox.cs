@@ -97,7 +97,7 @@ namespace V2RayGCon.Views.WinForms
                     var hashes = CalcHashesFromStream(fs, token);
                     hashes["file"] = path;
                     var j = VgcApis.Misc.Utils.ToJson(hashes);
-                    VgcApis.Misc.UI.Invoke(() => SetResult("Hashes - file", j));
+                    VgcApis.Misc.UI.Invoke(() => SetResult("Hash - file", j));
                 }
             }
             catch (Exception ex)
@@ -108,6 +108,26 @@ namespace V2RayGCon.Views.WinForms
 
         Dictionary<string, string> CalcHashesFromStream(Stream stream, CancellationToken token)
         {
+            long total = 0;
+            long lastTotal = 0;
+            var timestamp = DateTime.UtcNow;
+            void showProgress(int len)
+            {
+                total += len;
+                if (total - lastTotal > 20 * 1024 * 1024)
+                {
+                    lastTotal = total;
+                    var now = DateTime.UtcNow;
+                    if ((now - timestamp).TotalSeconds >= 3)
+                    {
+                        timestamp = now;
+                        VgcApis.Misc.UI.Invoke(
+                            () => SetResult("Hashing", $"Calculated: {total / 1024 / 1024} MiB")
+                        );
+                    }
+                }
+            }
+
             int size = 256 * 1024;
             var r = new Dictionary<string, string>();
             var buff = new byte[size];
@@ -126,6 +146,7 @@ namespace V2RayGCon.Views.WinForms
                     {
                         break;
                     }
+                    showProgress(len);
                     md5.TransformBlock(buff, 0, len, null, 0);
                     sha1.TransformBlock(buff, 0, len, null, 0);
                     sha256.TransformBlock(buff, 0, len, null, 0);
@@ -488,7 +509,7 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            SetResult("Hashing", "calculating...");
+            SetResult("Hashing", "Calculating ...");
             VgcApis.Misc.Utils.RunInBackground(() => CalcFileHash(path));
         }
 
@@ -503,7 +524,7 @@ namespace V2RayGCon.Views.WinForms
                     var token = UpdateHasherToken();
                     var hashes = CalcHashesFromStream(ms, token);
                     var j = VgcApis.Misc.Utils.ToJson(hashes);
-                    SetResult("Hashes - string", j);
+                    SetResult("Hash - string", j);
                 }
             }
             catch (Exception ex)

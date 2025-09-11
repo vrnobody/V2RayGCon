@@ -36,6 +36,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.1.7.6")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
+// xray-core v25.9.11 simplify vless outbound config
+// plan to modify vless://... decoder after 2026-01-01
+
 /*
 
 v2.1.7.6 Show hashing progress in FormToolbox.

@@ -1,8 +1,12 @@
 {
-  "version": "2.1.7.0",
-  "md5": "AF32121E514DA3533A43E84A6608D083",
+  "version": "2.1.8.0",
+  "md5": "C1A9F88FBAC3AC18E589290DF2B2447F",
   "warnings": [],
   "changes": [
-    "工具箱和 Commander 的小修小补"
+    "工具箱窗口添加计算 Hash 功能",
+    "Commander 插件的参数和环境变量支持注释",
+    "Commander 插件环境变量改为必需每个一行",
+    "支持显示 xray-core 的简化版 outbound 配置",
+    "暂时不支持生成简化版配置"
   ]
 }

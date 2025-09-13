@@ -56,7 +56,7 @@ namespace V2RayGCon.Views.UserControls
 
         public void FromCoreConfig(string config)
         {
-            if (!Services.ShareLinkComponents.Comm.TryParseConfig(config, out var sc) || sc == null)
+            if (!VgcApis.Misc.OutbMeta.TryParseConfig(config, out var sc) || sc == null)
             {
                 return;
             }

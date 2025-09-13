@@ -22,7 +22,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             try
             {
-                var vc = Comm.ParseNonStandarUriShareLink("trojan", shareLink);
+                var vc = VgcApis.Misc.OutbMeta.ParseNonStandarUriShareLink("trojan", shareLink);
                 var config = GetParent()?.TrojanToConfig(vc);
                 return new VgcApis.Models.Datas.DecodeResult(vc?.name, config);
             }
@@ -32,7 +32,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "trojan")
+            if (
+                VgcApis.Misc.OutbMeta.TryParseConfig(config, out var vc)
+                && vc != null
+                && vc.proto == "trojan"
+            )
             {
                 vc.name = name;
                 return vc.ToShareLink();

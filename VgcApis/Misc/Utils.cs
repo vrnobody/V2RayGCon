@@ -1997,11 +1997,7 @@ namespace VgcApis.Misc
                 return $"balancer: {count} random";
             }
 
-            var result = GetSummaryFromConfig(json, "outbounds.0");
-            if (string.IsNullOrEmpty(result))
-            {
-                result = GetSummaryFromConfig(json, "outbound");
-            }
+            var result = GetSummaryFromConfig(json);
             return result;
         }
 
@@ -2397,64 +2393,32 @@ namespace VgcApis.Misc
             return empty;
         }
 
-        static string GetStreamSettingInfo(JObject json, string root)
+        static string GetSummaryFromConfig(JObject json)
         {
-            var streamType = GetValue<string>(json, root + ".streamSettings.network")?.ToLower();
-            // "tcp" | "kcp" | "ws" | "http" | "domainsocket" | "quic"
-            string result;
-            switch (streamType)
-            {
-                case null:
-                    result = "";
-                    break;
-                case "domainsocket":
-                    result = "ds";
-                    break;
-                default:
-                    result = streamType;
-                    break;
-            }
-
-            var sec = GetValue<string>(json, root + ".streamSettings.security")?.ToLower();
-            if (!string.IsNullOrWhiteSpace(sec) && sec != "none")
-            {
-                result += $".{sec}";
-            }
-            return result;
-        }
-
-        static string GetSummaryFromConfig(JObject json, string root)
-        {
-            var protocol = GetValue<string>(json, root + ".protocol")?.ToLower();
+            var meta = OutbMeta.ExtractMetaFromOutboundConfig(json);
+            var protocol = meta?.proto;
             if (protocol == null)
             {
                 return string.Empty;
             }
 
-            string addrKey = root;
-            switch (protocol)
+            var left = new List<string>() { protocol == "shadowsocks" ? "ss" : protocol };
+            var st = meta.streamType;
+            if (!string.IsNullOrEmpty(st))
             {
-                case "vless":
-                case "vmess":
-                    addrKey += ".settings.vnext.0.address";
-                    break;
-                case "shadowsocks":
-                    protocol = "ss";
-                    addrKey += ".settings.servers.0.address";
-                    break;
-                case "trojan":
-                case "socks":
-                case "http":
-                    addrKey += ".settings.servers.0.address";
-                    break;
+                left.Add(st == "domainsocket" ? "ds" : st);
+                if (!string.IsNullOrEmpty(meta.tlsType) && meta.tlsType != "none")
+                {
+                    left.Add(meta.tlsType);
+                }
             }
 
-            string addr = GetValue<string>(json, addrKey);
-            string streamType = GetStreamSettingInfo(json, root);
-
-            return protocol
-                + (string.IsNullOrEmpty(streamType) ? "" : $".{streamType}")
-                + (string.IsNullOrEmpty(addr) ? "" : "@" + FormatHost(addr));
+            var smm = new List<string>() { string.Join(".", left) };
+            if (!string.IsNullOrEmpty(meta.host))
+            {
+                smm.Add(FormatHost(meta.host));
+            }
+            return string.Join("@", smm);
         }
 
         static bool Contains(JProperty main, JProperty sub)

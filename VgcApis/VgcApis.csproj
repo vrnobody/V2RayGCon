@@ -78,6 +78,7 @@
     <Compile Include="Libs\Infr\Undoer.cs" />
     <Compile Include="Libs\Tasks\MrePool.cs" />
     <Compile Include="Libs\Tasks\Waiter.cs" />
+    <Compile Include="Misc\OutbMeta.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteListView.cs">

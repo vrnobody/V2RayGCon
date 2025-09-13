@@ -24,7 +24,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "vmess")
+            if (
+                VgcApis.Misc.OutbMeta.TryParseConfig(config, out var vc)
+                && vc != null
+                && vc.proto == "vmess"
+            )
             {
                 vc.name = name;
                 return vc.ToShareLink();

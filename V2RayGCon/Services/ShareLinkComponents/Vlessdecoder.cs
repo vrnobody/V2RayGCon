@@ -13,7 +13,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             try
             {
-                var vc = Comm.ParseNonStandarUriShareLink("vless", shareLink);
+                var vc = VgcApis.Misc.OutbMeta.ParseNonStandarUriShareLink("vless", shareLink);
                 var config = GetParent()?.VlessToConfig(vc);
                 return new VgcApis.Models.Datas.DecodeResult(vc?.name, config);
             }
@@ -23,7 +23,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "vless")
+            if (
+                VgcApis.Misc.OutbMeta.TryParseConfig(config, out var vc)
+                && vc != null
+                && vc.proto == "vless"
+            )
             {
                 vc.name = name;
                 return vc.ToShareLink();

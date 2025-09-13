@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 
 namespace VgcApisTests
 {
@@ -23,6 +24,24 @@ namespace VgcApisTests
             Assert.AreEqual(2, s1);
             var s2 = 1 << 2;
             Assert.AreEqual(4, s2);
+        }
+
+        [TestMethod]
+        public void JsonKeyTest()
+        {
+            var o = new JObject();
+            var s = o["none-existed-key"];
+            Assert.IsNull(s);
+            try
+            {
+                var s2 = s["any-key"];
+                Assert.Fail("should throw error!");
+            }
+            catch (NullReferenceException ex)
+            {
+                // ok
+                Assert.IsNotNull(ex);
+            }
         }
 
 #if DEBUG

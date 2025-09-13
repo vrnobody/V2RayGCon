@@ -44,7 +44,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "socks")
+            if (
+                VgcApis.Misc.OutbMeta.TryParseConfig(config, out var vc)
+                && vc != null
+                && vc.proto == "socks"
+            )
             {
                 vc.name = name;
                 return vc.ToShareLink();
@@ -93,7 +97,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 node["users"] = new JArray
                 {
-                    new JObject { ["user"] = auths[0], ["pass"] = auths[1] }
+                    new JObject { ["user"] = auths[0], ["pass"] = auths[1] },
                 };
             }
 

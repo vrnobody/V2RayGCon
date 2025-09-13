@@ -34,7 +34,7 @@ namespace V2RayGCon.Services
         public string DecodeShareLinkToMetadata(string shareLink)
         {
             var r = DecodeShareLinkToConfig(shareLink);
-            if (Comm.TryParseConfig(r.config, out var meta) && meta != null)
+            if (VgcApis.Misc.OutbMeta.TryParseConfig(r.config, out var meta) && meta != null)
             {
                 meta.name = r.name;
                 return JsonConvert.SerializeObject(meta);
@@ -44,7 +44,7 @@ namespace V2RayGCon.Services
 
         public bool TryParseConfig(string config, out SharelinkMetaData meta)
         {
-            var r = Comm.TryParseConfig(config, out meta);
+            var r = VgcApis.Misc.OutbMeta.TryParseConfig(config, out meta);
             return r;
         }
 

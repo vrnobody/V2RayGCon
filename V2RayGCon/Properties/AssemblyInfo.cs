@@ -41,7 +41,7 @@ using System.Runtime.InteropServices;
 
 /*
 
-v2.1.7.7 Support simplified xray-core outbounds config.
+v2.1.7.7 Support displaying simplified xray-core outbound config.
 v2.1.7.6 Show hashing progress in FormToolbox.
 v2.1.7.5 Add std.Misc:Sha1(str).
 v2.1.7.4 Add calculate-hashes feature to FormToolbox.

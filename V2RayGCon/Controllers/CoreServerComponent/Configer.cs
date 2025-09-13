@@ -115,10 +115,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var name = GetSibling<CoreStates>().GetName();
             var config = GetConfig();
-            if (
-                Services.ShareLinkComponents.Comm.TryParseConfig(config, out var meta)
-                && meta != null
-            )
+            if (VgcApis.Misc.OutbMeta.TryParseConfig(config, out var meta) && meta != null)
             {
                 meta.name = name;
                 return meta;

@@ -1,0 +1,33 @@
+{
+    "log": {
+        "loglevel": "debug"
+    },
+    "metrics": {
+        "tag": "metrics",
+        // http://127.0.0.1:2025/debug/vars
+        // http://127.0.0.1:2025/debug/pprof/
+        "listen": "127.0.0.1:2025"
+    },
+    "burstObservatory": {
+        "subjectSelector": [
+            "proxy"
+        ],
+        "pingConfig": {
+            "destination": "https://www.google.com/generate_204",
+            "connectivity": "",
+            "interval": "10s",
+            "sampling": 2,
+            "timeout": "30s"
+        }
+    },
+    "outbounds": [
+        {
+            "tag": "proxy1"
+            // outbound settings
+        },
+        {
+            "tag": "proxy2"
+            // outbound settings
+        }
+    ]
+}

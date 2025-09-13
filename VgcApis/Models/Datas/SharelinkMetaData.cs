@@ -19,7 +19,6 @@ namespace VgcApis.Models.Datas
         public string streamParam2 = string.Empty;
         public string streamParam3 = string.Empty;
 
-        public string _tlsType = @"none";
         static HashSet<string> supportedTlsTypes = new HashSet<string>
         {
             "none",
@@ -27,6 +26,8 @@ namespace VgcApis.Models.Datas
             "xtls",
             "reality",
         };
+
+        string _tlsType = @"none";
         public string tlsType
         {
             get => _tlsType;

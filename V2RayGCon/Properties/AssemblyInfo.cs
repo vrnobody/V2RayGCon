@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.7.6")]
+[assembly: AssemblyVersion("2.1.7.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v2.1.7.7 Support simplified xray-core outbounds config.
 v2.1.7.6 Show hashing progress in FormToolbox.
 v2.1.7.5 Add std.Misc:Sha1(str).
 v2.1.7.4 Add calculate-hashes feature to FormToolbox.

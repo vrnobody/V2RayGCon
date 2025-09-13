@@ -23,8 +23,8 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         readonly string formTitle;
-        CancellationTokenSource clipboardWatcherCts,
-            hasherCts;
+        CancellationTokenSource clipboardWatcherCts = new CancellationTokenSource();
+        CancellationTokenSource hasherCts = new CancellationTokenSource();
         bool formClosed = false;
         readonly VgcApis.Libs.Infr.Undoer<string> undoer = new VgcApis.Libs.Infr.Undoer<string>();
 
@@ -79,12 +79,12 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region helpers
-        CancellationToken UpdateHasherToken()
+        CancellationTokenSource RefreshCts(CancellationTokenSource old)
         {
             var cts = new CancellationTokenSource();
-            hasherCts?.Cancel();
-            hasherCts = cts;
-            return cts.Token;
+            old?.Cancel();
+            old?.Dispose();
+            return cts;
         }
 
         void CalcFileHash(string path)
@@ -93,8 +93,8 @@ namespace V2RayGCon.Views.WinForms
             {
                 using (var fs = File.OpenRead(path))
                 {
-                    var token = UpdateHasherToken();
-                    var hashes = CalcHashesFromStream(fs, token);
+                    hasherCts = RefreshCts(hasherCts);
+                    var hashes = CalcHashesFromStream(fs, hasherCts.Token);
                     hashes["file"] = path;
                     var j = VgcApis.Misc.Utils.ToJson(hashes);
                     VgcApis.Misc.UI.Invoke(() => SetResult("Hash - file", j));
@@ -491,14 +491,14 @@ namespace V2RayGCon.Views.WinForms
 
             if (isChecked)
             {
-                clipboardWatcherCts?.Cancel();
+                clipboardWatcherCts = RefreshCts(clipboardWatcherCts);
                 return;
             }
 
-            var cts = new CancellationTokenSource();
-            clipboardWatcherCts = cts;
             SetResult("Clipboard", "");
-            VgcApis.Misc.Utils.RunInBackground(() => StartClipboardWatcher(cts.Token));
+            VgcApis.Misc.Utils.RunInBackground(
+                () => StartClipboardWatcher(clipboardWatcherCts.Token)
+            );
         }
 
         private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -521,8 +521,8 @@ namespace V2RayGCon.Views.WinForms
                 var ec = new UTF8Encoding(false);
                 using (var ms = new MemoryStream(ec.GetBytes(content)))
                 {
-                    var token = UpdateHasherToken();
-                    var hashes = CalcHashesFromStream(ms, token);
+                    hasherCts = RefreshCts(hasherCts);
+                    var hashes = CalcHashesFromStream(ms, hasherCts.Token);
                     var j = VgcApis.Misc.Utils.ToJson(hashes);
                     SetResult("Hash - string", j);
                 }

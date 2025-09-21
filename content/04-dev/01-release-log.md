@@ -18,6 +18,7 @@ Commander 插件环境变量改为必需每个一行
 更新几个配置示例  
 Commander 插件添加快捷键  
 Commander 插件日志添加日期时间  
+std.Web:Fetch() 及订阅，支持带账号密码的 URL  
 
 ##### `v2.1.6.0` 20250830
 添加 Commander 插件，用于调用命令行 API  

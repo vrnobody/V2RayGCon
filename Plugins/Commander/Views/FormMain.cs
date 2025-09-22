@@ -221,6 +221,17 @@ namespace Commander.Views
             rtboxStdInContent.BackColor = disabled ? tboxArgs.BackColor : tboxExe.BackColor;
             rtboxStdInContent.ReadOnly = disabled;
         }
+
+        void UpdateChkWriteStdin()
+        {
+            var disabled = chkUseShell.Checked || !chkHideWindow.Checked;
+            chkWriteStdIn.Enabled = !disabled;
+
+            if (disabled)
+            {
+                chkWriteStdIn.Checked = false;
+            }
+        }
         #endregion
 
         #region UI events
@@ -233,11 +244,13 @@ namespace Commander.Views
         private void chkUseShell_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.useShell = chkUseShell.Checked;
+            UpdateChkWriteStdin();
         }
 
         private void chkHideWindow_CheckedChanged(object sender, EventArgs e)
         {
             currentParam.hideWindow = chkHideWindow.Checked;
+            UpdateChkWriteStdin();
         }
 
         private void rtboxStdInContent_TextChanged(object sender, EventArgs e)

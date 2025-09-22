@@ -138,8 +138,8 @@
   <data name="Description" xml:space="preserve">
     <value>命令行工具执行器。</value>
   </data>
-  <data name="DisableLogInWindowMode" xml:space="preserve">
-    <value>窗口模式下不显示日志输出</value>
+  <data name="DisableOutputRedirectInWindowMode" xml:space="preserve">
+    <value>窗口模式或启用 shell 支持时，停止重定向标准输入、标准输出</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>错误</value>

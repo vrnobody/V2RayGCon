@@ -138,8 +138,8 @@
   <data name="Description" xml:space="preserve">
     <value>Command-line tools launcher.</value>
   </data>
-  <data name="DisableLogInWindowMode" xml:space="preserve">
-    <value>Disable logging under window mode.</value>
+  <data name="DisableOutputRedirectInWindowMode" xml:space="preserve">
+    <value>Disable STDIN and STDOUT redirect in window-mode or shell-support is enabled.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>

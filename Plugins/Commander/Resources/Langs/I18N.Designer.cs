@@ -124,11 +124,11 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Disable logging under window mode. 的本地化字符串。
+        ///   查找类似 Disable STDIN and STDOUT redirect in window-mode or shell-support is enabled. 的本地化字符串。
         /// </summary>
-        internal static string DisableLogInWindowMode {
+        internal static string DisableOutputRedirectInWindowMode {
             get {
-                return ResourceManager.GetString("DisableLogInWindowMode", resourceCulture);
+                return ResourceManager.GetString("DisableOutputRedirectInWindowMode", resourceCulture);
             }
         }
         

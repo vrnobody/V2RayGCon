@@ -53,7 +53,7 @@ namespace Commander.Services
             if (TryGetProcByName(name, out var proc))
             {
                 LogWithTag(name, I18N.SendStopSignal);
-                VgcApis.Misc.Utils.SendStopSignal(proc);
+                VgcApis.Misc.Utils.RunInBackground(() => VgcApis.Misc.Utils.SendStopSignal(proc));
             }
         }
 
@@ -108,31 +108,32 @@ namespace Commander.Services
                     LogWithTag(config.name, I18N.Exited);
                     RemoveClosedProcess();
                 };
-                if (config.hideWindow)
+                if (ShouldRedirectOutput(config))
                 {
                     BindLoggerEvents(proc);
                 }
                 else
                 {
-                    LogWithTag(name, I18N.DisableLogInWindowMode);
+                    LogWithTag(name, I18N.DisableOutputRedirectInWindowMode);
                 }
 
                 proc.Start();
-                if (config.writeToStdIn)
-                {
-                    var encIn = VgcApis.Misc.Utils.TranslateEncoding(config.stdInEncoding);
-                    WriteToStandardInput(proc, config.stdInContent, encIn);
-                }
 
                 lock (locker)
                 {
                     procInfos.Add(new ProcInfo() { name = name, proc = proc });
                 }
 
-                if (config.hideWindow)
+                if (ShouldRedirectOutput(config))
                 {
                     proc.BeginErrorReadLine();
                     proc.BeginOutputReadLine();
+                }
+
+                if (!config.useShell && config.writeToStdIn)
+                {
+                    var encIn = VgcApis.Misc.Utils.TranslateEncoding(config.stdInEncoding);
+                    WriteToStandardInput(proc, config.stdInContent, encIn);
                 }
             }
             catch (Exception ex)
@@ -143,6 +144,21 @@ namespace Commander.Services
         #endregion
 
         #region private methods
+        bool ShouldRedirectOutput(Models.Data.CmderParam config)
+        {
+            if (config.useShell)
+            {
+                return false;
+            }
+
+            if (!config.hideWindow)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         void LogWithTag(string tag, string msg)
         {
             logger.Log($"{DateTime.Now} [{tag}] {msg}");
@@ -190,16 +206,18 @@ namespace Commander.Services
         void WriteToStandardInput(Process proc, string content, Encoding encoding)
         {
             using (var s = proc.StandardInput.BaseStream)
-            using (var w = new StreamWriter(s, encoding))
             {
-                w.Write(content);
+                using (var w = new StreamWriter(s, encoding))
+                {
+                    w.Write(content);
+                }
             }
         }
 
         Process CreateProcess(Models.Data.CmderParam config)
         {
             var args = Misc.Utils.TrimComments(config.args);
-            var redirect = config.hideWindow;
+            var redirect = ShouldRedirectOutput(config);
 
             var p = new Process
             {
@@ -211,7 +229,7 @@ namespace Commander.Services
                     UseShellExecute = config.useShell,
                     RedirectStandardOutput = redirect,
                     RedirectStandardError = redirect,
-                    RedirectStandardInput = config.writeToStdIn,
+                    RedirectStandardInput = !config.useShell && config.writeToStdIn,
                 },
             };
 

@@ -99,6 +99,7 @@ namespace Commander.Services
                 return;
             }
             var name = config.name;
+            var redirect = Misc.Utils.ShouldRedirectStdIo(config);
             try
             {
                 LogWithTag(name, I18N.Start);
@@ -108,7 +109,7 @@ namespace Commander.Services
                     LogWithTag(config.name, I18N.Exited);
                     RemoveClosedProcess();
                 };
-                if (ShouldRedirectOutput(config))
+                if (redirect)
                 {
                     BindLoggerEvents(proc);
                 }
@@ -124,13 +125,13 @@ namespace Commander.Services
                     procInfos.Add(new ProcInfo() { name = name, proc = proc });
                 }
 
-                if (ShouldRedirectOutput(config))
+                if (redirect)
                 {
                     proc.BeginErrorReadLine();
                     proc.BeginOutputReadLine();
                 }
 
-                if (!config.useShell && config.writeToStdIn)
+                if (redirect && config.writeToStdIn)
                 {
                     var encIn = VgcApis.Misc.Utils.TranslateEncoding(config.stdInEncoding);
                     WriteToStandardInput(proc, config.stdInContent, encIn);
@@ -144,20 +145,7 @@ namespace Commander.Services
         #endregion
 
         #region private methods
-        bool ShouldRedirectOutput(Models.Data.CmderParam config)
-        {
-            if (config.useShell)
-            {
-                return false;
-            }
 
-            if (!config.hideWindow)
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         void LogWithTag(string tag, string msg)
         {
@@ -217,7 +205,7 @@ namespace Commander.Services
         Process CreateProcess(Models.Data.CmderParam config)
         {
             var args = Misc.Utils.TrimComments(config.args);
-            var redirect = ShouldRedirectOutput(config);
+            var redirect = Misc.Utils.ShouldRedirectStdIo(config);
 
             var p = new Process
             {
@@ -229,7 +217,7 @@ namespace Commander.Services
                     UseShellExecute = config.useShell,
                     RedirectStandardOutput = redirect,
                     RedirectStandardError = redirect,
-                    RedirectStandardInput = !config.useShell && config.writeToStdIn,
+                    RedirectStandardInput = redirect && config.writeToStdIn,
                 },
             };
 

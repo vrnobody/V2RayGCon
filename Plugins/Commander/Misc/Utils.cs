@@ -3,11 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VgcApis.Models.Consts;
 
 namespace Commander.Misc
 {
     internal static class Utils
     {
+        public static bool ShouldRedirectStdIo(bool hideWindow, bool useShell)
+        {
+            if (!hideWindow)
+            {
+                return false;
+            }
+
+            if (useShell)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool ShouldRedirectStdIo(Models.Data.CmderParam config)
+        {
+            return ShouldRedirectStdIo(config.hideWindow, config.useShell);
+        }
+
         public static string TrimComments(string s)
         {
             var lines = ParseMultiLineString(s);

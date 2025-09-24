@@ -224,10 +224,12 @@ namespace Commander.Views
 
         void UpdateChkWriteStdin()
         {
-            var disabled = chkUseShell.Checked || !chkHideWindow.Checked;
-            chkWriteStdIn.Enabled = !disabled;
-
-            if (disabled)
+            var redirect = Misc.Utils.ShouldRedirectStdIo(
+                chkHideWindow.Checked,
+                chkUseShell.Checked
+            );
+            chkWriteStdIn.Enabled = redirect;
+            if (!redirect)
             {
                 chkWriteStdIn.Checked = false;
             }

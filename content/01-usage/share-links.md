@@ -69,6 +69,16 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 | config.json | 1000 |
 | v2cfg v1 | 1320 |
 
+##### 处理速度
+每秒大概可以导入 1000 个链接。导入结果窗口每秒加载约 1000 个结果。  
+
+##### 资源需求（大概）
+| 每 1 万个服务器 | 数值 | 单位 | 补充说明 |
+| :---- | :-: | :-: | :---- |
+| 内存（memory） | 100 | MiB | |
+| userSettings.json | 2 | MiB | |
+| 存盘耗时 |10 | 秒 | 压缩数据耗时较多 |
+| 十年写盘量 | 1 | TiB | 7 * 24 高强度使用下 |
 
 [1]: https://github.com/vrnobody/V2RayGCon/blob/1.8.3/V2RayGCon/Services/ShareLinkComponents/VeeDecoder.cs "VeeDecoder.cs"
 [2]: https://github.com/v2ray/v2ray-core/issues/1392 "v2ray-core #1392"

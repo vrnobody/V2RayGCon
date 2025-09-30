@@ -12,9 +12,6 @@ weight: 4
 ##### 备用 SDK
 [.net framework v4.5 SDK](../images/releases/dotnetf45.zip)
 
-##### 资源需求
-这个软件的运行数据都在内存里，每 1 万个服务器需要大约 100M 内存。  
-
 ##### 在GitHub上发送加密信息：
 把下面的内容保存为 `nobody.pub`
 ```txt

@@ -496,6 +496,7 @@ namespace V2RayGCon.Views.WinForms
             }
 
             SetResult("Clipboard", "");
+            VgcApis.Misc.Utils.ClearClipboard();
             VgcApis.Misc.Utils.RunInBackground(
                 () => StartClipboardWatcher(clipboardWatcherCts.Token)
             );

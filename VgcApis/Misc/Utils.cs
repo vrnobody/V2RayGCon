@@ -3728,6 +3728,23 @@ namespace VgcApis.Misc
             return string.Empty;
         }
 
+        /// <summary>
+        /// Must call from UI thread!
+        /// </summary>
+        public static bool ClearClipboard()
+        {
+            try
+            {
+                Clipboard.Clear();
+                return true;
+            }
+            catch { }
+            return false;
+        }
+
+        /// <summary>
+        /// Must call from UI thread!
+        /// </summary>
         public static bool CopyToClipboard(string content)
         {
             if (!string.IsNullOrEmpty(content))

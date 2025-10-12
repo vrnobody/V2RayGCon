@@ -1295,8 +1295,11 @@ namespace V2RayGCon.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
                 StreamUserSettingsToFile(parts, main);
-                VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
-                StreamUserSettingsToFile(parts, bak);
+                if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                {
+                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
+                    StreamUserSettingsToFile(parts, bak);
+                }
                 return true;
             }
             catch

@@ -1289,24 +1289,29 @@ namespace V2RayGCon.Services
             }
         }
 
+        private readonly object writeUserSettingFilesLocker = new object();
+
         bool TryWriteUserSettings(List<string> parts, string main, string bak)
         {
-            try
+            lock (writeUserSettingFilesLocker)
             {
-                VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
-                StreamUserSettingsToFile(parts, main);
-                if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                try
                 {
-                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
-                    StreamUserSettingsToFile(parts, bak);
+                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
+                    StreamUserSettingsToFile(parts, main);
+                    if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                    {
+                        VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
+                        StreamUserSettingsToFile(parts, bak);
+                    }
+                    return true;
                 }
-                return true;
+                catch
+                {
+                    VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
+                }
+                return false;
             }
-            catch
-            {
-                VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
-            }
-            return false;
         }
 
         void SaveUserSettingsToFile(string configSlim, string mainFilename, string bakFilename)

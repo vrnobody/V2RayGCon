@@ -42,6 +42,7 @@ using System.Runtime.InteropServices;
 /*
 
 v2.1.9.1 Write userSettings.json to disk in sequential order.
+         Sleep 10 seconds after writing userSettings.json.
 --------------------------------------------------------------------
 v2.1.8.4 Add move-to-custom-index menu item to ServerUI.
 v2.1.8.3 Reduce the risk of data corruption during shutdown.

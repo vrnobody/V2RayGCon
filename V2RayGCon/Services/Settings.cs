@@ -1030,7 +1030,7 @@ namespace V2RayGCon.Services
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
                 VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
-                5000
+                60 * 1000
             )
             {
                 Name = "Settings.SaveSettings",
@@ -1295,23 +1295,30 @@ namespace V2RayGCon.Services
         {
             lock (writeUserSettingFilesLocker)
             {
-                try
-                {
-                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
-                    StreamUserSettingsToFile(parts, main);
-                    if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
-                    {
-                        VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
-                        StreamUserSettingsToFile(parts, bak);
-                    }
-                    return true;
-                }
-                catch
-                {
-                    VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
-                }
-                return false;
+                var r = TryWriteUserSettingsCore(parts, main, bak);
+                VgcApis.Misc.Utils.Sleep(10 * 1000);
+                return r;
             }
+        }
+
+        bool TryWriteUserSettingsCore(List<string> parts, string main, string bak)
+        {
+            try
+            {
+                VgcApis.Libs.Sys.FileLogger.Info($"Writing to main file");
+                StreamUserSettingsToFile(parts, main);
+                if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                {
+                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to backup file");
+                    StreamUserSettingsToFile(parts, bak);
+                }
+                return true;
+            }
+            catch
+            {
+                VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
+            }
+            return false;
         }
 
         void SaveUserSettingsToFile(string configSlim, string mainFilename, string bakFilename)

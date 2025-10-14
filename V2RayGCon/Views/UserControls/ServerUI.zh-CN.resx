@@ -153,53 +153,11 @@
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="startToolStripMenuItem.Text" xml:space="preserve">
-    <value>开启</value>
-  </data>
-  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>关闭全部服务器，然后运行这个服务器</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
-    <value>多开</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
-  </data>
-  <data name="restartToolStripMenuItem.Text" xml:space="preserve">
-    <value>重启</value>
-  </data>
-  <data name="restartToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>重启这个服务器</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
-    <value>停止</value>
-  </data>
-  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>停止这个服务器</value>
-  </data>
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>移动</value>
   </data>
-  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
-    <value>置顶</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>将此服务器移至顶部</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
-    <value>置底</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>将此服务器移至底部</value>
-  </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>复制</value>
-  </data>
-  <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>只包含第一个出站的主要配置信息</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>包含全部配置信息</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
     <value>设定及二维码</value>
@@ -230,6 +188,51 @@
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>下载测试网页所需的时间</value>
+  </data>
+  <data name="startToolStripMenuItem.Text" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>关闭全部服务器，然后运行这个服务器</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
+    <value>多开</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
+  </data>
+  <data name="restartToolStripMenuItem.Text" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="restartToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>重启这个服务器</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>停止这个服务器</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将此服务器移至顶部</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
+    <value>置底</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将此服务器移至底部</value>
+  </data>
+  <data name="toCustomIndexToolStripMenuItem.Text" xml:space="preserve">
+    <value>至指定序号</value>
+  </data>
+  <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>只包含第一个出站的主要配置信息</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>包含全部配置信息</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放可调整顺序</value>

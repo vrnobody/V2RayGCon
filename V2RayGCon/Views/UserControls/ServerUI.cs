@@ -944,6 +944,31 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetCoreCtrl().RestartCoreThen();
         }
 
+        private void toCustomIndexToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var curIdx = coreServCtrl.GetCoreStates().GetIndex();
+            VgcApis.Misc.UI.GetUserInput(
+                I18N.DestIndex,
+                str =>
+                {
+                    if (!double.TryParse(str, out var index))
+                    {
+                        VgcApis.Misc.UI.MsgBox(I18N.ParseNumberFailed);
+                        return;
+                    }
+
+                    if (VgcApis.Misc.Utils.AreEqual(curIdx, index))
+                    {
+                        return;
+                    }
+                    var delta = index > curIdx ? 0.05 : -0.05;
+                    coreServCtrl.GetCoreStates().SetIndex(index + delta);
+                    servers.ResetIndexQuiet();
+                    servers.RequireFormMainReload();
+                }
+            );
+        }
+
         private void rlbRemark_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();

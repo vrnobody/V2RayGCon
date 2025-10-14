@@ -57,6 +57,7 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toCustomIndexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoShareLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -323,7 +324,8 @@
             resources.ApplyResources(this.toolStripMenuItem6, "toolStripMenuItem6");
             this.toolStripMenuItem6.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveToTopToolStripMenuItem,
-            this.moveToBottomToolStripMenuItem});
+            this.moveToBottomToolStripMenuItem,
+            this.toCustomIndexToolStripMenuItem});
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             // 
             // moveToTopToolStripMenuItem
@@ -337,6 +339,12 @@
             resources.ApplyResources(this.moveToBottomToolStripMenuItem, "moveToBottomToolStripMenuItem");
             this.moveToBottomToolStripMenuItem.Name = "moveToBottomToolStripMenuItem";
             this.moveToBottomToolStripMenuItem.Click += new System.EventHandler(this.moveToBottomToolStripMenuItem_Click);
+            // 
+            // toCustomIndexToolStripMenuItem
+            // 
+            resources.ApplyResources(this.toCustomIndexToolStripMenuItem, "toCustomIndexToolStripMenuItem");
+            this.toCustomIndexToolStripMenuItem.Name = "toCustomIndexToolStripMenuItem";
+            this.toCustomIndexToolStripMenuItem.Click += new System.EventHandler(this.toCustomIndexToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
@@ -489,5 +497,6 @@
         private VgcApis.UserControls.RoundLabel rlbCoreName;
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private System.Windows.Forms.Button btnRestart;
+        private System.Windows.Forms.ToolStripMenuItem toCustomIndexToolStripMenuItem;
     }
 }

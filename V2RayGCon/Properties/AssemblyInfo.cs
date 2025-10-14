@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.8.3")]
+[assembly: AssemblyVersion("2.1.9.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -41,6 +41,8 @@ using System.Runtime.InteropServices;
 
 /*
 
+--------------------------------------------------------------------
+v2.1.8.4 Add move-to-custom-index menu item to ServerUI.
 v2.1.8.3 Reduce the risk of data corruption during shutdown.
 v2.1.8.2 Clear clipboard before watching.
 v2.1.8.1 Disable STDIN and STDOUT redirect in window-mode or shell-support is enabled in Commander plug-in.

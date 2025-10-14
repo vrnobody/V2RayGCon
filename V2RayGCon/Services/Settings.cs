@@ -1296,7 +1296,13 @@ namespace V2RayGCon.Services
             lock (writeUserSettingFilesLocker)
             {
                 var r = TryWriteUserSettingsCore(parts, main, bak);
-                VgcApis.Misc.Utils.Sleep(10 * 1000);
+                if (
+                    IsClosing()
+                    && GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff
+                )
+                {
+                    VgcApis.Misc.Utils.Sleep(10 * 1000);
+                }
                 return r;
             }
         }

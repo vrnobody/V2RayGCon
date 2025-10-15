@@ -1143,6 +1143,7 @@ namespace Luna.Models.Apis
 
         public void SaveV2RayGConSettingsNow()
         {
+            vgcServerService.SaveServersSettingNow();
             vgcSettingsService.SaveUserSettingsNow();
         }
 

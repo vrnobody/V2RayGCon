@@ -123,5 +123,8 @@ namespace VgcApis.Interfaces.Services
         List<ICoreServCtrl> GetServersByUids(IEnumerable<string> uids);
 
         List<ICoreServCtrl> GetSelectedServers();
+
+        // 保存服务器配置到 Services.Settings
+        void SaveServersSettingNow();
     }
 }

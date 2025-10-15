@@ -250,6 +250,8 @@ namespace V2RayGCon.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Warn($"receive session ending event.");
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
+
+                servers?.SaveServersSettingNow();
                 setting.SaveUserSettingsNow();
 
                 // for win7 logoff
@@ -265,8 +267,10 @@ namespace V2RayGCon.Services
 
         void InitAllServices()
         {
-            servers = Servers.Instance;
-            updater = Updater.Instance;
+            // Do not set value to this.servers before Services.Servers.Run().
+            // Incase computer shutdown during init.
+            var servers = Servers.Instance;
+            var updater = Updater.Instance;
 
             // warn-up
             var configMgr = ConfigMgr.Instance;
@@ -293,6 +297,9 @@ namespace V2RayGCon.Services
             slinkMgr.Run(setting, servers);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
+
+            this.updater = updater;
+            this.servers = servers;
         }
 
         readonly object disposeLocker = new object();
@@ -331,6 +338,9 @@ namespace V2RayGCon.Services
                 == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser
             )
             {
+                VgcApis.Libs.Sys.FileLogger.Info(
+                    "Luancher.DisposeAllServices() call servers.StopAllServers()"
+                );
                 servers.StopAllServers();
             }
 

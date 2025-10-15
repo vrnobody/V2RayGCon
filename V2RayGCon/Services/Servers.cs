@@ -314,6 +314,12 @@ namespace V2RayGCon.Services
 
         #region public method
 
+        public void SaveServersSettingNow()
+        {
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.SaveServersSettingNow()");
+            SaveServersSettingsWorker();
+        }
+
         public void RequireFormMainReload() =>
             InvokeEventHandlerIgnoreError(OnRequireFlyPanelReload, this, EventArgs.Empty);
 
@@ -1115,6 +1121,7 @@ namespace V2RayGCon.Services
 
         void SaveServersSettingsWorker()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.SaveServersSettingsWorker()");
             List<VgcApis.Models.Datas.CoreInfo> coreInfoList = GetAllCoreInfos();
             setting.SaveServerList(coreInfoList);
         }

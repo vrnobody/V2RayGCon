@@ -1311,11 +1311,11 @@ namespace V2RayGCon.Services
         {
             try
             {
-                VgcApis.Libs.Sys.FileLogger.Info($"Writing to: {main}");
+                VgcApis.Libs.Sys.FileLogger.Info($"Write file: {main}");
                 StreamUserSettingsToFile(parts, main);
                 if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
                 {
-                    VgcApis.Libs.Sys.FileLogger.Info($"Writing to: {bak}");
+                    VgcApis.Libs.Sys.FileLogger.Info($"Write file: {bak}");
                     StreamUserSettingsToFile(parts, bak);
                 }
                 return true;

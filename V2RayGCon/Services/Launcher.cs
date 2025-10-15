@@ -293,13 +293,14 @@ namespace V2RayGCon.Services
             // dependency injection
             configMgr.Run(setting);
             servers.Run(setting, configMgr);
+            this.servers = servers;
+
             updater.Run(setting, servers);
+            this.updater = updater;
+
             slinkMgr.Run(setting, servers);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
-
-            this.updater = updater;
-            this.servers = servers;
         }
 
         readonly object disposeLocker = new object();
@@ -308,7 +309,7 @@ namespace V2RayGCon.Services
         {
             // throw new NullReferenceException("for debugging");
             VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() begin");
-            VgcApis.Libs.Sys.FileLogger.Info($"Close reason: {setting.GetShutdownReason()}");
+            VgcApis.Libs.Sys.FileLogger.Info($"App exit reason: {setting.GetShutdownReason()}");
 
             if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {

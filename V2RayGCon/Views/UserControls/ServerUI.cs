@@ -741,7 +741,8 @@ namespace V2RayGCon.Views.UserControls
                 item.MouseEnter -= ShowCtrlBtn;
             }
 
-            this.coreServCtrl = null;
+            // causing System.NullReferenceException
+            // this.coreServCtrl = null;
         }
         #endregion
 
@@ -791,7 +792,8 @@ namespace V2RayGCon.Views.UserControls
             }
 
             var csc = this.coreServCtrl;
-            this.coreServCtrl = null;
+            // causing System.NullReferenceException
+            // this.coreServCtrl = null;
 
             ReleaseCoreCtrlEvents(csc);
 

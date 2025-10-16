@@ -1263,9 +1263,18 @@ namespace V2RayGCon.Services
             lazyServerTrackingTimer?.Timeout();
             lazyServerTrackingTimer?.Release();
 
-            VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.Dispose();
-            SaveServersSettingsWorker();
+            if (setting.IsPowerOff())
+            {
+                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() skip saving data");
+            }
+            else
+            {
+                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
+                SaveServersSettingsWorker();
+            }
+
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() done");
         }
 
         #endregion

@@ -126,7 +126,7 @@ namespace V2RayGCon.Services
 
             VgcApis.Libs.Sys.FileLogger.Error($"unhandled exception:\n{exception}");
 
-            if (setting.GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+            if (!setting.IsPowerOff())
             {
                 ShowExceptionDetails(exception);
             }
@@ -252,7 +252,7 @@ namespace V2RayGCon.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Raw("");
                 VgcApis.Libs.Sys.FileLogger.Warn($"detect session ending event: {a.Reason}");
-                setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
+                setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.PowerOff);
 
                 servers?.SaveServersSettingNow();
                 setting.SaveUserSettingsNow();

@@ -308,7 +308,7 @@ namespace V2RayGCon.Services
 
         public void SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons reason)
         {
-            VgcApis.Libs.Sys.FileLogger.Warn($"change shutdow reason to: {reason}");
+            VgcApis.Libs.Sys.FileLogger.Warn($"set shutdow reason: {reason}");
             this.shutdownReason = reason;
         }
 
@@ -652,6 +652,9 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+
+        public bool IsPowerOff() =>
+            GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.PowerOff;
 
         public void DisposeFileMutex()
         {
@@ -1295,35 +1298,21 @@ namespace V2RayGCon.Services
         {
             lock (writeUserSettingFilesLocker)
             {
-                var r = TryWriteUserSettingsCore(parts, main, bak);
-                if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                try
                 {
-                    var span = TimeSpan.FromSeconds(10);
-                    VgcApis.Libs.Sys.FileLogger.Info(
-                        $"Settings.TryWriteUserSettings() sleep {span.TotalSeconds} secondes"
-                    );
-                    VgcApis.Misc.Utils.Sleep(span);
+                    VgcApis.Libs.Sys.FileLogger.Info($"Write file: {main}");
+                    StreamUserSettingsToFile(parts, main);
+                    if (!IsPowerOff())
+                    {
+                        VgcApis.Libs.Sys.FileLogger.Info($"Write file: {bak}");
+                        StreamUserSettingsToFile(parts, bak);
+                    }
+                    return true;
                 }
-                return r;
-            }
-        }
-
-        bool TryWriteUserSettingsCore(List<string> parts, string main, string bak)
-        {
-            try
-            {
-                VgcApis.Libs.Sys.FileLogger.Info($"Write file: {main}");
-                StreamUserSettingsToFile(parts, main);
-                if (GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+                catch (Exception ex)
                 {
-                    VgcApis.Libs.Sys.FileLogger.Info($"Write file: {bak}");
-                    StreamUserSettingsToFile(parts, bak);
+                    VgcApis.Libs.Sys.FileLogger.Error($"Write file failed: {ex.Message}");
                 }
-                return true;
-            }
-            catch
-            {
-                VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
             }
             return false;
         }
@@ -1483,7 +1472,16 @@ namespace V2RayGCon.Services
             DisposeFileMutex();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
             lazyBookKeeper?.Dispose();
-            SaveUserSettingsNow();
+            if (IsPowerOff())
+            {
+                VgcApis.Libs.Sys.FileLogger.Info(
+                    "Settings.Cleanup() skip SaveUserSettingsNow() during power off"
+                );
+            }
+            else
+            {
+                SaveUserSettingsNow();
+            }
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");
         }
         #endregion

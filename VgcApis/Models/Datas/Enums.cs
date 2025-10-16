@@ -32,14 +32,14 @@ namespace VgcApis.Models.Datas
             Alt = 1,
             Control = 2,
             Shift = 4,
-            Win = 8
+            Win = 8,
         }
 
         public enum ShutdownReasons
         {
             Undefined, // default
             CloseByUser, // close by user
-            Poweroff, // system shut down
+            PowerOff, // system shut down
             Abort, // attacked by aliens :>
             FileLocked, // userSettings is occupied
             ShowHelpInfo,

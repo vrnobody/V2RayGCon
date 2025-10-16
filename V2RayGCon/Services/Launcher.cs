@@ -237,18 +237,21 @@ namespace V2RayGCon.Services
         {
             Application.ApplicationExit += (s, a) =>
             {
+                VgcApis.Libs.Sys.FileLogger.Raw("");
                 VgcApis.Libs.Sys.FileLogger.Warn($"detect application exit event.");
                 context.ExitThread();
             };
 
             Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
             {
+                VgcApis.Libs.Sys.FileLogger.Raw("");
                 VgcApis.Libs.Sys.FileLogger.Warn($"detect session switch event: {a.Reason}");
             };
 
             Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
             {
-                VgcApis.Libs.Sys.FileLogger.Warn($"receive session ending event.");
+                VgcApis.Libs.Sys.FileLogger.Raw("");
+                VgcApis.Libs.Sys.FileLogger.Warn($"detect session ending event: {a.Reason}");
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
 
                 servers?.SaveServersSettingNow();
@@ -381,8 +384,9 @@ namespace V2RayGCon.Services
         #region protected override
         protected override void Cleanup()
         {
-            VgcApis.Libs.Sys.FileLogger.Raw("");
+            VgcApis.Libs.Sys.FileLogger.Info("Launcher.Cleanup() begin");
             DisposeAllServices();
+            VgcApis.Libs.Sys.FileLogger.Info("Launcher.Cleanup() done");
             VgcApis.Libs.Sys.FileLogger.Info($"{appName} exited");
         }
         #endregion

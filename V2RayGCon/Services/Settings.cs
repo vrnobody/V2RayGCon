@@ -1296,12 +1296,13 @@ namespace V2RayGCon.Services
             lock (writeUserSettingFilesLocker)
             {
                 var r = TryWriteUserSettingsCore(parts, main, bak);
-                if (
-                    IsClosing()
-                    && GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff
-                )
+                if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
                 {
-                    VgcApis.Misc.Utils.Sleep(10 * 1000);
+                    var span = TimeSpan.FromSeconds(10);
+                    VgcApis.Libs.Sys.FileLogger.Info(
+                        $"Settings.TryWriteUserSettings() sleep {span.TotalSeconds} secondes"
+                    );
+                    VgcApis.Misc.Utils.Sleep(span);
                 }
                 return r;
             }
@@ -1345,7 +1346,7 @@ namespace V2RayGCon.Services
         {
             var msg = I18N.SaveUserSettingsToFileFail;
 
-            if (isClosing)
+            if (IsClosing())
             {
                 // 兄弟只能帮你到这了
                 var fullConfig = ReplacePlaceHoldersWithData(configSlim);
@@ -1357,7 +1358,7 @@ namespace V2RayGCon.Services
 
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
             // do not block any function in background service
-            if (isClosing)
+            if (IsClosing())
             {
                 VgcApis.Libs.Sys.NotepadHelper.ShowMessage(msg, "Warning!!");
             }

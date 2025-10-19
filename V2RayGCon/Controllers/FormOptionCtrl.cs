@@ -37,6 +37,14 @@
                     changed = true;
                 }
             }
+            if (changed)
+            {
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    Services.Servers.Instance.SaveServersSettingNow();
+                    Services.Settings.Instance.SaveUserSettingsNow();
+                });
+            }
             return changed;
         }
     }

@@ -10,7 +10,10 @@ namespace V2RayGCon.Models.Datas
             "// show tested servers orderby latency\n#latency ~ 1 30000 & #orderby latency";
 
         public bool isLoad3rdPartyPlugins { get; set; }
-        public string CompressedUnicodeLocalStorage { get; set; }
+
+        // obsolete delete after 2026-10
+        public string CompressedUnicodeLocalStorage { get; set; } = "";
+        public string ZstdLocalStorage { get; set; } = "";
 
         public bool isUseCustomUserAgent { get; set; }
         public string customUserAgent { get; set; }
@@ -59,10 +62,17 @@ namespace V2RayGCon.Models.Datas
 
         public string PluginInfoItems { get; set; }
 
-        public string CompressedUnicodePluginsSetting { get; set; }
+        // obsolete delete after 2026-10
+        public string CompressedUnicodePluginsSetting { get; set; } = "";
+
+        public string ZstdPluginsSetting { get; set; } = "";
 
         public string Culture { get; set; }
-        public string CompressedUnicodeCoreInfoList { get; set; }
+
+        // obsolete delete after 2026-10
+        public string CompressedUnicodeCoreInfoList { get; set; } = "";
+
+        public string ZstdCoreInfoList { get; set; } = "";
 
         public string PacServerSettings { get; set; }
         public string SysProxySetting { get; set; }
@@ -73,15 +83,15 @@ namespace V2RayGCon.Models.Datas
 
         public List<CustomCoreSettings> CustomCoreSettings = null;
 
-        public string CompressedUnicodeCustomConfigTemplates { get; set; } = string.Empty;
+        // obsolete delete after 2026-10
+        public string CompressedUnicodeCustomConfigTemplates { get; set; } = "";
+        public string ZstdCustomConfigTemplates { get; set; } = "";
         #endregion
 
 
         public UserSettings()
         {
             isLoad3rdPartyPlugins = false;
-
-            CompressedUnicodeLocalStorage = string.Empty;
 
             isUseCustomUserAgent = false;
 
@@ -124,11 +134,7 @@ namespace V2RayGCon.Models.Datas
             // PluginInfoItems = "[{\"filename\":\"ProxySetter\",\"isUse\":true}]";
             PluginInfoItems = string.Empty;
 
-            CompressedUnicodePluginsSetting = string.Empty;
-
             Culture = string.Empty;
-
-            CompressedUnicodeCoreInfoList = string.Empty;
 
             PacServerSettings = string.Empty;
             SysProxySetting = string.Empty;
@@ -146,10 +152,13 @@ namespace V2RayGCon.Models.Datas
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
 
-            if (string.IsNullOrEmpty(CompressedUnicodeCustomConfigTemplates))
+            if (
+                string.IsNullOrEmpty(CompressedUnicodeCustomConfigTemplates) // obsolete delete after 2026-10
+                && string.IsNullOrEmpty(ZstdCustomConfigTemplates)
+            )
             {
-                CompressedUnicodeCustomConfigTemplates =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                ZstdCustomConfigTemplates =
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToZstdBase64(
                         CreateDefaultConfigTemplates()
                     );
             }

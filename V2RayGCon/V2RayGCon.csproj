@@ -129,6 +129,9 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -144,6 +147,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZstdNet, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZstdNet.1.4.5\lib\net45\ZstdNet.dll</HintPath>
+    </Reference>
     <Reference Include="zxing, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.0.16.9\lib\net45\zxing.dll</HintPath>
     </Reference>
@@ -676,7 +682,7 @@
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
 set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter Commander"
-set "otherDlls=Microsoft.Web.WebView2.Core Microsoft.Web.WebView2.WinForms Microsoft.Web.WebView2.Wpf System.Buffers NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "otherDlls=Microsoft.Web.WebView2.Core Microsoft.Web.WebView2.WinForms Microsoft.Web.WebView2.Wpf System.Buffers NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET Newtonsoft ScintillaNET zxing Castle.Core Moq System.Memory System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions ZstdNet"
 
 call:RemoveDbgFiles "%25otherDlls%25"
 
@@ -685,7 +691,7 @@ rem call:CopyLunaAssets
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25pluginDlls%25 %25otherDlls%25"
 call:CopyFolders "%25copyFolderList%25"
-call:MoveFolders "runtimes"
+call:MoveFolders "x86 x64 runtimes"
 
 call:RemoveOtherFiles
 
@@ -760,5 +766,7 @@ goto:eof</PostBuildEvent>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('..\packages\ZstdNet.1.4.5\build\ZstdNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ZstdNet.1.4.5\build\ZstdNet.targets'))" />
   </Target>
+  <Import Project="..\packages\ZstdNet.1.4.5\build\ZstdNet.targets" Condition="Exists('..\packages\ZstdNet.1.4.5\build\ZstdNet.targets')" />
 </Project>

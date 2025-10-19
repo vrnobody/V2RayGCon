@@ -153,11 +153,24 @@ namespace V2RayGCon.Services
             List<Models.Datas.CustomConfigTemplate> tpl = null;
             try
             {
-                tpl = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                tpl = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromZstdBase64<
                     List<Models.Datas.CustomConfigTemplate>
-                >(userSettings.CompressedUnicodeCustomConfigTemplates);
+                >(userSettings.ZstdCustomConfigTemplates);
             }
             catch { }
+
+            // obsolete delete after 2026-10
+            if (tpl == null)
+            {
+                try
+                {
+                    tpl =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            List<Models.Datas.CustomConfigTemplate>
+                        >(userSettings.CompressedUnicodeCustomConfigTemplates);
+                }
+                catch { }
+            }
             configTemplateCache = tpl ?? new List<Models.Datas.CustomConfigTemplate>();
         }
 
@@ -829,7 +842,12 @@ namespace V2RayGCon.Services
                     config = pluginsSettingCache[pluginName];
                 }
             }
-            if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(config))
+
+            if (VgcApis.Libs.Infr.ZipExtensions.IsZstdBase64(config))
+            {
+                return VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64(config);
+            }
+            else if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(config))
             {
                 return VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(config);
             }
@@ -867,7 +885,7 @@ namespace V2RayGCon.Services
                 > VgcApis.Models.Consts.Libs.MinCompressStringLength
             )
             {
-                config = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(config);
+                config = VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64(config);
             }
             lock (saveUserSettingsLocker)
             {
@@ -1043,28 +1061,55 @@ namespace V2RayGCon.Services
         void InitLocalStorageCache()
         {
             ConcurrentDictionary<string, string> ls = null;
+
             try
             {
-                ls = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                ls = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromZstdBase64<
                     ConcurrentDictionary<string, string>
-                >(userSettings.CompressedUnicodeLocalStorage);
+                >(userSettings.ZstdLocalStorage);
             }
             catch { }
+
+            // obsolete delete after 2026-10
+            if (ls == null)
+            {
+                try
+                {
+                    ls =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            ConcurrentDictionary<string, string>
+                        >(userSettings.CompressedUnicodeLocalStorage);
+                }
+                catch { }
+            }
             localStorageCache = ls ?? new ConcurrentDictionary<string, string>();
         }
 
         void InitCoreInfoCache()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfos = null;
+
             try
             {
-                var ucs = userSettings.CompressedUnicodeCoreInfoList;
-                coreInfos =
-                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                        List<VgcApis.Models.Datas.CoreInfo>
-                    >(ucs);
+                coreInfos = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromZstdBase64<
+                    List<VgcApis.Models.Datas.CoreInfo>
+                >(userSettings.ZstdCoreInfoList);
             }
             catch { }
+
+            // fallback
+            // obsolete delete after 2026-10
+            if (coreInfos == null)
+            {
+                try
+                {
+                    coreInfos =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            List<VgcApis.Models.Datas.CoreInfo>
+                        >(userSettings.CompressedUnicodeCoreInfoList);
+                }
+                catch { }
+            }
             coreInfoCache = coreInfos ?? new List<VgcApis.Models.Datas.CoreInfo>();
         }
 
@@ -1118,16 +1163,17 @@ namespace V2RayGCon.Services
 
         void ReplaceLargeStringsWithPlaceHolder()
         {
-            userSettings.CompressedUnicodeLocalStorage = placeHolderTable[
-                PlaceHolders.LocalStorage
-            ];
-            userSettings.CompressedUnicodeCoreInfoList = placeHolderTable[
-                PlaceHolders.CoreInfoList
-            ];
-            userSettings.CompressedUnicodePluginsSetting = placeHolderTable[
-                PlaceHolders.PluginsSetting
-            ];
-            userSettings.CompressedUnicodeCustomConfigTemplates = placeHolderTable[
+            userSettings.CompressedUnicodeLocalStorage = "";
+            userSettings.ZstdLocalStorage = placeHolderTable[PlaceHolders.LocalStorage];
+
+            userSettings.CompressedUnicodeCoreInfoList = "";
+            userSettings.ZstdCoreInfoList = placeHolderTable[PlaceHolders.CoreInfoList];
+
+            userSettings.CompressedUnicodePluginsSetting = "";
+            userSettings.ZstdPluginsSetting = placeHolderTable[PlaceHolders.PluginsSetting];
+
+            userSettings.CompressedUnicodeCustomConfigTemplates = "";
+            userSettings.ZstdCustomConfigTemplates = placeHolderTable[
                 PlaceHolders.CustomConfigTemplates
             ];
         }
@@ -1160,7 +1206,7 @@ namespace V2RayGCon.Services
                     continue;
                 }
                 var o = GetTargetByPlaceHolderName(name);
-                var s = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(o);
+                var s = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToZstdBase64(o);
                 parts[i] = s;
             }
             return string.Join("", parts);
@@ -1228,13 +1274,24 @@ namespace V2RayGCon.Services
             Dictionary<string, string> pluginsSetting = null;
             try
             {
-                string ucps = userSettings.CompressedUnicodePluginsSetting;
-                pluginsSetting =
-                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                        Dictionary<string, string>
-                    >(ucps);
+                pluginsSetting = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromZstdBase64<
+                    Dictionary<string, string>
+                >(userSettings.ZstdPluginsSetting);
             }
             catch { }
+
+            // obsolete delete after 2026-10
+            if (pluginsSetting == null)
+            {
+                try
+                {
+                    pluginsSetting =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            Dictionary<string, string>
+                        >(userSettings.CompressedUnicodePluginsSetting);
+                }
+                catch { }
+            }
 
             pluginsSettingCache = pluginsSetting ?? new Dictionary<string, string>();
         }
@@ -1278,7 +1335,7 @@ namespace V2RayGCon.Services
                     if (placeHolderLookupTable.TryGetValue(part, out var name))
                     {
                         var o = GetTargetByPlaceHolderName(name);
-                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(
+                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsZstdBase64ToStream(
                             stream,
                             o
                         );

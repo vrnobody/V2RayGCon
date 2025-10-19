@@ -104,7 +104,11 @@ namespace VgcApis.Models.Datas
         #region private methods
         string DeCompressOndemand(string s)
         {
-            if (Libs.Infr.ZipExtensions.IsCompressedBase64(s))
+            if (Libs.Infr.ZipExtensions.IsZstdBase64(s))
+            {
+                return Libs.Infr.ZipExtensions.ZstdFromBase64(s);
+            }
+            else if (Libs.Infr.ZipExtensions.IsCompressedBase64(s))
             {
                 return Libs.Infr.ZipExtensions.DecompressFromBase64(s);
             }
@@ -119,7 +123,7 @@ namespace VgcApis.Models.Datas
                 && len < Consts.Libs.MaxCompressStringLength
             )
             {
-                return Libs.Infr.ZipExtensions.CompressToBase64(s);
+                return Libs.Infr.ZipExtensions.ZstdToBase64(s);
             }
             return s;
         }

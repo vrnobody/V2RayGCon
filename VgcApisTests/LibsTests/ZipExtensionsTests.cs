@@ -14,6 +14,26 @@ namespace VgcApisTests.LibsTests
         public ZipExtensionsTests() { }
 
         [TestMethod]
+        public void IsZipBase64StringTest()
+        {
+            var c =
+                "中文测试😀😁😂🤣😃😄😅😆"
+                + "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                + "/!&#^?,(*'<[.~$:_\"{`%;)|+>=-\\}@]";
+
+            for (int i = 0; i < 30; i++)
+            {
+                var s = VgcApis.Misc.Utils.PickRandomChars(c, 20);
+                var z = ZipExtensions.ZstdToBase64(s);
+                var g = ZipExtensions.CompressToBase64(s);
+                Assert.IsTrue(ZipExtensions.IsZstdBase64(z));
+                Assert.IsFalse(ZipExtensions.IsCompressedBase64(z));
+                Assert.IsFalse(ZipExtensions.IsZstdBase64(g));
+                Assert.IsTrue(ZipExtensions.IsCompressedBase64(g));
+            }
+        }
+
+        [TestMethod]
         public void SerializeToStreamTest()
         {
             var o1 = new Dictionary<string, List<string>>()
@@ -27,6 +47,7 @@ namespace VgcApisTests.LibsTests
                 { "😀,😂", "ab,中文,😀,😂".Split(',').ToList() },
             };
 
+            // GZip
             var dest = new VgcApis.Libs.Streams.ArrayPoolMemoryStream(Encoding.ASCII);
             using (var w = new StreamWriter(dest))
             {
@@ -49,6 +70,31 @@ namespace VgcApisTests.LibsTests
             var r2 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
                 Dictionary<string, List<string>>
             >(parts[1]);
+            CompareDicts(o2, r2);
+
+            // ZSTD
+            dest = new VgcApis.Libs.Streams.ArrayPoolMemoryStream(Encoding.ASCII);
+            using (var w = new StreamWriter(dest))
+            {
+                ZipExtensions.SerializeObjectAsZstdBase64ToStream(dest, o1);
+                w.Write(",");
+                w.Flush();
+                ZipExtensions.SerializeObjectAsZstdBase64ToStream(dest, o2);
+            }
+            dest.Dispose();
+            str = dest.GetString();
+            Assert.IsFalse(string.IsNullOrEmpty(str));
+            parts = str.Split(',');
+            Assert.AreEqual(2, parts.Length);
+
+            r1 = ZipExtensions.DeserializeObjectFromZstdBase64<Dictionary<string, List<string>>>(
+                parts[0]
+            );
+            CompareDicts(o1, r1);
+
+            r2 = ZipExtensions.DeserializeObjectFromZstdBase64<Dictionary<string, List<string>>>(
+                parts[1]
+            );
             CompareDicts(o2, r2);
         }
 
@@ -92,18 +138,36 @@ namespace VgcApisTests.LibsTests
             var rnull = ZipExtensions.CompressToBase64(null);
             Assert.AreEqual("", rnull);
 
+            rnull = ZipExtensions.ZstdToBase64(null);
+            Assert.AreEqual("", rnull);
+
             rnull = ZipExtensions.DecompressFromBase64(null);
+            Assert.AreEqual("", rnull);
+
+            rnull = ZipExtensions.ZstdFromBase64(null);
             Assert.AreEqual("", rnull);
 
             rnull = ZipExtensions.SerializeObjectToCompressedUnicodeBase64(null);
             Assert.AreEqual("", rnull);
 
+            rnull = ZipExtensions.SerializeObjectToZstdBase64(null);
+            Assert.AreEqual("", rnull);
+
             var onull = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<object>(null);
+            Assert.AreEqual(null, onull);
+
+            onull = ZipExtensions.DeserializeObjectFromZstdBase64<object>(null);
             Assert.AreEqual(null, onull);
 
             using (var s = new MemoryStream())
             {
                 ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(s, null);
+                Assert.AreEqual(0, s.Length);
+            }
+
+            using (var s = new MemoryStream())
+            {
+                ZipExtensions.SerializeObjectAsZstdBase64ToStream(s, null);
                 Assert.AreEqual(0, s.Length);
             }
         }
@@ -129,6 +193,10 @@ namespace VgcApisTests.LibsTests
             var ser = ZipExtensions.SerializeObjectToCompressedUnicodeBase64(s);
             var de = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<string>(ser);
             Assert.AreEqual(s, de);
+
+            ser = ZipExtensions.SerializeObjectToZstdBase64(s);
+            de = ZipExtensions.DeserializeObjectFromZstdBase64<string>(ser);
+            Assert.AreEqual(s, de);
         }
 
         [TestMethod]
@@ -139,14 +207,34 @@ namespace VgcApisTests.LibsTests
             var t1 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<List<int>>(b1);
             Assert.IsTrue(s1.SequenceEqual(t1));
 
-            var s2 = new List<string> { "123", "abc", "123中文AbcZ", "😀😀😣👨‍🦰🎗🥙🛴❣", "", null };
+            b1 = ZipExtensions.SerializeObjectToZstdBase64(s1);
+            t1 = ZipExtensions.DeserializeObjectFromZstdBase64<List<int>>(b1);
+            Assert.IsTrue(s1.SequenceEqual(t1));
+
+            var s2 = new List<string>
+            {
+                "123",
+                "abc",
+                "123中文AbcZ",
+                "😀😀😣👨‍🦰🎗🥙🛴❣",
+                "",
+                null,
+            };
             var b2 = ZipExtensions.SerializeObjectToCompressedUnicodeBase64(s2);
             var t2 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<List<string>>(b2);
+            Assert.IsTrue(s2.SequenceEqual(t2));
+
+            b2 = ZipExtensions.SerializeObjectToZstdBase64(s2);
+            t2 = ZipExtensions.DeserializeObjectFromZstdBase64<List<string>>(b2);
             Assert.IsTrue(s2.SequenceEqual(t2));
 
             object es1 = null;
             var eb1 = ZipExtensions.SerializeObjectToCompressedUnicodeBase64(es1);
             var et1 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<object>(eb1);
+            Assert.AreEqual(es1, et1);
+
+            eb1 = ZipExtensions.SerializeObjectToZstdBase64(es1);
+            et1 = ZipExtensions.DeserializeObjectFromZstdBase64<object>(eb1);
             Assert.AreEqual(es1, et1);
         }
 
@@ -161,6 +249,10 @@ namespace VgcApisTests.LibsTests
             var cs = ZipExtensions.CompressToBase64(s);
             var de = ZipExtensions.DecompressFromBase64(cs);
 
+            Assert.AreEqual(s, de);
+
+            cs = ZipExtensions.ZstdToBase64(s);
+            de = ZipExtensions.ZstdFromBase64(cs);
             Assert.AreEqual(s, de);
         }
     }

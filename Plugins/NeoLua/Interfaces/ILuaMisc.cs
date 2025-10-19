@@ -409,11 +409,19 @@ namespace NeoLuna.Interfaces
 
         string DetectConfigType(string config);
 
-        bool IsCompressedBase64(string str);
+        // GZip API
+        bool IsCompressedBase64(string b64);
 
         string CompressToBase64(string str);
 
-        string DecompressFromBase64(string str);
+        string DecompressFromBase64(string b64);
+
+        // ZSTD API
+        bool IsZstdBase64(string b64);
+
+        string ZstdToBase64(string str);
+
+        string ZstdFromBase64(string b64);
 
         string Md5(string str);
 

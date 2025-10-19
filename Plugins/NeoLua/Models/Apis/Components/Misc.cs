@@ -195,14 +195,21 @@ namespace NeoLuna.Models.Apis.Components
             return null;
         }
 
-        public bool IsCompressedBase64(string str) =>
-            VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(str);
+        public bool IsCompressedBase64(string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(b64);
 
         public string CompressToBase64(string str) =>
             VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(str);
 
-        public string DecompressFromBase64(string str) =>
-            VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(str);
+        public string DecompressFromBase64(string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(b64);
+
+        public bool IsZstdBase64(string b64) => VgcApis.Libs.Infr.ZipExtensions.IsZstdBase64(b64);
+
+        public string ZstdToBase64(string str) => VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64(str);
+
+        public string ZstdFromBase64(string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64(b64);
 
         public string Md5(string str)
         {

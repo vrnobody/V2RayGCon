@@ -49,6 +49,7 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 [ravibpatel/AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) 自动更新功能及ZipExtractor源码  
 [rxi/json.lua](https://github.com/rxi/json.lua) Luna插件中的json解释器  
 [shadowsocksr-backup/shadowsocksr-csharp](https://github.com/shadowsocksr-backup/shadowsocksr-csharp) 屏幕扫码实现代码  
+[skbkontur/ZstdNet](https://github.com/skbkontur/ZstdNet) ZSTD第三方库  
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的PAC代码及IP列表来源  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  

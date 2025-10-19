@@ -61,9 +61,9 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 | 链接类型 | 平均长度(bytes) |
 | ------ | --- |
 | v | 120 |
+| userSettings.json | 180 |
 | vless | 200 |
 | trojan | 200 |
-| userSettings.json | 220 |
 | vmess | 300 |
 | v2cfg v2 | 800 |
 | config.json | 1000 |
@@ -77,7 +77,7 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 | :---- | :-: | :-: | :---- |
 | 内存（memory） | 100 | MiB | |
 | userSettings.json | 2 | MiB | |
-| 存盘耗时 |10 | 秒 | 压缩数据耗时较多 |
+| 存盘耗时 | 1 | 秒 | v2.2.0+ |
 | 十年写盘量 | 1 | TiB | 7 * 24 高强度使用下 |
 
 [1]: https://github.com/vrnobody/V2RayGCon/blob/1.8.3/V2RayGCon/Services/ShareLinkComponents/VeeDecoder.cs "VeeDecoder.cs"

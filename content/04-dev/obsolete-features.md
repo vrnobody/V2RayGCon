@@ -5,6 +5,14 @@ draft: false
 weight: 20
 ---
 
+##### 预计 2026-10-01 删除以下功能
+userSetting.json 里面的配置项：  
+CompressedUnicodeLocalStorage  
+CompressedUnicodeCoreInfoList  
+CompressedUnicodePluginsSetting  
+CompressedUnicodeCustomConfigTemplates  
+*注：替换为对应的 Zstd...*  
+
 ##### 预计 2026-06-01 删除以下功能
 Settings service 从 Properties 加载配置功能  
 

@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.9.7")]
+[assembly: AssemblyVersion("2.2.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -41,6 +41,8 @@ using System.Runtime.InteropServices;
 
 /*
 
+--------------------------------------------------------------------
+v2.1.9.8 More aggressive string compression size limit.
 v2.1.9.7 Replace GZip with ZSTD.
 v2.1.9.6 Add back save-user-settings code in FormOption.
 v2.1.9.5 Remove save-user-settings delay.

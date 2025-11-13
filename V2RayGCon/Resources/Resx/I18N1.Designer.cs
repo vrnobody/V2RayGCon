@@ -561,6 +561,16 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Using old version GUI could cause data lost!
+        ///Continue anyway? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmUseOldGui {
+            get {
+                return ResourceManager.GetString("ConfirmUseOldGui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Copy 的本地化字符串。
         /// </summary>
         internal static string Copy {

@@ -21,16 +21,16 @@ namespace V2RayGCon.Services
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
-        readonly string appName;
+        readonly string appName = Misc.Utils.GetAppNameAndVer();
 
         public Launcher()
         {
-            this.context = new ApplicationContext();
-            this.setting = Settings.Instance;
-
-            appName = Misc.Utils.GetAppNameAndVer();
             VgcApis.Libs.Sys.FileLogger.Raw("\n");
             VgcApis.Libs.Sys.FileLogger.Info($"{appName} start");
+
+            this.context = new ApplicationContext();
+            VgcApis.Libs.Sys.FileLogger.Info($"Init Settings service");
+            this.setting = Settings.Instance;
         }
 
         #region public method
@@ -104,7 +104,6 @@ namespace V2RayGCon.Services
             //    {
             //        servers.DbgFastRestartTest(100);
             //    }));
-
 
             // Views.WinForms.FormOption.GetForm();
             // setting.WakeupAutorunServer();

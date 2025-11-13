@@ -3254,6 +3254,20 @@ namespace VgcApis.Misc
             }
         }
 
+        public static bool IsOlderVersion(string curVer, string minVer)
+        {
+            if (
+                TryParseVersionString(minVer, out var min)
+                && TryParseVersionString(curVer, out var cur)
+                && min > cur
+            )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool TryParseVersionString(string versionString, out Version version)
         {
             try
@@ -3564,7 +3578,6 @@ namespace VgcApis.Misc
         #endregion
 
         #region numbers
-
 
 
         public static List<string> EnumToList<TEnum>()

@@ -837,4 +837,8 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="ToolboxForm" xml:space="preserve">
     <value>工具箱</value>
   </data>
+  <data name="ConfirmUseOldGui" xml:space="preserve">
+    <value>使用旧版 GUI 可能导致配置数据丢失！
+继续启动程序吗？</value>
+  </data>
 </root>

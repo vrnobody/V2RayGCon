@@ -846,4 +846,8 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="ToolboxForm" xml:space="preserve">
     <value>Toolbox</value>
   </data>
+  <data name="ConfirmUseOldGui" xml:space="preserve">
+    <value>Using old version GUI could cause data lost!
+Continue anyway?</value>
+  </data>
 </root>

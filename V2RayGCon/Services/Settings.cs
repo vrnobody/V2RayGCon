@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -1047,6 +1048,7 @@ namespace V2RayGCon.Services
 
             UpdateSpeedTestPool();
             UpdateFileLoggerSetting();
+            VgcApis.Libs.Sys.FileLogger.Ready();
 
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
@@ -1128,7 +1130,7 @@ namespace V2RayGCon.Services
         {
             if (userSettings.isEnableDebugFile)
             {
-                VgcApis.Libs.Sys.FileLogger.LogFilename = userSettings.DebugLogFilePath;
+                VgcApis.Libs.Sys.FileLogger.SetLogFilename(userSettings.DebugLogFilePath);
             }
         }
 
@@ -1417,6 +1419,7 @@ namespace V2RayGCon.Services
         // obsolete! delete after 2026-06-01
         Models.Datas.UserSettings LoadUserSettingsFromPorperties()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromPorperties() begin");
             try
             {
                 var serializedUserSettings = Properties.Settings.Default.UserSettings;
@@ -1430,7 +1433,10 @@ namespace V2RayGCon.Services
                 }
             }
             catch { }
-
+            finally
+            {
+                VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromPorperties() done");
+            }
             return null;
         }
 
@@ -1440,10 +1446,12 @@ namespace V2RayGCon.Services
             bool ignorePartableSetting
         )
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromFile() begin");
             // try to load userSettings.json
             Models.Datas.UserSettings result = null;
             try
             {
+                VgcApis.Libs.Sys.FileLogger.Info($"Try load: {mainFilename}");
                 var content = File.ReadAllText(mainFilename);
                 result = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(content);
             }
@@ -1452,11 +1460,13 @@ namespace V2RayGCon.Services
             // try to load userSettings.bak
             if (result == null)
             {
+                VgcApis.Libs.Sys.FileLogger.Info($"Try load: {mainFilename}");
                 result = VgcApis.Misc.Utils.LoadAndParseJsonFile<Models.Datas.UserSettings>(
                     bakFilename
                 );
             }
 
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromFile() done");
             if (result != null && (ignorePartableSetting || result.isPortable))
             {
                 return result;
@@ -1474,14 +1484,30 @@ namespace V2RayGCon.Services
 
         Models.Datas.UserSettings LoadUserSettings()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettings() begin");
             var mainUsFile = cmdArgs.userSettings;
             var bakUsFile = cmdArgs.userSettingsBak;
-
             var appDataUsFiles = GetSysAppDataUserSettingFilenames();
+
             var result =
                 LoadUserSettingsFromFile(cmdArgs.userSettings, cmdArgs.userSettingsBak, false)
                 ?? LoadUserSettingsFromFile(appDataUsFiles[0], appDataUsFiles[1], true)
                 ?? LoadUserSettingsFromPorperties();
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettings() done");
+
+            var appVer = Misc.Utils.GetAssemblyVersion();
+            var cfgVer = result?.ConfigVer;
+            if (VgcApis.Misc.Utils.IsOlderVersion(appVer, cfgVer))
+            {
+                VgcApis.Libs.Sys.FileLogger.Warn(
+                    $"Loading new version config v{cfgVer} from old GUI v{appVer}"
+                );
+                if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmUseOldGui))
+                {
+                    SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Abort);
+                }
+            }
+
             if (
                 result == null
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))
@@ -1491,7 +1517,9 @@ namespace V2RayGCon.Services
                 SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Abort);
             }
 
-            return result ?? new Models.Datas.UserSettings();
+            result = result ?? new Models.Datas.UserSettings();
+            result.ConfigVer = appVer;
+            return result;
         }
 
         void SaveSettingsLater() => lazyBookKeeper?.Deadline();

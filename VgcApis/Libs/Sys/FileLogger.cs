@@ -1,28 +1,64 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace VgcApis.Libs.Sys
 {
     // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-open-and-append-to-a-log-file
     public class FileLogger
     {
-        public static string LogFilename = @"";
+        static string logFilename = @"";
 
         static readonly object writeLogLocker = new object();
+        static readonly List<string> earlyLogs = new List<string>();
+        static bool isReady = false;
 
         #region public method
-        static public void Raw(string message)
+        static public void Ready()
         {
-            if (string.IsNullOrEmpty(LogFilename))
+            lock (writeLogLocker)
+            {
+                isReady = true;
+                if (!Disabled())
+                {
+                    using (StreamWriter w = File.AppendText(logFilename))
+                    {
+                        foreach (var line in earlyLogs)
+                        {
+                            w.WriteLine(line);
+                        }
+                    }
+                }
+                earlyLogs.Clear();
+            }
+        }
+
+        public static void SetLogFilename(string filename)
+        {
+            logFilename = filename;
+        }
+
+        public static void Raw(string message)
+        {
+            if (isReady && Disabled())
             {
                 return;
             }
 
             lock (writeLogLocker)
             {
-                using (StreamWriter w = File.AppendText(LogFilename))
+                if (!isReady)
                 {
-                    w.WriteLine(message);
+                    earlyLogs.Add(message);
+                }
+                else
+                {
+                    using (StreamWriter w = File.AppendText(logFilename))
+                    {
+                        w.WriteLine(message);
+                    }
                 }
             }
         }
@@ -47,44 +83,28 @@ namespace VgcApis.Libs.Sys
             AppendLog("Error", message);
         }
 
-        public static void Dump()
-        {
-            using (StreamReader r = File.OpenText(LogFilename))
-            {
-                string line;
-                while ((line = r.ReadLine()) != null)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-        }
-
-        static readonly object dumpCsLocker = new object();
-
         public static void DumpCallStack(string message)
         {
-            if (string.IsNullOrEmpty(LogFilename))
-            {
-                return;
-            }
-
-            lock (dumpCsLocker)
-            {
-                Debug(message);
-                Debug(Misc.Utils.GetCurCallStack());
-            }
+            var details = Misc.Utils.GetCurCallStack();
+            Debug(message);
+            Debug(details);
         }
 
         #endregion
 
         #region private method
 
-        static void AppendLog(string prefix, string message)
+        static bool Disabled()
+        {
+            return string.IsNullOrEmpty(logFilename);
+        }
+
+        static void AppendLog(string tag, string message)
         {
             var text = string.Format(
-                "[{0}] {1} {2}",
-                prefix,
+                "{0} [{1}] {2}",
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                tag,
                 message
             );
 

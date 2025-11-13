@@ -302,12 +302,12 @@ namespace V2RayGCon.Services
                 InvokeEventOnCoreStopIgnoreError(sender, EventArgs.Empty);
             }
 
-            if (!setting.isServerTrackerOn)
+            if (!setting.serverTrackerEnabled)
             {
                 return;
             }
 
-            var isTrackerOn = setting.GetServerTrackerSetting().isTrackerOn;
+            var isTrackerOn = setting.IsServerTrackerOn();
             DoServerTrackingLater(() => UpdateServerTrackerSettings(isTrackerOn));
         }
         #endregion
@@ -383,7 +383,6 @@ namespace V2RayGCon.Services
                 : new List<string>();
 
             setting.SaveServerTrackerSetting(tracker);
-            return;
         }
 
         int selectedServersCountCache = -1;
@@ -1082,6 +1081,7 @@ namespace V2RayGCon.Services
                 }
                 if (tracker.isTrackerOn)
                 {
+                    setting.serverTrackerEnabled = true;
                     AddToBootList(set, tracker.curServer);
                     foreach (var config in tracker.serverList)
                     {
@@ -1250,7 +1250,7 @@ namespace V2RayGCon.Services
         {
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() begin");
 
-            setting.isServerTrackerOn = false;
+            setting.serverTrackerEnabled = false;
             if (setting.GetShutdownReason() == ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() abort");
@@ -1260,7 +1260,8 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop tracking");
 
             indexHandler.OnIndexChanged -= ClearSortedCoreServCacheHandler;
-            lazyServerTrackingTimer?.Timeout();
+
+            // 2025-11-13 Do not call Timout()!
             lazyServerTrackingTimer?.Release();
 
             lazyServerSettingsRecorder?.Dispose();

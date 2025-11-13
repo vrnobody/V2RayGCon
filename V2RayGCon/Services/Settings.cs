@@ -591,8 +591,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool isServerTrackerOn = false;
-
         public int serverPanelPageSize
         {
             get
@@ -897,8 +895,15 @@ namespace V2RayGCon.Services
 
         public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
+        public bool serverTrackerEnabled = false;
+
+        bool curServerTrackerState = false;
+
+        public bool IsServerTrackerOn() => curServerTrackerState;
+
         public void SaveServerTrackerSetting(Models.Datas.ServerTracker serverTrackerSetting)
         {
+            curServerTrackerState = serverTrackerSetting.isTrackerOn;
             userSettings.ServerTracker = JsonConvert.SerializeObject(serverTrackerSetting);
             SaveSettingsLater();
         }
@@ -921,9 +926,10 @@ namespace V2RayGCon.Services
             }
             catch
             {
-                return empty;
+                result = empty;
             }
-            return result ?? empty;
+            curServerTrackerState = result.isTrackerOn;
+            return result;
         }
 
         public List<VgcApis.Models.Datas.CoreInfo> LoadCoreInfoList() => coreInfoCache;

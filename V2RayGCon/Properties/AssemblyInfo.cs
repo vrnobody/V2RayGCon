@@ -43,6 +43,7 @@ using System.Runtime.InteropServices;
 
 v2.2.0.2 Fix #31 auto-track feature not working bug.
 v2.2.0.1 Support debug message logging while app init.
+         Add version information to userSettings.json.
 --------------------------------------------------------------------
 v2.1.9.8 More aggressive string compression size limit.
 v2.1.9.7 Replace GZip with ZSTD.

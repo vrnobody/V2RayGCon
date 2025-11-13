@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
+using VgcApis.Misc;
 
 namespace VgcApis.Libs.Tasks
 {
@@ -24,12 +26,39 @@ namespace VgcApis.Libs.Tasks
             {
                 return;
             }
-            // do not use RunInBgSlim()!!! 2023-11
-            Misc.Utils.RunInBackground(this.LongRunningTaskWrapper);
+            RunQuietly(this.LongRunningTaskWrapper);
         }
         #endregion
 
         #region private method
+        public static void RunQuietly(Action worker)
+        {
+            void job()
+            {
+                try
+                {
+                    worker?.Invoke();
+                }
+                catch (ThreadAbortException) { }
+                catch (Exception e)
+                {
+                    Sys.FileLogger.Error($"CancelableTask error:\n{e}");
+                }
+            }
+
+            try
+            {
+                var t = new Task(job, TaskCreationOptions.LongRunning);
+                t.ConfigureAwait(false);
+                t.Start();
+                return;
+            }
+            catch (Exception e)
+            {
+                Sys.FileLogger.Error($"Create CancelableTask error:\n{e}");
+            }
+        }
+
         // Suppress the exception if required, depends on the business use case:
         private void LongRunningTaskWrapper()
         {

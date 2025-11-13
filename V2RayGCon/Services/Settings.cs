@@ -895,15 +895,8 @@ namespace V2RayGCon.Services
 
         public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
-        public bool serverTrackerEnabled = false;
-
-        bool curServerTrackerState = false;
-
-        public bool IsServerTrackerOn() => curServerTrackerState;
-
         public void SaveServerTrackerSetting(Models.Datas.ServerTracker serverTrackerSetting)
         {
-            curServerTrackerState = serverTrackerSetting.isTrackerOn;
             userSettings.ServerTracker = JsonConvert.SerializeObject(serverTrackerSetting);
             SaveSettingsLater();
         }
@@ -920,7 +913,6 @@ namespace V2RayGCon.Services
 
                 if (result != null)
                 {
-                    result.serverList = result.serverList ?? new List<string>();
                     result.uids = result.uids ?? new List<string>();
                 }
             }
@@ -928,7 +920,6 @@ namespace V2RayGCon.Services
             {
                 result = empty;
             }
-            curServerTrackerState = result.isTrackerOn;
             return result;
         }
 

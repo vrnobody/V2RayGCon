@@ -38,6 +38,8 @@ namespace V2RayGCon.Services
         readonly ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
         readonly VgcApis.Libs.Tasks.Bar speedTestingBar = new VgcApis.Libs.Tasks.Bar();
 
+        bool serverTrackerEnabled = false;
+
         Servers()
         {
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
@@ -302,13 +304,11 @@ namespace V2RayGCon.Services
                 InvokeEventOnCoreStopIgnoreError(sender, EventArgs.Empty);
             }
 
-            if (!setting.serverTrackerEnabled)
+            if (!serverTrackerEnabled)
             {
                 return;
             }
-
-            var isTrackerOn = setting.IsServerTrackerOn();
-            DoServerTrackingLater(() => UpdateServerTrackerSettings(isTrackerOn));
+            DoServerTrackingLater(UpdateTrackerUidsOnly);
         }
         #endregion
 
@@ -364,16 +364,11 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        public void UpdateServerTrackerSettings(bool isTrackerOn)
+        public void UpdateTrackerSettings(bool isTrackerOn)
         {
-            var tracker = new Models.Datas.ServerTracker
-            {
-                isTrackerOn = isTrackerOn,
-                curServer = string.Empty, // obsolete
-                serverList =
-                    new List<string>() //obsolete
-                ,
-            };
+            serverTrackerEnabled = isTrackerOn;
+
+            var tracker = new Models.Datas.ServerTracker { isTrackerOn = isTrackerOn };
 
             tracker.uids = tracker.isTrackerOn
                 ? GetRunningServers()
@@ -922,6 +917,18 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void UpdateTrackerUidsOnly()
+        {
+            var tracker = setting.GetServerTrackerSetting();
+            tracker.uids = tracker.isTrackerOn
+                ? GetRunningServers()
+                    .Where(s => !s.GetCoreStates().IsUntrack())
+                    .Select(s => s.GetCoreStates().GetUid())
+                    .ToList()
+                : new List<string>();
+            setting.SaveServerTrackerSetting(tracker);
+        }
+
         int GetAvailableProxyPortCore(IEnumerable<string> protocols)
         {
             var servs = GetRunningServers();
@@ -1081,13 +1088,7 @@ namespace V2RayGCon.Services
                 }
                 if (tracker.isTrackerOn)
                 {
-                    setting.serverTrackerEnabled = true;
-                    AddToBootList(set, tracker.curServer);
-                    foreach (var config in tracker.serverList)
-                    {
-                        AddToBootList(set, config);
-                    }
-
+                    serverTrackerEnabled = true;
                     foreach (var uid in tracker.uids)
                     {
                         if (coreServCache.TryGetValue(uid, out var coreServ) && coreServ != null)
@@ -1250,7 +1251,7 @@ namespace V2RayGCon.Services
         {
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() begin");
 
-            setting.serverTrackerEnabled = false;
+            serverTrackerEnabled = false;
             if (setting.GetShutdownReason() == ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() abort");
@@ -1261,7 +1262,6 @@ namespace V2RayGCon.Services
 
             indexHandler.OnIndexChanged -= ClearSortedCoreServCacheHandler;
 
-            // 2025-11-13 Do not call Timout()!
             lazyServerTrackingTimer?.Release();
 
             lazyServerSettingsRecorder?.Dispose();

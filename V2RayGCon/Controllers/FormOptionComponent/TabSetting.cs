@@ -154,10 +154,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             var trackerSetting = setting.GetServerTrackerSetting();
             if (trackerSetting.isTrackerOn != keepTracking)
             {
-                // disable tracker first
-                setting.serverTrackerEnabled = false;
-                servers.UpdateServerTrackerSettings(keepTracking);
-                setting.serverTrackerEnabled = keepTracking;
+                servers.UpdateTrackerSettings(keepTracking);
             }
 
             setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(

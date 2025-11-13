@@ -3270,6 +3270,12 @@ namespace VgcApis.Misc
 
         public static bool TryParseVersionString(string versionString, out Version version)
         {
+            version = default;
+            if (string.IsNullOrEmpty(versionString))
+            {
+                return false;
+            }
+
             try
             {
                 var groups = Regex.Match(versionString, @"^v?([\.\d]+)").Groups;
@@ -3280,7 +3286,6 @@ namespace VgcApis.Misc
                 }
             }
             catch { }
-            version = default;
             return false;
         }
 

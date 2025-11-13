@@ -8,7 +8,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
     {
         #region misc
 
-        public string GetAppVersion() => Misc.Utils.GetAssemblyVersion();
+        public string GetAppVersion() => Misc.Utils.GetAssemblyVersion().ToString();
 
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             VgcApis.Misc.Utils.AddLinkPrefix(linkBody, type);

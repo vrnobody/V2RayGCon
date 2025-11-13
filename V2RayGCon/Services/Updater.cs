@@ -94,7 +94,7 @@ namespace V2RayGCon.Services
                 return false;
             }
 
-            var curVer = System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
+            var curVer = Misc.Utils.GetAssemblyVersion();
             var newVer = new Version(infos.version);
             if (newVer > curVer)
             {

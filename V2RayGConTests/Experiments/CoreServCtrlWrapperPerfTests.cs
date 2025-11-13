@@ -58,7 +58,7 @@ namespace V2RayGCon.Test.Experiments
         {
             // var len = 1_000_000; // about 1 minute
 
-            var len = 10;
+            var len = 100;
 
             var sw = new Stopwatch();
             var coreServs = new List<VgcApis.Interfaces.ICoreServCtrl>();

@@ -83,7 +83,6 @@
     <Compile Include="MiscCachesTests\ZipStrLruTests.cs" />
     <Compile Include="UITests.cs" />
     <Compile Include="MiscCachesTests\CacheTest.cs" />
-    <Compile Include="CoreServerTest.cs" />
     <Compile Include="UtilsTests.cs" />
     <Compile Include="ImportTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

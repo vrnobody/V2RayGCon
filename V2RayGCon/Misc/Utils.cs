@@ -104,7 +104,7 @@ namespace V2RayGCon.Misc
         {
             if (string.IsNullOrEmpty(appNameAndVersion))
             {
-                var rawVer = GetAssemblyVersion();
+                var rawVer = GetAssemblyVersion().ToString();
                 var ver = VgcApis.Misc.Utils.TrimVersionString(rawVer);
                 var name = VgcApis.Misc.Utils.GetAppName();
                 appNameAndVersion = VgcApis.Misc.Utils.PrependTag($"{name} v{ver}");
@@ -458,12 +458,11 @@ namespace V2RayGCon.Misc
 
         #region Miscellaneous
 
-
-
-        public static string GetAssemblyVersion()
+        public static Version GetAssemblyVersion()
         {
-            Version version = Assembly.GetEntryAssembly().GetName().Version;
-            return version.ToString();
+            var entry = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+            var version = entry.GetName().Version;
+            return version;
         }
 
         public static bool VerifyZipFile(string zipFile)

@@ -1492,7 +1492,7 @@ namespace V2RayGCon.Services
                 ?? LoadUserSettingsFromPorperties();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettings() done");
 
-            var appVer = Misc.Utils.GetAssemblyVersion();
+            var appVer = Misc.Utils.GetAssemblyVersion().ToString();
             var cfgVer = result?.ConfigVer;
             if (VgcApis.Misc.Utils.IsOlderVersion(appVer, cfgVer))
             {

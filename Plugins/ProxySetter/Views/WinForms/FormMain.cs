@@ -113,7 +113,7 @@ namespace ProxySetter.Views.WinForms
 
         void StartUpdateTimer()
         {
-            updateSysProxyInfoTimer = new Timer { Interval = 2000, };
+            updateSysProxyInfoTimer = new Timer { Interval = 2000 };
             updateSysProxyInfoTimer.Tick += UpdateSysProxyInfo;
             updateSysProxyInfoTimer.Start();
         }
@@ -225,6 +225,13 @@ namespace ProxySetter.Views.WinForms
             rtboxPacWhiteList.Enabled = !isChecked;
             rtboxPacBlackList.Enabled = !isChecked;
             btnBasicViewInNotepad.Enabled = !isChecked;
+        }
+
+        private void chkBasicAutoUpdateSysProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            var enabled = chkBasicAutoUpdateSysProxy.Checked;
+            tboxBasicGlobalPort.Enabled = !enabled;
+            cboxBasicPacProtocol.Enabled = !enabled;
         }
         #endregion
     }

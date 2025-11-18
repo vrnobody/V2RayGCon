@@ -132,16 +132,18 @@
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // tabControl1
             // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabTun);
             this.tabControl1.Controls.Add(this.tabBasic);
             this.tabControl1.Controls.Add(this.tabPac);
             this.tabControl1.Controls.Add(this.tabUsage);
-            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
+            this.toolTip1.SetToolTip(this.tabControl1, resources.GetString("tabControl1.ToolTip"));
             // 
             // tabTun
             // 
@@ -171,12 +173,14 @@
             this.tabTun.Controls.Add(this.btnTunaStart);
             this.tabTun.Controls.Add(this.btnTunaDetect);
             this.tabTun.Name = "tabTun";
+            this.toolTip1.SetToolTip(this.tabTun, resources.GetString("tabTun.ToolTip"));
             this.tabTun.UseVisualStyleBackColor = true;
             // 
             // rtboxTunaDns
             // 
             resources.ApplyResources(this.rtboxTunaDns, "rtboxTunaDns");
             this.rtboxTunaDns.Name = "rtboxTunaDns";
+            this.toolTip1.SetToolTip(this.rtboxTunaDns, resources.GetString("rtboxTunaDns.ToolTip"));
             // 
             // chkTunaModifySendThrough
             // 
@@ -225,23 +229,27 @@
             resources.ApplyResources(this.panel3, "panel3");
             this.panel3.Controls.Add(this.groupBox6);
             this.panel3.Name = "panel3";
+            this.toolTip1.SetToolTip(this.panel3, resources.GetString("panel3.ToolTip"));
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.rtboxTunaStartupScript);
             resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Controls.Add(this.rtboxTunaStartupScript);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox6, resources.GetString("groupBox6.ToolTip"));
             // 
             // rtboxTunaStartupScript
             // 
             resources.ApplyResources(this.rtboxTunaStartupScript, "rtboxTunaStartupScript");
             this.rtboxTunaStartupScript.Name = "rtboxTunaStartupScript";
+            this.toolTip1.SetToolTip(this.rtboxTunaStartupScript, resources.GetString("rtboxTunaStartupScript.ToolTip"));
             // 
             // lbTunaStatus
             // 
             resources.ApplyResources(this.lbTunaStatus, "lbTunaStatus");
             this.lbTunaStatus.Name = "lbTunaStatus";
+            this.toolTip1.SetToolTip(this.lbTunaStatus, resources.GetString("lbTunaStatus.ToolTip"));
             // 
             // label11
             // 
@@ -259,21 +267,25 @@
             // 
             resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
+            this.toolTip1.SetToolTip(this.label14, resources.GetString("label14.ToolTip"));
             // 
             // label10
             // 
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
+            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
             // 
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
+            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
+            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // tboxTunaTunName
             // 
@@ -285,37 +297,44 @@
             // 
             resources.ApplyResources(this.tboxTunaExePath, "tboxTunaExePath");
             this.tboxTunaExePath.Name = "tboxTunaExePath";
+            this.toolTip1.SetToolTip(this.tboxTunaExePath, resources.GetString("tboxTunaExePath.ToolTip"));
             // 
             // tboxTunaTunIpv4
             // 
             resources.ApplyResources(this.tboxTunaTunIpv4, "tboxTunaTunIpv4");
             this.tboxTunaTunIpv4.Name = "tboxTunaTunIpv4";
+            this.toolTip1.SetToolTip(this.tboxTunaTunIpv4, resources.GetString("tboxTunaTunIpv4.ToolTip"));
             // 
             // tboxTunaTunIpv6
             // 
             resources.ApplyResources(this.tboxTunaTunIpv6, "tboxTunaTunIpv6");
             this.tboxTunaTunIpv6.Name = "tboxTunaTunIpv6";
+            this.toolTip1.SetToolTip(this.tboxTunaTunIpv6, resources.GetString("tboxTunaTunIpv6.ToolTip"));
             // 
             // tboxTunaNicIpv4
             // 
             resources.ApplyResources(this.tboxTunaNicIpv4, "tboxTunaNicIpv4");
             this.tboxTunaNicIpv4.Name = "tboxTunaNicIpv4";
+            this.toolTip1.SetToolTip(this.tboxTunaNicIpv4, resources.GetString("tboxTunaNicIpv4.ToolTip"));
             // 
             // tboxTunaProxy
             // 
             resources.ApplyResources(this.tboxTunaProxy, "tboxTunaProxy");
             this.tboxTunaProxy.Name = "tboxTunaProxy";
+            this.toolTip1.SetToolTip(this.tboxTunaProxy, resources.GetString("tboxTunaProxy.ToolTip"));
             // 
             // btnTunaStop
             // 
             resources.ApplyResources(this.btnTunaStop, "btnTunaStop");
             this.btnTunaStop.Name = "btnTunaStop";
+            this.toolTip1.SetToolTip(this.btnTunaStop, resources.GetString("btnTunaStop.ToolTip"));
             this.btnTunaStop.UseVisualStyleBackColor = true;
             // 
             // btnTunaStart
             // 
             resources.ApplyResources(this.btnTunaStart, "btnTunaStart");
             this.btnTunaStart.Name = "btnTunaStart";
+            this.toolTip1.SetToolTip(this.btnTunaStart, resources.GetString("btnTunaStart.ToolTip"));
             this.btnTunaStart.UseVisualStyleBackColor = true;
             // 
             // btnTunaDetect
@@ -327,9 +346,10 @@
             // 
             // tabBasic
             // 
-            this.tabBasic.Controls.Add(this.tableLayoutPanel2);
             resources.ApplyResources(this.tabBasic, "tabBasic");
+            this.tabBasic.Controls.Add(this.tableLayoutPanel2);
             this.tabBasic.Name = "tabBasic";
+            this.toolTip1.SetToolTip(this.tabBasic, resources.GetString("tabBasic.ToolTip"));
             this.tabBasic.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
@@ -338,9 +358,11 @@
             this.tableLayoutPanel2.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 1, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel2, resources.GetString("tableLayoutPanel2.ToolTip"));
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.chkBasicUseHotkey);
             this.groupBox1.Controls.Add(this.chkBasicUseShift);
             this.groupBox1.Controls.Add(this.chkBasicUseAlt);
@@ -362,9 +384,9 @@
             this.groupBox1.Controls.Add(this.tboxBasicCustomPacPath);
             this.groupBox1.Controls.Add(this.tboxBaiscPacPort);
             this.groupBox1.Controls.Add(this.tboxBasicGlobalPort);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // chkBasicUseHotkey
             // 
@@ -377,23 +399,27 @@
             // 
             resources.ApplyResources(this.chkBasicUseShift, "chkBasicUseShift");
             this.chkBasicUseShift.Name = "chkBasicUseShift";
+            this.toolTip1.SetToolTip(this.chkBasicUseShift, resources.GetString("chkBasicUseShift.ToolTip"));
             this.chkBasicUseShift.UseVisualStyleBackColor = true;
             // 
             // chkBasicUseAlt
             // 
             resources.ApplyResources(this.chkBasicUseAlt, "chkBasicUseAlt");
             this.chkBasicUseAlt.Name = "chkBasicUseAlt";
+            this.toolTip1.SetToolTip(this.chkBasicUseAlt, resources.GetString("chkBasicUseAlt.ToolTip"));
             this.chkBasicUseAlt.UseVisualStyleBackColor = true;
             // 
             // tboxBasicHotkey
             // 
             resources.ApplyResources(this.tboxBasicHotkey, "tboxBasicHotkey");
             this.tboxBasicHotkey.Name = "tboxBasicHotkey";
+            this.toolTip1.SetToolTip(this.tboxBasicHotkey, resources.GetString("tboxBasicHotkey.ToolTip"));
             // 
             // label9
             // 
             resources.ApplyResources(this.label9, "label9");
             this.label9.Name = "label9";
+            this.toolTip1.SetToolTip(this.label9, resources.GetString("label9.ToolTip"));
             // 
             // label8
             // 
@@ -410,6 +436,7 @@
             resources.GetString("cboxBasicPacProtocol.Items"),
             resources.GetString("cboxBasicPacProtocol.Items1")});
             this.cboxBasicPacProtocol.Name = "cboxBasicPacProtocol";
+            this.toolTip1.SetToolTip(this.cboxBasicPacProtocol, resources.GetString("cboxBasicPacProtocol.ToolTip"));
             // 
             // chkBasicUseCustomPac
             // 
@@ -428,6 +455,7 @@
             resources.GetString("cboxBasicPacMode.Items"),
             resources.GetString("cboxBasicPacMode.Items1")});
             this.cboxBasicPacMode.Name = "cboxBasicPacMode";
+            this.toolTip1.SetToolTip(this.cboxBasicPacMode, resources.GetString("cboxBasicPacMode.ToolTip"));
             // 
             // cboxBasicSysProxyMode
             // 
@@ -440,6 +468,7 @@
             resources.GetString("cboxBasicSysProxyMode.Items2"),
             resources.GetString("cboxBasicSysProxyMode.Items3")});
             this.cboxBasicSysProxyMode.Name = "cboxBasicSysProxyMode";
+            this.toolTip1.SetToolTip(this.cboxBasicSysProxyMode, resources.GetString("cboxBasicSysProxyMode.ToolTip"));
             // 
             // label1
             // 
@@ -466,16 +495,19 @@
             this.chkBasicAutoUpdateSysProxy.Name = "chkBasicAutoUpdateSysProxy";
             this.toolTip1.SetToolTip(this.chkBasicAutoUpdateSysProxy, resources.GetString("chkBasicAutoUpdateSysProxy.ToolTip"));
             this.chkBasicAutoUpdateSysProxy.UseVisualStyleBackColor = true;
+            this.chkBasicAutoUpdateSysProxy.CheckedChanged += new System.EventHandler(this.chkBasicAutoUpdateSysProxy_CheckedChanged);
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
+            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // label6
             // 
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
+            this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
             // label3
             // 
@@ -494,19 +526,23 @@
             // 
             resources.ApplyResources(this.tboxBasicCustomPacPath, "tboxBasicCustomPacPath");
             this.tboxBasicCustomPacPath.Name = "tboxBasicCustomPacPath";
+            this.toolTip1.SetToolTip(this.tboxBasicCustomPacPath, resources.GetString("tboxBasicCustomPacPath.ToolTip"));
             // 
             // tboxBaiscPacPort
             // 
             resources.ApplyResources(this.tboxBaiscPacPort, "tboxBaiscPacPort");
             this.tboxBaiscPacPort.Name = "tboxBaiscPacPort";
+            this.toolTip1.SetToolTip(this.tboxBaiscPacPort, resources.GetString("tboxBaiscPacPort.ToolTip"));
             // 
             // tboxBasicGlobalPort
             // 
             resources.ApplyResources(this.tboxBasicGlobalPort, "tboxBasicGlobalPort");
             this.tboxBasicGlobalPort.Name = "tboxBasicGlobalPort";
+            this.toolTip1.SetToolTip(this.tboxBasicGlobalPort, resources.GetString("tboxBasicGlobalPort.ToolTip"));
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.btnBasicViewInNotepad);
             this.groupBox2.Controls.Add(this.lbBasicProxyLink);
             this.groupBox2.Controls.Add(this.lbBasicCurPacServerStatus);
@@ -514,9 +550,9 @@
             this.groupBox2.Controls.Add(this.btnBasicDebugPacServer);
             this.groupBox2.Controls.Add(this.btnBasicStartPacServer);
             this.groupBox2.Controls.Add(this.btnBasicStopPacServer);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // btnBasicViewInNotepad
             // 
@@ -536,6 +572,7 @@
             // 
             resources.ApplyResources(this.lbBasicCurPacServerStatus, "lbBasicCurPacServerStatus");
             this.lbBasicCurPacServerStatus.Name = "lbBasicCurPacServerStatus";
+            this.toolTip1.SetToolTip(this.lbBasicCurPacServerStatus, resources.GetString("lbBasicCurPacServerStatus.ToolTip"));
             // 
             // btnBaiscCopyProxyLink
             // 
@@ -567,9 +604,10 @@
             // 
             // tabPac
             // 
-            this.tabPac.Controls.Add(this.tableLayoutPanel3);
             resources.ApplyResources(this.tabPac, "tabPac");
+            this.tabPac.Controls.Add(this.tableLayoutPanel3);
             this.tabPac.Name = "tabPac";
+            this.toolTip1.SetToolTip(this.tabPac, resources.GetString("tabPac.ToolTip"));
             this.tabPac.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel3
@@ -578,14 +616,16 @@
             this.tableLayoutPanel3.Controls.Add(this.groupBox3, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.groupBox4, 1, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel3, resources.GetString("tableLayoutPanel3.ToolTip"));
             // 
             // groupBox3
             // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.btnSetSortWhitelist);
             this.groupBox3.Controls.Add(this.rtboxPacWhiteList);
-            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // btnSetSortWhitelist
             // 
@@ -598,14 +638,16 @@
             // 
             resources.ApplyResources(this.rtboxPacWhiteList, "rtboxPacWhiteList");
             this.rtboxPacWhiteList.Name = "rtboxPacWhiteList";
+            this.toolTip1.SetToolTip(this.rtboxPacWhiteList, resources.GetString("rtboxPacWhiteList.ToolTip"));
             // 
             // groupBox4
             // 
+            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Controls.Add(this.btnSetSortBlacklist);
             this.groupBox4.Controls.Add(this.rtboxPacBlackList);
-            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox4, resources.GetString("groupBox4.ToolTip"));
             // 
             // btnSetSortBlacklist
             // 
@@ -618,44 +660,51 @@
             // 
             resources.ApplyResources(this.rtboxPacBlackList, "rtboxPacBlackList");
             this.rtboxPacBlackList.Name = "rtboxPacBlackList";
+            this.toolTip1.SetToolTip(this.rtboxPacBlackList, resources.GetString("rtboxPacBlackList.ToolTip"));
             // 
             // tabUsage
             // 
-            this.tabUsage.Controls.Add(this.panel2);
             resources.ApplyResources(this.tabUsage, "tabUsage");
+            this.tabUsage.Controls.Add(this.panel2);
             this.tabUsage.Name = "tabUsage";
+            this.toolTip1.SetToolTip(this.tabUsage, resources.GetString("tabUsage.ToolTip"));
             this.tabUsage.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.groupBox5);
             resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.Controls.Add(this.groupBox5);
             this.panel2.Name = "panel2";
+            this.toolTip1.SetToolTip(this.panel2, resources.GetString("panel2.ToolTip"));
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.tboxUsageReadMe);
             resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.tboxUsageReadMe);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox5, resources.GetString("groupBox5.ToolTip"));
             // 
             // tboxUsageReadMe
             // 
             resources.ApplyResources(this.tboxUsageReadMe, "tboxUsageReadMe");
             this.tboxUsageReadMe.Name = "tboxUsageReadMe";
             this.tboxUsageReadMe.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tboxUsageReadMe, resources.GetString("tboxUsageReadMe.ToolTip"));
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnSave);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
+            this.toolTip1.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
+            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -663,6 +712,7 @@
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
+            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -672,6 +722,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormMain";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FormPluginMain_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);

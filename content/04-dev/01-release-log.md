@@ -5,6 +5,12 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.1.0` 20251119
+修复 issue #31 “自动追踪”设置无效的问题  
+ProxySetter 插件少量调整  
+添加检查 userSettings.json 版本功能  
+调试日志支持初始化时记录日志  
+
 ##### `v2.2.0.0` 20251021
 用 ZSTD 取代 GZip 压缩算法  
 优化配置存盘过程  

@@ -18,6 +18,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkImportSsShareLink = null,
             chkImportTrojanShareLink = null;
         private readonly CheckBox chkImportSocksShareLink;
+        private readonly CheckBox chkImportMobShareLink;
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null;
@@ -32,6 +33,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             CheckBox chkImportSsShareLink,
             CheckBox chkImportTrojanShareLink,
             CheckBox chkImportSocksShareLink,
+            CheckBox chkImportMobShareLink,
             // speedtest
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
@@ -49,6 +51,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportTrojanShareLink = chkImportTrojanShareLink;
             this.chkImportSocksShareLink = chkImportSocksShareLink;
+            this.chkImportMobShareLink = chkImportMobShareLink;
             this.cboxDefCoreName = cboxDefCoreName;
             this.chkImportVmessShareLink = chkImportVmessShareLink;
             this.chkImportVlessShareLink = chkImportVlessShareLink;
@@ -70,6 +73,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
+            settings.CustomDefImportMobShareLink = chkImportMobShareLink.Checked;
             settings.CustomDefImportVlessShareLink = chkImportVlessShareLink.Checked;
             settings.CustomDefImportVmessShareLink = chkImportVmessShareLink.Checked;
 
@@ -120,6 +124,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             );
             if (
                 !success
+                || settings.CustomDefImportMobShareLink != chkImportMobShareLink.Checked
                 || settings.CustomDefImportVlessShareLink != chkImportVlessShareLink.Checked
                 || settings.CustomDefImportVmessShareLink != chkImportVmessShareLink.Checked
                 || settings.CustomDefImportHost != host
@@ -182,6 +187,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitControls()
         {
+            chkImportMobShareLink.Checked = settings.CustomDefImportMobShareLink;
             chkImportVmessShareLink.Checked = settings.CustomDefImportVmessShareLink;
             chkImportVlessShareLink.Checked = settings.CustomDefImportVlessShareLink;
             chkImportSsShareLink.Checked = settings.CustomDefImportSsShareLink;

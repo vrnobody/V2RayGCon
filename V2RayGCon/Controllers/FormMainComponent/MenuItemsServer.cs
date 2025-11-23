@@ -20,6 +20,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // copy
             ToolStripMenuItem copyAsV2cfgLinks,
             ToolStripMenuItem copyAsVmixLinks,
+            ToolStripMenuItem copyAsMobLinks,
             // batch op
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem runBatchSpeedtest,
@@ -55,7 +56,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitCtrlView(moveToTop, moveToBottom, moveToCustomIndex);
 
-            InitCtrlCopyToClipboard(copyAsV2cfgLinks, copyAsVmixLinks);
+            InitCtrlCopyToClipboard(copyAsV2cfgLinks, copyAsVmixLinks, copyAsMobLinks);
 
             InitCtrlMisc(refreshSummary, deleteSelected, deleteAllServers);
 
@@ -137,8 +138,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 }
             });
 
-            modifySelected.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => Views.WinForms.FormBatchModifyServerSetting.GetForm()
+            modifySelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                Views.WinForms.FormBatchModifyServerSetting.GetForm()
             );
 
             runBatchSpeedtest.Click += RunWhenSelectionIsNotEmptyHandler(() =>
@@ -206,9 +207,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitCtrlCopyToClipboard(
             ToolStripMenuItem copyAsV2cfgLinks,
-            ToolStripMenuItem copyAsVmixLinks
+            ToolStripMenuItem copyAsVmixLinks,
+            ToolStripMenuItem copyAsMobLinks
         )
         {
+            copyAsMobLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            {
+                var links = EncodeSelectedServersIntoShareLinks(
+                    VgcApis.Models.Datas.Enums.LinkTypes.mob
+                );
+                Misc.Utils.CopyToClipboardAndPrompt(links);
+            });
+
             copyAsV2cfgLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeSelectedServersIntoShareLinks(
@@ -274,28 +284,28 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem sortByUploadTotal
         )
         {
-            sortByDownloadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.SortSelectedByDownloadTotal()
+            sortByDownloadTotal.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.SortSelectedByDownloadTotal()
             );
 
-            sortByUploadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.SortSelectedByUploadTotal()
+            sortByUploadTotal.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.SortSelectedByUploadTotal()
             );
 
-            reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.ReverseSelectedByIndex()
+            reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.ReverseSelectedByIndex()
             );
 
-            sortByDate.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.SortSelectedByLastModifiedDate()
+            sortByDate.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.SortSelectedByLastModifiedDate()
             );
 
-            sortBySummary.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.SortSelectedBySummary()
+            sortBySummary.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.SortSelectedBySummary()
             );
 
-            sortBySpeed.Click += RunWhenSelectionIsNotEmptyHandler(
-                () => servers.SortSelectedBySpeedTest()
+            sortBySpeed.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+                servers.SortSelectedBySpeedTest()
             );
         }
 

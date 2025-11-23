@@ -134,6 +134,7 @@ namespace V2RayGCon.Misc
                     return LinksTextExtractor(text, protocol, Patterns.NonStandardUriBodyChars);
                 case Enums.LinkTypes.vmess:
                 case Enums.LinkTypes.v2cfg:
+                case Enums.LinkTypes.mob:
                     return LinksTextExtractor(text, protocol, Patterns.Base64Chars);
                 case Enums.LinkTypes.http:
                 case Enums.LinkTypes.https:

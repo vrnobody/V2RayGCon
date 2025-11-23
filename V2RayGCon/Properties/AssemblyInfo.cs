@@ -33,14 +33,16 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.1.0")]
+[assembly: AssemblyVersion("2.2.1.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
 // postpone vless://... decoder support
+// config example https://github.com/XTLS/Xray-core/pull/5124
 
 /*
 
+v2.2.1.1 Add support for mob://... new share link format.
 --------------------------------------------------------------------
 v2.2.0.4 Disable proxy port setting under Auto mode in ProxySetter plug-in.
 v2.2.0.3 Fix GetAssemblyVersion() return null bug.

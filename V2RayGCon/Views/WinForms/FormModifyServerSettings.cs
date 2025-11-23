@@ -77,8 +77,9 @@ namespace V2RayGCon.Views.WinForms
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
             var coreState = coreServ.GetCoreStates();
-            lbServerTitle.Text = coreState.GetTitle();
 
+            InitCboxShareLinkType();
+            lbServerTitle.Text = coreState.GetTitle();
             cboxMark.Items.AddRange(marks);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
 
@@ -100,23 +101,39 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region private methods
-        void AutoSelectShareLinkType()
-        {
-            var slinkMgr = Services.ShareLinkMgr.Instance;
-            var config = coreServ.GetConfiger().GetConfig();
-            var name = coreServ.GetCoreStates().GetName();
-            var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes>
+        List<VgcApis.Models.Datas.Enums.LinkTypes> supportedShareLinkTypes =
+            new List<VgcApis.Models.Datas.Enums.LinkTypes>
             {
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.trojan,
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.socks,
+                VgcApis.Models.Datas.Enums.LinkTypes.mob,
             };
 
-            for (int i = 0; i < ts.Count; i++)
+        void InitCboxShareLinkType()
+        {
+            cboxShareLinkType.Items.Clear();
+            foreach (var ty in supportedShareLinkTypes)
             {
-                if (!string.IsNullOrEmpty(slinkMgr.EncodeConfigToShareLink(name, config, ts[i])))
+                cboxShareLinkType.Items.Add($"{ty}");
+            }
+        }
+
+        void AutoSelectShareLinkType()
+        {
+            var slinkMgr = Services.ShareLinkMgr.Instance;
+            var config = coreServ.GetConfiger().GetConfig();
+            var name = coreServ.GetCoreStates().GetName();
+
+            for (int i = 0; i < supportedShareLinkTypes.Count; i++)
+            {
+                if (
+                    !string.IsNullOrEmpty(
+                        slinkMgr.EncodeConfigToShareLink(name, config, supportedShareLinkTypes[i])
+                    )
+                )
                 {
                     cboxShareLinkType.SelectedIndex = i;
                     return;
@@ -179,6 +196,9 @@ namespace V2RayGCon.Views.WinForms
             var ty = VgcApis.Models.Datas.Enums.LinkTypes.ss;
             switch (cboxShareLinkType.Text.ToLower())
             {
+                case "mob":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.mob;
+                    break;
                 case "vmess":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
                     break;

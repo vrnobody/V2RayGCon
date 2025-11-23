@@ -765,6 +765,17 @@ namespace V2RayGCon.Views.UserControls
             SetServerTitleLabelFontStyle(chkSelected.Checked);
         }
 
+        private void mobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = slinkMgr.EncodeConfigToShareLink(
+                coreServCtrl.GetCoreStates().GetName(),
+                GetConfig(),
+                VgcApis.Models.Datas.Enums.LinkTypes.mob
+            );
+
+            Misc.Utils.CopyToClipboardAndPrompt(content);
+        }
+
         private void autoShareLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var url = coreServCtrl?.GetConfiger()?.GetShareLink();

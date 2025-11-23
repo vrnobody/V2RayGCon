@@ -2,6 +2,7 @@
 {
     public class ImportSharelinkOptions
     {
+        public bool IsImportMobShareLink { get; set; } = true;
         public bool IsImportVmessShareLink { get; set; } = true;
         public bool IsImportVlessShareLink { get; set; } = true;
 

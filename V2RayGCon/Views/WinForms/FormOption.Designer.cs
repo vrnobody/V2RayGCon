@@ -83,6 +83,7 @@
             this.chkIsUseCustomUserAgent = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cboxDefImportCoreName = new System.Windows.Forms.ComboBox();
+            this.chkDefImportMobShareLink = new System.Windows.Forms.CheckBox();
             this.chkDefImportVlessShareLink = new System.Windows.Forms.CheckBox();
             this.chkDefImportVmessShareLink = new System.Windows.Forms.CheckBox();
             this.chkDefImportSocksShareLink = new System.Windows.Forms.CheckBox();
@@ -573,6 +574,7 @@
             // 
             resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Controls.Add(this.cboxDefImportCoreName);
+            this.groupBox4.Controls.Add(this.chkDefImportMobShareLink);
             this.groupBox4.Controls.Add(this.chkDefImportVlessShareLink);
             this.groupBox4.Controls.Add(this.chkDefImportVmessShareLink);
             this.groupBox4.Controls.Add(this.chkDefImportSocksShareLink);
@@ -594,6 +596,13 @@
             this.cboxDefImportCoreName.FormattingEnabled = true;
             this.cboxDefImportCoreName.Name = "cboxDefImportCoreName";
             this.toolTip1.SetToolTip(this.cboxDefImportCoreName, resources.GetString("cboxDefImportCoreName.ToolTip"));
+            // 
+            // chkDefImportMobShareLink
+            // 
+            resources.ApplyResources(this.chkDefImportMobShareLink, "chkDefImportMobShareLink");
+            this.chkDefImportMobShareLink.Name = "chkDefImportMobShareLink";
+            this.toolTip1.SetToolTip(this.chkDefImportMobShareLink, resources.GetString("chkDefImportMobShareLink.ToolTip"));
+            this.chkDefImportMobShareLink.UseVisualStyleBackColor = true;
             // 
             // chkDefImportVlessShareLink
             // 
@@ -995,5 +1004,6 @@
         private System.Windows.Forms.CheckBox chkDefImportVmessShareLink;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RichTextBox rtboxCustomFilterKeywords;
+        private System.Windows.Forms.CheckBox chkDefImportMobShareLink;
     }
 }

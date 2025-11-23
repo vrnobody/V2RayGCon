@@ -72,6 +72,15 @@
     "protocol": "socks",
     "settings": {}
   },
+  "outbMobSimple": {
+    "protocol": "vless",
+    "settings": {
+      "address": "127.0.0.1",
+      "port": 8080
+    },
+    "tag": "agentout",
+    "streamSettings": {}
+  },
   "outbVless": {
     "protocol": "vmess",
     "settings": {

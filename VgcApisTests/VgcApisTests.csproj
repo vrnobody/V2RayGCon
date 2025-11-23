@@ -76,6 +76,7 @@
     <Compile Include="LibsTests\BoolExprFilterTests.cs" />
     <Compile Include="LibsTests\MrePoolTest.cs" />
     <Compile Include="LibsTests\WaiterTest.cs" />
+    <Compile Include="ModelTests\MobItemTests.cs" />
     <Compile Include="VeeLegacyTests\BitStreamTests.cs" />
     <Compile Include="LibsTests\ArrayPoolMemoryStreamTests.cs" />
     <Compile Include="LibsTests\AsciiRoStrStreamTests.cs" />

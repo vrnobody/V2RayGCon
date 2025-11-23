@@ -75,6 +75,8 @@ namespace V2RayGCon.Services
                     return codecs.Decode<V2cfgDecoder>(shareLink);
                 case Enums.LinkTypes.vless:
                     return codecs.Decode<VlessDecoder>(shareLink);
+                case Enums.LinkTypes.mob:
+                    return codecs.Decode<MobDecoder>(shareLink);
                 case Enums.LinkTypes.trojan:
                     return codecs.Decode<TrojanDecoder>(shareLink);
                 case Enums.LinkTypes.socks:
@@ -115,6 +117,8 @@ namespace V2RayGCon.Services
                     return codecs.Encode<V2cfgDecoder>(name, config);
                 case Enums.LinkTypes.vless:
                     return codecs.Encode<VlessDecoder>(name, config);
+                case Enums.LinkTypes.mob:
+                    return codecs.Encode<MobDecoder>(name, config);
                 case Enums.LinkTypes.trojan:
                     return codecs.Encode<TrojanDecoder>(name, config);
                 default:
@@ -200,6 +204,7 @@ namespace V2RayGCon.Services
             Enums.LinkTypes.trojan,
             Enums.LinkTypes.ss,
             Enums.LinkTypes.socks,
+            Enums.LinkTypes.mob,
         };
 
         int CountImportSuccessResult(IEnumerable<string[]> result)

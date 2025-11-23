@@ -964,19 +964,7 @@
     <value>3</value>
   </data>
   <data name="cboxShareLinkType.Items" xml:space="preserve">
-    <value>vmess</value>
-  </data>
-  <data name="cboxShareLinkType.Items1" xml:space="preserve">
-    <value>vless</value>
-  </data>
-  <data name="cboxShareLinkType.Items2" xml:space="preserve">
-    <value>trojan</value>
-  </data>
-  <data name="cboxShareLinkType.Items3" xml:space="preserve">
-    <value>ss</value>
-  </data>
-  <data name="cboxShareLinkType.Items4" xml:space="preserve">
-    <value>socks</value>
+    <value>use code to init this control</value>
   </data>
   <data name="cboxShareLinkType.Location" type="System.Drawing.Point, System.Drawing">
     <value>44, 20</value>

@@ -245,6 +245,7 @@ namespace V2RayGCon.Views.WinForms
                     //ToolStripMenuItem copyAsSubscriptions,
                     toolStripMenuItemCopyAsV2cfgLink,
                     toolStripMenuItemCopyAsVmixLink,
+                    toolStripMenuItemCopyAsMobLink,
                     //// batch op
                     toolStripMenuItemStopBatchSpeedTest,
                     toolStripMenuItemRunBatchSpeedTest,

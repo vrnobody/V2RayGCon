@@ -99,6 +99,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCopyAsV2cfgLink = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCopyAsVmixLink = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCopyAsMobLink = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemMoveToTop = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemMoveToBottom = new System.Windows.Forms.ToolStripMenuItem();
@@ -626,7 +627,8 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemCopyAsV2cfgLink,
-            this.toolStripMenuItemCopyAsVmixLink});
+            this.toolStripMenuItemCopyAsVmixLink,
+            this.toolStripMenuItemCopyAsMobLink});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             // 
             // toolStripMenuItemCopyAsV2cfgLink
@@ -638,6 +640,11 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.toolStripMenuItemCopyAsVmixLink, "toolStripMenuItemCopyAsVmixLink");
             this.toolStripMenuItemCopyAsVmixLink.Name = "toolStripMenuItemCopyAsVmixLink";
+            // 
+            // toolStripMenuItemCopyAsMobLink
+            // 
+            resources.ApplyResources(this.toolStripMenuItemCopyAsMobLink, "toolStripMenuItemCopyAsMobLink");
+            this.toolStripMenuItemCopyAsMobLink.Name = "toolStripMenuItemCopyAsMobLink";
             // 
             // toolStripMenuItem7
             // 
@@ -1067,5 +1074,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem selectUntrackCurPageToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItemMoveToCustomIndex;
         private ToolStripMenuItem toolStripMenuItemKeyGenForm;
+        private ToolStripMenuItem toolStripMenuItemCopyAsMobLink;
     }
 }

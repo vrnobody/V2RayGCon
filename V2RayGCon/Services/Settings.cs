@@ -416,6 +416,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool CustomDefImportMobShareLink
+        {
+            get => userSettings.ImportOptions.IsImportMobShareLink;
+            set
+            {
+                userSettings.ImportOptions.IsImportMobShareLink = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool CustomDefImportVlessShareLink
         {
             get => userSettings.ImportOptions.IsImportVlessShareLink;

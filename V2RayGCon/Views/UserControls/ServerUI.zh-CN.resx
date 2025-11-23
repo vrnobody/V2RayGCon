@@ -150,14 +150,30 @@
   <data name="btnRestart.ToolTip" xml:space="preserve">
     <value>重启这个服务器</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>移动</value>
   </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>复制</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
     <value>设定及二维码</value>
@@ -165,11 +181,17 @@
   <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>调出修改设置窗口</value>
   </data>
+  <data name="textEditortoolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="textEditortoolStripMenuItem.Text" xml:space="preserve">
     <value>Text 编辑器</value>
   </data>
   <data name="textEditortoolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>编辑配置</value>
+  </data>
+  <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
     <value>查看最终配置(只读)</value>
@@ -177,11 +199,23 @@
   <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>传给v2ray-core的最终配置</value>
   </data>
+  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="logOfThisServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
     <value>此服务器日志</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
     <value>速度测试</value>
@@ -189,11 +223,20 @@
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>下载测试网页所需的时间</value>
   </data>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 214</value>
+  </data>
+  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
+  </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>
   </data>
   <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭全部服务器，然后运行这个服务器</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
   <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
     <value>多开</value>
@@ -201,11 +244,17 @@
   <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
   </data>
+  <data name="restartToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
+  </data>
   <data name="restartToolStripMenuItem.Text" xml:space="preserve">
     <value>重启</value>
   </data>
   <data name="restartToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>重启这个服务器</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
   <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
     <value>停止</value>
@@ -213,11 +262,17 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>停止这个服务器</value>
   </data>
+  <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
+  </data>
   <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
     <value>置顶</value>
   </data>
   <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>将此服务器移至顶部</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
   </data>
   <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
     <value>置底</value>
@@ -225,8 +280,14 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>将此服务器移至底部</value>
   </data>
+  <data name="toCustomIndexToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
+  </data>
   <data name="toCustomIndexToolStripMenuItem.Text" xml:space="preserve">
     <value>至指定序号</value>
+  </data>
+  <data name="mobToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>只包含第一个出站的主要配置信息</value>
   </data>
   <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>只包含第一个出站的主要配置信息</value>

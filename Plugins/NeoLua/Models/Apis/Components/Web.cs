@@ -254,6 +254,7 @@ namespace NeoLuna.Models.Apis.Components
                 VgcApis.Models.Datas.Enums.LinkTypes.v2cfg,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+                VgcApis.Models.Datas.Enums.LinkTypes.mob,
             };
 
             var r = new List<string>();

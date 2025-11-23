@@ -10,6 +10,56 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public Codecs() { }
 
         #region vless and trojan
+        public string MobToConfigSimple(VgcApis.Models.Datas.SharelinkMetaData meta)
+        {
+            if (meta == null)
+            {
+                return null;
+            }
+
+            var outb = Misc.Caches.Jsons.LoadTemplate("outbMobSimple");
+            outb["streamSettings"] = Comm.GenStreamSetting(meta);
+
+            // mob.server and mob.protocol
+            outb["protocol"] = meta.proto;
+            var s = outb["settings"];
+            s["address"] = meta.host;
+            s["port"] = meta.port;
+
+            switch (meta.proto)
+            {
+                case "ss":
+                case "shadowsocks":
+                    s["password"] = meta.auth1;
+                    s["password"] = meta.auth2;
+                    break;
+                case "socks":
+                    s["user"] = meta.auth1;
+                    s["pass"] = meta.auth2;
+                    break;
+                case "trojan":
+                    s["password"] = meta.auth1;
+                    break;
+                case "vless":
+                    s["id"] = meta.auth1;
+                    if (!string.IsNullOrEmpty(meta.auth2))
+                    {
+                        s["flow"] = meta.auth2;
+                    }
+                    s["encryption"] = string.IsNullOrEmpty(meta.auth3) ? "none" : meta.auth3;
+                    break;
+                case "vmess":
+                    s["id"] = meta.auth1;
+                    break;
+                default:
+                    // pass
+                    break;
+            }
+
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
+            return GenerateJsonConfing(tpl, outb);
+        }
+
         public string TrojanToConfig(VgcApis.Models.Datas.SharelinkMetaData vee)
         {
             if (vee == null)
@@ -168,6 +218,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var trojanDecoder = new TrojanDecoder();
             var vlessDecoder = new VlessDecoder();
             var socksDecoder = new SocksDecoder();
+            var mobDecoder = new MobDecoder();
 
             AddChild(vlessDecoder);
             AddChild(trojanDecoder);
@@ -175,11 +226,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(socksDecoder);
             AddChild(v2cfgDecoder);
             AddChild(vmessDecoder);
+            AddChild(mobDecoder);
         }
 
         public List<VgcApis.Interfaces.IShareLinkDecoder> GetDecoders(bool isIncludeV2cfgDecoder)
         {
             var r = new List<VgcApis.Interfaces.IShareLinkDecoder>();
+
+            if (settings.CustomDefImportMobShareLink)
+            {
+                r.Add(GetChild<MobDecoder>());
+            }
 
             if (settings.CustomDefImportVlessShareLink)
             {

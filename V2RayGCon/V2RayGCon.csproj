@@ -244,6 +244,7 @@
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
     <Compile Include="Services\ShareLinkComponents\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\SocksDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\MobDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VlessDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\TrojanDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />

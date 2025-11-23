@@ -123,6 +123,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return null;
         }
 
+        public string GetMobShareLink()
+        {
+            var name = GetSibling<CoreStates>().GetName();
+            var config = GetConfig();
+            return ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config, Enums.LinkTypes.mob);
+        }
+
         public string GetShareLink()
         {
             var name = GetSibling<CoreStates>().GetName();

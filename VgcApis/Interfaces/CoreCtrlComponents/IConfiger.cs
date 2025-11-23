@@ -50,6 +50,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetShareLink();
 
         /// <summary>
+        /// 获取 mob://... 分享链接
+        /// </summary>
+        /// <returns>分享链接</returns>
+        string GetMobShareLink();
+
+        /// <summary>
         /// 获取分享链接元数据
         /// </summary>
         /// <returns>分享链接元数据</returns>

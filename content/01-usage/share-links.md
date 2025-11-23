@@ -5,6 +5,9 @@ draft: false
 weight: 80
 ---
 
+##### mob://...
+mob 是 meta outbound 的缩写。这是一个还处于试验阶段的新分享链接格式。详见 [mob://...]({{< relref "01-usage/mob-share-link.md" >}})
+
 ##### socks://...
 `v1.8.9` 起支持 v2rayN 的 `socks://auth@host:port#remark` 链接  
 auth 是把 `username:password` 进行 base64 编码得出  
@@ -64,6 +67,7 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 | userSettings.json | 180 |
 | vless | 200 |
 | trojan | 200 |
+| mob | 300 |
 | vmess | 300 |
 | v2cfg v2 | 800 |
 | config.json | 1000 |

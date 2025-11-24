@@ -35,20 +35,20 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。意思是 (M)eta(
 |vmess|UUID|||
 |vless|UUID|flow|encryption|
 |trojan|password|flow||
-|ss|password|method||
+|ss / shadowsocks|password|method||
 |socks|user name|password||
 |http|user name|password||
 
-注1：ss 和 shadowsocks 等价  
-注2: V2RayGCon v2.2.1.3+ 才支持 http 协议  
+注1: V2RayGCon v2.2.1.3+ 才支持 http 协议  
 
 #### stream 配置数组
 |参数 #1|参数 #2|参数 #3|参数 #4|
 |-|-|-|-|
-|tcp|type|path|host|
+|tcp / raw||||
 |ws|path|host||
 |h2|path|host||
 |xhttp|mode|path|host|
+|grpc|multi mode: "true" / "false"|service name|authority|
 
 注：stream: [] 表示 streamSettings 留空。
 

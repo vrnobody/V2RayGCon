@@ -154,7 +154,7 @@
     <value>287, 20</value>
   </data>
   <data name="cboxStreamParma1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;cboxStreamParma1.Name" xml:space="preserve">
     <value>cboxStreamParma1</value>
@@ -538,7 +538,7 @@
     <value>84, 16</value>
   </data>
   <data name="chkTlsCertSelfSign.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="chkTlsCertSelfSign.Text" xml:space="preserve">
     <value>SelfSigned</value>
@@ -670,7 +670,7 @@
     <value>Fingerprint</value>
   </data>
   <data name="label2.ToolTip" xml:space="preserve">
-    <value>(x)tlsSettings.serverName</value>
+    <value>(x)tlsSettings.fingerprint</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -706,7 +706,7 @@
     <value>ALPN</value>
   </data>
   <data name="label6.ToolTip" xml:space="preserve">
-    <value>(x)tlsSettings.serverName</value>
+    <value>(x)tlsSettings.alpn</value>
   </data>
   <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
@@ -739,7 +739,7 @@
     <value>PublicKey</value>
   </data>
   <data name="lbRealityPubKey.ToolTip" xml:space="preserve">
-    <value>(x)tlsSettings.serverName</value>
+    <value>(x)tls.echConfigList / realitySettings.publicKey</value>
   </data>
   <data name="&gt;&gt;lbRealityPubKey.Name" xml:space="preserve">
     <value>lbRealityPubKey</value>
@@ -772,7 +772,7 @@
     <value>ShortId</value>
   </data>
   <data name="label9.ToolTip" xml:space="preserve">
-    <value>(x)tlsSettings.serverName</value>
+    <value>realitySettings.shortId</value>
   </data>
   <data name="&gt;&gt;label9.Name" xml:space="preserve">
     <value>label9</value>
@@ -808,7 +808,7 @@
     <value>SpiderX</value>
   </data>
   <data name="label10.ToolTip" xml:space="preserve">
-    <value>(x)tlsSettings.serverName</value>
+    <value>realitySettings.spiderX</value>
   </data>
   <data name="&gt;&gt;label10.Name" xml:space="preserve">
     <value>label10</value>
@@ -865,7 +865,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxStreamParam2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam2.Name" xml:space="preserve">
     <value>tboxStreamParam2</value>
@@ -889,7 +889,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxStreamParam3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam3.Name" xml:space="preserve">
     <value>tboxStreamParam3</value>
@@ -1066,7 +1066,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxAuth3.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;tboxAuth3.Name" xml:space="preserve">
     <value>tboxAuth3</value>
@@ -1150,7 +1150,7 @@
     <value>128, 20</value>
   </data>
   <data name="cboxTlsFingerprint.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;cboxTlsFingerprint.Name" xml:space="preserve">
     <value>cboxTlsFingerprint</value>
@@ -1174,7 +1174,7 @@
     <value>100, 21</value>
   </data>
   <data name="tboxTlsSpiderX.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;tboxTlsSpiderX.Name" xml:space="preserve">
     <value>tboxTlsSpiderX</value>
@@ -1198,7 +1198,7 @@
     <value>128, 21</value>
   </data>
   <data name="tboxTlsShortId.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;tboxTlsShortId.Name" xml:space="preserve">
     <value>tboxTlsShortId</value>
@@ -1222,7 +1222,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxRealityMlDsa65Verify.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;tboxRealityMlDsa65Verify.Name" xml:space="preserve">
     <value>tboxRealityMlDsa65Verify</value>
@@ -1246,7 +1246,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxTlsPublicKey.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;tboxTlsPublicKey.Name" xml:space="preserve">
     <value>tboxTlsPublicKey</value>
@@ -1270,7 +1270,7 @@
     <value>100, 21</value>
   </data>
   <data name="tboxTlsAlpn.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;tboxTlsAlpn.Name" xml:space="preserve">
     <value>tboxTlsAlpn</value>
@@ -1294,7 +1294,7 @@
     <value>287, 21</value>
   </data>
   <data name="tboxTlsServName.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;tboxTlsServName.Name" xml:space="preserve">
     <value>tboxTlsServName</value>

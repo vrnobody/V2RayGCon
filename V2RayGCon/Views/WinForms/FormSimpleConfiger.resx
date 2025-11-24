@@ -136,7 +136,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnClient.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="btnClient.Text" xml:space="preserve">
     <value>Gen. Client</value>
@@ -169,7 +169,7 @@
     <value>84, 21</value>
   </data>
   <data name="btnServer.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="btnServer.Text" xml:space="preserve">
     <value>Copy Server</value>
@@ -202,7 +202,7 @@
     <value>56, 21</value>
   </data>
   <data name="btnExit.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="btnExit.Text" xml:space="preserve">
     <value>Exit</value>
@@ -241,7 +241,7 @@
     <value>SimpleConfigerUI1</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.1.5.6, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.2.1.3, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>

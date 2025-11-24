@@ -90,12 +90,13 @@ namespace VgcApis.Models.Datas
             return fields;
         }
 
-        void SetFieldsValue(Object obj, List<FieldInfo> fields, List<string> values)
+        void SetFieldsValue(SharelinkMetaData meta, List<FieldInfo> fields, List<string> values)
         {
-            for (int i = values.Count - 1; i >= 0; i--)
+            var last = Math.Min(fields.Count, values.Count) - 1;
+            for (int i = last; i >= 0; i--)
             {
                 var field = fields[i];
-                field?.SetValue(obj, values[i]);
+                field?.SetValue(meta, values[i]);
             }
         }
 
@@ -130,10 +131,12 @@ namespace VgcApis.Models.Datas
         // This function could throw exception!
         public SharelinkMetaData ToShareLinkMetaData()
         {
-            var meta = new SharelinkMetaData();
-            meta.name = server[0];
-            meta.host = server[1];
-            meta.port = Misc.Utils.Str2Int(server[2]);
+            var meta = new SharelinkMetaData
+            {
+                name = server[0],
+                host = server[1],
+                port = Misc.Utils.Str2Int(server[2]),
+            };
 
             SetFieldsValue(meta, metaProtoFields, protocol);
             SetFieldsValue(meta, metaStreamFields, stream);

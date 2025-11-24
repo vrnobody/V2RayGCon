@@ -55,9 +55,9 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。意思是 (M)eta(
 #### enc 配置数组
 |参数 #1|参数 #2|参数 #3|参数 #4|参数 #5|参数 #6|参数 #7|参数 #8|
 |-|-|-|-|-|-|-|-|
-|tls|server name|finger print|alpn|ech|||||
-|xtls|server name|finger print|alpn|ech|||||
-|reality|server name|finger print|alpn|public key|short ID|spider X|ML-DSA-65|
+|tls|server name|fingerprint|alpn|ech|||||
+|xtls|server name|fingerprint|alpn|ech|||||
+|reality|server name|fingerprint|alpn|public key|short ID|spider X|ML-DSA-65|
 
 注：enc: [] 表示 tls/xtls/... 配置留空。
 

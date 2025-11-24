@@ -6,7 +6,7 @@ weight: 80
 ---
 
 ##### mob://...
-mob 是 meta outbound 的缩写。这是一个还处于试验阶段的新分享链接格式。详见 [mob://...]({{< relref "01-usage/mob-share-link.md" >}})
+mob 是 MetaOutBound 的缩写。这个链接还处于试验阶段。详见 [mob://...]({{< relref "01-usage/mob-share-link.md" >}})
 
 ##### socks://...
 `v1.8.9` 起支持 v2rayN 的 `socks://auth@host:port#remark` 链接  

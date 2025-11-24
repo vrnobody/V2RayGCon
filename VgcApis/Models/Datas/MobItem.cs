@@ -64,6 +64,7 @@ namespace VgcApis.Models.Datas
         };
         static List<string> metaTlsKeys = new List<string>()
         {
+            // tlsType is a property, metaTlsFields[0] will be null
             nameof(SharelinkMetaData.tlsType),
             nameof(SharelinkMetaData.tlsServName),
             nameof(SharelinkMetaData.tlsFingerPrint),
@@ -137,8 +138,10 @@ namespace VgcApis.Models.Datas
             SetFieldsValue(meta, metaProtoFields, protocol);
             SetFieldsValue(meta, metaStreamFields, stream);
             SetFieldsValue(meta, metaTlsFields, enc);
-            meta.tlsType = enc[0];
-
+            if (enc.Count > 0)
+            {
+                meta.tlsType = enc[0];
+            }
             return meta;
         }
         #endregion

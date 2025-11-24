@@ -33,15 +33,16 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.1.2")]
+[assembly: AssemblyVersion("2.2.1.3")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
-// postpone vless://... decoder support
+// postpone vless://... decode support
 // config example https://github.com/XTLS/Xray-core/pull/5124
 
 /*
 
+v2.2.1.3 Add http protocol to mob://...
 v2.2.1.2 Add wserv:GetMobShareLink() in NeoLuna plug-in.
 v2.2.1.1 Add new share link format mob://...
 --------------------------------------------------------------------

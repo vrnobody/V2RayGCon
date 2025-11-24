@@ -33,6 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     s["password"] = meta.auth1;
                     s["password"] = meta.auth2;
                     break;
+                case "http":
                 case "socks":
                     s["user"] = meta.auth1;
                     s["pass"] = meta.auth2;

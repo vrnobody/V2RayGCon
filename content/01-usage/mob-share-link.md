@@ -36,17 +36,15 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。意思是 (M)eta(
 |vless|UUID|flow|encryption|
 |trojan|password|flow||
 |ss / shadowsocks|password|method||
-|socks|user name|password||
-|http|user name|password||
+|socks / http|user name|password||
 
-注1: V2RayGCon v2.2.1.3+ 才支持 http 协议  
+注: V2RayGCon v2.2.1.3+ 才支持 http 协议  
 
 #### stream 配置数组
 |参数 #1|参数 #2|参数 #3|参数 #4|
 |-|-|-|-|
 |tcp / raw||||
-|ws|path|host||
-|h2|path|host||
+|ws / h2 / httpupgrade|path|host||
 |xhttp|mode|path|host|
 |grpc|multi mode: "true" / "false"|service name|authority|
 
@@ -55,8 +53,7 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。意思是 (M)eta(
 #### enc 配置数组
 |参数 #1|参数 #2|参数 #3|参数 #4|参数 #5|参数 #6|参数 #7|参数 #8|
 |-|-|-|-|-|-|-|-|
-|tls|server name|fingerprint|alpn|ech|||||
-|xtls|server name|fingerprint|alpn|ech|||||
+|tls / xtls|server name|fingerprint|alpn|ech|||||
 |reality|server name|fingerprint|alpn|public key|short ID|spider X|ML-DSA-65|
 
 注：enc: [] 表示 tls/xtls/... 配置留空。

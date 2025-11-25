@@ -253,6 +253,7 @@ namespace V2RayGCon.Services
                 VgcApis.Libs.Sys.FileLogger.Warn($"detect session ending event: {a.Reason}");
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.PowerOff);
 
+                SetStateClosing();
                 servers?.SaveServersSettingNow();
                 setting.SaveUserSettingsNow();
 
@@ -305,6 +306,12 @@ namespace V2RayGCon.Services
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
         }
 
+        void SetStateClosing()
+        {
+            setting.SetIsClosing(true);
+            setting.isSpeedtestCancelled = true;
+        }
+
         readonly object disposeLocker = new object();
 
         void DisposeAllServices()
@@ -328,8 +335,7 @@ namespace V2RayGCon.Services
                 isDisposing = true;
             }
 
-            setting.SetIsClosing(true);
-            setting.isSpeedtestCancelled = true;
+            SetStateClosing();
 
             foreach (var service in services)
             {

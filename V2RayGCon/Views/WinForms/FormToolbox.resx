@@ -117,36 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>582, 386</value>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
-  <data name="uRIToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+  <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Close</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
-    <value>toolStripMenuItem2</value>
+  <data name="uUIDV4ToolStripMenuItem.Text" xml:space="preserve">
+    <value>UUID v4</value>
   </data>
   <data name="toolToolStripMenuItem1.Text" xml:space="preserve">
     <value>Tool</value>
   </data>
+  <data name="&gt;&gt;mobToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="numAlphabetSymbolToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Alphabet + Number + Symbol</value>
+  </data>
+  <data name="base64ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Base64</value>
   </data>
   <data name="&gt;&gt;hexToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 21</value>
   </data>
-  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Key</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="&gt;&gt;scanQRCodeToolStripMenuItem1.Name" xml:space="preserve">
-    <value>scanQRCodeToolStripMenuItem1</value>
+  <data name="rtboxOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>582, 361</value>
   </data>
   <data name="&gt;&gt;uRIToolStripMenuItem.Name" xml:space="preserve">
     <value>uRIToolStripMenuItem</value>
@@ -159,6 +159,9 @@
   </data>
   <data name="x25519ToolStripMenuItem.Text" xml:space="preserve">
     <value>x25519</value>
+  </data>
+  <data name="mobToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="&gt;&gt;tLSCertToolStripMenuItem.Name" xml:space="preserve">
     <value>tLSCertToolStripMenuItem</value>
@@ -178,17 +181,17 @@
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 6</value>
   </data>
-  <data name="&gt;&gt;toolToolStripMenuItem.Name" xml:space="preserve">
-    <value>toolToolStripMenuItem</value>
+  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>decode vmess://... body</value>
   </data>
-  <data name="&gt;&gt;generateToolStripMenuItem.Name" xml:space="preserve">
-    <value>generateToolStripMenuItem</value>
+  <data name="&gt;&gt;fromFileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;watchClipboardToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;x25519ToolStripMenuItem.Name" xml:space="preserve">
-    <value>x25519ToolStripMenuItem</value>
+  <data name="&gt;&gt;scanQRCodeToolStripMenuItem1.Name" xml:space="preserve">
+    <value>scanQRCodeToolStripMenuItem1</value>
   </data>
   <data name="unicodeToolStripMenuItem1.Text" xml:space="preserve">
     <value>Unicode</value>
@@ -207,7 +210,7 @@
     <value>ML-KEM-768</value>
   </data>
   <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="&gt;&gt;closeToolStripMenuItem1.Name" xml:space="preserve">
     <value>closeToolStripMenuItem1</value>
@@ -236,8 +239,11 @@
   <data name="&gt;&gt;vmessToolStripMenuItem.Name" xml:space="preserve">
     <value>vmessToolStripMenuItem</value>
   </data>
-  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 21</value>
+  <data name="mobToolStripMenuItem.Text" xml:space="preserve">
+    <value>mob://...</value>
+  </data>
+  <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
+    <value>TLS Cert</value>
   </data>
   <data name="&gt;&gt;mLDSA65ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -249,22 +255,22 @@
     <value>base64ToolStripMenuItem</value>
   </data>
   <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="base64ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
   <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="&gt;&gt;saveAsToolStripMenuItem.Name" xml:space="preserve">
     <value>saveAsToolStripMenuItem</value>
   </data>
-  <data name="uUIDV4ToolStripMenuItem.Text" xml:space="preserve">
-    <value>UUID v4</value>
+  <data name="unicodeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Unicode</value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;toolToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
     <value>Save as</value>
@@ -282,10 +288,13 @@
     <value>180, 22</value>
   </data>
   <data name="currentTextToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>144, 22</value>
   </data>
   <data name="hashesToolStripMenuItem.Text" xml:space="preserve">
     <value>Calc hashes</value>
+  </data>
+  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="&gt;&gt;unicodeToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -299,17 +308,20 @@
   <data name="&gt;&gt;uRIToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
-  <data name="numberToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 22</value>
+  </data>
+  <data name="&gt;&gt;numberToolStripMenuItem.Name" xml:space="preserve">
+    <value>numberToolStripMenuItem</value>
   </data>
   <data name="hexToolStripMenuItem.Text" xml:space="preserve">
     <value>Hex</value>
-  </data>
-  <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Close</value>
   </data>
   <data name="uRIToolStripMenuItem1.Text" xml:space="preserve">
     <value>URI</value>
@@ -323,23 +335,26 @@
   <data name="closeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
   </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>582, 386</value>
+  </data>
   <data name="numAlphabetSymbolToolStripMenuItem.Text" xml:space="preserve">
     <value>Symbol+</value>
   </data>
-  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormToolbox</value>
   </data>
   <data name="&gt;&gt;unicodeToolStripMenuItem1.Name" xml:space="preserve">
     <value>unicodeToolStripMenuItem1</value>
   </data>
-  <data name="&gt;&gt;numberToolStripMenuItem.Name" xml:space="preserve">
-    <value>numberToolStripMenuItem</value>
-  </data>
   <data name="toolStripMenuItemPaste.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
   </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>582, 25</value>
+  <data name="uRIToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="numberToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
   </data>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -380,11 +395,8 @@
   <data name="numberToolStripMenuItem.Text" xml:space="preserve">
     <value>Number</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;base64ToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;mobToolStripMenuItem.Name" xml:space="preserve">
+    <value>mobToolStripMenuItem</value>
   </data>
   <data name="rtboxOutput.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 25</value>
@@ -407,14 +419,11 @@
   <data name="toolToolStripMenuItem.Text" xml:space="preserve">
     <value>Transform</value>
   </data>
-  <data name="rtboxOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>582, 361</value>
+  <data name="&gt;&gt;rtboxOutput.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormToolbox</value>
-  </data>
-  <data name="&gt;&gt;numAlphabetSymbolToolStripMenuItem.Name" xml:space="preserve">
-    <value>numAlphabetSymbolToolStripMenuItem</value>
+  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
+    <value>toolStripMenuItem2</value>
   </data>
   <data name="&gt;&gt;mLKEM768ToolStripMenuItem.Name" xml:space="preserve">
     <value>mLKEM768ToolStripMenuItem</value>
@@ -428,8 +437,8 @@
   <data name="&gt;&gt;scanQRCodeToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="watchClipboardToolStripMenuItem.Text" xml:space="preserve">
+    <value>Watch clipboard</value>
   </data>
   <data name="upperCaseToolStripMenuItem.Text" xml:space="preserve">
     <value>To upper case</value>
@@ -446,8 +455,8 @@
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
-    <value>TLS Cert</value>
+  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Name" xml:space="preserve">
+    <value>lowerCaseToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;passwordToolStripMenuItem.Name" xml:space="preserve">
     <value>passwordToolStripMenuItem</value>
@@ -455,8 +464,11 @@
   <data name="numAlphabetToolStripMenuItem.Text" xml:space="preserve">
     <value>Alphabet+</value>
   </data>
-  <data name="watchClipboardToolStripMenuItem.Text" xml:space="preserve">
-    <value>Watch clipboard</value>
+  <data name="&gt;&gt;generateToolStripMenuItem.Name" xml:space="preserve">
+    <value>generateToolStripMenuItem</value>
+  </data>
+  <data name="mobToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>decode mob://... body</value>
   </data>
   <data name="&gt;&gt;base64ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -489,20 +501,20 @@
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="fromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="&gt;&gt;x25519ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+  <data name="fromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
   </data>
   <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
     <value>Encode</value>
   </data>
-  <data name="&gt;&gt;toolToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;x25519ToolStripMenuItem.Name" xml:space="preserve">
+    <value>x25519ToolStripMenuItem</value>
   </data>
   <data name="uRIToolStripMenuItem.Text" xml:space="preserve">
     <value>URI</value>
@@ -519,8 +531,8 @@
   <data name="lowerCaseToolStripMenuItem.Text" xml:space="preserve">
     <value>To lower case</value>
   </data>
-  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Name" xml:space="preserve">
-    <value>lowerCaseToolStripMenuItem</value>
+  <data name="&gt;&gt;generateToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;hashesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -537,17 +549,20 @@
   <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 21</value>
   </data>
+  <data name="currentTextToolStripMenuItem.Text" xml:space="preserve">
+    <value>Current text</value>
+  </data>
   <data name="&gt;&gt;mLDSA65ToolStripMenuItem.Name" xml:space="preserve">
     <value>mLDSA65ToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;tLSCertToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rtboxOutput.Parent" xml:space="preserve">
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="&gt;&gt;numAlphabetSymbolToolStripMenuItem.Name" xml:space="preserve">
+    <value>numAlphabetSymbolToolStripMenuItem</value>
+  </data>
   <data name="base64ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="&gt;&gt;toolToolStripMenuItem1.Name" xml:space="preserve">
     <value>toolToolStripMenuItem1</value>
@@ -558,11 +573,11 @@
   <data name="wireGuardToolStripMenuItem.Text" xml:space="preserve">
     <value>WireGuard</value>
   </data>
-  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
+  </data>
+  <data name="vlessencToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="&gt;&gt;mixedCaseToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -570,8 +585,8 @@
   <data name="&gt;&gt;convertToolStripMenuItem.Name" xml:space="preserve">
     <value>convertToolStripMenuItem</value>
   </data>
-  <data name="unicodeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Unicode</value>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>582, 25</value>
   </data>
   <data name="&gt;&gt;uRIToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -585,8 +600,8 @@
   <data name="&gt;&gt;decodeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+  <data name="&gt;&gt;toolToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;rtboxOutput.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -603,23 +618,17 @@
   <data name="&gt;&gt;upperCaseToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="currentTextToolStripMenuItem.Text" xml:space="preserve">
-    <value>Current text</value>
+  <data name="&gt;&gt;toolToolStripMenuItem.Name" xml:space="preserve">
+    <value>toolToolStripMenuItem</value>
   </data>
-  <data name="vlessencToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="&gt;&gt;fromFileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;numAlphabetToolStripMenuItem.Name" xml:space="preserve">
-    <value>numAlphabetToolStripMenuItem</value>
+  <data name="toolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 21</value>
   </data>
   <data name="watchClipboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
+  <data name="&gt;&gt;base64ToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;convertToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -633,8 +642,8 @@
   <data name="uRIToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
-  <data name="&gt;&gt;generateToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="generateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Key</value>
   </data>
   <data name="scanQRCodeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
@@ -642,17 +651,20 @@
   <data name="rtboxOutput.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
   <data name="menuStrip1.Text" xml:space="preserve">
     <value>menuStrip1</value>
   </data>
-  <data name="&gt;&gt;x25519ToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+  <data name="&gt;&gt;lowerCaseToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="mLKEM768ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -660,14 +672,17 @@
   <data name="toolStripMenuItemPaste.Text" xml:space="preserve">
     <value>Paste</value>
   </data>
+  <data name="&gt;&gt;tLSCertToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="unicodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="&gt;&gt;vmessToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="base64ToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Base64</value>
+  <data name="&gt;&gt;numAlphabetToolStripMenuItem.Name" xml:space="preserve">
+    <value>numAlphabetToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;base64ToolStripMenuItem1.Name" xml:space="preserve">
     <value>base64ToolStripMenuItem1</value>

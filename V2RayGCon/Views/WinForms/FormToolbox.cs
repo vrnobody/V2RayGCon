@@ -121,8 +121,8 @@ namespace V2RayGCon.Views.WinForms
                     if ((now - timestamp).TotalSeconds >= 3)
                     {
                         timestamp = now;
-                        VgcApis.Misc.UI.Invoke(
-                            () => SetResult("Hashing", $"Calculated: {total / 1024 / 1024} MiB")
+                        VgcApis.Misc.UI.Invoke(() =>
+                            SetResult("Hashing", $"Calculated: {total / 1024 / 1024} MiB")
                         );
                     }
                 }
@@ -362,7 +362,17 @@ namespace V2RayGCon.Views.WinForms
             SetResults("Decode - Base64", r);
         }
 
+        private void mobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DecodeBase64LinkBody("mob");
+        }
+
         private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DecodeBase64LinkBody("vmess");
+        }
+
+        private void DecodeBase64LinkBody(string tag)
         {
             // vmess://abc... -> vmess:::abc...
             var content = GetContent().Replace("://", ":::");
@@ -386,7 +396,7 @@ namespace V2RayGCon.Views.WinForms
                     r.Add(config);
                 }
             }
-            SetResults("Decode - vmess://...", r);
+            SetResults($"Decode - {tag}://...", r);
         }
 
         private void decodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -497,8 +507,8 @@ namespace V2RayGCon.Views.WinForms
 
             SetResult("Clipboard", "");
             VgcApis.Misc.Utils.ClearClipboard();
-            VgcApis.Misc.Utils.RunInBackground(
-                () => StartClipboardWatcher(clipboardWatcherCts.Token)
+            VgcApis.Misc.Utils.RunInBackground(() =>
+                StartClipboardWatcher(clipboardWatcherCts.Token)
             );
         }
 

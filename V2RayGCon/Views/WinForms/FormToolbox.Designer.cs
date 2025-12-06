@@ -56,6 +56,7 @@
             this.unicodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uRIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.encodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.base64ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.unicodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -237,7 +238,8 @@
             this.base64ToolStripMenuItem,
             this.unicodeToolStripMenuItem,
             this.uRIToolStripMenuItem,
-            this.vmessToolStripMenuItem});
+            this.vmessToolStripMenuItem,
+            this.mobToolStripMenuItem});
             this.decodeToolStripMenuItem.Name = "decodeToolStripMenuItem";
             // 
             // base64ToolStripMenuItem
@@ -263,6 +265,12 @@
             resources.ApplyResources(this.vmessToolStripMenuItem, "vmessToolStripMenuItem");
             this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
             this.vmessToolStripMenuItem.Click += new System.EventHandler(this.vmessToolStripMenuItem_Click);
+            // 
+            // mobToolStripMenuItem
+            // 
+            resources.ApplyResources(this.mobToolStripMenuItem, "mobToolStripMenuItem");
+            this.mobToolStripMenuItem.Name = "mobToolStripMenuItem";
+            this.mobToolStripMenuItem.Click += new System.EventHandler(this.mobToolStripMenuItem_Click);
             // 
             // encodeToolStripMenuItem
             // 
@@ -427,5 +435,6 @@
         private System.Windows.Forms.ToolStripMenuItem hashesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fromFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mobToolStripMenuItem;
     }
 }

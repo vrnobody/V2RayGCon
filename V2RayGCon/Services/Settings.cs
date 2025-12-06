@@ -220,6 +220,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region Properties
+        public long LastBootTimestamp
+        {
+            get => userSettings.LastBootTimestamp;
+            set
+            {
+                userSettings.LastBootTimestamp = value;
+                SaveSettingsLater();
+            }
+        }
+
         public string CustomFilterKeywords
         {
             get => userSettings.CustomFilterKeywords;

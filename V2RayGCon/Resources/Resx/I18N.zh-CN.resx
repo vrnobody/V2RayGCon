@@ -841,4 +841,12 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
     <value>使用旧版 GUI 可能导致配置数据丢失！
 继续启动程序吗？</value>
   </data>
+  <data name="WarnTrialEnds" xml:space="preserve">
+    <value>抱歉，这个软件的试用期已经结束！
+点击“是”访问注册页面。
+点击“否”退出。</value>
+  </data>
+  <data name="A1Message" xml:space="preserve">
+    <value>愚人节快乐！</value>
+  </data>
 </root>

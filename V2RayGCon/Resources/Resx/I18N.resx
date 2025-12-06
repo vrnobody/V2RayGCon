@@ -850,4 +850,12 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
     <value>Using old version GUI could cause data lost!
 Continue anyway?</value>
   </data>
+  <data name="WarnTrialEnds" xml:space="preserve">
+    <value>The trial period for this software has ended!
+Click "Yes" to register.
+Click "No" to exit.</value>
+  </data>
+  <data name="A1Message" xml:space="preserve">
+    <value>Happy Apirl 1st day!</value>
+  </data>
 </root>

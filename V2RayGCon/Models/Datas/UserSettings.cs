@@ -24,6 +24,9 @@ namespace V2RayGCon.Models.Datas
         public bool isEnableSystrayLeftClickCommand { get; set; }
 
         public string DebugLogFilePath { get; set; }
+
+        public long LastBootTimestamp { get; set; }
+
         public bool isEnableDebugFile { get; set; }
         public int QuickSwitchServerLatency { get; set; }
         public bool isAutoPatchSubsInfo { get; set; }

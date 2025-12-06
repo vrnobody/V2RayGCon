@@ -162,11 +162,34 @@ namespace V2RayGCon.Services
                 servers.WakeupServersInBootList();
             }
 
+            CheckLastBootTimestampBg();
             CheckForUpdateBg(setting.isCheckV2RayCoreUpdateWhenAppStart, V2RayCoreUpdater);
             CheckForUpdateBg(
                 setting.isCheckVgcUpdateWhenAppStart,
                 () => updater.CheckForUpdate(false)
             );
+        }
+
+        void CheckLastBootTimestampBg()
+        {
+            var utcTick = setting.LastBootTimestamp;
+            var now = DateTime.UtcNow.Ticks;
+            setting.LastBootTimestamp = now;
+
+            var exp = 42 - 1;
+            if (VgcApis.Misc.Utils.CheckTimestamp(utcTick, exp))
+            {
+                return;
+            }
+            if (!VgcApis.Misc.Utils.CheckTimestamp(now, exp))
+            {
+                return;
+            }
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                VgcApis.Misc.UI.ConfirmBg(I18N.WarnTrialEnds);
+                VgcApis.Misc.UI.MsgBoxBg("", I18N.A1Message);
+            });
         }
 
         void CheckForUpdateBg(bool flag, Action worker)

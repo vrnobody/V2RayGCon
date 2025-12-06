@@ -61,6 +61,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Happy Apirl 1st day! 的本地化字符串。
+        /// </summary>
+        internal static string A1Message {
+            get {
+                return ResourceManager.GetString("A1Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 About 的本地化字符串。
         /// </summary>
         internal static string About {
@@ -2170,6 +2179,17 @@ namespace V2RayGCon.Resources.Resx {
         internal static string WarnMultipleInstance {
             get {
                 return ResourceManager.GetString("WarnMultipleInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The trial period for this software has ended!
+        ///Click &quot;Yes&quot; to register.
+        ///Click &quot;No&quot; to exit. 的本地化字符串。
+        /// </summary>
+        internal static string WarnTrialEnds {
+            get {
+                return ResourceManager.GetString("WarnTrialEnds", resourceCulture);
             }
         }
         

@@ -533,15 +533,30 @@ namespace VgcApis.Misc
                 title = Utils.PrependTag(Properties.Resources.AppName);
             }
 
-            Invoke(
-                () =>
-                    MessageBox.Show(
-                        content ?? string.Empty,
-                        title,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.None,
-                        MessageBoxDefaultButton.Button1
-                    )
+            Invoke(() =>
+                MessageBox.Show(
+                    content ?? string.Empty,
+                    title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.None,
+                    MessageBoxDefaultButton.Button1
+                )
+            );
+        }
+
+        public static void MsgBoxBg(string title, string content)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                title = Utils.PrependTag(Properties.Resources.AppName);
+            }
+
+            MessageBox.Show(
+                content ?? string.Empty,
+                title,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None,
+                MessageBoxDefaultButton.Button1
             );
         }
 
@@ -553,6 +568,20 @@ namespace VgcApis.Misc
         public static void MsgBoxAsync(string title, string content)
         {
             Utils.RunInBackground(() => MsgBox(title, content));
+        }
+
+        public static bool ConfirmBg(string content)
+        {
+            var title = $"{Properties.Resources.AppName} - {I18N.Confirm}";
+            DialogResult ok = DialogResult.No;
+            ok = MessageBox.Show(
+                content,
+                Utils.PrependTag(title),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2
+            );
+            return ok == DialogResult.Yes;
         }
 
         public static bool Confirm(string content)

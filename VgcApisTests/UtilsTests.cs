@@ -114,6 +114,24 @@ namespace VgcApisTests
 
         #endregion
 
+        [TestMethod]
+        public void CheckTimestampTest()
+        {
+            var datas = new List<Tuple<int, int, int, bool>>
+            {
+                new Tuple<int, int, int, bool>(12, 6, 126, true),
+                new Tuple<int, int, int, bool>(12, 3, 123, true),
+                new Tuple<int, int, int, bool>(12, 3, 121, false),
+            };
+
+            foreach (var data in datas)
+            {
+                var utcTick = new DateTime(2025, data.Item1, data.Item2).ToUniversalTime().Ticks;
+                var r = CheckTimestamp(utcTick, data.Item3);
+                Assert.AreEqual(data.Item4, r);
+            }
+        }
+
         [DataTestMethod]
         [DataRow("f", "f", "f")]
         [DataRow("def", "ef", "")]

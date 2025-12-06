@@ -447,6 +447,17 @@ namespace VgcApis.Misc
         #endregion
 
         #region datetime
+
+        public static bool CheckTimestamp(long utcTick, int expected)
+        {
+            var last = new DateTime(utcTick, DateTimeKind.Utc).ToLocalTime();
+            if ($"{last.Month}{last.Day}" == $"{expected}")
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static long ToShortDateInt(DateTime localNow, long date)
         {
             // int is 32 bit, max value is 2,147,483,647

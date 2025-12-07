@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mob playground</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        font-size: 1rem;
+        margin: 0;
+        padding: 0;
+      }
+      textarea {
+        border-radius: 0.5rem;
+        resize: none;
+        font-size: 0.8rem;
+        width: 100%;
+      }
+      button {
+        padding: 0.25rem 0.5rem;
+        margin-right: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: ghostwhite;
+        border: 0.1rem gray solid;
+      }
+      .main {
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        display: flex;
+        height: 99%;
+        box-shadow: 0.2rem 0.2rem lightgray;
+        width: 100%;
+        min-width: 600px;
+        max-width: 1000px;
+        margin: 0 auto;
+        border: 0.1rem solid gray;
+        background-color: whitesmoke;
+      }
+      .wrapper {
+        display: flex;
+        width: 98%;
+        height: 98%;
+      }
+      .left-panel {
+        min-width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .right-panel {
+        flex-grow: 1;
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .row {
+        display: flex;
+        padding: 0.25rem;
+      }
+      .title {
+        text-shadow: 0.1rem 0.1rem lightgray;
+      }
+      .grow {
+        flex-grow: 1;
+      }
+      .mr {
+        margin-right: 0.25rem;
+      }
+      #link {
+        background-color: whitesmoke;
+        height: 12vh;
+      }
+      #config-json {
+        width: 100%;
+      }
+      #msg-board {
+        flex-grow: 1;
+        text-align: end;
+        color: red;
+        margin-right: 0.5rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="wrapper">
+        <div class="left-panel">
+          <div class="row">
+            <span class="mr title">share link</span>
+            <button id="copy-link">Copy</button>
+            <button id="paste-link">Paste</button>
+          </div>
+          <div class="row">
+            <textarea id="link" readonly></textarea>
+          </div>
+          <div class="row">
+            <span class="mr title">link body</span>
+          </div>
+          <div class="row grow">
+            <textarea id="mob"></textarea>
+          </div>
+        </div>
+        <div class="right-panel">
+          <div class="row">
+            <span class="mr title">config.json</span>
+            <button id="copy-config-json">Copy</button>
+            <button id="paste-config-json">Paste</button>
+            <span id="msg-board"></span>
+          </div>
+          <div class="row grow">
+            <textarea id="config-json"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const tboxLink = $("#link");
+    const tboxConfig = $("#config-json");
+    const tboxMob = $("#mob");
+    const tboxMsgBoard = $("#msg-board");
+
+    $("#paste-link").click(async () => {
+      const s = await navigator.clipboard.readText();
+      tboxLink.val(s);
+      tboxLink.trigger("input");
+    });
+
+    $("#copy-link").click(async () => {
+      const s = tboxLink.val();
+      await navigator.clipboard.writeText(s);
+      warn("link copied");
+    });
+
+    $("#paste-config-json").click(async () => {
+      const s = await navigator.clipboard.readText();
+      tboxConfig.val(s);
+      tboxConfig.trigger("input");
+    });
+
+    $("#copy-config-json").click(async () => {
+      const s = tboxConfig.val();
+      await navigator.clipboard.writeText(s);
+      warn("config copied");
+    });
+
+    tboxLink.on("input", () => {
+      link_to_mob();
+      mob_changed();
+    });
+
+    tboxConfig.on("input", () => {
+      config_changed();
+      mob_to_link();
+    });
+
+    tboxMob.on("input", () => {
+      mob_changed();
+      mob_to_link();
+    });
+
+    function support_tab_key(el) {
+      el.keydown(function (e) {
+        if (e.keyCode !== 9) {
+          return;
+        }
+        const indent = "  ";
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        const $this = $(this);
+        const value = $this.val();
+        $this.val(value.substring(0, start) + indent + value.substring(end));
+        this.selectionStart = this.selectionEnd = start + indent.length;
+        e.preventDefault();
+      });
+    }
+
+    function warn(msg) {
+      tboxMsgBoard.text(msg);
+      tboxMsgBoard.attr("title", msg);
+    }
+
+    function format(o, noIndent) {
+      try {
+        const j = typeof o === "string" ? JSON.parse(o) : o;
+        const r = noIndent ? JSON.stringify(j) : JSON.stringify(j, null, "  ");
+        return r;
+      } catch (err) {
+        warn(err.message);
+      }
+    }
+
+    function get_root(key, ty) {
+      if (key === "protocol") {
+        return `${OUTB}.settings`;
+      }
+      return `${OUTB}.streamSettings.${ty}Settings`;
+    }
+
+    function mob_to_link() {
+      try {
+        const s = tboxMob.val();
+        const mob = format(s, true);
+        tboxLink.val(`mob://${btoa(mob)}`);
+      } catch (err) {
+        warn(err.message);
+      }
+    }
+
+    function link_to_mob() {
+      try {
+        const parts = tboxLink.val().split("://");
+        const link = parts[parts.length - 1];
+        const j = JSON.parse(atob(link));
+        tboxMob.val(format(trim_mob(j)));
+      } catch (err) {
+        warn(err.message);
+      }
+    }
+
+    function mob_changed() {
+      const body = tboxMob.val();
+      const cfg = mob_to_config(body);
+      if (cfg) {
+        const j = format(cfg);
+        tboxConfig.val(j);
+      } else {
+        warn("parse mob failed");
+      }
+    }
+
+    function config_changed() {
+      const cfg = tboxConfig.val();
+      const mob = config_to_mob(cfg);
+      if (mob) {
+        tboxMob.val(format(trim_mob(mob)));
+      } else {
+        warn("parse config failed");
+      }
+    }
+
+    function get_value(json, path) {
+      if (!json) {
+        return "";
+      }
+      const keys = path.split(".");
+      for (const key of keys) {
+        if (key === "") {
+          return "";
+        }
+        json = json[key];
+        if (json === undefined) {
+          return "";
+        }
+      }
+      if (Array.isArray(json)) {
+        return json.join(",");
+      }
+      return `${json}`;
+    }
+
+    function set_value(json, path, value) {
+      const keys = path.split(".");
+      let i = 0;
+      for (; i < keys.length - 1; i++) {
+        const key = keys[i];
+        if (json[key] === undefined) {
+          json[key] = {};
+        }
+        json = json[key];
+      }
+      const last = keys[i];
+      if (last === "alpn") {
+        json[last] = value.split(",");
+      } else if (last === "multiMode") {
+        json[last] = value === "true";
+      } else {
+        json[last] = `${value}`;
+      }
+    }
+
+    function mob_to_config(mob) {
+      const r = get_config_tpl();
+      const s = MOB_KEYS;
+
+      try {
+        const j = JSON.parse(mob);
+
+        // server
+        const out = "outbounds.0";
+        set_value(r, `${out}.settings.address`, j.server[1]);
+        set_value(r, `${out}.settings.port`, j.server[2]);
+        let root = "outbounds.0.settings";
+
+        // protocol, stream, enc
+        for (const ck of CONFIG_KEYS) {
+          const ty = j[ck[0]][0];
+          set_value(r, ck[1], ty);
+          const paths = s[ck[0]][ty] || [];
+          const len = Math.min(j[ck[0]].length - 1, paths.length);
+          for (let i = 0; i < len; i++) {
+            const root = get_root(ck[0], ty);
+            set_value(r, `${root}.${paths[i]}`, j[ck[0]][i + 1]);
+          }
+        }
+        warn("");
+        return r;
+      } catch (err) {
+        warn(err.message);
+      }
+      return null;
+    }
+
+    function config_to_mob(cfg) {
+      const r = {
+        ver: "1",
+        server: ["serv1"],
+        protocol: [],
+        stream: [],
+        enc: [],
+      };
+
+      const mk = MOB_KEYS;
+      try {
+        const j = JSON.parse(cfg);
+
+        // server
+        r.server.push(get_value(j, `${OUTB}.settings.address`));
+        r.server.push(get_value(j, `${OUTB}.settings.port`));
+
+        // protocol, stream, enc
+        for (const ck of CONFIG_KEYS) {
+          const ty = get_value(j, ck[1]);
+          r[ck[0]].push(ty);
+          const paths = mk[ck[0]][ty] || [];
+          const root = get_root(ck[0], ty);
+          for (const path of paths) {
+            r[ck[0]].push(get_value(j, `${root}.${path}`));
+          }
+        }
+
+        warn("");
+        return r;
+      } catch (err) {
+        warn(err.message);
+      }
+      return null;
+    }
+
+    function get_config_tpl() {
+      const j = JSON.parse(CONFIG_SAMPLE);
+      delete j.outbounds[0].settings;
+      delete j.outbounds[0].streamSettings;
+      return j;
+    }
+
+    function trim_mob(json) {
+      for (const ck of CONFIG_KEYS) {
+        const arr = json[ck[0]];
+        while (arr.length > 0 && arr[arr.length - 1] === "") {
+          arr.pop();
+        }
+      }
+      return json;
+    }
+
+    const OUTB = "outbounds.0";
+
+    const CONFIG_KEYS = [
+      ["protocol", `${OUTB}.protocol`],
+      ["stream", `${OUTB}.streamSettings.network`],
+      ["enc", `${OUTB}.streamSettings.security`],
+    ];
+
+    const MOB_KEYS = {
+      protocol: {
+        vmess: ["id"],
+        trojan: ["password", "flow"],
+        vless: ["id", "flow", "encryption"],
+        shadowsocks: ["password", "method"],
+        ss: ["password", "method"],
+        socks: ["user", "pass"],
+        http: ["user", "pass"],
+      },
+      stream: {
+        raw: [],
+        tcp: [],
+        ws: ["path", "host"],
+        h2: ["path", "host"],
+        httpupgrade: ["path", "host"],
+        xhttp: ["mode", "path", "host"],
+        grpc: ["multiMode", "serviceName", "authority"],
+      },
+      enc: {
+        tls: ["serverName", "fingerprint", "alpn", "echConfigList"],
+        xtls: ["serverName", "fingerprint", "alpn", "echConfigList"],
+        reality: [
+          "serverName",
+          "fingerprint",
+          "alpn",
+          "publicKey",
+          "shortId",
+          "spiderX",
+          "mldsa65Verify",
+        ],
+      },
+    };
+
+    const CONFIG_SAMPLE = `{
+              "log": {
+                "loglevel": "warning"
+              },
+              "inbounds": [
+                {
+                  "tag": "agentin",
+                  "port": 1080,
+                  "listen": "127.0.0.1",
+                  "protocol": "socks",
+                  "settings": {}
+                }
+              ],
+              "outbounds": [
+                {
+                  "tag": "agentout",
+                  "protocol": "vless",
+                  "settings": {
+                    "address": "1.2.3.4",
+                    "port": "1234",
+                    "id": "48074ffa-dda5-411f-b612-5f0d2122301c",
+                    "encryption": "none"
+                  },
+                  "streamSettings": {
+                    "network": "ws",
+                    "security": "tls",
+                    "wsSettings": {
+                      "path": "/wspath",
+                      "host": "baidu.com"
+                    },
+                    "tlsSettings": {
+                      "serverName": "bing.com",
+                      "fingerprint": "chrome",
+                      "alpn": [
+                        "http/1.1",
+                        "h2"
+                      ],
+                      "echConfigList": ""
+                    }
+                  }
+                }
+              ]
+            }`;
+
+    function init() {
+      support_tab_key(tboxConfig);
+      support_tab_key(tboxMob);
+      tboxConfig.val(format(CONFIG_SAMPLE));
+      config_changed();
+      mob_to_link();
+      warn("press ctrl + u to view soruce code");
+    }
+    init();
+  </script>
+</html>

@@ -13,8 +13,10 @@
         font-size: 1rem;
         margin: 0;
         padding: 0;
+        background-color: #eee;
       }
       textarea {
+        padding: 0.3rem;
         border-radius: 0.5rem;
         resize: none;
         font-size: 0.8rem;
@@ -28,18 +30,18 @@
         border: 0.1rem gray solid;
       }
       .main {
+        border: none;
+        background-color: white;
+        box-shadow: 0 0 0.8rem 0rem gray;
         align-items: center;
         justify-content: center;
         border-radius: 0.5rem;
         display: flex;
         height: 99%;
-        box-shadow: 0.2rem 0.2rem lightgray;
         width: 100%;
         min-width: 600px;
         max-width: 1000px;
-        margin: 0 auto;
-        border: 0.1rem solid gray;
-        background-color: whitesmoke;
+        margin: 0.25rem auto;
       }
       .wrapper {
         display: flex;
@@ -74,7 +76,7 @@
       }
       #link {
         background-color: whitesmoke;
-        height: 12vh;
+        height: 17vh;
       }
       #config-json {
         width: 100%;
@@ -290,26 +292,24 @@
 
     function mob_to_config(mob) {
       const r = get_config_tpl();
-      const s = MOB_KEYS;
 
       try {
         const j = JSON.parse(mob);
 
         // server
-        const out = "outbounds.0";
-        set_value(r, `${out}.settings.address`, j.server[1]);
-        set_value(r, `${out}.settings.port`, j.server[2]);
-        let root = "outbounds.0.settings";
+        set_value(r, `${OUTB}.settings.address`, j.server[1]);
+        set_value(r, `${OUTB}.settings.port`, j.server[2]);
 
         // protocol, stream, enc
-        for (const ck of CONFIG_KEYS) {
-          const ty = j[ck[0]][0];
-          set_value(r, ck[1], ty);
-          const paths = s[ck[0]][ty] || [];
-          const len = Math.min(j[ck[0]].length - 1, paths.length);
+        for (const cs of CONFIG_SETTINGS) {
+          const mk = cs[0]; // mob-key
+          const ty = j[mk][0]; // protocol-type, stream-type, tls-type
+          set_value(r, cs[1], ty);
+          const paths = MOB_SETTINGS[mk][ty] || [];
+          const len = Math.min(j[mk].length - 1, paths.length);
           for (let i = 0; i < len; i++) {
-            const root = get_root(ck[0], ty);
-            set_value(r, `${root}.${paths[i]}`, j[ck[0]][i + 1]);
+            const root = get_root(mk, ty);
+            set_value(r, `${root}.${paths[i]}`, j[mk][i + 1]);
           }
         }
         warn("");
@@ -329,7 +329,6 @@
         enc: [],
       };
 
-      const mk = MOB_KEYS;
       try {
         const j = JSON.parse(cfg);
 
@@ -338,13 +337,14 @@
         r.server.push(get_value(j, `${OUTB}.settings.port`));
 
         // protocol, stream, enc
-        for (const ck of CONFIG_KEYS) {
-          const ty = get_value(j, ck[1]);
-          r[ck[0]].push(ty);
-          const paths = mk[ck[0]][ty] || [];
-          const root = get_root(ck[0], ty);
+        for (const cs of CONFIG_SETTINGS) {
+          const mk = cs[0]; // mob-key
+          const ty = get_value(j, cs[1]); // protocol-type, stream-type, enc-type
+          r[mk].push(ty);
+          const paths = MOB_SETTINGS[mk][ty] || [];
+          const root = get_root(mk, ty);
           for (const path of paths) {
-            r[ck[0]].push(get_value(j, `${root}.${path}`));
+            r[cs[0]].push(get_value(j, `${root}.${path}`));
           }
         }
 
@@ -364,8 +364,8 @@
     }
 
     function trim_mob(json) {
-      for (const ck of CONFIG_KEYS) {
-        const arr = json[ck[0]];
+      for (const mk in MOB_SETTINGS) {
+        const arr = json[mk];
         while (arr.length > 0 && arr[arr.length - 1] === "") {
           arr.pop();
         }
@@ -375,13 +375,13 @@
 
     const OUTB = "outbounds.0";
 
-    const CONFIG_KEYS = [
+    const CONFIG_SETTINGS = [
       ["protocol", `${OUTB}.protocol`],
       ["stream", `${OUTB}.streamSettings.network`],
       ["enc", `${OUTB}.streamSettings.security`],
     ];
 
-    const MOB_KEYS = {
+    const MOB_SETTINGS = {
       protocol: {
         vmess: ["id"],
         trojan: ["password", "flow"],

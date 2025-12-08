@@ -121,7 +121,7 @@
             <span class="mr title">config.json</span>
             <button id="copy-config-json">Copy</button>
             <button id="paste-config-json">Paste</button>
-            <span id="msg-board"></span>
+            <span id="msg-board">load jQuery failed, press F5 to refresh</span>
           </div>
           <div class="row grow">
             <textarea id="config-json"></textarea>
@@ -129,298 +129,306 @@
         </div>
       </div>
     </div>
-  </body>
-  <script>
-    const tboxLink = $("#link");
-    const tboxConfig = $("#config-json");
-    const tboxMob = $("#mob");
-    const tboxMsgBoard = $("#msg-board");
+    <script>
+      $ &&
+        $(document).ready(function () {
+          const tboxLink = $("#link");
+          const tboxConfig = $("#config-json");
+          const tboxMob = $("#mob");
+          const tboxMsgBoard = $("#msg-board");
 
-    $("#paste-link").click(async () => {
-      const s = await navigator.clipboard.readText();
-      tboxLink.val(s);
-      tboxLink.trigger("input");
-    });
+          $("#paste-link").click(async () => {
+            const s = await navigator.clipboard.readText();
+            tboxLink.val(s);
+            tboxLink.trigger("input");
+          });
 
-    $("#copy-link").click(async () => {
-      const s = tboxLink.val();
-      await navigator.clipboard.writeText(s);
-      warn("link copied");
-    });
+          $("#copy-link").click(async () => {
+            const s = tboxLink.val();
+            await navigator.clipboard.writeText(s);
+            warn("link copied");
+          });
 
-    $("#paste-config-json").click(async () => {
-      const s = await navigator.clipboard.readText();
-      tboxConfig.val(s);
-      tboxConfig.trigger("input");
-    });
+          $("#paste-config-json").click(async () => {
+            const s = await navigator.clipboard.readText();
+            tboxConfig.val(s);
+            tboxConfig.trigger("input");
+          });
 
-    $("#copy-config-json").click(async () => {
-      const s = tboxConfig.val();
-      await navigator.clipboard.writeText(s);
-      warn("config copied");
-    });
+          $("#copy-config-json").click(async () => {
+            const s = tboxConfig.val();
+            await navigator.clipboard.writeText(s);
+            warn("config copied");
+          });
 
-    tboxLink.on("input", () => {
-      link_to_mob();
-      mob_changed();
-    });
+          tboxLink.on("input", () => {
+            link_to_mob();
+            mob_changed();
+          });
 
-    tboxConfig.on("input", () => {
-      config_changed();
-      mob_to_link();
-    });
+          tboxConfig.on("input", () => {
+            config_changed();
+            mob_to_link();
+          });
 
-    tboxMob.on("input", () => {
-      mob_changed();
-      mob_to_link();
-    });
+          tboxMob.on("input", () => {
+            mob_changed();
+            mob_to_link();
+          });
 
-    function support_tab_key(el) {
-      el.keydown(function (e) {
-        if (e.keyCode !== 9) {
-          return;
-        }
-        const indent = "  ";
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        const $this = $(this);
-        const value = $this.val();
-        $this.val(value.substring(0, start) + indent + value.substring(end));
-        this.selectionStart = this.selectionEnd = start + indent.length;
-        e.preventDefault();
-      });
-    }
-
-    function warn(msg) {
-      tboxMsgBoard.text(msg);
-      tboxMsgBoard.attr("title", msg);
-    }
-
-    function format(o, noIndent) {
-      try {
-        const j = typeof o === "string" ? JSON.parse(o) : o;
-        const r = noIndent ? JSON.stringify(j) : JSON.stringify(j, null, "  ");
-        return r;
-      } catch (err) {
-        warn(err.message);
-      }
-    }
-
-    function get_root(key, ty) {
-      if (key === "protocol") {
-        return `${OUTB}.settings`;
-      }
-      return `${OUTB}.streamSettings.${ty}Settings`;
-    }
-
-    function mob_to_link() {
-      try {
-        const s = tboxMob.val();
-        const mob = format(s, true);
-        tboxLink.val(`mob://${btoa(mob)}`);
-      } catch (err) {
-        warn(err.message);
-      }
-    }
-
-    function link_to_mob() {
-      try {
-        const parts = tboxLink.val().split("://");
-        const link = parts[parts.length - 1];
-        const j = JSON.parse(atob(link));
-        tboxMob.val(format(trim_mob(j)));
-      } catch (err) {
-        warn(err.message);
-      }
-    }
-
-    function mob_changed() {
-      const body = tboxMob.val();
-      const cfg = mob_to_config(body);
-      if (cfg) {
-        const j = format(cfg);
-        tboxConfig.val(j);
-      } else {
-        warn("parse mob failed");
-      }
-    }
-
-    function config_changed() {
-      const cfg = tboxConfig.val();
-      const mob = config_to_mob(cfg);
-      if (mob) {
-        tboxMob.val(format(trim_mob(mob)));
-      } else {
-        warn("parse config failed");
-      }
-    }
-
-    function get_value(json, path) {
-      if (!json) {
-        return "";
-      }
-      const keys = path.split(".");
-      for (const key of keys) {
-        if (key === "") {
-          return "";
-        }
-        json = json[key];
-        if (json === undefined) {
-          return "";
-        }
-      }
-      if (Array.isArray(json)) {
-        return json.join(",");
-      }
-      return `${json}`;
-    }
-
-    function set_value(json, path, value) {
-      const keys = path.split(".");
-      let i = 0;
-      for (; i < keys.length - 1; i++) {
-        const key = keys[i];
-        if (json[key] === undefined) {
-          json[key] = {};
-        }
-        json = json[key];
-      }
-      const last = keys[i];
-      if (last === "alpn") {
-        json[last] = value.split(",");
-      } else if (last === "multiMode") {
-        json[last] = value === "true";
-      } else {
-        json[last] = `${value}`;
-      }
-    }
-
-    function mob_to_config(mob) {
-      const r = get_config_tpl();
-
-      try {
-        const j = JSON.parse(mob);
-
-        // server
-        set_value(r, `${OUTB}.settings.address`, j.server[1]);
-        set_value(r, `${OUTB}.settings.port`, j.server[2]);
-
-        // protocol, stream, enc
-        for (const cs of CONFIG_SETTINGS) {
-          const mk = cs[0]; // mob-key
-          const ty = j[mk][0]; // protocol-type, stream-type, tls-type
-          set_value(r, cs[1], ty);
-          const paths = MOB_SETTINGS[mk][ty] || [];
-          const len = Math.min(j[mk].length - 1, paths.length);
-          for (let i = 0; i < len; i++) {
-            const root = get_root(mk, ty);
-            set_value(r, `${root}.${paths[i]}`, j[mk][i + 1]);
+          function support_tab_key(el) {
+            el.keydown(function (e) {
+              if (e.keyCode !== 9) {
+                return;
+              }
+              const indent = "  ";
+              const start = this.selectionStart;
+              const end = this.selectionEnd;
+              const $this = $(this);
+              const value = $this.val();
+              $this.val(
+                value.substring(0, start) + indent + value.substring(end)
+              );
+              this.selectionStart = this.selectionEnd = start + indent.length;
+              e.preventDefault();
+            });
           }
-        }
-        warn("");
-        return r;
-      } catch (err) {
-        warn(err.message);
-      }
-      return null;
-    }
 
-    function config_to_mob(cfg) {
-      const r = {
-        ver: "1",
-        server: ["serv1"],
-        protocol: [],
-        stream: [],
-        enc: [],
-      };
-
-      try {
-        const j = JSON.parse(cfg);
-
-        // server
-        r.server.push(get_value(j, `${OUTB}.settings.address`));
-        r.server.push(get_value(j, `${OUTB}.settings.port`));
-
-        // protocol, stream, enc
-        for (const cs of CONFIG_SETTINGS) {
-          const mk = cs[0]; // mob-key
-          const ty = get_value(j, cs[1]); // protocol-type, stream-type, enc-type
-          r[mk].push(ty);
-          const paths = MOB_SETTINGS[mk][ty] || [];
-          const root = get_root(mk, ty);
-          for (const path of paths) {
-            r[cs[0]].push(get_value(j, `${root}.${path}`));
+          function warn(msg) {
+            tboxMsgBoard.text(msg);
+            tboxMsgBoard.attr("title", msg);
           }
-        }
 
-        warn("");
-        return r;
-      } catch (err) {
-        warn(err.message);
-      }
-      return null;
-    }
+          function format(o, noIndent) {
+            try {
+              const j = typeof o === "string" ? JSON.parse(o) : o;
+              const r = noIndent
+                ? JSON.stringify(j)
+                : JSON.stringify(j, null, "  ");
+              return r;
+            } catch (err) {
+              warn(err.message);
+            }
+          }
 
-    function get_config_tpl() {
-      const j = JSON.parse(CONFIG_SAMPLE);
-      delete j.outbounds[0].settings;
-      delete j.outbounds[0].streamSettings;
-      return j;
-    }
+          function get_root(key, ty) {
+            if (key === "protocol") {
+              return `${OUTB}.settings`;
+            }
+            return `${OUTB}.streamSettings.${ty}Settings`;
+          }
 
-    function trim_mob(json) {
-      for (const mk in MOB_SETTINGS) {
-        const arr = json[mk];
-        while (arr.length > 0 && arr[arr.length - 1] === "") {
-          arr.pop();
-        }
-      }
-      return json;
-    }
+          function mob_to_link() {
+            try {
+              const s = tboxMob.val();
+              const mob = format(s, true);
+              tboxLink.val(`mob://${btoa(mob)}`);
+            } catch (err) {
+              warn(err.message);
+            }
+          }
 
-    const OUTB = "outbounds.0";
+          function link_to_mob() {
+            try {
+              const parts = tboxLink.val().split("://");
+              const link = parts[parts.length - 1];
+              const j = JSON.parse(atob(link));
+              tboxMob.val(format(trim_mob(j)));
+            } catch (err) {
+              warn(err.message);
+            }
+          }
 
-    const CONFIG_SETTINGS = [
-      ["protocol", `${OUTB}.protocol`],
-      ["stream", `${OUTB}.streamSettings.network`],
-      ["enc", `${OUTB}.streamSettings.security`],
-    ];
+          function mob_changed() {
+            const body = tboxMob.val();
+            const cfg = mob_to_config(body);
+            if (cfg) {
+              const j = format(cfg);
+              tboxConfig.val(j);
+            } else {
+              warn("parse mob failed");
+            }
+          }
 
-    const MOB_SETTINGS = {
-      protocol: {
-        vmess: ["id"],
-        trojan: ["password", "flow"],
-        vless: ["id", "flow", "encryption"],
-        shadowsocks: ["password", "method"],
-        ss: ["password", "method"],
-        socks: ["user", "pass"],
-        http: ["user", "pass"],
-      },
-      stream: {
-        raw: [],
-        tcp: [],
-        ws: ["path", "host"],
-        h2: ["path", "host"],
-        httpupgrade: ["path", "host"],
-        xhttp: ["mode", "path", "host"],
-        grpc: ["multiMode", "serviceName", "authority"],
-      },
-      enc: {
-        tls: ["serverName", "fingerprint", "alpn", "echConfigList"],
-        xtls: ["serverName", "fingerprint", "alpn", "echConfigList"],
-        reality: [
-          "serverName",
-          "fingerprint",
-          "alpn",
-          "publicKey",
-          "shortId",
-          "spiderX",
-          "mldsa65Verify",
-        ],
-      },
-    };
+          function config_changed() {
+            const cfg = tboxConfig.val();
+            const mob = config_to_mob(cfg);
+            if (mob) {
+              tboxMob.val(format(trim_mob(mob)));
+            } else {
+              warn("parse config failed");
+            }
+          }
 
-    const CONFIG_SAMPLE = `{
+          function get_value(json, path) {
+            if (!json) {
+              return "";
+            }
+            const keys = path.split(".");
+            for (const key of keys) {
+              if (key === "") {
+                return "";
+              }
+              json = json[key];
+              if (json === undefined) {
+                return "";
+              }
+            }
+            if (Array.isArray(json)) {
+              return json.join(",");
+            }
+            return `${json}`;
+          }
+
+          function set_value(json, path, value) {
+            const keys = path.split(".");
+            let i = 0;
+            for (; i < keys.length - 1; i++) {
+              const key = keys[i];
+              if (json[key] === undefined) {
+                json[key] = {};
+              }
+              json = json[key];
+            }
+            const last = keys[i];
+            if (last === "alpn") {
+              json[last] = value.split(",");
+            } else if (last === "multiMode") {
+              json[last] = value === "true";
+            } else {
+              json[last] = value === undefined ? "" : `${value}`;
+            }
+          }
+
+          function mob_to_config(mob) {
+            const r = get_config_tpl();
+
+            try {
+              const j = JSON.parse(mob);
+
+              // server
+              set_value(r, `${OUTB}.settings.address`, j.server[1]);
+              set_value(r, `${OUTB}.settings.port`, j.server[2]);
+
+              // protocol, stream, enc
+              for (const cs of CONFIG_SETTINGS) {
+                const mk = cs[0]; // mob-key
+                const ty = j[mk][0]; // protocol-type, stream-type, tls-type
+                if (ty === undefined) {
+                  continue;
+                }
+                set_value(r, cs[1], ty);
+                const paths = MOB_SETTINGS[mk][ty] || [];
+                const len = Math.min(j[mk].length - 1, paths.length);
+                for (let i = 0; i < len; i++) {
+                  const root = get_root(mk, ty);
+                  set_value(r, `${root}.${paths[i]}`, j[mk][i + 1]);
+                }
+              }
+              warn("");
+              return r;
+            } catch (err) {
+              warn(err.message);
+            }
+            return null;
+          }
+
+          function config_to_mob(cfg) {
+            const r = {
+              ver: "1",
+              server: ["serv1"],
+              protocol: [],
+              stream: [],
+              enc: [],
+            };
+
+            try {
+              const j = JSON.parse(cfg);
+
+              // server
+              r.server.push(get_value(j, `${OUTB}.settings.address`));
+              r.server.push(get_value(j, `${OUTB}.settings.port`));
+
+              // protocol, stream, enc
+              for (const cs of CONFIG_SETTINGS) {
+                const mk = cs[0]; // mob-key
+                const ty = get_value(j, cs[1]); // protocol-type, stream-type, enc-type
+                r[mk].push(ty);
+                const paths = MOB_SETTINGS[mk][ty] || [];
+                const root = get_root(mk, ty);
+                for (const path of paths) {
+                  r[cs[0]].push(get_value(j, `${root}.${path}`));
+                }
+              }
+
+              warn("");
+              return r;
+            } catch (err) {
+              warn(err.message);
+            }
+            return null;
+          }
+
+          function get_config_tpl() {
+            const j = JSON.parse(CONFIG_SAMPLE);
+            delete j.outbounds[0].settings;
+            delete j.outbounds[0].streamSettings;
+            return j;
+          }
+
+          function trim_mob(json) {
+            for (const mk in MOB_SETTINGS) {
+              const arr = json[mk];
+              while (arr.length > 0 && arr[arr.length - 1] === "") {
+                arr.pop();
+              }
+            }
+            return json;
+          }
+
+          const OUTB = "outbounds.0";
+
+          const CONFIG_SETTINGS = [
+            ["protocol", `${OUTB}.protocol`],
+            ["stream", `${OUTB}.streamSettings.network`],
+            ["enc", `${OUTB}.streamSettings.security`],
+          ];
+
+          const MOB_SETTINGS = {
+            protocol: {
+              vmess: ["id"],
+              trojan: ["password", "flow"],
+              vless: ["id", "flow", "encryption"],
+              shadowsocks: ["password", "method"],
+              ss: ["password", "method"],
+              socks: ["user", "pass"],
+              http: ["user", "pass"],
+            },
+            stream: {
+              raw: [],
+              tcp: [],
+              ws: ["path", "host"],
+              h2: ["path", "host"],
+              httpupgrade: ["path", "host"],
+              xhttp: ["mode", "path", "host"],
+              grpc: ["multiMode", "serviceName", "authority"],
+            },
+            enc: {
+              tls: ["serverName", "fingerprint", "alpn", "echConfigList"],
+              xtls: ["serverName", "fingerprint", "alpn", "echConfigList"],
+              reality: [
+                "serverName",
+                "fingerprint",
+                "alpn",
+                "publicKey",
+                "shortId",
+                "spiderX",
+                "mldsa65Verify",
+              ],
+            },
+          };
+
+          const CONFIG_SAMPLE = `{
               "log": {
                 "loglevel": "warning"
               },
@@ -464,14 +472,16 @@
               ]
             }`;
 
-    function init() {
-      support_tab_key(tboxConfig);
-      support_tab_key(tboxMob);
-      tboxConfig.val(format(CONFIG_SAMPLE));
-      config_changed();
-      mob_to_link();
-      warn("press ctrl + u to view soruce code");
-    }
-    init();
-  </script>
+          function init() {
+            support_tab_key(tboxConfig);
+            support_tab_key(tboxMob);
+            tboxConfig.val(format(CONFIG_SAMPLE));
+            config_changed();
+            mob_to_link();
+            warn("press ctrl + u to view soruce code");
+          }
+          init();
+        });
+    </script>
+  </body>
 </html>

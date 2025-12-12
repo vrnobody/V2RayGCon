@@ -139,44 +139,46 @@
           const tboxMob = $("#mob");
           const tboxMsgBoard = $("#msg-board");
 
-          $("#paste-link").click(async () => {
-            const s = await navigator.clipboard.readText();
-            tboxLink.val(s);
-            tboxLink.trigger("input");
-          });
+          function bind_ui_events() {
+            $("#paste-link").click(async () => {
+              const s = await navigator.clipboard.readText();
+              tboxLink.val(s);
+              tboxLink.trigger("input");
+            });
 
-          $("#copy-link").click(async () => {
-            const s = tboxLink.val();
-            await navigator.clipboard.writeText(s);
-            warn("link copied");
-          });
+            $("#copy-link").click(async () => {
+              const s = tboxLink.val();
+              await navigator.clipboard.writeText(s);
+              warn("link copied");
+            });
 
-          $("#paste-config-json").click(async () => {
-            const s = await navigator.clipboard.readText();
-            tboxConfig.val(s);
-            tboxConfig.trigger("input");
-          });
+            $("#paste-config-json").click(async () => {
+              const s = await navigator.clipboard.readText();
+              tboxConfig.val(s);
+              tboxConfig.trigger("input");
+            });
 
-          $("#copy-config-json").click(async () => {
-            const s = tboxConfig.val();
-            await navigator.clipboard.writeText(s);
-            warn("config copied");
-          });
+            $("#copy-config-json").click(async () => {
+              const s = tboxConfig.val();
+              await navigator.clipboard.writeText(s);
+              warn("config copied");
+            });
 
-          tboxLink.on("input", () => {
-            link_to_mob();
-            mob_changed();
-          });
+            tboxLink.on("input", () => {
+              link_to_mob();
+              mob_to_config();
+            });
 
-          tboxConfig.on("input", () => {
-            config_changed();
-            mob_to_link();
-          });
+            tboxConfig.on("input", () => {
+              config_to_mob();
+              mob_to_link();
+            });
 
-          tboxMob.on("input", () => {
-            mob_changed();
-            mob_to_link();
-          });
+            tboxMob.on("input", () => {
+              mob_to_config();
+              mob_to_link();
+            });
+          }
 
           function support_tab_key(el) {
             el.keydown(function (e) {
@@ -241,24 +243,28 @@
             }
           }
 
-          function mob_changed() {
-            const body = tboxMob.val();
-            const cfg = mob_to_config(body);
-            if (cfg) {
-              const j = format(cfg);
-              tboxConfig.val(j);
-            } else {
-              warn("parse mob failed");
+          function mob_to_config() {
+            try {
+              const s = tboxMob.val();
+              const mob = JSON.parse(s);
+              const cfg = try_gen_config(mob);
+              tboxConfig.val(format(cfg));
+              warn("");
+            } catch (err) {
+              warn(err.message);
             }
           }
 
-          function config_changed() {
-            const cfg = tboxConfig.val();
-            const mob = config_to_mob(cfg);
-            if (mob) {
-              tboxMob.val(format(trim_mob(mob)));
-            } else {
-              warn("parse config failed");
+          function config_to_mob() {
+            try {
+              const s = tboxConfig.val();
+              const cfg = JSON.parse(s);
+              const mob = try_gen_mob(cfg);
+              const m = trim_mob(mob);
+              tboxMob.val(format(m));
+              warn("");
+            } catch (err) {
+              warn(err.message);
             }
           }
 
@@ -302,40 +308,33 @@
             }
           }
 
-          function mob_to_config(mob) {
+          function try_gen_config(mob) {
             const r = get_config_tpl();
 
-            try {
-              const j = JSON.parse(mob);
+            // server
+            set_value(r, `${OUTB}.settings.address`, mob.server[1]);
+            set_value(r, `${OUTB}.settings.port`, mob.server[2]);
 
-              // server
-              set_value(r, `${OUTB}.settings.address`, j.server[1]);
-              set_value(r, `${OUTB}.settings.port`, j.server[2]);
-
-              // protocol, stream, enc
-              for (const cs of CONFIG_SETTINGS) {
-                const mk = cs[0]; // mob-key
-                const ty = j[mk][0]; // protocol-type, stream-type, tls-type
-                if (ty === undefined) {
-                  continue;
-                }
-                set_value(r, cs[1], ty);
-                const paths = MOB_SETTINGS[mk][ty] || [];
-                const len = Math.min(j[mk].length - 1, paths.length);
-                for (let i = 0; i < len; i++) {
-                  const root = get_root(mk, ty);
-                  set_value(r, `${root}.${paths[i]}`, j[mk][i + 1]);
-                }
+            // protocol, stream, enc
+            for (const cs of CONFIG_SETTINGS) {
+              const mk = cs[0]; // mob-key
+              const ty = mob[mk][0]; // protocol-type, stream-type, tls-type
+              if (ty === undefined) {
+                continue;
               }
-              warn("");
-              return r;
-            } catch (err) {
-              warn(err.message);
+              set_value(r, cs[1], ty);
+              const paths = MOB_SETTINGS[mk][ty] || [];
+              const len = Math.min(mob[mk].length - 1, paths.length);
+              for (let i = 0; i < len; i++) {
+                const root = get_root(mk, ty);
+                set_value(r, `${root}.${paths[i]}`, mob[mk][i + 1]);
+              }
             }
-            return null;
+
+            return r;
           }
 
-          function config_to_mob(cfg) {
+          function try_gen_mob(cfg) {
             const r = {
               ver: "1",
               server: ["serv1"],
@@ -344,31 +343,23 @@
               enc: [],
             };
 
-            try {
-              const j = JSON.parse(cfg);
+            // server
+            r.server.push(get_value(cfg, `${OUTB}.settings.address`));
+            r.server.push(get_value(cfg, `${OUTB}.settings.port`));
 
-              // server
-              r.server.push(get_value(j, `${OUTB}.settings.address`));
-              r.server.push(get_value(j, `${OUTB}.settings.port`));
-
-              // protocol, stream, enc
-              for (const cs of CONFIG_SETTINGS) {
-                const mk = cs[0]; // mob-key
-                const ty = get_value(j, cs[1]); // protocol-type, stream-type, enc-type
-                r[mk].push(ty);
-                const paths = MOB_SETTINGS[mk][ty] || [];
-                const root = get_root(mk, ty);
-                for (const path of paths) {
-                  r[cs[0]].push(get_value(j, `${root}.${path}`));
-                }
+            // protocol, stream, enc
+            for (const cs of CONFIG_SETTINGS) {
+              const mk = cs[0]; // mob-key
+              const ty = get_value(cfg, cs[1]); // protocol-type, stream-type, enc-type
+              r[mk].push(ty);
+              const paths = MOB_SETTINGS[mk][ty] || [];
+              const root = get_root(mk, ty);
+              for (const path of paths) {
+                r[cs[0]].push(get_value(cfg, `${root}.${path}`));
               }
-
-              warn("");
-              return r;
-            } catch (err) {
-              warn(err.message);
             }
-            return null;
+
+            return r;
           }
 
           function get_config_tpl() {
@@ -475,12 +466,13 @@
             }`;
 
           function init() {
+            bind_ui_events();
             support_tab_key(tboxConfig);
             support_tab_key(tboxMob);
             tboxConfig.val(format(CONFIG_SAMPLE));
-            config_changed();
+            config_to_mob();
             mob_to_link();
-            warn("press ctrl + u to view soruce code");
+            warn("press ctrl+u to view soruce code");
           }
           init();
         });

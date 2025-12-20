@@ -79,10 +79,8 @@ namespace V2RayGCon.Views.WinForms
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                if (this.Text != title)
-                {
-                    this.Text = title;
-                }
+                this.Text = title;
+                VgcApis.Misc.UI.AddTagToFormTitle(this);
             });
         }
 

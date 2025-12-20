@@ -48,7 +48,24 @@ local function HandlePost(self, title, req)
     Response(self, title, r)
 end
 
-local function HandleOneConn(self)
+local function CheckOneConn(self)
+    local mail = self.inbox:Check()
+    if mail == nil then
+        return false
+    end
+
+    local code = mail:GetCode()
+    local title = mail:GetTitle()
+    if code ~= 1 and self.source ~= nil then
+        Response(self, title, self.source)
+    else
+        local req = mail:GetContent()
+        HandlePost(self, title, req)
+    end
+    return true
+end
+
+local function WaitOneConn(self)
     
     local mail = self.inbox:Wait()
     
@@ -91,10 +108,22 @@ function M:Close()
     self.inbox:Close()
 end
 
+function M:StartServ()
+    self.serv:Start()
+end
+
+function M:CheckOneConn()
+    return CheckOneConn(self)
+end
+
+function M:StopServ()
+    self.serv:Stop()
+end
+
 function M:Run()
     self.serv:Start()
     repeat
-        local ok = HandleOneConn(self)
+        local ok = WaitOneConn(self)
     until not ok
     self.serv:Stop()
 end

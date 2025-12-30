@@ -67,6 +67,9 @@ namespace V2RayGCon.Views.WinForms
             this.tboxInPort.Text = first.inbPort.ToString();
             this.cboxMark.Text = first.customMark;
             this.tboxRemark.Text = first.customRemark;
+            this.tboxTag1.Text = first.tag1;
+            this.tboxTag2.Text = first.tag2;
+            this.tboxTag3.Text = first.tag3;
             VgcApis.Misc.UI.SelectComboxByText(cboxCustomCoreName, first.customCoreName);
             this.cboxAutorun.SelectedIndex = first.isAutoRun ? 0 : 1;
             this.cboxUntrack.SelectedIndex = first.isUntrack ? 0 : 1;
@@ -122,53 +125,59 @@ namespace V2RayGCon.Views.WinForms
 
             var coreServs = servers.GetSelectedServers().OrderBy(s => s).ToList();
 
-            var newInbName = chkInMode.Checked ? cboxInName.Text : null;
-            var newIP = chkInIP.Checked ? tboxInIP.Text : null;
-            var newPort = chkInPort.Checked ? VgcApis.Misc.Utils.Str2Int(tboxInPort.Text) : -1;
+            var bs = new BatchSettings()
+            {
+                mInbName = chkInMode.Checked,
+                inboundName = cboxInName.Text,
 
-            var newMark = chkMark.Checked ? cboxMark.Text : null;
-            var newRemark = chkRemark.Checked ? tboxRemark.Text : null;
-            var newCoreName = GetCustomCoreName();
+                mIp = chkInIP.Checked,
+                ip = tboxInIP.Text,
 
-            var newAutorun = chkAutorun.Checked ? cboxAutorun.SelectedIndex : -1;
-            var newUntrack = chkUntrack.Checked ? cboxUntrack.SelectedIndex : -1;
-            var isPortAutoIncrease = chkIncrement.Checked;
-            var newInject = chkInject.Checked ? cboxInject.SelectedIndex : -1;
-            var newSendThrough = chkSendThough.Checked ? cboxSendThrough.SelectedIndex : -1;
-            var newTemplates = chkTemplates.Checked ? (tboxTemplates.Text ?? "") : null;
+                mPort = chkInPort.Checked,
+                port = VgcApis.Misc.Utils.Str2Int(tboxInPort.Text),
+                isPortAutoIncrease = chkIncrement.Checked,
 
-            ModifyServersSetting(
-                coreServs,
-                newInbName,
-                newIP,
-                newPort,
-                isPortAutoIncrease,
-                newMark,
-                newRemark,
-                newCoreName,
-                newAutorun,
-                newUntrack,
-                newInject,
-                newSendThrough,
-                newTemplates
-            );
+                mMark = chkMark.Checked,
+                mark = cboxMark.Text,
+
+                mRemark = chkRemark.Checked,
+                remark = tboxRemark.Text,
+
+                mTag1 = chkTag1.Checked,
+                tag1 = tboxTag1.Text,
+
+                mTag2 = chkTag2.Checked,
+                tag2 = tboxTag2.Text,
+
+                mTag3 = chkTag3.Checked,
+                tag3 = tboxTag3.Text,
+
+                mCoreName = chkCustomCore.Checked,
+                coreName = cboxCustomCoreName.SelectedIndex < 1 ? "" : cboxCustomCoreName.Text,
+
+                mTemplates = chkTemplates.Checked,
+                templates = tboxTemplates.Text,
+
+                mAutorun = chkAutorun.Checked,
+                autorun = cboxAutorun.SelectedIndex == 0,
+
+                mUntrack = chkUntrack.Checked,
+                untrack = cboxUntrack.SelectedIndex == 0,
+
+                mInject = chkInject.Checked,
+                inject = cboxInject.SelectedIndex == 0,
+
+                mSendThrough = chkSendThough.Checked,
+                sendThrough = cboxSendThrough.SelectedIndex == 0,
+            };
+
+            ModifyServersSetting(coreServs, bs);
         }
 
         #endregion
 
         #region private method
-        string GetCustomCoreName()
-        {
-            if (chkCustomCore.Checked)
-            {
-                if (cboxCustomCoreName.SelectedIndex < 1)
-                {
-                    return string.Empty;
-                }
-                return cboxCustomCoreName.Text;
-            }
-            return null;
-        }
+
 
         void InitCboxCustomInboundName()
         {
@@ -195,41 +204,15 @@ namespace V2RayGCon.Views.WinForms
 
         void ModifyServersSetting(
             List<VgcApis.Interfaces.ICoreServCtrl> coreServs,
-            string newInbName,
-            string newIP,
-            int newPort,
-            bool isPortAutoIncrease,
-            string newMark,
-            string newRemark,
-            string newCoreName,
-            int newAutorun,
-            int newUntrack,
-            int newInject,
-            int newSendThrough,
-            string newTemplates
+            BatchSettings bs
         )
         {
             void worker(int index, Action next)
             {
-                var portNumber = isPortAutoIncrease ? newPort + index : newPort;
-
                 var server = coreServs[index];
                 if (!server.GetCoreCtrl().IsCoreRunning())
                 {
-                    ModifyServerSetting(
-                        ref server,
-                        newInbName,
-                        newIP,
-                        portNumber,
-                        newMark,
-                        newRemark,
-                        newCoreName,
-                        newAutorun,
-                        newUntrack,
-                        newInject,
-                        newSendThrough,
-                        newTemplates
-                    );
+                    ModifyServerSetting(ref server, index, bs);
                     server.InvokeEventOnPropertyChange();
                     next();
                     return;
@@ -239,20 +222,7 @@ namespace V2RayGCon.Views.WinForms
                     .GetCoreCtrl()
                     .StopCoreThen(() =>
                     {
-                        ModifyServerSetting(
-                            ref server,
-                            newInbName,
-                            newIP,
-                            portNumber,
-                            newMark,
-                            newRemark,
-                            newCoreName,
-                            newAutorun,
-                            newUntrack,
-                            newInject,
-                            newSendThrough,
-                            newTemplates
-                        );
+                        ModifyServerSetting(ref server, index, bs);
                         server.GetCoreCtrl().RestartCoreThen();
                         next();
                     });
@@ -270,78 +240,132 @@ namespace V2RayGCon.Views.WinForms
 
         void ModifyServerSetting(
             ref VgcApis.Interfaces.ICoreServCtrl serverCtrl,
-            string newInbName,
-            string newIP,
-            int newPort,
-            string newMark,
-            string newRemark,
-            string newCoreName,
-            int newAutorun,
-            int newUntrack,
-            int newInject,
-            int newSendThrough,
-            string newTemplates
+            int index,
+            BatchSettings bs
         )
         {
             var server = serverCtrl.GetCoreStates().GetAllRawCoreInfo();
 
-            if (newTemplates != null)
+            if (bs.mTemplates)
             {
-                server.templates = newTemplates;
+                server.templates = bs.templates;
             }
 
-            if (newSendThrough >= 0)
+            if (bs.mSendThrough)
             {
-                server.ignoreSendThrough = newSendThrough == 1;
+                server.ignoreSendThrough = !bs.sendThrough;
             }
 
-            if (newInject >= 0)
+            if (bs.mInject)
             {
-                server.isAcceptInjection = newInject == 0;
+                server.isAcceptInjection = bs.inject;
             }
 
-            if (newAutorun >= 0)
+            if (bs.mAutorun)
             {
-                server.isAutoRun = newAutorun == 0;
+                server.isAutoRun = bs.autorun;
             }
 
-            if (newUntrack >= 0)
+            if (bs.mUntrack)
             {
-                server.isUntrack = newUntrack == 0;
+                server.isUntrack = bs.untrack;
             }
 
-            if (newInbName != null)
+            if (bs.mInbName)
             {
-                server.inbName = newInbName;
+                server.inbName = bs.inboundName;
             }
 
-            if (newIP != null)
+            if (bs.mIp)
             {
-                server.inbIp = newIP;
+                server.inbIp = bs.ip;
             }
 
-            if (newPort >= 0)
+            if (bs.mPort)
             {
-                server.inbPort = newPort;
+                server.inbPort = bs.isPortAutoIncrease ? bs.port + index : bs.port;
             }
 
-            if (newMark != null)
+            if (bs.mMark)
             {
-                server.customMark = newMark;
+                server.customMark = bs.mark;
             }
 
-            if (newRemark != null)
+            if (bs.mRemark)
             {
-                server.customRemark = newRemark;
+                server.customRemark = bs.remark;
+            }
+
+            if (bs.mTag1)
+            {
+                server.tag1 = bs.tag1;
+            }
+            if (bs.mTag2)
+            {
+                server.tag2 = bs.tag2;
+            }
+            if (bs.mTag3)
+            {
+                server.tag3 = bs.tag3;
             }
 
             // 需要放最后，因为会InvokeEventOnPropertyChange()
-            if (newCoreName != null)
+            if (bs.mCoreName)
             {
-                serverCtrl.GetCoreCtrl().SetCustomCoreName(newCoreName);
+                serverCtrl.GetCoreCtrl().SetCustomCoreName(bs.coreName);
             }
 
             serverCtrl.GetConfiger().UpdateSummary();
+        }
+
+        #endregion
+
+        #region batch settins
+
+        class BatchSettings
+        {
+            public bool mInbName;
+            public string inboundName;
+
+            public bool mIp;
+            public string ip;
+
+            public bool mPort;
+            public int port;
+            public bool isPortAutoIncrease;
+
+            public bool mMark;
+            public string mark;
+
+            public bool mRemark;
+            public string remark;
+
+            public bool mTag1;
+            public string tag1;
+
+            public bool mTag2;
+            public string tag2;
+
+            public bool mTag3;
+            public string tag3;
+
+            public bool mCoreName;
+            public string coreName;
+
+            public bool mTemplates;
+            public string templates;
+
+            public bool mAutorun;
+            public bool autorun;
+
+            public bool mUntrack;
+            public bool untrack;
+
+            public bool mInject;
+            public bool inject;
+
+            public bool mSendThrough;
+            public bool sendThrough;
         }
 
         #endregion

@@ -117,839 +117,251 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkUntrack.Text" xml:space="preserve">
-    <value>Untrack</value>
-  </data>
-  <data name="chkShareOverLAN.Text" xml:space="preserve">
-    <value>Share</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="chkInPort.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;cboxInject.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxInject.Items" xml:space="preserve">
-    <value>True</value>
-  </data>
-  <data name="cboxSendThrough.Items" xml:space="preserve">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkInIP.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkInMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
+  <data name="chkInIP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 39</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkShareOverLAN.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkInIP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;cboxUntrack.Name" xml:space="preserve">
-    <value>cboxUntrack</value>
-  </data>
-  <data name="chkCustomCore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkTemplates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;tboxInIP.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tboxInIP.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;btnTemplates.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="tboxTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 21</value>
-  </data>
-  <data name="chkInPort.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cboxInject.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;cboxInName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;cboxInName.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chkShareOverLAN.Name" xml:space="preserve">
-    <value>chkShareOverLAN</value>
-  </data>
-  <data name="&gt;&gt;chkInPort.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 87</value>
-  </data>
-  <data name="tboxInIP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkUntrack.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="btnCancel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxRemark.Name" xml:space="preserve">
-    <value>tboxRemark</value>
-  </data>
-  <data name="&gt;&gt;chkUntrack.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tboxRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 222</value>
-  </data>
-  <data name="cboxInject.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 139</value>
-  </data>
-  <data name="chkSendThough.ToolTip" xml:space="preserve">
-    <value>Accept modify sendThough under tun mode.</value>
-  </data>
-  <data name="&gt;&gt;cboxAutorun.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTemplates.Name" xml:space="preserve">
-    <value>tboxTemplates</value>
-  </data>
-  <data name="cboxAutorun.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="chkAutorun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkInIP.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="cboxUntrack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="chkIncrement.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="groupBox2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkUntrack.ToolTip" xml:space="preserve">
-    <value>Do not track server running state.</value>
-  </data>
-  <data name="&gt;&gt;chkSendThough.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="cboxInName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 15</value>
-  </data>
-  <data name="&gt;&gt;chkCustomCore.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="chkInIP.Text" xml:space="preserve">
-    <value>IP</value>
-  </data>
-  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="chkMark.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="cboxAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 91</value>
-  </data>
-  <data name="&gt;&gt;tboxInPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;cboxSendThrough.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxMark.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkSendThough.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;tboxInIP.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="cboxCustomCoreName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 67</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkInject.Text" xml:space="preserve">
-    <value>Inject</value>
-  </data>
-  <data name="&gt;&gt;cboxInject.Name" xml:space="preserve">
-    <value>cboxInject</value>
-  </data>
-  <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkSendThough.Text" xml:space="preserve">
-    <value>ST</value>
-  </data>
-  <data name="chkSendThough.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="chkInIP.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 16</value>
-  </data>
-  <data name="tboxTemplates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 187</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="tboxInPort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 21</value>
-  </data>
-  <data name="&gt;&gt;cboxUntrack.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkInMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 18</value>
-  </data>
-  <data name="cboxInName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxRemark.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="chkAutorun.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkAutorun.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="chkSendThough.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 165</value>
-  </data>
-  <data name="btnModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Name" xml:space="preserve">
-    <value>cboxMark</value>
-  </data>
-  <data name="&gt;&gt;btnModify.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="chkInPort.Text" xml:space="preserve">
-    <value>Port</value>
-  </data>
-  <data name="tboxInIP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 21</value>
-  </data>
-  <data name="&gt;&gt;chkInject.Name" xml:space="preserve">
-    <value>chkInject</value>
-  </data>
-  <data name="chkCustomCore.Text" xml:space="preserve">
-    <value>Core</value>
-  </data>
-  <data name="chkInject.ToolTip" xml:space="preserve">
-    <value>Accept custom template injection.</value>
-  </data>
-  <data name="tboxInIP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 37</value>
-  </data>
-  <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 18</value>
-  </data>
-  <data name="&gt;&gt;tboxInIP.Name" xml:space="preserve">
-    <value>tboxInIP</value>
-  </data>
-  <data name="&gt;&gt;btnModify.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkTemplates.ToolTip" xml:space="preserve">
-    <value>Merge templates.</value>
-  </data>
-  <data name="chkAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 93</value>
-  </data>
-  <data name="cboxSendThrough.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="tboxInIP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
-  </data>
-  <data name="chkCustomCore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="cboxInName.Items" xml:space="preserve">
-    <value>Config</value>
-  </data>
-  <data name="chkTemplates.Text" xml:space="preserve">
-    <value>Tpls</value>
-  </data>
-  <data name="chkTemplates.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;chkTemplates.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;chkSendThough.Name" xml:space="preserve">
-    <value>chkSendThough</value>
-  </data>
-  <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 16</value>
-  </data>
-  <data name="&gt;&gt;cboxInName.Name" xml:space="preserve">
-    <value>cboxInName</value>
-  </data>
-  <data name="tboxRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 21</value>
-  </data>
-  <data name="cboxMark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="cboxInject.Items1" xml:space="preserve">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;chkShareOverLAN.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkCustomCore.Name" xml:space="preserve">
-    <value>chkCustomCore</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tboxRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 42</value>
-  </data>
-  <data name="chkRemark.Text" xml:space="preserve">
-    <value>Remark</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnModify.ToolTip" xml:space="preserve">
-    <value>Only checked items will be modified.</value>
-  </data>
-  <data name="chkInject.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="cboxMark.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;chkInPort.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="chkCustomCore.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;cboxCustomCoreName.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;chkInject.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="tboxInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cboxCustomCoreName.Name" xml:space="preserve">
-    <value>cboxCustomCoreName</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxCustomCoreName.Items" xml:space="preserve">
-    <value>True</value>
-  </data>
-  <data name="chkSendThough.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="cboxUntrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 115</value>
-  </data>
-  <data name="chkInject.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="cboxSendThrough.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkUntrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 117</value>
-  </data>
-  <data name="tboxInIP.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="cboxCustomCoreName.Items1" xml:space="preserve">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;chkTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkAutorun.Text" xml:space="preserve">
-    <value>Autorun</value>
-  </data>
-  <data name="&gt;&gt;tboxRemark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxAutorun.Name" xml:space="preserve">
-    <value>cboxAutorun</value>
-  </data>
-  <data name="cboxAutorun.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkInPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 13</value>
-  </data>
-  <data name="cboxUntrack.Items" xml:space="preserve">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;chkShareOverLAN.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;btnTemplates.Name" xml:space="preserve">
-    <value>btnTemplates</value>
-  </data>
-  <data name="&gt;&gt;chkRemark.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkRemark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkInPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 62</value>
-  </data>
-  <data name="btnTemplates.Text" xml:space="preserve">
-    <value>Templates</value>
-  </data>
-  <data name="cboxUntrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkUntrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 104</value>
-  </data>
-  <data name="chkInMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnModify.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="chkRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 44</value>
-  </data>
-  <data name="&gt;&gt;chkUntrack.Name" xml:space="preserve">
-    <value>chkUntrack</value>
-  </data>
-  <data name="chkIncrement.Text" xml:space="preserve">
-    <value>Increment</value>
-  </data>
-  <data name="&gt;&gt;chkAutorun.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnModify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="&gt;&gt;chkMark.Name" xml:space="preserve">
-    <value>chkMark</value>
-  </data>
-  <data name="chkInject.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 141</value>
-  </data>
-  <data name="chkInMode.ToolTip" xml:space="preserve">
-    <value>Custom config template name.</value>
-  </data>
-  <data name="cboxCustomCoreName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxUntrack.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkInMode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkMark.Text" xml:space="preserve">
-    <value>Mark</value>
-  </data>
-  <data name="cboxSendThrough.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkIncrement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;tboxTemplates.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="btnModify.Text" xml:space="preserve">
-    <value>Modify</value>
-  </data>
-  <data name="&gt;&gt;tboxInPort.Name" xml:space="preserve">
-    <value>tboxInPort</value>
-  </data>
-  <data name="chkMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 20</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="chkInPort.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;chkInMode.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="chkAutorun.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="chkInMode.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="&gt;&gt;chkInIP.Name" xml:space="preserve">
-    <value>chkInIP</value>
-  </data>
-  <data name="&gt;&gt;chkUntrack.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="btnTemplates.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="chkInject.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;chkCustomCore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInMode.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;btnTemplates.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tboxRemark.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="cboxAutorun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="&gt;&gt;cboxAutorun.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="chkTemplates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 189</value>
-  </data>
-  <data name="cboxInject.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkInMode.Name" xml:space="preserve">
-    <value>chkInMode</value>
-  </data>
-  <data name="chkRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cboxCustomCoreName.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkShareOverLAN.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;cboxInject.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxSendThrough.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 163</value>
-  </data>
-  <data name="chkIncrement.ToolTip" xml:space="preserve">
-    <value>Auto increment port number.</value>
-  </data>
-  <data name="cboxSendThrough.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkCustomCore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 69</value>
-  </data>
-  <data name="chkSendThough.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
-  </data>
-  <data name="cboxAutorun.Items1" xml:space="preserve">
-    <value>False</value>
-  </data>
-  <data name="cboxInName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkAutorun.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Inbound</value>
-  </data>
-  <data name="chkTemplates.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="chkRemark.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tboxInPort.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="cboxCustomCoreName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkIncrement.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;cboxCustomCoreName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkInject.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;cboxInName.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="chkMark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="&gt;&gt;cboxCustomCoreName.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="btnTemplates.ToolTip" xml:space="preserve">
-    <value>Select templates.</value>
-  </data>
-  <data name="&gt;&gt;cboxSendThrough.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="cboxSendThrough.Items1" xml:space="preserve">
-    <value>False</value>
-  </data>
-  <data name="cboxUntrack.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tboxTemplates.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="cboxInName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxTemplates.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;cboxAutorun.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkInIP.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkMark.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkUntrack.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkCustomCore.ToolTip" xml:space="preserve">
-    <value>Custom core.</value>
-  </data>
-  <data name="&gt;&gt;chkInject.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxUntrack.Items1" xml:space="preserve">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormBatchModifyServerSetting</value>
-  </data>
-  <data name="chkTemplates.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;btnModify.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnModify.Name" xml:space="preserve">
-    <value>btnModify</value>
-  </data>
-  <data name="chkShareOverLAN.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 39</value>
-  </data>
-  <data name="btnTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="chkShareOverLAN.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 16</value>
-  </data>
-  <data name="chkInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnTemplates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 186</value>
-  </data>
-  <data name="&gt;&gt;chkCustomCore.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;chkMark.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="chkMark.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkCustomCore.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
   </data>
   <data name="chkInIP.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="cboxAutorun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="chkInIP.Text" xml:space="preserve">
+    <value>IP</value>
   </data>
-  <data name="chkIncrement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 62</value>
+  <data name="&gt;&gt;chkInIP.Name" xml:space="preserve">
+    <value>chkInIP</value>
   </data>
-  <data name="cboxUntrack.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;chkInIP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkInIP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;chkInIP.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="tboxTemplates.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="cboxMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 335</value>
+  <data name="&gt;&gt;chkInIP.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="tboxInPort.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 60</value>
   </data>
-  <data name="&gt;&gt;chkSendThough.ZOrder" xml:space="preserve">
-    <value>10</value>
+  <data name="tboxInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;chkInMode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tboxInPort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
   </data>
-  <data name="chkTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
+  <data name="tboxInPort.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="&gt;&gt;chkTemplates.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="&gt;&gt;tboxInPort.Name" xml:space="preserve">
+    <value>tboxInPort</value>
   </data>
-  <data name="chkSendThough.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cboxInject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="chkUntrack.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;tboxInPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tboxInPort.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="chkRemark.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;tboxInPort.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkInPort.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInPort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 62</value>
+  </data>
+  <data name="chkInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkInPort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkInPort.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="chkInPort.Text" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="&gt;&gt;chkInPort.Name" xml:space="preserve">
+    <value>chkInPort</value>
+  </data>
+  <data name="&gt;&gt;chkInPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInPort.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;chkInPort.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="tboxInIP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 37</value>
+  </data>
+  <data name="tboxInIP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxInIP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxInIP.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tboxInIP.Name" xml:space="preserve">
+    <value>tboxInIP</value>
+  </data>
+  <data name="&gt;&gt;tboxInIP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxInIP.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;tboxInIP.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chkMark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkMark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 20</value>
+  </data>
+  <data name="chkMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkMark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkMark.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chkMark.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;chkMark.Name" xml:space="preserve">
+    <value>chkMark</value>
+  </data>
+  <data name="&gt;&gt;chkMark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkMark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkMark.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="chkInMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 18</value>
+  </data>
+  <data name="chkInMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkInMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkInMode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chkInMode.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="chkInMode.ToolTip" xml:space="preserve">
+    <value>Custom config template name.</value>
+  </data>
+  <data name="&gt;&gt;chkInMode.Name" xml:space="preserve">
+    <value>chkInMode</value>
+  </data>
+  <data name="&gt;&gt;chkInMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInMode.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;chkInMode.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkIncrement.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkIncrement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>282, 62</value>
+  </data>
+  <data name="chkIncrement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 16</value>
+  </data>
+  <data name="chkIncrement.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkIncrement.Text" xml:space="preserve">
+    <value>Increment</value>
+  </data>
+  <data name="chkIncrement.ToolTip" xml:space="preserve">
+    <value>Auto increment port number.</value>
   </data>
   <data name="&gt;&gt;chkIncrement.Name" xml:space="preserve">
     <value>chkIncrement</value>
   </data>
-  <data name="chkRemark.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;chkIncrement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkIncrement.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;chkIncrement.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkShareOverLAN.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkShareOverLAN.Location" type="System.Drawing.Point, System.Drawing">
+    <value>282, 39</value>
+  </data>
+  <data name="chkShareOverLAN.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkShareOverLAN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 16</value>
+  </data>
+  <data name="chkShareOverLAN.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="chkInIP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 39</value>
+  <data name="chkShareOverLAN.Text" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
+    <value>Share proxy over LAN.</value>
+  </data>
+  <data name="&gt;&gt;chkShareOverLAN.Name" xml:space="preserve">
+    <value>chkShareOverLAN</value>
+  </data>
+  <data name="&gt;&gt;chkShareOverLAN.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkShareOverLAN.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;chkShareOverLAN.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cboxInName.Items" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="cboxInName.Items1" xml:space="preserve">
+    <value>HTTP</value>
   </data>
   <data name="cboxInName.Items2" xml:space="preserve">
     <value>SOCKS</value>
@@ -957,142 +369,841 @@
   <data name="cboxInName.Items3" xml:space="preserve">
     <value>Custom</value>
   </data>
-  <data name="cboxInName.Items1" xml:space="preserve">
-    <value>HTTP</value>
+  <data name="cboxInName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 15</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>340, 366</value>
-  </data>
-  <data name="btnModify.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="cboxInName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;tboxInPort.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;cboxSendThrough.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;chkInIP.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tboxInPort.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Batch modify</value>
-  </data>
-  <data name="chkInIP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkInject.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;chkSendThough.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkInject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
-  </data>
-  <data name="chkInPort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="&gt;&gt;chkIncrement.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="chkIncrement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 16</value>
-  </data>
-  <data name="tboxTemplates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkTemplates.Name" xml:space="preserve">
-    <value>chkTemplates</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
-  </data>
-  <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
-    <value>Share proxy over LAN.</value>
-  </data>
-  <data name="&gt;&gt;chkMark.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;chkRemark.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;chkMark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tboxRemark.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;cboxSendThrough.Name" xml:space="preserve">
-    <value>cboxSendThrough</value>
-  </data>
-  <data name="&gt;&gt;cboxUntrack.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="chkAutorun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 16</value>
-  </data>
-  <data name="&gt;&gt;chkAutorun.Name" xml:space="preserve">
-    <value>chkAutorun</value>
-  </data>
-  <data name="chkInIP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 16</value>
-  </data>
-  <data name="chkCustomCore.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 335</value>
   </data>
   <data name="cboxInName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
+    <value>190, 20</value>
   </data>
-  <data name="cboxInject.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="cboxInName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;tboxRemark.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="&gt;&gt;cboxInName.Name" xml:space="preserve">
+    <value>cboxInName</value>
+  </data>
+  <data name="&gt;&gt;cboxInName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxInName.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cboxInName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 13</value>
+  </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 87</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="chkIncrement.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Inbound</value>
   </data>
-  <data name="&gt;&gt;chkRemark.Name" xml:space="preserve">
-    <value>chkRemark</value>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;chkInPort.Name" xml:space="preserve">
-    <value>chkInPort</value>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkInIP.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="chkInMode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="cboxAutorun.Items" xml:space="preserve">
-    <value>True</value>
+  <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 18</value>
   </data>
-  <data name="&gt;&gt;chkShareOverLAN.ZOrder" xml:space="preserve">
+  <data name="cboxMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxMark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxMark.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="chkAutorun.AutoSize" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;cboxMark.Name" xml:space="preserve">
+    <value>cboxMark</value>
+  </data>
+  <data name="&gt;&gt;cboxMark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxMark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="btnModify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnModify.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 410</value>
+  </data>
+  <data name="btnModify.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnModify.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnModify.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnModify.Text" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="btnModify.ToolTip" xml:space="preserve">
+    <value>Only checked items will be modified.</value>
+  </data>
+  <data name="&gt;&gt;btnModify.Name" xml:space="preserve">
+    <value>btnModify</value>
+  </data>
+  <data name="&gt;&gt;btnModify.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnModify.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnModify.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 410</value>
+  </data>
+  <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnTemplates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>282, 165</value>
+  </data>
+  <data name="btnTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnTemplates.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="btnTemplates.Text" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="btnTemplates.ToolTip" xml:space="preserve">
+    <value>Select templates.</value>
+  </data>
+  <data name="&gt;&gt;btnTemplates.Name" xml:space="preserve">
+    <value>btnTemplates</value>
+  </data>
+  <data name="&gt;&gt;btnTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTemplates.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;btnTemplates.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboxUntrack.Items" xml:space="preserve">
     <value>True</value>
   </data>
-  <data name="chkShareOverLAN.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="cboxUntrack.Items1" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="cboxUntrack.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 215</value>
+  </data>
+  <data name="cboxUntrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxUntrack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxUntrack.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;cboxUntrack.Name" xml:space="preserve">
+    <value>cboxUntrack</value>
+  </data>
+  <data name="&gt;&gt;cboxUntrack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxUntrack.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;cboxUntrack.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cboxCustomCoreName.Items" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="cboxCustomCoreName.Items1" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="cboxCustomCoreName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 142</value>
+  </data>
+  <data name="cboxCustomCoreName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxCustomCoreName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxCustomCoreName.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;cboxCustomCoreName.Name" xml:space="preserve">
+    <value>cboxCustomCoreName</value>
+  </data>
+  <data name="&gt;&gt;cboxCustomCoreName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxCustomCoreName.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;cboxCustomCoreName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboxSendThrough.Items" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="cboxSendThrough.Items1" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="cboxSendThrough.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 263</value>
+  </data>
+  <data name="cboxSendThrough.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxSendThrough.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxSendThrough.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;cboxSendThrough.Name" xml:space="preserve">
+    <value>cboxSendThrough</value>
+  </data>
+  <data name="&gt;&gt;cboxSendThrough.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxSendThrough.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;cboxSendThrough.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cboxInject.Items" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="cboxInject.Items1" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="cboxInject.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 239</value>
+  </data>
+  <data name="cboxInject.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxInject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxInject.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;cboxInject.Name" xml:space="preserve">
+    <value>cboxInject</value>
+  </data>
+  <data name="&gt;&gt;cboxInject.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxInject.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
+  <data name="&gt;&gt;cboxInject.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cboxAutorun.Items" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="cboxAutorun.Items1" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="cboxAutorun.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 191</value>
+  </data>
+  <data name="cboxAutorun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxAutorun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 20</value>
+  </data>
+  <data name="cboxAutorun.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;cboxAutorun.Name" xml:space="preserve">
+    <value>cboxAutorun</value>
+  </data>
+  <data name="&gt;&gt;cboxAutorun.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxAutorun.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;cboxAutorun.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tboxTemplates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 166</value>
+  </data>
+  <data name="tboxTemplates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxTemplates.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tboxTemplates.Name" xml:space="preserve">
+    <value>tboxTemplates</value>
+  </data>
+  <data name="&gt;&gt;tboxTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTemplates.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tboxTemplates.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="tboxTag3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 117</value>
+  </data>
+  <data name="tboxTag3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxTag3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxTag3.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tboxTag3.Name" xml:space="preserve">
+    <value>tboxTag3</value>
+  </data>
+  <data name="&gt;&gt;tboxTag3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTag3.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tboxTag3.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tboxTag2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 92</value>
+  </data>
+  <data name="tboxTag2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxTag2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxTag2.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tboxTag2.Name" xml:space="preserve">
+    <value>tboxTag2</value>
+  </data>
+  <data name="&gt;&gt;tboxTag2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTag2.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tboxTag2.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tboxTag1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 67</value>
+  </data>
+  <data name="tboxTag1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxTag1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxTag1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tboxTag1.Name" xml:space="preserve">
+    <value>tboxTag1</value>
+  </data>
+  <data name="&gt;&gt;tboxTag1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTag1.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tboxTag1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="tboxRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 42</value>
+  </data>
+  <data name="tboxRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 21</value>
+  </data>
+  <data name="tboxRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tboxRemark.Name" xml:space="preserve">
+    <value>tboxRemark</value>
+  </data>
+  <data name="&gt;&gt;tboxRemark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxRemark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tboxRemark.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="chkTag3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTag3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTag3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 119</value>
+  </data>
+  <data name="chkTag3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkTag3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTag3.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="chkTag3.Text" xml:space="preserve">
+    <value>Tag3</value>
+  </data>
+  <data name="&gt;&gt;chkTag3.Name" xml:space="preserve">
+    <value>chkTag3</value>
+  </data>
+  <data name="&gt;&gt;chkTag3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTag3.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkTag3.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="chkUntrack.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkUntrack.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 217</value>
+  </data>
+  <data name="chkUntrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 16</value>
+  </data>
+  <data name="chkUntrack.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="chkUntrack.Text" xml:space="preserve">
+    <value>Untrack</value>
+  </data>
+  <data name="chkUntrack.ToolTip" xml:space="preserve">
+    <value>Do not track server running state.</value>
+  </data>
+  <data name="&gt;&gt;chkUntrack.Name" xml:space="preserve">
+    <value>chkUntrack</value>
+  </data>
+  <data name="&gt;&gt;chkUntrack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkUntrack.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkUntrack.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="chkTag2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTag2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTag2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 94</value>
+  </data>
+  <data name="chkTag2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkTag2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTag2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="chkTag2.Text" xml:space="preserve">
+    <value>Tag2</value>
+  </data>
+  <data name="&gt;&gt;chkTag2.Name" xml:space="preserve">
+    <value>chkTag2</value>
+  </data>
+  <data name="&gt;&gt;chkTag2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTag2.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkTag2.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="chkTemplates.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTemplates.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTemplates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 168</value>
+  </data>
+  <data name="chkTemplates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTemplates.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="chkTemplates.Text" xml:space="preserve">
+    <value>Tpls</value>
+  </data>
+  <data name="chkTemplates.ToolTip" xml:space="preserve">
+    <value>Merge templates.</value>
+  </data>
+  <data name="&gt;&gt;chkTemplates.Name" xml:space="preserve">
+    <value>chkTemplates</value>
+  </data>
+  <data name="&gt;&gt;chkTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTemplates.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkTemplates.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="chkTag1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTag1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTag1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 69</value>
+  </data>
+  <data name="chkTag1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkTag1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTag1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="chkTag1.Text" xml:space="preserve">
+    <value>Tag1</value>
+  </data>
+  <data name="&gt;&gt;chkTag1.Name" xml:space="preserve">
+    <value>chkTag1</value>
+  </data>
+  <data name="&gt;&gt;chkTag1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTag1.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkTag1.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="chkSendThough.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkSendThough.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkSendThough.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 265</value>
+  </data>
+  <data name="chkSendThough.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkSendThough.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 16</value>
+  </data>
+  <data name="chkSendThough.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="chkSendThough.Text" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="chkSendThough.ToolTip" xml:space="preserve">
+    <value>Accept modify sendThough under tun mode.</value>
+  </data>
+  <data name="&gt;&gt;chkSendThough.Name" xml:space="preserve">
+    <value>chkSendThough</value>
+  </data>
+  <data name="&gt;&gt;chkSendThough.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkSendThough.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkSendThough.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="chkRemark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 44</value>
+  </data>
+  <data name="chkRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
+  <data name="chkRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="chkRemark.Text" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.Name" xml:space="preserve">
+    <value>chkRemark</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="chkInject.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInject.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInject.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 241</value>
+  </data>
+  <data name="chkInject.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkInject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
+  <data name="chkInject.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="chkInject.Text" xml:space="preserve">
+    <value>Inject</value>
+  </data>
+  <data name="chkInject.ToolTip" xml:space="preserve">
+    <value>Accept custom template injection.</value>
+  </data>
+  <data name="&gt;&gt;chkInject.Name" xml:space="preserve">
+    <value>chkInject</value>
+  </data>
+  <data name="&gt;&gt;chkInject.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInject.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkInject.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="chkCustomCore.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkCustomCore.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkCustomCore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 144</value>
+  </data>
+  <data name="chkCustomCore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkCustomCore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkCustomCore.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="chkCustomCore.Text" xml:space="preserve">
+    <value>Core</value>
+  </data>
+  <data name="chkCustomCore.ToolTip" xml:space="preserve">
+    <value>Custom core.</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.Name" xml:space="preserve">
+    <value>chkCustomCore</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="chkAutorun.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAutorun.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 193</value>
+  </data>
+  <data name="chkAutorun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkAutorun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 16</value>
+  </data>
+  <data name="chkAutorun.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="chkAutorun.Text" xml:space="preserve">
+    <value>Autorun</value>
+  </data>
+  <data name="&gt;&gt;chkAutorun.Name" xml:space="preserve">
+    <value>chkAutorun</value>
+  </data>
+  <data name="&gt;&gt;chkAutorun.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAutorun.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkAutorun.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 104</value>
+  </data>
+  <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 295</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>401, 441</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Batch modify</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormBatchModifyServerSetting</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

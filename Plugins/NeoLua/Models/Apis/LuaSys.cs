@@ -330,9 +330,6 @@ namespace NeoLuna.Models.Apis
             return false;
         }
 
-        // should be deleted on 2026-01-01
-        public bool LusServSetIndex(string name, double index) => LuaServSetIndex(name, index);
-
         public bool LuaServSetIndex(string name, double index)
         {
             var core = GetLuaCoreCtrlByName(name);

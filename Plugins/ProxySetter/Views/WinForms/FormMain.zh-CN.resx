@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="rtboxTunaDns.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkTunaModifySendThrough.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
@@ -154,14 +157,26 @@
   <data name="btnTunaBrowseExe.ToolTip" xml:space="preserve">
     <value>浏览tun2socks.exe</value>
   </data>
+  <data name="rtboxTunaStartupScript.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox6.Text" xml:space="preserve">
     <value>启动参数</value>
+  </data>
+  <data name="groupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="lbTunaStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
   </data>
   <data name="lbTunaStatus.Text" xml:space="preserve">
     <value>状态</value>
+  </data>
+  <data name="lbTunaStatus.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 12</value>
@@ -181,8 +196,17 @@
   <data name="label12.ToolTip" xml:space="preserve">
     <value>TUN虚拟网卡的名字</value>
   </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label7.Text" xml:space="preserve">
     <value>网卡IPv4</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -190,17 +214,50 @@
   <data name="label5.Text" xml:space="preserve">
     <value>代理地址</value>
   </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaExePath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaTunIpv4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaTunIpv6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaNicIpv4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaProxy.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnTunaStop.Text" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="btnTunaStop.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnTunaStart.Text" xml:space="preserve">
     <value>启动</value>
+  </data>
+  <data name="btnTunaStart.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnTunaDetect.Text" xml:space="preserve">
     <value>生成参数</value>
   </data>
   <data name="btnTunaDetect.ToolTip" xml:space="preserve">
     <value>自动生成参数</value>
+  </data>
+  <data name="tabTun.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnPacModifyList.Text" xml:space="preserve">
+    <value>调整</value>
+  </data>
+  <data name="btnPacModifyList.ToolTip" xml:space="preserve">
+    <value>调整默认 PAC 域名及 IP 列表。</value>
   </data>
   <data name="chkBasicUseHotkey.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
@@ -211,6 +268,18 @@
   <data name="chkBasicUseHotkey.ToolTip" xml:space="preserve">
     <value>开启或停用全局热键</value>
   </data>
+  <data name="chkBasicUseShift.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkBasicUseAlt.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBasicHotkey.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
   </data>
@@ -219,6 +288,9 @@
   </data>
   <data name="label8.ToolTip" xml:space="preserve">
     <value>切换代理模式全局热键</value>
+  </data>
+  <data name="cboxBasicPacProtocol.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkBasicUseCustomPac.Location" type="System.Drawing.Point, System.Drawing">
     <value>228, 154</value>
@@ -238,6 +310,9 @@
   <data name="cboxBasicPacMode.Items1" xml:space="preserve">
     <value>黑名单</value>
   </data>
+  <data name="cboxBasicPacMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="cboxBasicSysProxyMode.Items" xml:space="preserve">
     <value>手动</value>
   </data>
@@ -246,6 +321,9 @@
   </data>
   <data name="cboxBasicSysProxyMode.Items3" xml:space="preserve">
     <value>直连</value>
+  </data>
+  <data name="cboxBasicSysProxyMode.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -292,6 +370,9 @@
   <data name="label6.Text" xml:space="preserve">
     <value>PAC模式</value>
   </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
   </data>
@@ -313,13 +394,25 @@
   <data name="chkBasicPacAlwaysOn.ToolTip" xml:space="preserve">
     <value>保持PAC服务器处于开启状态</value>
   </data>
+  <data name="tboxBasicCustomPacPath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBaiscPacPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBasicGlobalPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnBasicViewInNotepad.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAR9JREFUOE9jQAbfvn37TwB/BGJzqHJMAFO4YO/1/zfuPfmfkZHx38nJCY4LCgr+
+        wAAADsABataJCQAAAR9JREFUOE9jQAbfvn37TwB/BGJzqHJMAFO4YO/1/zfuPfmfkZHx38nJCY4LCgr+
         v3v37hNOQ2AGRPTu+a+Vv+b/vaev/z97+vz/h/cfwQbk5+djNwTIiQHiazADPn/5+j8casijl+/hBrx8
         8QrTECCRcOHui//Gpev/MwTPwcAh3bvhBoBoZEM+f/78EWTAfcOSdf8L5h4F2/b8zYf/T169/+/Vsh3D
         Bej49evX/8H+Btn04Pk7WEijOP/Tx09gA9AxsgEPdArW/C9bePz/2w+fwQZM234Zr2YQRjYg7fTNZ/+1
@@ -333,10 +426,13 @@
   <data name="lbBasicProxyLink.ToolTip" xml:space="preserve">
     <value>当前系统代理</value>
   </data>
+  <data name="lbBasicCurPacServerStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnBaiscCopyProxyLink.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAJVJREFUOE+10EEKgCAQQFFv1V6X4tpreJxa1BE1W7idmmDAxrSEEj4RNQ9VAIBI
+        wAAADsABataJCQAAAJVJREFUOE+10EEKgCAQQFFv1V6X4tpreJxa1BE1W7idmmDAxrSEEj4RNQ9VAIBI
         KUGleDSI1iJASlnknAPv/dZEcmAN8dIyL89IC8iREML9kWqAtRaMMaC1bh+pBuAwf5/GqUR6AHwW99IL
         YIQcc7ELoOhecO41wPsHyLeplLodpAqAx3fE4wDvG+Ap/O8E+MIP70qwA3iV0qEij2QHAAAAAElFTkSu
         QmCC
@@ -348,7 +444,7 @@
   <data name="btnBasicDebugPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAMxJREFUOE+9U7sNgzAU9CgZITN4Cg/gNtSEAeg9QUagcO+eLSiStCQStssXnYWR
+        vwAADr8BOAVTJAAAAMxJREFUOE+9U7sNgzAU9CgZITN4Cg/gNtSEAeg9QUagcO+eLSiStCQStssXnYWR
         iQJOQMqTTsf73PFsyWx3OOdoD4IB53wT/mdQVRUZY6ht28DIUZ8MclBKzQyRx97qBvgThsvyTLfrnR79
         MzBy1K21l1UDrAuO4gjkqGc3wJnBqThCCEFd1+XvAAabN0BPSknFqZhMwMjHi2wWDbTWVNd1+IZJ2hvF
         vff+8NEgFYMxjLkETRAvvYV38TAMxzCcCwxCAOHP4hjR5DsxYy+1KlKi/qW/8wAAAABJRU5ErkJggg==
@@ -360,7 +456,7 @@
   <data name="btnBasicStartPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        wAAADsABataJCQAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
         0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
         iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
         YII=
@@ -372,7 +468,7 @@
   <data name="btnBasicStopPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        vwAADr8BOAVTJAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
         jpx4AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -382,10 +478,19 @@
   <data name="groupBox2.Text" xml:space="preserve">
     <value>状态</value>
   </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabBasic.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnSetSortWhitelist.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        wAAADsABataJCQAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
         O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
         lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
         VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
@@ -395,13 +500,19 @@
   <data name="btnSetSortWhitelist.ToolTip" xml:space="preserve">
     <value>排序</value>
   </data>
+  <data name="rtboxPacWhiteList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox3.Text" xml:space="preserve">
     <value>白名单</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnSetSortBlacklist.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        wAAADsABataJCQAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
         O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
         lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
         VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
@@ -411,25 +522,67 @@
   <data name="btnSetSortBlacklist.ToolTip" xml:space="preserve">
     <value>排序</value>
   </data>
+  <data name="rtboxPacBlackList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox4.Text" xml:space="preserve">
     <value>黑名单</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tabPac.Text" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="tabPac.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxUsageReadMe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox5.Text" xml:space="preserve">
     <value>说明</value>
+  </data>
+  <data name="groupBox5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tabUsage.Text" xml:space="preserve">
     <value>用法</value>
   </data>
+  <data name="tabUsage.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>取消</value>
+  </data>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnSave.Text" xml:space="preserve">
     <value>保存</value>
   </data>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>V2RayGCon plugins</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

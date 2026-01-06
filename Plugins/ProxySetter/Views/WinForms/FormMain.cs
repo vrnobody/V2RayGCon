@@ -184,16 +184,6 @@ namespace ProxySetter.Views.WinForms
                 )
             );
 
-            ctrl.Plug(
-                new Controllers.VGCPluginComponents.TabPacCustomList(
-                    setting,
-                    rtboxPacWhiteList,
-                    rtboxPacBlackList,
-                    btnSetSortWhitelist,
-                    btnSetSortBlacklist
-                )
-            );
-
             return ctrl;
         }
         #endregion
@@ -220,10 +210,9 @@ namespace ProxySetter.Views.WinForms
             chkBasicAutoUpdateSysProxy.Enabled = !isChecked;
             tboxBasicGlobalPort.Enabled = !isChecked;
             cboxBasicPacMode.Enabled = !isChecked;
+            btnPacModifyList.Enabled = !isChecked;
             cboxBasicPacProtocol.Enabled = !isChecked;
             btnBasicDebugPacServer.Enabled = !isChecked;
-            rtboxPacWhiteList.Enabled = !isChecked;
-            rtboxPacBlackList.Enabled = !isChecked;
             btnBasicViewInNotepad.Enabled = !isChecked;
         }
 
@@ -232,6 +221,23 @@ namespace ProxySetter.Views.WinForms
             var enabled = chkBasicAutoUpdateSysProxy.Checked;
             tboxBasicGlobalPort.Enabled = !enabled;
             cboxBasicPacProtocol.Enabled = !enabled;
+        }
+
+        readonly object formModifyPacListLocker = new object();
+        Form formModifyPacList = null;
+
+        private void btnPacModifyList_Click(object sender, EventArgs e)
+        {
+            lock (formModifyPacListLocker)
+            {
+                if (formModifyPacList == null)
+                {
+                    formModifyPacList = new FormModifyPacList(this.setting);
+                    formModifyPacList.FormClosing += (s, a) => this.formModifyPacList = null;
+                    formModifyPacList.Show();
+                }
+                formModifyPacList.Activate();
+            }
         }
         #endregion
     }

@@ -117,140 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmCloseWinWithoutSave" xml:space="preserve">
-    <value>Discard unsaved changes and close this window?</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnSortWhiteList.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
+        lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
+        VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
+        TkSuQmCC
+</value>
   </data>
-  <data name="CopyFail" xml:space="preserve">
-    <value>Copy fail!</value>
+  <data name="btnSortWhiteList.ToolTip" xml:space="preserve">
+    <value>排序白名单</value>
   </data>
-  <data name="CopySuccess" xml:space="preserve">
-    <value>Copied to clipboard.</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>白名单</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Auto update system proxy setting.</value>
+  <data name="btnSortBlackList.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wAAADsABataJCQAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
+        lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
+        VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
+        TkSuQmCC
+</value>
   </data>
-  <data name="DetectRouteConfigFailed" xml:space="preserve">
-    <value>Detect route config failed!</value>
+  <data name="btnSortBlackList.ToolTip" xml:space="preserve">
+    <value>排序黑名单</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>Done.</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>黑名单</value>
   </data>
-  <data name="ExeNotFound" xml:space="preserve">
-    <value>Exe file not found!
-{0}</value>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>保存</value>
   </data>
-  <data name="Failed" xml:space="preserve">
-    <value>Failed!</value>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value>保存设置</value>
   </data>
-  <data name="GlobalProxyRequireHttpServer" xml:space="preserve">
-    <value>Global proxy require http server!</value>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
   </data>
-  <data name="LaunchNotepadFail" xml:space="preserve">
-    <value>Launch notepad fail!</value>
-  </data>
-  <data name="MiDirect" xml:space="preserve">
-    <value>Direct</value>
-  </data>
-  <data name="MiGlobal" xml:space="preserve">
-    <value>System</value>
-  </data>
-  <data name="MiNone" xml:space="preserve">
-    <value>Manual</value>
-  </data>
-  <data name="MiPAC" xml:space="preserve">
-    <value>PAC</value>
-  </data>
-  <data name="NoServerCapableOfSysProxy" xml:space="preserve">
-    <value>No server capable to be system proxy.</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="PacProxyRequireSocksOrHttpServer" xml:space="preserve">
-    <value>PAC proxy require socks or http server.</value>
-  </data>
-  <data name="PacServerIsOff" xml:space="preserve">
-    <value>PAC server is not running.</value>
-  </data>
-  <data name="PacServerIsOn" xml:space="preserve">
-    <value>PAC server is running.</value>
-  </data>
-  <data name="ParseKeyCodeFail" xml:space="preserve">
-    <value>Try to parse hotkey fail!
-Please check hotkey settings in ProxySetter plug-in.</value>
-  </data>
-  <data name="PleaseConfigTunaFirst" xml:space="preserve">
-    <value>Please config Tuna in option window of this plug-in.
-And then click generate-button.</value>
-  </data>
-  <data name="RegHotKeySuccess" xml:space="preserve">
-    <value>Register hot key success!</value>
-  </data>
-  <data name="RegistHotkeyFail" xml:space="preserve">
-    <value>Try to regist global hotkey fail!
-Please make sure hotkey is not taken by other application.</value>
-  </data>
-  <data name="SetAsSysProxy" xml:space="preserve">
-    <value>Set as system proxy.</value>
-  </data>
-  <data name="StartPacServFail" xml:space="preserve">
-    <value>Start PAC server fail. 
-Please check port setting.</value>
-  </data>
-  <data name="SysProxyChangeTo" xml:space="preserve">
-    <value>Current system proxy is pointing to </value>
-  </data>
-  <data name="SystemProxySettingRemain" xml:space="preserve">
-    <value>System proxy settings remain the same.</value>
-  </data>
-  <data name="SystemProxySettingUpdated" xml:space="preserve">
-    <value>System proxy setting updated.</value>
-  </data>
-  <data name="TunaIsRunning" xml:space="preserve">
-    <value>Tuna is running.</value>
-  </data>
-  <data name="TunaStarts" xml:space="preserve">
-    <value>Tuna starts.</value>
-  </data>
-  <data name="TunaStopped" xml:space="preserve">
-    <value>Tuna stopped.</value>
-  </data>
-  <data name="UnregisterHotKey" xml:space="preserve">
-    <value>Unregister hot key {0}</value>
-  </data>
-  <data name="UsageReadme" xml:space="preserve">
-    <value>In order to use Tuna, you have to download these two binaries:
-https://www.wintun.net/
-https://github.com/xjasonlyu/tun2socks
-Please read the online manual first. (simple chinese)
-
-This plug-in use the following project as the default PAC source.
-https://github.com/txthinking/blackwhite
-https://github.com/Loyalsoldier/v2ray-rules-dat
-
-You can modify the default PAC as follows.
-
-// this is a comment
-
-
-// add domain or IP or CIDR
-
-example.com
-192.168.1.1
-
-192.168.1.0/24
-
-
-// remove domain or IP or CIDR
-
--example.com
--192.168.1.1
--192.168.1.0/24</value>
-  </data>
-  <data name="VisitPacDebugger" xml:space="preserve">
-    <value>Visit PAC debugger webpage?</value>
-  </data>
-  <data name="WriteFileFail" xml:space="preserve">
-    <value>Write file fail!</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>调整默认 PAC 域名及 IP 列表</value>
   </data>
 </root>

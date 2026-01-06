@@ -53,7 +53,6 @@
     <Compile Include="Controllers\VGCPluginComponents\TabTuna.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabUsage.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabStatus.cs" />
-    <Compile Include="Controllers\VGCPluginComponents\TabPacCustomList.cs" />
     <Compile Include="Libs\Nets\PacGenerator.cs" />
     <Compile Include="Libs\Sys\ProxySetter.cs" />
     <Compile Include="Libs\Sys\WinInet.cs" />
@@ -107,6 +106,12 @@
     <Compile Include="Views\WinForms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormModifyPacList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormModifyPacList.Designer.cs">
+      <DependentUpon>FormModifyPacList.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -137,6 +142,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormMain.zh-CN.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormModifyPacList.resx">
+      <DependentUpon>FormModifyPacList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormModifyPacList.zh-CN.resx">
+      <DependentUpon>FormModifyPacList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

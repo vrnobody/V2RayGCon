@@ -363,7 +363,7 @@ namespace ProxySetter.Resources.Langs {
         ///https://github.com/txthinking/blackwhite
         ///https://github.com/Loyalsoldier/v2ray-rules-dat
         ///
-        ///You can modify the default PAC in tab “setting” as follows.
+        ///You can modify the default PAC as follows.
         ///
         ///// this is a comment
         ///
@@ -376,7 +376,7 @@ namespace ProxySetter.Resources.Langs {
         ///192.168.1.0/24
         ///
         ///
-        /////  [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///// remove domain or  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string UsageReadme {
             get {

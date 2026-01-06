@@ -115,7 +115,6 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         #endregion
 
         #region private methods
-
         private void BindEvents(Button btnBasicBrowseCustomPac)
         {
             btnBasicBrowseCustomPac.Click += (s, a) =>

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VgcApis.Models.Consts;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace VgcApisTests.LibsTests
 {

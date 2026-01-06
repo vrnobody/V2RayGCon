@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Commander.Resources.Langs;
+﻿using Commander.Resources.Langs;
 
 namespace Commander.Misc
 {

@@ -20,6 +20,10 @@ namespace NeoLuna.Controllers
         string result = null;
         readonly VgcApis.Libs.Tasks.Waiter coreStopBar = new VgcApis.Libs.Tasks.Waiter();
 
+        static readonly int PREDEFINED_FUNC_LINE_COUNT = VgcApis.Misc.Utils.StrLenInLines(
+            Resources.Files.Datas.LuaPredefinedFunctions
+        );
+
         Thread luaCoreThread;
         private readonly bool enableTracebackFeature;
 
@@ -275,7 +279,6 @@ namespace NeoLuna.Controllers
                 using (Lua core = new Lua())
                 {
                     var g = CreateLuaCore(core, luaSys);
-
                     var sb = new StringBuilder();
                     sb.AppendLine(Resources.Files.Datas.LuaPredefinedFunctions);
                     sb.AppendLine(script);
@@ -285,7 +288,7 @@ namespace NeoLuna.Controllers
 
                     var chunk = core.CompileChunk(
                         src,
-                        $" [{this.name}] ",
+                        ToScriptFileName(),
                         new LuaCompileOptions()
                         {
                             ClrEnabled = isLoadClr,
@@ -300,10 +303,20 @@ namespace NeoLuna.Controllers
                     result = results?.GetValueOrDefault(0, "");
                 }
             }
+            catch (LuaParseException e)
+            {
+                var msg = TranslateLuaParseExcetion(e);
+                ShowErrorMessageToUser(msg);
+            }
+            catch (LuaRuntimeException e)
+            {
+                var msg = TranslateLuaRuntimeException(e);
+                ShowErrorMessageToUser(msg);
+            }
             catch (Exception e)
             {
-                var str = TraceException(e);
-                ShowErrorMessageToUser(str);
+                var msg = TranslateOtherException(e);
+                ShowErrorMessageToUser(msg);
             }
 
             luaSys?.Dispose();
@@ -311,23 +324,64 @@ namespace NeoLuna.Controllers
             isRunning = false;
         }
 
-        private string TraceException(Exception e)
+        string ToScriptFileName() => $" [{this.name}] ";
+
+        void AddExceptionDetail(StringBuilder sb, string filename, int lineNumber)
+        {
+            if (string.IsNullOrEmpty(filename))
+            {
+                return;
+            }
+
+            if (filename != ToScriptFileName())
+            {
+                sb.Append($"File: {filename}, Line: {lineNumber}");
+                return;
+            }
+
+            var n = lineNumber - PREDEFINED_FUNC_LINE_COUNT - 1;
+            if (n > 0)
+            {
+                var line = VgcApis.Misc.Utils.GetLineFromString(this.script, n);
+                sb.Append($"[#{n}] {line}");
+            }
+        }
+
+        StringBuilder CreateExceptionMessageBuilder(Exception ex)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"script [{coreSetting.name}]");
-            sb.AppendLine($"{e}");
-            sb.AppendLine(e.GetType().Name + ": ");
-            sb.AppendLine(e.Message);
-            sb.AppendLine();
+            sb.AppendLine($"{ex.GetType().Name}: {ex.Message}");
+            return sb;
+        }
 
-            var eData = LuaExceptionData.GetData(e);
+        string TranslateLuaParseExcetion(LuaParseException ex)
+        {
+            var sb = CreateExceptionMessageBuilder(ex);
+            AddExceptionDetail(sb, ex.FileName, ex.Line);
+            return sb.ToString();
+        }
+
+        string TranslateLuaRuntimeException(LuaRuntimeException ex)
+        {
+            var sb = CreateExceptionMessageBuilder(ex);
+            foreach (LuaExceptionData frames in ex.Data.Values)
+            {
+                foreach (LuaStackFrame frame in frames)
+                {
+                    AddExceptionDetail(sb, frame.FileName, frame.LineNumber);
+                }
+            }
+            return sb.ToString();
+        }
+
+        private string TranslateOtherException(Exception ex)
+        {
+            var sb = CreateExceptionMessageBuilder(ex);
+            sb.AppendLine($"{ex}");
+            sb.AppendLine();
+            var eData = LuaExceptionData.GetData(ex);
             sb.AppendLine(eData.FormatStackTrace(0, true));
             sb.AppendLine();
-            if (e.InnerException != null)
-            {
-                sb.AppendLine(">>> INNER EXCEPTION <<<");
-                return TraceException(e.InnerException);
-            }
             return sb.ToString();
         }
 

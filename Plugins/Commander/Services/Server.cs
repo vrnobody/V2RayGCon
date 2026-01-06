@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using Commander.Resources.Langs;
-using VgcApis.Models.Consts;
 
 namespace Commander.Services
 {

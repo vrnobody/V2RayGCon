@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using Commander.Resources.Langs;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Commander.Views
 {

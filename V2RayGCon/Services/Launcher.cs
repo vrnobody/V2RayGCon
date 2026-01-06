@@ -89,11 +89,11 @@ namespace V2RayGCon.Services
         void This_Function_Is_Used_For_Debugging()
         {
             // ShowPlugin(@"Commander");
-            // ShowPlugin(@"NeoLuna");
+            ShowPlugin(@"NeoLuna");
             // ShowPlugin(@"ProxySetter");
 
             // Views.WinForms.FormLog.ShowForm();
-            Views.WinForms.FormMain.ShowForm();
+            // Views.WinForms.FormMain.ShowForm();
             // Views.WinForms.FormToolbox.ShowForm();
             // Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 

@@ -1250,6 +1250,30 @@ namespace VgcApis.Misc
             return s.Length * 2;
         }
 
+        public static int StrLenInLines(string s)
+        {
+            if (!string.IsNullOrEmpty(s))
+            {
+                return Regex.Matches(s, "\n").Count;
+            }
+            return 0;
+        }
+
+        // line number starts with 1
+        public static string GetLineFromString(string s, int lineNumber)
+        {
+            // https://stackoverflow.com/questions/2606368/how-to-get-specific-line-from-a-string-in-c
+            var reader = new StringReader(s);
+            string line;
+            int currentLineNumber = 0;
+            do
+            {
+                currentLineNumber += 1;
+                line = reader.ReadLine();
+            } while (line != null && currentLineNumber < lineNumber);
+            return (currentLineNumber == lineNumber) ? line : string.Empty;
+        }
+
         #endregion
 
         #region net

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.WinForms

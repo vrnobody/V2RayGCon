@@ -45,7 +45,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void DisposeCore()
         {
-            StopCore();
+            StopCoreWorker(null);
             ReleaseEvents();
             core.Dispose();
             speedTestWaiter.Dispose();

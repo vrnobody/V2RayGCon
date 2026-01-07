@@ -275,7 +275,11 @@ namespace V2RayGCon.Libs.V2Ray
                 }
                 catch { }
             }
-            VgcApis.Misc.Utils.Sleep(500);
+
+            // 2026-01-07
+            // This function would be called by V2RayGCon\Services\Servers.cs @ DeleteServerByUids -> housekeeping
+            // So you need ONE HOUR to dispose 7200 servers!
+            // VgcApis.Misc.Utils.Sleep(500);
         }
 
         bool IsProcRunning(Process proc)

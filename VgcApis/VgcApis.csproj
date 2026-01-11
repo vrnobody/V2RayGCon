@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IHasIndex.cs" />
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Libs\Tasks\MrePool.cs" />
     <Compile Include="Libs\Tasks\Waiter.cs" />
     <Compile Include="Misc\OutbMeta.cs" />
+    <Compile Include="Models\Datas\Composer.cs" />
     <Compile Include="Models\Datas\MobItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />

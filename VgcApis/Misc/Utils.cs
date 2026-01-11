@@ -499,6 +499,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string GetUtf8StringWithoutBom(byte[] data)
+        {
+            var bom = Encoding.UTF8.GetPreamble();
+            if (data.Length > bom.Length)
+            {
+                for (int i = 0; i < bom.Length; i++)
+                {
+                    if (data[i] != bom[i])
+                        return Encoding.UTF8.GetString(data);
+                }
+            }
+            return Encoding.UTF8.GetString(data, bom.Length, data.Length - bom.Length);
+        }
 
         public static string MatchTailString(string needle, string hastack)
         {

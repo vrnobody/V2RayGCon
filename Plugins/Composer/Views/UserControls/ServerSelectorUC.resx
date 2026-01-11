@@ -117,25 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
+        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
+        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
+        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
-  </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
-  </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
-  </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
-  </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>194, 17</value>
+  </metadata>
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wAAADsABataJCQAAAKhJREFUOE/NkDEOAiEQRfdEHoKeytZTeBIPsFfwCnY2Nh7DxmTX7EA7+kiGiNEN
+        UEnyMhDmPyYMqpqIMU7AvmlZeHc4KTRLXoEUHLajCZrIAgtTN/ujni9X9d6rc+4nWUCzhZkEaiRZwIFm
+        QiaokRSCeXqoLFJMYZIQQrp/56sAPiX2NyJSJwAkvGxhapByilUBILnd5zxNswCQcA9dgjX+UNBDFvQT
+        9QkHKOQWh3DrDAAAAABJRU5ErkJggg==
+</value>
   </data>
 </root>

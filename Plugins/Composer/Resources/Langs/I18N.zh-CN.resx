@@ -117,25 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
-  </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
+  <data name="ConfirmDelPkg" xml:space="preserve">
+    <value>删除包裹：</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
+    <value>（开发中）节点缝合怪。</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="ErrCanNotOpenMulFormServSelector" xml:space="preserve">
+    <value>错误：只能开一个节点选择器窗口！</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="ErrPkgNameIsEmpty" xml:space="preserve">
+    <value>错误：包名为空！</value>
   </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
+  <data name="ErrSameConfigExists" xml:space="preserve">
+    <value>错误：已存在 config 相同的服务器！</value>
   </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <data name="ErrTagIsEmpty" xml:space="preserve">
+    <value>错误：Tag 为空！</value>
+  </data>
+  <data name="PackageNotExist" xml:space="preserve">
+    <value>包裹不存在！</value>
+  </data>
+  <data name="PackServFailed" xml:space="preserve">
+    <value>打包服务器失败。</value>
+  </data>
+  <data name="PackServSuccess" xml:space="preserve">
+    <value>打包服务器成功！</value>
+  </data>
+  <data name="TotalLabelText" xml:space="preserve">
+    <value>合计：过滤器({0}) + 自定义({1}) = {2}</value>
+  </data>
+  <data name="UnkownTemplateName" xml:space="preserve">
+    <value>未知模板名：</value>
   </data>
 </root>

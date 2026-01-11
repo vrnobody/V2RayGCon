@@ -10,10 +10,6 @@ namespace ProxySetter
 
         public ProxySetter() { }
 
-        #region private methods
-
-        #endregion
-
         #region properties
         ToolStripMenuItem menuItemCache = null;
 

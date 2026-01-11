@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pacman.Resources.Langs {
+namespace Composer.Resources.Langs {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Pacman.Resources.Langs {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pacman.Resources.Langs.I18N", typeof(I18N).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Composer.Resources.Langs.I18N", typeof(I18N).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,25 +61,16 @@ namespace Pacman.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Delete this item? 的本地化字符串。
+        ///   查找类似 Delete package: 的本地化字符串。
         /// </summary>
-        internal static string DeleteThis {
+        internal static string ConfirmDelPkg {
             get {
-                return ResourceManager.GetString("DeleteThis", resourceCulture);
+                return ResourceManager.GetString("ConfirmDelPkg", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Delete {0}? 的本地化字符串。
-        /// </summary>
-        internal static string DeleteTpl {
-            get {
-                return ResourceManager.GetString("DeleteTpl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 (obsoleted) Pack multiple servers into one server. 的本地化字符串。
+        ///   查找类似 (W.I.P) Compose servers outbound config. 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {
@@ -88,38 +79,83 @@ namespace Pacman.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Done. 的本地化字符串。
+        ///   查找类似 Can not open multiple server selector windows. 的本地化字符串。
         /// </summary>
-        internal static string Done {
+        internal static string ErrCanNotOpenMulFormServSelector {
             get {
-                return ResourceManager.GetString("Done", resourceCulture);
+                return ResourceManager.GetString("ErrCanNotOpenMulFormServSelector", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Fail! 的本地化字符串。
+        ///   查找类似 Error: package name is empty! 的本地化字符串。
         /// </summary>
-        internal static string Fail {
+        internal static string ErrPkgNameIsEmpty {
             get {
-                return ResourceManager.GetString("Fail", resourceCulture);
+                return ResourceManager.GetString("ErrPkgNameIsEmpty", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Name must not null. 的本地化字符串。
+        ///   查找类似 Error: server with same config already exists! 的本地化字符串。
         /// </summary>
-        internal static string NameCanNotBeNull {
+        internal static string ErrSameConfigExists {
             get {
-                return ResourceManager.GetString("NameCanNotBeNull", resourceCulture);
+                return ResourceManager.GetString("ErrSameConfigExists", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Parameter is null. 的本地化字符串。
+        ///   查找类似 Error: tag is empty! 的本地化字符串。
         /// </summary>
-        internal static string NullParam {
+        internal static string ErrTagIsEmpty {
             get {
-                return ResourceManager.GetString("NullParam", resourceCulture);
+                return ResourceManager.GetString("ErrTagIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Package not exist! 的本地化字符串。
+        /// </summary>
+        internal static string PackageNotExist {
+            get {
+                return ResourceManager.GetString("PackageNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Pack servers failed. 的本地化字符串。
+        /// </summary>
+        internal static string PackServFailed {
+            get {
+                return ResourceManager.GetString("PackServFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Pack servers success. 的本地化字符串。
+        /// </summary>
+        internal static string PackServSuccess {
+            get {
+                return ResourceManager.GetString("PackServSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Total: filter({0}) + custom({1}) = {2} 的本地化字符串。
+        /// </summary>
+        internal static string TotalLabelText {
+            get {
+                return ResourceManager.GetString("TotalLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unknow template name: 的本地化字符串。
+        /// </summary>
+        internal static string UnkownTemplateName {
+            get {
+                return ResourceManager.GetString("UnkownTemplateName", resourceCulture);
             }
         }
     }

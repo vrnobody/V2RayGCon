@@ -117,25 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
-  </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
+  <data name="ConfirmDelPkg" xml:space="preserve">
+    <value>Delete package:</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
+    <value>(W.I.P) Compose servers outbound config.</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="ErrCanNotOpenMulFormServSelector" xml:space="preserve">
+    <value>Can not open multiple server selector windows.</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="ErrPkgNameIsEmpty" xml:space="preserve">
+    <value>Error: package name is empty!</value>
   </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
+  <data name="ErrSameConfigExists" xml:space="preserve">
+    <value>Error: server with same config already exists!</value>
   </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <data name="ErrTagIsEmpty" xml:space="preserve">
+    <value>Error: tag is empty!</value>
+  </data>
+  <data name="PackageNotExist" xml:space="preserve">
+    <value>Package not exist!</value>
+  </data>
+  <data name="PackServFailed" xml:space="preserve">
+    <value>Pack servers failed.</value>
+  </data>
+  <data name="PackServSuccess" xml:space="preserve">
+    <value>Pack servers success.</value>
+  </data>
+  <data name="TotalLabelText" xml:space="preserve">
+    <value>Total: filter({0}) + custom({1}) = {2}</value>
+  </data>
+  <data name="UnkownTemplateName" xml:space="preserve">
+    <value>Unknow template name:</value>
   </data>
 </root>

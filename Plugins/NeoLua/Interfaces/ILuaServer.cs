@@ -93,7 +93,6 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="index">index</param>
         /// <returns>服务器或者null</returns>
-
         ICoreServCtrl GetServerByIndex(int index);
 
         /// <summary>
@@ -101,7 +100,6 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="uid">uid</param>
         /// <returns>服务器或者null</returns>
-
         ICoreServCtrl GetServerByUid(string uid);
 
         /// <summary>
@@ -109,7 +107,6 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="config">config</param>
         /// <returns>服务器或者null</returns>
-
         ICoreServCtrl GetServerByConfig(string config);
 
         /// <summary>
@@ -117,7 +114,6 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="uids">uid列表</param>
         /// <returns>服务器</returns>
-
         List<ICoreServCtrl> GetServersByUids(LuaTable uids);
 
         /// <summary>
@@ -153,6 +149,13 @@ namespace NeoLuna.Interfaces
             string interval,
             string url
         );
+
+        /// <summary>
+        /// Composer 插件同款。用于打包服务器的函数。
+        /// </summary>
+        /// <param name="options">请看 VgcApis.Models.Data.Composer 里面的 options</param>
+        /// <returns></returns>
+        string ComposeServersToString(string options);
 
         /// <summary>
         /// 将服务器打包成blancer.random的服务器包

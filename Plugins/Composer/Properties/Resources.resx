@@ -117,25 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Balancer_Random" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Balancer-Random.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
+  <data name="Balancer_Round_Robin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Balancer-Round-Robin.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
+  <data name="Name" xml:space="preserve">
+    <value>Composer</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="Routing_CN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Routing-CN.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="UserCode_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\UserCode_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
-  </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <data name="Version" xml:space="preserve">
+    <value>0.0.1</value>
   </data>
 </root>

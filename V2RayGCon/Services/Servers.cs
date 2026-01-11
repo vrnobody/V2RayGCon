@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
 using VgcApis.Models.Consts;
@@ -457,6 +458,54 @@ namespace V2RayGCon.Services
             {
                 locker.ExitReadLock();
             }
+        }
+
+        public string ComposeServersToString(VgcApis.Models.Datas.Composer.Options options)
+        {
+            try
+            {
+                var sk = JObject.Parse(options.skelecton);
+                var tags = new List<string>();
+                var c = 0;
+                var coreServList = new List<List<ICoreServCtrl>>();
+                foreach (var option in options.selectors)
+                {
+                    var tag = option.tag;
+                    if (string.IsNullOrEmpty(tag))
+                    {
+                        continue;
+                    }
+
+                    var coreServs = new List<ICoreServCtrl>();
+                    if (!string.IsNullOrEmpty(option.filter))
+                    {
+                        coreServs = coreServs.Concat(GetFilteredServers(option.filter)).ToList();
+                    }
+                    coreServs = coreServs.Concat(GetServersByUids(option.uids)).ToList();
+
+                    if (coreServs.Count < 1)
+                    {
+                        continue;
+                    }
+                    c += coreServs.Count;
+                    tags.Add(tag);
+                    coreServList.Add(coreServs);
+                }
+                if (c < 1)
+                {
+                    return "";
+                }
+                var cfg = configMgr.ComposeServersConfig(
+                    sk,
+                    options.isAppend,
+                    $"{c}".Length,
+                    tags,
+                    coreServList
+                );
+                return cfg;
+            }
+            catch { }
+            return "";
         }
 
         public string PackServersToString(List<string> uids)

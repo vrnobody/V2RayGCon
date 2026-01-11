@@ -125,6 +125,7 @@ namespace V2RayGCon.Services.PluginsComponents
             var ps = new List<VgcApis.Interfaces.IPlugin>()
             {
                 new Commander.Commander(),
+                new Composer.Composer(),
                 new NeoLuna.NeoLuna(),
                 new Pacman.Pacman(),
                 new ProxySetter.ProxySetter(),

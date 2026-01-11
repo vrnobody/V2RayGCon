@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pacman.Resources.Langs {
+namespace Composer.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Pacman.Resources.Langs {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class I18N {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal I18N() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Pacman.Resources.Langs {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pacman.Resources.Langs.I18N", typeof(I18N).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Composer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,60 @@ namespace Pacman.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Delete this item? 的本地化字符串。
+        ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static string DeleteThis {
+        internal static byte[] Balancer_Random {
             get {
-                return ResourceManager.GetString("DeleteThis", resourceCulture);
+                object obj = ResourceManager.GetObject("Balancer_Random", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 Delete {0}? 的本地化字符串。
+        ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static string DeleteTpl {
+        internal static byte[] Balancer_Round_Robin {
             get {
-                return ResourceManager.GetString("DeleteTpl", resourceCulture);
+                object obj = ResourceManager.GetObject("Balancer_Round_Robin", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 (obsoleted) Pack multiple servers into one server. 的本地化字符串。
+        ///   查找类似 Composer 的本地化字符串。
         /// </summary>
-        internal static string Description {
+        internal static string Name {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Done. 的本地化字符串。
+        ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static string Done {
+        internal static byte[] Routing_CN {
             get {
-                return ResourceManager.GetString("Done", resourceCulture);
+                object obj = ResourceManager.GetObject("Routing_CN", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 Fail! 的本地化字符串。
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static string Fail {
+        internal static System.Drawing.Bitmap UserCode_16x {
             get {
-                return ResourceManager.GetString("Fail", resourceCulture);
+                object obj = ResourceManager.GetObject("UserCode_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 Name must not null. 的本地化字符串。
+        ///   查找类似 0.0.1 的本地化字符串。
         /// </summary>
-        internal static string NameCanNotBeNull {
+        internal static string Version {
             get {
-                return ResourceManager.GetString("NameCanNotBeNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Parameter is null. 的本地化字符串。
-        /// </summary>
-        internal static string NullParam {
-            get {
-                return ResourceManager.GetString("NullParam", resourceCulture);
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

@@ -117,25 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value>节点的 outbound tag</value>
   </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>过滤器</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value>搜索过滤器。例如：#idx = 1</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="btnPullServers.Text" xml:space="preserve">
+    <value>拉取</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="btnPullServers.ToolTip" xml:space="preserve">
+    <value>拉取主窗口中已选中的节点。</value>
   </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
+  <data name="btnRefreshTotal.Text" xml:space="preserve">
+    <value>刷新</value>
   </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <data name="btnRefreshTotal.ToolTip" xml:space="preserve">
+    <value>刷新合计</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>自定义节点。从主窗口拖入右边框框。</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>合计</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>节点选择器</value>
   </data>
 </root>

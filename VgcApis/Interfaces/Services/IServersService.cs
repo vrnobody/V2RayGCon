@@ -24,6 +24,7 @@ namespace VgcApis.Interfaces.Services
         bool GetAvailableProxyInfo(out bool isSocks5, out int port);
 
         int GetAvailableHttpProxyPort();
+
         int GetAvailableSocksProxyPort();
 
         string AddServer(string name, string config, string mark, bool quiet);
@@ -76,6 +77,8 @@ namespace VgcApis.Interfaces.Services
         void StopAllServersThen(Action lambda = null);
 
         void UpdateAllServersSummary();
+
+        string ComposeServersToString(VgcApis.Models.Datas.Composer.Options options);
 
         string PackServersToString(List<string> uids);
 

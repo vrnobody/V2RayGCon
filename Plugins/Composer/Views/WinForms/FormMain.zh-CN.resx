@@ -117,25 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteThis" xml:space="preserve">
-    <value>删除此项？</value>
+  <data name="flyPkgNames.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="DeleteTpl" xml:space="preserve">
-    <value>删除 {0}？</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>包裹</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>（废弃）将多个服务器打包成一个服务器。</value>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="cboxSkelectonTpl.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>模板</value>
   </data>
-  <data name="NameCanNotBeNull" xml:space="preserve">
-    <value>名字不能为空！</value>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value>骨架模板</value>
   </data>
-  <data name="NullParam" xml:space="preserve">
-    <value>参数为空！</value>
+  <data name="rtboxSkelecton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSkFormat.Text" xml:space="preserve">
+    <value>格式化</value>
+  </data>
+  <data name="btnLoadSkTpl.Text" xml:space="preserve">
+    <value>加载</value>
+  </data>
+  <data name="btnLoadSkTpl.ToolTip" xml:space="preserve">
+    <value>加载模板</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>骨架</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxNodeInsertPos.Items" xml:space="preserve">
+    <value>插入顶部</value>
+  </data>
+  <data name="cboxNodeInsertPos.Items1" xml:space="preserve">
+    <value>添加至底部</value>
+  </data>
+  <data name="cboxNodeInsertPos.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>选中的节点插入骨架 outbounds 的位置</value>
+  </data>
+  <data name="flyNodes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnOpenFormServerSelector.Text" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="btnOpenFormServerSelector.ToolTip" xml:space="preserve">
+    <value>打开节点选择器</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>节点</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel3LeftRight.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxPkgName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value>包裹名字</value>
+  </data>
+  <data name="btnPack.Text" xml:space="preserve">
+    <value>打包</value>
+  </data>
+  <data name="btnPack.ToolTip" xml:space="preserve">
+    <value>创建服务器包</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value>保存当前包裹设置</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>工具栏</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel2UpDown.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanelBackGroundLeftRight.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neo.IronLua;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis.Components
@@ -201,6 +203,18 @@ namespace NeoLuna.Models.Apis.Components
                 st,
                 VgcApis.Models.Datas.Enums.PackageTypes.Balancer
             );
+        }
+
+        public string ComposeServersToString(string options)
+        {
+            try
+            {
+                var composOptions =
+                    JsonConvert.DeserializeObject<VgcApis.Models.Datas.Composer.Options>(options);
+                return vgcServers.ComposeServersToString(composOptions);
+            }
+            catch { }
+            return null;
         }
 
         public string PackServersToString(LuaTable uids)

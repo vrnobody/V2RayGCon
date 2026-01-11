@@ -128,9 +128,7 @@
       <Name>VgcApis</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\icons\Console_16x.png" />
   </ItemGroup>

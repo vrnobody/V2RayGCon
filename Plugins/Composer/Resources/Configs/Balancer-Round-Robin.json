@@ -1,0 +1,37 @@
+﻿{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {},
+      "tag": "agentin"
+    }
+  ],
+  "outbounds": [],
+  "routing": {
+    "balancers": [
+      {
+        "tag": "composer",
+        "selector": [
+          "node"
+        ],
+        "strategy": {
+          "type": "roundRobin"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "composer"
+      }
+    ]
+  }
+}

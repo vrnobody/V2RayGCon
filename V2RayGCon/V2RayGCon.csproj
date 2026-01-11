@@ -653,6 +653,10 @@
       <Project>{cb4a8632-7796-45c2-bfca-11cd2af02f24}</Project>
       <Name>Commander</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\Composer\Composer.csproj">
+      <Project>{e33f5083-36b5-4fd7-8be0-8465ee7ac9df}</Project>
+      <Name>Composer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\NeoLua\NeoLuna.csproj">
       <Project>{1f2fd9d2-2230-49f1-a163-3987e2c9929c}</Project>
       <Name>NeoLuna</Name>
@@ -682,7 +686,7 @@
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
-set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter Commander"
+set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter Commander Composer"
 set "otherDlls=Microsoft.Web.WebView2.Core Microsoft.Web.WebView2.WinForms Microsoft.Web.WebView2.Wpf System.Buffers NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET Newtonsoft ScintillaNET zxing Castle.Core Moq System.Memory System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions ZstdNet"
 
 call:RemoveDbgFiles "%25otherDlls%25"

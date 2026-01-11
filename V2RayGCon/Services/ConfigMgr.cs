@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
 using System.Threading;
+using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Interfaces;
 using VgcApis.Models.Consts;
 using static VgcApis.Models.Datas.Enums;
 
@@ -170,6 +175,63 @@ namespace V2RayGCon.Services
             return package;
         }
 
+        public string ComposeServersConfig(
+            JObject tpl,
+            bool isAppend,
+            int tagLen,
+            List<string> tags,
+            List<List<ICoreServCtrl>> coreServList
+        )
+        {
+            var placeHolder = $"vgc-outbounds-{Guid.NewGuid()}";
+            var backup = tpl["outbounds"];
+            tpl["outbounds"] = new JArray { placeHolder };
+            var pkg = VgcApis.Misc.Utils.FormatConfig(tpl);
+
+            // parse outbounds
+            var outbounds = new List<string>();
+            var counter = 1;
+            void restore()
+            {
+                var padding = Config.OutboundsLeftPadding;
+                foreach (var item in backup)
+                {
+                    var c = VgcApis.Misc.Utils.FormatConfig(item, padding);
+                    outbounds.Add(c);
+                    // counter++;
+                }
+            }
+
+            if (isAppend)
+            {
+                restore();
+            }
+            for (var i = 0; i < tags.Count; i++)
+            {
+                var coreServs = coreServList[i];
+                string genTagFunc()
+                {
+                    var prefix = Config.ServsPkgTagPrefix;
+                    var num = $"{counter++}".PadLeft(tagLen, '0');
+                    return $"{tags[i]}{num}";
+                }
+                foreach (var coreServ in coreServs)
+                {
+                    var config = coreServ.GetConfiger().GetConfig();
+                    var outbs = ExtractOutboundsFromConfig(config, genTagFunc);
+                    outbounds.AddRange(outbs);
+                }
+            }
+            if (!isAppend)
+            {
+                restore();
+            }
+
+            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, outbounds);
+            VgcApis.Misc.Utils.CollectOnHighPressure(r.Length);
+            return r;
+        }
+
         public string GenV4BalancerConfig(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string interval,
@@ -187,15 +249,21 @@ namespace V2RayGCon.Services
             tpl["outbounds"] = new JArray { placeHolder };
             var pkg = VgcApis.Misc.Utils.FormatConfig(tpl);
 
+            // tag gen
+            var counter = 1;
+            var tagLen = $"{servList.Count - 1}".Length;
+            string genTag()
+            {
+                return GenOutboundTag(tagLen, counter++);
+            }
+
             // parse outbounds
             var outbounds = new List<string>();
-            var counter = 0;
-            var tagLen = $"{servList.Count - 1}".Length;
             for (var i = 0; i < servList.Count; i++)
             {
                 var coreServ = servList[i];
                 var config = coreServ.GetConfiger().GetConfig();
-                var outbs = ExtractOutboundsFromConfig(config, tagLen, ref counter);
+                var outbs = ExtractOutboundsFromConfig(config, genTag);
                 outbounds.AddRange(outbs);
             }
 
@@ -206,6 +274,8 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+
+
         string GenOutboundTag(int len, int index)
         {
             var prefix = Config.ServsPkgTagPrefix;
@@ -213,7 +283,7 @@ namespace V2RayGCon.Services
             return $"{prefix}{num}";
         }
 
-        List<string> ExtractOutboundsFromConfig(string config, int tagLen, ref int counter)
+        List<string> ExtractOutboundsFromConfig(string config, Func<string> genTagFunc)
         {
             var padding = Config.OutboundsLeftPadding;
             var r = new List<string>();
@@ -225,8 +295,7 @@ namespace V2RayGCon.Services
                 {
                     continue;
                 }
-
-                outbound["tag"] = GenOutboundTag(tagLen, counter++);
+                outbound["tag"] = genTagFunc();
                 var c = VgcApis.Misc.Utils.FormatConfig(outbound, padding);
                 r.Add(c);
             }

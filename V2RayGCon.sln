@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoLunaTests", "Plugins\Neo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander", "Plugins\Commander\Commander.csproj", "{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composer", "Plugins\Composer\Composer.csproj", "{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{6F0B0A4C-FF9C-4B6E-99C8-451CBB03EC18} = {DFBD2D2B-0418-4C19-9527-FF6260F541AC}
 		{624360E8-DEF7-4B4A-A08F-811BB0C57103} = {AAA70B17-54E7-4366-BC8E-467169010D30}
 		{CB4A8632-7796-45C2-BFCA-11CD2AF02F24} = {AAA70B17-54E7-4366-BC8E-467169010D30}
+		{E33F5083-36B5-4FD7-8BE0-8465EE7AC9DF} = {AAA70B17-54E7-4366-BC8E-467169010D30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E9C5F7-B4F0-4978-BD02-6F1FF74A184A}

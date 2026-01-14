@@ -147,7 +147,7 @@ namespace Composer.Views.WinForms
         void RefreshNodeFilterPanel(List<Models.ServerSelectorItem> nodeFilterItems)
         {
             UI.RefreshPanel(
-                flyNodes,
+                flySelectors,
                 nodeFilterItems,
                 (el) => new UserControls.ServerSelectorUC(this, el)
             );
@@ -174,7 +174,7 @@ namespace Composer.Views.WinForms
         Models.PackageItem CollectCurrentSettings()
         {
             var filters = new List<Models.ServerSelectorItem>();
-            foreach (UserControls.ServerSelectorUC nf in flyNodes.Controls)
+            foreach (UserControls.ServerSelectorUC nf in flySelectors.Controls)
             {
                 filters.Add(nf.GetNodeFilterItem());
             }
@@ -238,12 +238,18 @@ namespace Composer.Views.WinForms
 
         private void flyPkgNames_DragEnter(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            if (UI.HasDropablePackageNameControl(e))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
         }
 
-        private void flyNodes_DragEnter(object sender, DragEventArgs e)
+        private void flySelectors_DragEnter(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            if (Misc.UI.HasDropableSelectorControl(e))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
         }
 
         private void flyPkgNames_DragDrop(object sender, DragEventArgs e)
@@ -260,20 +266,59 @@ namespace Composer.Views.WinForms
             }
         }
 
-        private void flyNodes_DragDrop(object sender, DragEventArgs e)
+        private void flySelectors_DragDrop(object sender, DragEventArgs e)
         {
             if (
-                e.Data.GetData(typeof(UserControls.ServerSelectorUC))
-                is UserControls.ServerSelectorUC nodeFilter
+                VgcApis.Misc.UI.TryGetControlFromDragDropEvent(
+                    e,
+                    out UserControls.ServerSelectorUC nodeFilter
+                )
             )
             {
-                if (!UI.SwapUserControls(flyNodes, nodeFilter, e))
+                if (!UI.SwapUserControls(flySelectors, nodeFilter, e))
                 {
                     return;
                 }
-                Utils.ResetIndex(this.curPkgItem.selectors);
-                RefreshNodeFilterPanel(this.curPkgItem.selectors);
             }
+            else if (
+                VgcApis.Misc.UI.TryGetIDropableControlFromDragDropEvent(
+                    e,
+                    VgcApis.Models.Consts.UI.VgcServUiName,
+                    out var servUi
+                )
+            )
+            {
+                var tag = "node";
+                var selector = this.curPkgItem.selectors.FirstOrDefault(el => el.tag == tag);
+                if (selector == null)
+                {
+                    selector = new Models.ServerSelectorItem()
+                    {
+                        tag = tag,
+                        index = this.curPkgItem.selectors.Count + 1,
+                    };
+                    this.curPkgItem.selectors.Add(selector);
+                }
+                var uid = servUi.GetUid();
+                if (selector.servInfos.FirstOrDefault(el => el.uid == uid) != null)
+                {
+                    return;
+                }
+                var si = new Models.ServerInfoItem()
+                {
+                    index = selector.servInfos.Count + 1,
+                    title = servUi.GetTitle(),
+                    uid = uid,
+                };
+                selector.servInfos.Add(si);
+            }
+            else
+            {
+                return;
+            }
+
+            Utils.ResetIndex(this.curPkgItem.selectors);
+            RefreshNodeFilterPanel(this.curPkgItem.selectors);
         }
 
         private void btnSkFormat_Click(object sender, EventArgs e)

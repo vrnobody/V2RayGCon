@@ -460,52 +460,41 @@ namespace V2RayGCon.Services
             }
         }
 
-        public string ComposeServersToString(VgcApis.Models.Datas.Composer.Options options)
+        public string ComposeServersToString(
+            VgcApis.Models.Composer.Options options,
+            string uidGuard = ""
+        )
         {
-            try
+            var sk = JObject.Parse(options.skelecton);
+            var tags = new List<string>();
+
+            var coreServList = new List<List<ICoreServCtrl>>();
+            var num = ExtractTagsAndCoreServs(options, tags, coreServList);
+            if (num < 1)
             {
-                var sk = JObject.Parse(options.skelecton);
-                var tags = new List<string>();
-                var c = 0;
-                var coreServList = new List<List<ICoreServCtrl>>();
-                foreach (var option in options.selectors)
-                {
-                    var tag = option.tag;
-                    if (string.IsNullOrEmpty(tag))
-                    {
-                        continue;
-                    }
-
-                    var coreServs = new List<ICoreServCtrl>();
-                    if (!string.IsNullOrEmpty(option.filter))
-                    {
-                        coreServs = coreServs.Concat(GetFilteredServers(option.filter)).ToList();
-                    }
-                    coreServs = coreServs.Concat(GetServersByUids(option.uids)).ToList();
-
-                    if (coreServs.Count < 1)
-                    {
-                        continue;
-                    }
-                    c += coreServs.Count;
-                    tags.Add(tag);
-                    coreServList.Add(coreServs);
-                }
-                if (c < 1)
-                {
-                    return "";
-                }
-                var cfg = configMgr.ComposeServersConfig(
-                    sk,
-                    options.isAppend,
-                    $"{c}".Length,
-                    tags,
-                    coreServList
-                );
-                return cfg;
+                throw new ArgumentException("find no server");
             }
-            catch { }
-            return "";
+
+            if (
+                !string.IsNullOrEmpty(uidGuard)
+                && coreServList
+                    .SelectMany(el => el)
+                    .FirstOrDefault(el => el.GetCoreStates().GetUid() == uidGuard) != null
+            )
+            {
+                throw new ArgumentException(
+                    "selected servers contain the same uid as targe server"
+                );
+            }
+
+            var cfg = configMgr.ComposeServersConfig(
+                sk,
+                options.isAppend,
+                $"{num}".Length,
+                tags,
+                coreServList
+            );
+            return cfg;
         }
 
         public string PackServersToString(List<string> uids)
@@ -966,6 +955,39 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        int ExtractTagsAndCoreServs(
+            VgcApis.Models.Composer.Options options,
+            List<string> tags,
+            List<List<ICoreServCtrl>> coreServList
+        )
+        {
+            var c = 0;
+            foreach (var option in options.selectors)
+            {
+                var tag = option.tag;
+                if (string.IsNullOrEmpty(tag))
+                {
+                    continue;
+                }
+
+                var coreServs = new List<ICoreServCtrl>();
+                if (!string.IsNullOrEmpty(option.filter))
+                {
+                    coreServs = coreServs.Concat(GetFilteredServers(option.filter)).ToList();
+                }
+                coreServs = coreServs.Concat(GetServersByUids(option.uids)).ToList();
+
+                if (coreServs.Count < 1)
+                {
+                    continue;
+                }
+                c += coreServs.Count;
+                tags.Add(tag);
+                coreServList.Add(coreServs);
+            }
+            return c;
+        }
+
         void UpdateTrackerUidsOnly()
         {
             var tracker = setting.GetServerTrackerSetting();

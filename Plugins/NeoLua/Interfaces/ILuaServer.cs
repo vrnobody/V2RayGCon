@@ -153,9 +153,29 @@ namespace NeoLuna.Interfaces
         /// <summary>
         /// Composer 插件同款。用于打包服务器的函数。
         /// </summary>
-        /// <param name="options">请看 VgcApis.Models.Data.Composer 里面的 options</param>
-        /// <returns></returns>
-        string ComposeServersToString(string options);
+        /// <param name="skelecton">配置骨架（模板）</param>
+        /// <param name="isAppend">节点的 outbounds 配置是追加还是插入至顶部</param>
+        /// <param name="selectors">
+        /// 节点选择器列表，见 VgcApis.Models.Composer.Selector<br/>
+        /// 示例：
+        /// {
+        ///     {
+        ///         ["tag"] = "node",
+        ///         ["filter"] = "#idx 1"
+        ///     },
+        ///     {
+        ///         ["tag"] = "node",
+        ///         ["uids"] = {
+        ///             "0dd4633c-4cd8-4cb7-9c62-e22fc7a75b13"
+        ///         }
+        ///     }
+        /// }
+        /// </param>
+        /// <returns>
+        /// 成功时第一个返回值是 config<br/>
+        /// 失败时第一个返回值是 nil，每二个返回值是字符串类型的 error 信息。
+        /// </returns>
+        LuaResult ComposeServersToString(string skelecton, bool isAppend, LuaTable selectors);
 
         /// <summary>
         /// 将服务器打包成blancer.random的服务器包

@@ -129,12 +129,14 @@ namespace Composer.Views.WinForms
 
         private void flyCustomServers_DragEnter(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            if (UI.HasDropableSelectorControl(e))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
         }
 
         private void flyCustomServers_DragDrop(object sender, DragEventArgs e)
         {
-            var vgcServUiName = "V2RayGCon.Views.UserControls.ServerUI";
             if (
                 e.Data.GetData(typeof(UserControls.ServerInfoUC))
                 is UserControls.ServerInfoUC servInfoUC
@@ -146,14 +148,21 @@ namespace Composer.Views.WinForms
                 }
                 Utils.ResetIndex(this.nodeFilterItem.servInfos);
             }
-            else if (e.Data.GetDataPresent(vgcServUiName))
+            else if (
+                VgcApis.Misc.UI.TryGetIDropableControlFromDragDropEvent(
+                    e,
+                    VgcApis.Models.Consts.UI.VgcServUiName,
+                    out var servUi
+                )
+            )
             {
-                var item = (VgcApis.Interfaces.IDropableControl)e.Data.GetData(vgcServUiName);
-                var si = new Models.ServerInfoItem()
+                var uid = servUi.GetUid();
+                var infos = this.nodeFilterItem.servInfos;
+                if (infos.FirstOrDefault(el => el.uid == uid) != null)
                 {
-                    title = item.GetTitle(),
-                    uid = item.GetUid(),
-                };
+                    return;
+                }
+                var si = new Models.ServerInfoItem() { title = servUi.GetTitle(), uid = uid };
                 si.SetIndex(this.nodeFilterItem.servInfos.Count + 1);
                 this.nodeFilterItem.servInfos.Add(si);
             }

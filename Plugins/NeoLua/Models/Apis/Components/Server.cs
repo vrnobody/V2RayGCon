@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo.IronLua;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis.Components
@@ -205,16 +205,30 @@ namespace NeoLuna.Models.Apis.Components
             );
         }
 
-        public string ComposeServersToString(string options)
+        public LuaResult ComposeServersToString(string skelecton, bool isAppend, LuaTable selectors)
         {
+            var opt = new VgcApis.Models.Composer.Options()
+            {
+                skelecton = skelecton,
+                isAppend = isAppend,
+            };
+
             try
             {
-                var composOptions =
-                    JsonConvert.DeserializeObject<VgcApis.Models.Datas.Composer.Options>(options);
-                return vgcServers.ComposeServersToString(composOptions);
+                foreach (KeyValuePair<object, object> item in selectors)
+                {
+                    var j = JsonConvert.SerializeObject(item.Value);
+                    var dto = JsonConvert.DeserializeObject<Data.ServerSelectorDTO>(j);
+                    var s = dto.ToSelector();
+                    opt.selectors.Add(s);
+                }
+                var cfg = vgcServers.ComposeServersToString(opt);
+                return new LuaResult(cfg);
             }
-            catch { }
-            return null;
+            catch (Exception ex)
+            {
+                return new LuaResult(null, $"{ex.GetType()}: {ex.Message}");
+            }
         }
 
         public string PackServersToString(LuaTable uids)

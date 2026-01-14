@@ -135,6 +135,12 @@
   <data name="ErrTagIsEmpty" xml:space="preserve">
     <value>Error: tag is empty!</value>
   </data>
+  <data name="HasFilter" xml:space="preserve">
+    <value>Has filter.</value>
+  </data>
+  <data name="Nodes" xml:space="preserve">
+    <value>Custom servers</value>
+  </data>
   <data name="PackageNotExist" xml:space="preserve">
     <value>Package not exist!</value>
   </data>
@@ -145,7 +151,7 @@
     <value>Pack servers success.</value>
   </data>
   <data name="TotalLabelText" xml:space="preserve">
-    <value>Total: filter({0}) + custom({1}) = {2}</value>
+    <value>total({2}) = filter({0}) + custom({1})</value>
   </data>
   <data name="UnkownTemplateName" xml:space="preserve">
     <value>Unknow template name:</value>

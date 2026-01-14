@@ -53,6 +53,7 @@
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDelete.BackgroundImage")));
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnDelete.Location = new System.Drawing.Point(296, 2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(20, 20);
@@ -68,6 +69,7 @@
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lbTitle);
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ServerInfoUC";
             this.Size = new System.Drawing.Size(320, 26);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ServerTitle_MouseDown);

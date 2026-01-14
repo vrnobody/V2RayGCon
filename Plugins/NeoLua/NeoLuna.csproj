@@ -103,6 +103,7 @@
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Models\Apis\SysCmpos\PipedProcess.cs" />
     <Compile Include="Models\Consts\Lua.cs" />
+    <Compile Include="Models\Data\ServerSelectorDTO.cs" />
     <Compile Include="NeoLuna.cs" />
     <Compile Include="Misc\Utils.cs" />
     <Compile Include="Models\Apis\LuaSignal.cs" />

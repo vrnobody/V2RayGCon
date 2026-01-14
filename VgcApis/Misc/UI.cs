@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using ScintillaNET;
+using VgcApis.Interfaces;
 using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
@@ -604,6 +605,37 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+        public static bool TryGetControlFromDragDropEvent<T>(DragEventArgs e, out T control)
+            where T : Control
+        {
+            var name = typeof(T).FullName;
+            control = null;
+            if (e.Data.GetDataPresent(name))
+            {
+                control = (T)e.Data.GetData(name);
+                return control != null;
+            }
+            return false;
+        }
+
+        public static bool TryGetIDropableControlFromDragDropEvent(
+            DragEventArgs e,
+            string name,
+            out IDropableControl dropable
+        )
+        {
+            dropable = null;
+            if (e.Data.GetDataPresent(name))
+            {
+                dropable = (IDropableControl)e.Data.GetData(name);
+                return dropable != null;
+            }
+            return false;
+        }
+        #endregion
+
+        #region winform
+
         public static bool TryParseNumKeyToIndex(Keys key, out int index)
         {
             index = -1;

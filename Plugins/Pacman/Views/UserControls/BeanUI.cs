@@ -115,6 +115,10 @@ namespace Pacman.Views.UserControls
             chkTitle.Checked = !chkTitle.Checked;
         }
 
+        private void lbTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
         #endregion
     }
 }

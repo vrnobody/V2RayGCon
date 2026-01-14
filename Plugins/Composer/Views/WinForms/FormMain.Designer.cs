@@ -44,7 +44,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cboxNodeInsertPos = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.flyNodes = new System.Windows.Forms.FlowLayoutPanel();
+            this.flySelectors = new System.Windows.Forms.FlowLayoutPanel();
             this.btnOpenFormServerSelector = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tboxPkgName = new System.Windows.Forms.TextBox();
@@ -158,7 +158,7 @@
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.cboxNodeInsertPos);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.flyNodes);
+            this.groupBox3.Controls.Add(this.flySelectors);
             this.groupBox3.Controls.Add(this.btnOpenFormServerSelector);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
@@ -183,14 +183,14 @@
             // 
             // flyNodes
             // 
-            resources.ApplyResources(this.flyNodes, "flyNodes");
-            this.flyNodes.AllowDrop = true;
-            this.flyNodes.BackColor = System.Drawing.SystemColors.Control;
-            this.flyNodes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flyNodes.Name = "flyNodes";
-            this.toolTip1.SetToolTip(this.flyNodes, resources.GetString("flyNodes.ToolTip"));
-            this.flyNodes.DragDrop += new System.Windows.Forms.DragEventHandler(this.flyNodes_DragDrop);
-            this.flyNodes.DragEnter += new System.Windows.Forms.DragEventHandler(this.flyNodes_DragEnter);
+            resources.ApplyResources(this.flySelectors, "flyNodes");
+            this.flySelectors.AllowDrop = true;
+            this.flySelectors.BackColor = System.Drawing.SystemColors.Control;
+            this.flySelectors.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flySelectors.Name = "flyNodes";
+            this.toolTip1.SetToolTip(this.flySelectors, resources.GetString("flyNodes.ToolTip"));
+            this.flySelectors.DragDrop += new System.Windows.Forms.DragEventHandler(this.flySelectors_DragDrop);
+            this.flySelectors.DragEnter += new System.Windows.Forms.DragEventHandler(this.flySelectors_DragEnter);
             // 
             // btnOpenFormServerSelector
             // 
@@ -272,7 +272,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private VgcApis.UserControls.ExRichTextBox rtboxSkelecton;
-        private System.Windows.Forms.FlowLayoutPanel flyNodes;
+        private System.Windows.Forms.FlowLayoutPanel flySelectors;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolTip toolTip1;

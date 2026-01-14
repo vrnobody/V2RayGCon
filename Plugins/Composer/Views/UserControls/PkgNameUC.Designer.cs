@@ -54,6 +54,7 @@
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelete.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
             this.btnDelete.Location = new System.Drawing.Point(146, 2);
             this.btnDelete.Name = "btnDelete";
@@ -67,6 +68,7 @@
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEdit.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnEdit.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
             this.btnEdit.Location = new System.Drawing.Point(126, 2);
             this.btnEdit.Name = "btnEdit";
@@ -84,6 +86,7 @@
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lbPkgName);
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "PkgNameUC";
             this.Size = new System.Drawing.Size(170, 26);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PkgName_MouseDown);

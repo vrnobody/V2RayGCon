@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
@@ -29,7 +30,18 @@ namespace Composer.Services
         {
             var upkg = userSettings.packages.FirstOrDefault(el => el.name == pkgItem.name);
             var options = ToComposOptions(pkgItem);
-            var cfg = vgcServer.ComposeServersToString(options);
+
+            var cfg = "";
+            try
+            {
+                cfg = vgcServer.ComposeServersToString(options, upkg?.uid);
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox($"{ex.GetType().Name}: {ex.Message}");
+                return "";
+            }
+
             if (string.IsNullOrEmpty(cfg))
             {
                 VgcApis.Misc.UI.MsgBox(I18N.PackServFailed);
@@ -96,9 +108,9 @@ namespace Composer.Services
         #endregion
 
         #region private methods
-        VgcApis.Models.Datas.Composer.Options ToComposOptions(Models.PackageItem pkgItem)
+        VgcApis.Models.Composer.Options ToComposOptions(Models.PackageItem pkgItem)
         {
-            var options = new VgcApis.Models.Datas.Composer.Options()
+            var options = new VgcApis.Models.Composer.Options()
             {
                 isAppend = pkgItem.isAppend,
                 skelecton = pkgItem.skelecton,
@@ -106,7 +118,7 @@ namespace Composer.Services
 
             foreach (var selector in pkgItem.selectors)
             {
-                var s = new VgcApis.Models.Datas.Composer.Selector()
+                var s = new VgcApis.Models.Composer.Selector()
                 {
                     tag = selector.tag,
                     filter = selector.filter,

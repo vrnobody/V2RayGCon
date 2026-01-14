@@ -67,17 +67,19 @@ namespace Pacman.Controllers
         }
 
         #region drag and drop
-        readonly List<string> dropableObjectsTypeString = new List<string>
+        private readonly List<string> dropableTypes = new List<string>()
         {
-            "Pacman.Views.UserControls.BeanUI",
-            "V2RayGCon.Views.UserControls.ServerUI",
+            typeof(Views.UserControls.BeanUI).FullName,
+            VgcApis.Models.Consts.UI.VgcServUiName,
         };
 
-        bool IsDropableObject(DragEventArgs args)
+        bool HasDropableControl(DragEventArgs e)
         {
-            foreach (string type in args.Data.GetFormats())
+            // "Pacman.Views.UserControls.BeanUI",
+
+            foreach (string ty in e.Data.GetFormats())
             {
-                if (dropableObjectsTypeString.Contains(type))
+                if (dropableTypes.Contains(ty))
                 {
                     return true;
                 }
@@ -99,7 +101,7 @@ namespace Pacman.Controllers
         {
             flyContent.DragEnter += (s, a) =>
             {
-                if (!IsDropableObject(a))
+                if (!HasDropableControl(a))
                 {
                     return;
                 }
@@ -111,16 +113,19 @@ namespace Pacman.Controllers
                 Views.UserControls.BeanUI beanUI = null;
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var objName = "V2RayGCon.Views.UserControls.ServerUI";
-
-                if (a.Data.GetDataPresent(objName))
+                if (
+                    VgcApis.Misc.UI.TryGetIDropableControlFromDragDropEvent(
+                        a,
+                        VgcApis.Models.Consts.UI.VgcServUiName,
+                        out var servUi
+                    )
+                )
                 {
-                    var item = (VgcApis.Interfaces.IDropableControl)a.Data.GetData(objName);
                     var bean = new Models.Data.Bean
                     {
-                        title = item.GetTitle(),
-                        uid = item.GetUid(),
-                        status = item.GetStatus(),
+                        title = servUi.GetTitle(),
+                        uid = servUi.GetUid(),
+                        status = servUi.GetStatus(),
                     };
 
                     foreach (Views.UserControls.BeanUI control in flyContent.Controls)
@@ -139,10 +144,9 @@ namespace Pacman.Controllers
                     beanUI.Reload(bean);
                 }
 
-                if (beanUI == null && a.Data.GetDataPresent(typeof(Views.UserControls.BeanUI)))
+                if (beanUI == null)
                 {
-                    beanUI = (Views.UserControls.BeanUI)
-                        a.Data.GetData(typeof(Views.UserControls.BeanUI));
+                    VgcApis.Misc.UI.TryGetControlFromDragDropEvent(a, out beanUI);
                 }
 
                 if (beanUI == null)
@@ -429,7 +433,7 @@ namespace Pacman.Controllers
                 strategy = cboxBalancerStrategy.SelectedIndex,
                 interval = cboxObsInterval.Text,
                 url = cboxObsUrl.Text,
-                beans = GetFlyContentBeanList()
+                beans = GetFlyContentBeanList(),
             };
 
             Libs.UI.MsgBoxAsync(settings.SavePackage(package) ? I18N.Done : I18N.NullParam);

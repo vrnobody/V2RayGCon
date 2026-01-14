@@ -54,6 +54,7 @@
             // 
             resources.ApplyResources(this.tboxTag, "tboxTag");
             this.tboxTag.Name = "tboxTag";
+            this.toolTip1.SetToolTip(this.tboxTag, resources.GetString("tboxTag.ToolTip"));
             // 
             // label2
             // 
@@ -65,6 +66,7 @@
             // 
             resources.ApplyResources(this.tboxFilterKw, "tboxFilterKw");
             this.tboxFilterKw.Name = "tboxFilterKw";
+            this.toolTip1.SetToolTip(this.tboxFilterKw, resources.GetString("tboxFilterKw.ToolTip"));
             this.tboxFilterKw.TextChanged += new System.EventHandler(this.tboxFilterKw_TextChanged);
             // 
             // btnPullServers
@@ -87,16 +89,18 @@
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
+            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // flyCustomServers
             // 
-            this.flyCustomServers.AllowDrop = true;
             resources.ApplyResources(this.flyCustomServers, "flyCustomServers");
+            this.flyCustomServers.AllowDrop = true;
             this.flyCustomServers.BackColor = System.Drawing.SystemColors.Control;
             this.flyCustomServers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flyCustomServers.Name = "flyCustomServers";
+            this.toolTip1.SetToolTip(this.flyCustomServers, resources.GetString("flyCustomServers.ToolTip"));
             this.flyCustomServers.DragDrop += new System.Windows.Forms.DragEventHandler(this.flyCustomServers_DragDrop);
             this.flyCustomServers.DragEnter += new System.Windows.Forms.DragEventHandler(this.flyCustomServers_DragEnter);
             // 
@@ -110,6 +114,7 @@
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
+            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -117,6 +122,7 @@
             // 
             resources.ApplyResources(this.lbTotal, "lbTotal");
             this.lbTotal.Name = "lbTotal";
+            this.toolTip1.SetToolTip(this.lbTotal, resources.GetString("lbTotal.ToolTip"));
             // 
             // FormServerSelector
             // 
@@ -134,6 +140,7 @@
             this.Controls.Add(this.tboxTag);
             this.Controls.Add(this.label1);
             this.Name = "FormServerSelector";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.ResumeLayout(false);
             this.PerformLayout();
 

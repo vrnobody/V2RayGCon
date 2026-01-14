@@ -55,9 +55,10 @@
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.AutoEllipsis = true;
-            this.lbTitle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbTitle.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Click += new System.EventHandler(this.lbTitle_Click);
+            this.lbTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTitle_MouseDown);
             // 
             // BeanUI
             // 

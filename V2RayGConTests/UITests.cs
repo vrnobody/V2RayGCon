@@ -11,6 +11,20 @@ namespace V2RayGCon.Test
         public UITests() { }
 
         [TestMethod]
+        public void EnsureServerUiIsIDropableControlTest()
+        {
+            var ty = typeof(Views.UserControls.ServerUI).FullName;
+            Assert.AreEqual(VgcApis.Models.Consts.UI.VgcServUiName, ty);
+
+            var servUI = new Views.UserControls.ServerUI();
+            var dropable = servUI as VgcApis.Interfaces.IDropableControl;
+            Assert.IsNotNull(dropable);
+
+            var impossible = servUI as VgcApis.Interfaces.ICoreServCtrl;
+            Assert.IsNull(impossible);
+        }
+
+        [TestMethod]
         public void UpdateControlOnDemandTest()
         {
             TextBox box = new TextBox { Text = "abc" };

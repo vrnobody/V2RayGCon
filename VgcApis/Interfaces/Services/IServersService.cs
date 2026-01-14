@@ -78,7 +78,13 @@ namespace VgcApis.Interfaces.Services
 
         void UpdateAllServersSummary();
 
-        string ComposeServersToString(VgcApis.Models.Datas.Composer.Options options);
+        /// <summary>
+        /// for Composer and NeoLuna plug-ins
+        /// </summary>
+        /// <param name="uidGuard">if servers that match options.selectors, has this uid then throw an error</param>
+        /// <param name="options">server selectors</param>
+        /// <returns></returns>
+        string ComposeServersToString(Models.Composer.Options options, string uidGuard = "");
 
         string PackServersToString(List<string> uids);
 

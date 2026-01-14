@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Composer.Models;
+using Composer.Resources.Langs;
 using Composer.Views.WinForms;
 
 namespace Composer.Views.UserControls
@@ -26,9 +27,16 @@ namespace Composer.Views.UserControls
         #region private methods
         void RefreshLabel()
         {
-            var tag = $"{this.nodeFilterItem.GetIndex()}.{this.nodeFilterItem.tag}";
-            this.lbNodeFilterTag.Text = tag;
-            this.toolTip1.SetToolTip(this.lbNodeFilterTag, tag);
+            var item = this.nodeFilterItem;
+            var mkC = item.servInfos.Count;
+            var hasFilter = !string.IsNullOrEmpty(item.filter);
+            var mkF1 = hasFilter ? "f" : "";
+
+            this.lbNodeFilterTag.Text = $"{item.GetIndex()}.({mkF1}{mkC}) {item.tag}";
+
+            var mkF2 = hasFilter ? $"\n{I18N.HasFilter}" : "";
+            var tip = $"tag: {item.tag}\n{I18N.Nodes}: {mkC}{mkF2}";
+            this.toolTip1.SetToolTip(this.lbNodeFilterTag, tip);
         }
         #endregion
 

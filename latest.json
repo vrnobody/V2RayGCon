@@ -1,10 +1,16 @@
 {
-  "version": "2.2.2.0",
-  "md5": "74B216E32AC57D9614532705C664923A",
+  "version": "2.2.3.0",
+  "md5": "44DB5E1A6AB4B98AFD0AAF0771EC78DB",
   "warnings": [],
   "changes": [
-    "优化简易编辑器中使用 TAB 键体验",
-    "mob://... 支持 http 协议",
-    "工具箱添加解码 mob://... 菜单"
+    "添加 Composer 插件",
+    "修复一个陈年内存泄露 bug",
+    "ProxySetter 插件的 PAC 设置分页改为按钮",
+    "批量修改窗口支持修改 tag1-3",
+    "主窗口标题显示多实例的 tag",
+    "NeoLuna 插件显示更友好的报错信息",
+    "添加 std.Server:ComposeServersToString()",
+    "删除一些一年前计划删除的功能",
+    "广告：vrnobody/xraye 项目添加了批量测速功能"
   ]
 }

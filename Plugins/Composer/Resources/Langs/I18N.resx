@@ -151,7 +151,7 @@
     <value>Pack servers success.</value>
   </data>
   <data name="TotalLabelText" xml:space="preserve">
-    <value>total({2}) = filter({0}) + custom({1})</value>
+    <value>total({2}) = filter({0}) + others({1})</value>
   </data>
   <data name="UnkownTemplateName" xml:space="preserve">
     <value>Unknow template name:</value>

@@ -160,7 +160,7 @@ namespace Composer.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 total({2}) = filter({0}) + custom({1}) 的本地化字符串。
+        ///   查找类似 total({2}) = filter({0}) + others({1}) 的本地化字符串。
         /// </summary>
         internal static string TotalLabelText {
             get {

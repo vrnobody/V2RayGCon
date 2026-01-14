@@ -151,7 +151,7 @@
     <value>打包服务器成功！</value>
   </data>
   <data name="TotalLabelText" xml:space="preserve">
-    <value>合计({2}) = 过滤器({0}) + 自定义({1})</value>
+    <value>合计({2}) = 过滤器({0}) + 其他({1})</value>
   </data>
   <data name="UnkownTemplateName" xml:space="preserve">
     <value>未知模板名：</value>

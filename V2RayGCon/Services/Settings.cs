@@ -923,7 +923,7 @@ namespace V2RayGCon.Services
         public Models.Datas.ServerTracker GetServerTrackerSetting()
         {
             var empty = new Models.Datas.ServerTracker();
-            Models.Datas.ServerTracker result;
+            Models.Datas.ServerTracker result = null;
             try
             {
                 result = JsonConvert.DeserializeObject<Models.Datas.ServerTracker>(
@@ -935,11 +935,8 @@ namespace V2RayGCon.Services
                     result.uids = result.uids ?? new List<string>();
                 }
             }
-            catch
-            {
-                result = empty;
-            }
-            return result;
+            catch { }
+            return result ?? empty;
         }
 
         public List<VgcApis.Models.Datas.CoreInfo> LoadCoreInfoList() => coreInfoCache;

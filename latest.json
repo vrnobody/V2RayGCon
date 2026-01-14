@@ -1,6 +1,6 @@
 {
-  "version": "2.2.3.0",
-  "md5": "44DB5E1A6AB4B98AFD0AAF0771EC78DB",
+  "version": "2.2.3.1",
+  "md5": "61F3BDD048AB54D9225FF8CCD081D66E",
   "warnings": [],
   "changes": [
     "添加 Composer 插件",
@@ -11,6 +11,7 @@
     "NeoLuna 插件显示更友好的报错信息",
     "添加 std.Server:ComposeServersToString()",
     "删除一些一年前计划删除的功能",
+    "修复 v2.2.3.0 启动报错 bug",
     "广告：vrnobody/xraye 项目添加了批量测速功能"
   ]
 }

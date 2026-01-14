@@ -5,6 +5,18 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.3.0` 20260114
+
+添加 Composer 插件  
+修复一个陈年内存泄露 bug  
+ProxySetter 插件的 PAC 设置分页改为按钮  
+批量修改窗口支持修改 tag1-3  
+主窗口标题显示多实例的 tag  
+NeoLuna 插件显示更友好的报错信息  
+添加 std.Server:ComposeServersToString()  
+删除一些一年前计划删除的功能  
+广告：vrnobody/xraye 项目添加了批量测速功能
+
 ##### `v2.2.2.0` 20251211
 
 优化简易编辑器中使用 TAB 键体验  

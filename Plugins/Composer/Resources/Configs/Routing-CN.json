@@ -32,13 +32,6 @@
     ],
     "rules": [
       {
-        "type": "field",
-        "inboundTag": [
-          "agentin"
-        ],
-        "balancerTag": "composer"
-      },
-      {
         "ip": [
           "geoip:cn",
           "geoip:private"
@@ -56,6 +49,13 @@
           "geosite:cn"
         ],
         "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "composer"
       }
     ]
   }

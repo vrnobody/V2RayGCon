@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Balancer_Least_Load" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Balancer-Least-Load.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Balancer_Least_Ping" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Balancer-Least-Ping.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Balancer_Random" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Configs\Balancer-Random.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

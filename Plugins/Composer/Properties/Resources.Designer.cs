@@ -63,6 +63,26 @@ namespace Composer.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] Balancer_Least_Load {
+            get {
+                object obj = ResourceManager.GetObject("Balancer_Least_Load", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Balancer_Least_Ping {
+            get {
+                object obj = ResourceManager.GetObject("Balancer_Least_Ping", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] Balancer_Random {
             get {
                 object obj = ResourceManager.GetObject("Balancer_Random", resourceCulture);

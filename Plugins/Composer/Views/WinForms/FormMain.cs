@@ -42,6 +42,8 @@ namespace Composer.Views.WinForms
             { "Routing CN", Properties.Resources.Routing_CN },
             { "Balancer Random", Properties.Resources.Balancer_Random },
             { "Balancer Round Robin", Properties.Resources.Balancer_Round_Robin },
+            { "Balancer Least Ping", Properties.Resources.Balancer_Least_Ping },
+            { "Balancer Least Load", Properties.Resources.Balancer_Least_Load },
         };
 
         #endregion

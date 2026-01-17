@@ -142,6 +142,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\Configs\Balancer-Least-Ping.json" />
+    <None Include="Resources\Configs\Balancer-Least-Load.json" />
     <None Include="Resources\Configs\Routing-CN.json" />
     <None Include="Resources\Configs\Balancer-Round-Robin.json" />
     <None Include="Resources\Icons\UserCode_16x.png" />

@@ -1,0 +1,49 @@
+﻿{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "agentin",
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {}
+    }
+  ],
+  "outbounds": [],
+  "burstObservatory": {
+    "subjectSelector": [
+      "node"
+    ],
+    "pingConfig": {
+      "destination": "https://www.google.com",
+      "interval": "1h",
+      "connectivity": "",
+      "timeout": "30s",
+      "sampling": 3
+    }
+  },
+  "routing": {
+    "balancers": [
+      {
+        "tag": "composer",
+        "selector": [
+          "node"
+        ],
+        "strategy": {
+          "type": "leastLoad"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "composer"
+      }
+    ]
+  }
+}

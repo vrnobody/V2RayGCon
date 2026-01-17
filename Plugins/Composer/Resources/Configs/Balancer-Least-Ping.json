@@ -1,0 +1,44 @@
+﻿{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "agentin",
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {}
+    }
+  ],
+  "outbounds": [],
+  "observatory": {
+    "subjectSelector": [
+      "node"
+    ],
+    "probeInterval": "5s",
+    "probeURL": "https://www.google.com"
+  },
+  "routing": {
+    "balancers": [
+      {
+        "tag": "composer",
+        "selector": [
+          "node"
+        ],
+        "strategy": {
+          "type": "leastPing"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "composer"
+      }
+    ]
+  }
+}

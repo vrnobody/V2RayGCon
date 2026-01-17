@@ -124,7 +124,7 @@
     <value>Delete {0}?</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>(obsoleted) Pack multiple servers into one server.</value>
+    <value>Pack multiple servers into one server.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Done.</value>

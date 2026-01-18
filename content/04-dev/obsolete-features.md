@@ -5,6 +5,10 @@ draft: false
 weight: 20
 ---
 
+##### 预计 2026-11-01 删除以下功能
+
+Pacman 插件，由 Composer 插件取代。
+
 ##### 预计 2026-10-01 删除以下功能
 
 userSetting.json 里面的配置项：  

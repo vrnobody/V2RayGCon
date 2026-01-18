@@ -30,11 +30,12 @@ namespace Composer.Services
         {
             var upkg = userSettings.packages.FirstOrDefault(el => el.name == pkgItem.name);
             var options = ToComposOptions(pkgItem);
+            var ouid = string.IsNullOrEmpty(upkg?.uid) ? pkgItem.uid : upkg.uid ?? "";
 
             var cfg = "";
             try
             {
-                cfg = vgcServer.ComposeServersToString(options, upkg?.uid);
+                cfg = vgcServer.ComposeServersToString(options, ouid);
             }
             catch (Exception ex)
             {
@@ -54,7 +55,7 @@ namespace Composer.Services
                 return "";
             }
 
-            var uid = vgcServer.ReplaceOrAddNewServer(upkg?.uid, pkgItem.name, cfg, "Composer");
+            var uid = vgcServer.ReplaceOrAddNewServer(ouid, pkgItem.name, cfg, "Composer");
             if (upkg != null && upkg.uid != uid)
             {
                 upkg.uid = uid;
@@ -113,6 +114,7 @@ namespace Composer.Services
             var options = new VgcApis.Models.Composer.Options()
             {
                 isAppend = pkgItem.isAppend,
+                isProxyChain = pkgItem.isProxyChain,
                 skelecton = pkgItem.skelecton,
             };
 

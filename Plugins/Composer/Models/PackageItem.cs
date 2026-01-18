@@ -11,6 +11,7 @@ namespace Composer.Models
         public string skelecton = "";
         public string uid = "";
         public bool isAppend = false;
+        public bool isProxyChain = false;
         public List<ServerSelectorItem> selectors = new List<ServerSelectorItem>();
         #endregion
 

@@ -177,57 +177,78 @@ namespace V2RayGCon.Services
 
         public string ComposeServersConfig(
             JObject tpl,
+            bool isProxyChain,
             bool isAppend,
-            int tagLen,
+            int coreServCount,
             List<string> tags,
             List<List<ICoreServCtrl>> coreServList
         )
         {
             var placeHolder = $"vgc-outbounds-{Guid.NewGuid()}";
-            var backup = tpl["outbounds"];
+            var backup = tpl["outbounds"]
+                .Select(el => VgcApis.Misc.Utils.FormatConfig(el, Config.OutboundsLeftPadding))
+                .ToList();
             tpl["outbounds"] = new JArray { placeHolder };
             var pkg = VgcApis.Misc.Utils.FormatConfig(tpl);
 
             // parse outbounds
             var outbounds = new List<string>();
-            var counter = 1;
-            void restore()
-            {
-                var padding = Config.OutboundsLeftPadding;
-                foreach (var item in backup)
-                {
-                    var c = VgcApis.Misc.Utils.FormatConfig(item, padding);
-                    outbounds.Add(c);
-                    // counter++;
-                }
-            }
 
-            if (isAppend)
-            {
-                restore();
-            }
-            for (var i = 0; i < tags.Count; i++)
+            JObject proxySettingsTpl = JObject.Parse(
+                "{\"tag\": \"my-tag\",\"transportLayer\": true}"
+            );
+
+            var i = isProxyChain ? tags.Count - 1 : 0;
+            var end = isProxyChain ? 0 : tags.Count - 1;
+            var di = isProxyChain ? -1 : 1;
+
+            var counter = isProxyChain ? coreServCount : 1;
+            var tagLen = $"{coreServCount}".Length;
+            var prevTag = "";
+
+            while (true)
             {
                 var coreServs = coreServList[i];
-                string genTagFunc()
+                void modifier(JObject outb)
                 {
                     var prefix = Config.ServsPkgTagPrefix;
-                    var num = $"{counter++}".PadLeft(tagLen, '0');
-                    return $"{tags[i]}{num}";
+                    var num = $"{counter}".PadLeft(tagLen, '0');
+                    counter += di;
+                    if (isProxyChain && !string.IsNullOrEmpty(prevTag))
+                    {
+                        proxySettingsTpl["tag"] = prevTag;
+                        outb["proxySettings"] = proxySettingsTpl;
+                    }
+                    prevTag = $"{tags[i]}{num}";
+                    outb["tag"] = prevTag;
                 }
                 foreach (var coreServ in coreServs)
                 {
                     var config = coreServ.GetConfiger().GetConfig();
-                    var outbs = ExtractOutboundsFromConfig(config, genTagFunc);
+                    var outbs = ExtractOutboundsFromConfig(config, modifier);
                     outbounds.AddRange(outbs);
                 }
+                i += di;
+                if (isProxyChain && i < 0)
+                {
+                    break;
+                }
+                if (!isProxyChain && i > end)
+                {
+                    break;
+                }
             }
-            if (!isAppend)
+            if (isProxyChain)
             {
-                restore();
+                outbounds.Reverse();
             }
 
-            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, outbounds);
+            // restore skelecton outbounds
+            var nodes = isAppend
+                ? backup.Concat(outbounds).ToList()
+                : outbounds.Concat(backup).ToList();
+
+            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, nodes);
             VgcApis.Misc.Utils.CollectOnHighPressure(r.Length);
             return r;
         }
@@ -252,9 +273,9 @@ namespace V2RayGCon.Services
             // tag gen
             var counter = 1;
             var tagLen = $"{servList.Count - 1}".Length;
-            string genTag()
+            void modifier(JObject outb)
             {
-                return GenOutboundTag(tagLen, counter++);
+                outb["tag"] = GenOutboundTag(tagLen, counter++);
             }
 
             // parse outbounds
@@ -263,7 +284,7 @@ namespace V2RayGCon.Services
             {
                 var coreServ = servList[i];
                 var config = coreServ.GetConfiger().GetConfig();
-                var outbs = ExtractOutboundsFromConfig(config, genTag);
+                var outbs = ExtractOutboundsFromConfig(config, modifier);
                 outbounds.AddRange(outbs);
             }
 
@@ -283,7 +304,7 @@ namespace V2RayGCon.Services
             return $"{prefix}{num}";
         }
 
-        List<string> ExtractOutboundsFromConfig(string config, Func<string> genTagFunc)
+        List<string> ExtractOutboundsFromConfig(string config, Action<JObject> modifier)
         {
             var padding = Config.OutboundsLeftPadding;
             var r = new List<string>();
@@ -295,7 +316,7 @@ namespace V2RayGCon.Services
                 {
                     continue;
                 }
-                outbound["tag"] = genTagFunc();
+                modifier.Invoke(outbound);
                 var c = VgcApis.Misc.Utils.FormatConfig(outbound, padding);
                 r.Add(c);
             }

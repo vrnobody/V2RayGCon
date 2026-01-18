@@ -10,6 +10,7 @@ namespace VgcApis.Models.Composer
     {
         public string skelecton = "";
         public bool isAppend = true;
+        public bool isProxyChain = false;
         public List<Selector> selectors = new List<Selector>();
     }
 }

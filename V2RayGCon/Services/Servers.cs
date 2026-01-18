@@ -489,8 +489,9 @@ namespace V2RayGCon.Services
 
             var cfg = configMgr.ComposeServersConfig(
                 sk,
+                options.isProxyChain,
                 options.isAppend,
-                $"{num}".Length,
+                num,
                 tags,
                 coreServList
             );

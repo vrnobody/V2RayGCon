@@ -31,7 +31,9 @@ namespace Composer.Views.WinForms
             cboxNodeInsertPos.SelectedIndex = 1;
             RefreshPackageNamePanel();
             var name = settings.GetCurPackageName();
-            var pkg = this.packageItems.FirstOrDefault(el => el.name == name);
+            var pkg =
+                this.packageItems.FirstOrDefault(el => el.name == name)
+                ?? this.packageItems.FirstOrDefault();
             LoadPackageItemToEditor(pkg);
         }
 
@@ -44,6 +46,7 @@ namespace Composer.Views.WinForms
             { "Balancer Round Robin", Properties.Resources.Balancer_Round_Robin },
             { "Balancer Least Ping", Properties.Resources.Balancer_Least_Ping },
             { "Balancer Least Load", Properties.Resources.Balancer_Least_Load },
+            { "Proxy Chain", Properties.Resources.Proxy_Chain },
         };
 
         #endregion
@@ -141,6 +144,23 @@ namespace Composer.Views.WinForms
         #endregion
 
         #region private methods
+        void CreateServersPackage(bool isProxyChain)
+        {
+            if (string.IsNullOrEmpty(tboxPkgName.Text))
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ErrPkgNameIsEmpty);
+                return;
+            }
+
+            var pkgItem = CollectCurrentSettings();
+            pkgItem.isProxyChain = isProxyChain;
+            var uid = settings.ComposeServers(pkgItem);
+            if (!string.IsNullOrEmpty(uid))
+            {
+                this.curPkgItem.uid = uid;
+            }
+        }
+
         void SavePackageNameItems()
         {
             this.settings.SavePackageItems(this.packageItems);
@@ -223,6 +243,12 @@ namespace Composer.Views.WinForms
             if (p == null)
             {
                 pkgItem.SetIndex(this.packageItems.Count + 1);
+                if (!string.IsNullOrEmpty(pkgItem.uid))
+                {
+                    this.packageItems.Where(el => el.uid == pkgItem.uid)
+                        .Select(el => el.uid = "")
+                        .Count();
+                }
                 this.packageItems.Add(pkgItem);
             }
             else
@@ -344,18 +370,12 @@ namespace Composer.Views.WinForms
 
         private void btnPack_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tboxPkgName.Text))
-            {
-                VgcApis.Misc.UI.MsgBox(I18N.ErrPkgNameIsEmpty);
-                return;
-            }
+            CreateServersPackage(false);
+        }
 
-            var pkgItem = CollectCurrentSettings();
-            var uid = settings.ComposeServers(pkgItem);
-            if (!string.IsNullOrEmpty(uid))
-            {
-                this.curPkgItem.uid = uid;
-            }
+        private void btnChain_Click(object sender, EventArgs e)
+        {
+            CreateServersPackage(true);
         }
         #endregion
     }

@@ -133,6 +133,9 @@
   <data name="Name" xml:space="preserve">
     <value>Composer</value>
   </data>
+  <data name="Proxy_Chain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Configs\Proxy-Chain.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Routing_CN" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Configs\Routing-CN.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

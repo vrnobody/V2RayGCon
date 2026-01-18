@@ -112,6 +112,16 @@ namespace Composer.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] Proxy_Chain {
+            get {
+                object obj = ResourceManager.GetObject("Proxy_Chain", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] Routing_CN {
             get {
                 object obj = ResourceManager.GetObject("Routing_CN", resourceCulture);

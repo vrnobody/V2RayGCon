@@ -103,6 +103,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Configs\Proxy-Chain.json" />
     <None Include="Resources\Configs\Balancer-Random.json" />
   </ItemGroup>
   <ItemGroup>

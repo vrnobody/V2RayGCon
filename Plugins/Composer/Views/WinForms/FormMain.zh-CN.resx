@@ -121,7 +121,7 @@
     <value />
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>包裹</value>
+    <value>包裹列表</value>
   </data>
   <data name="groupBox1.ToolTip" xml:space="preserve">
     <value />
@@ -165,7 +165,7 @@
   <data name="label3.ToolTip" xml:space="preserve">
     <value>选中的节点插入骨架 outbounds 的位置</value>
   </data>
-  <data name="flyNodes.ToolTip" xml:space="preserve">
+  <data name="flySelectors.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="btnOpenFormServerSelector.Text" xml:space="preserve">
@@ -191,6 +191,12 @@
   </data>
   <data name="label1.ToolTip" xml:space="preserve">
     <value>包裹名字</value>
+  </data>
+  <data name="btnChain.Text" xml:space="preserve">
+    <value>串联</value>
+  </data>
+  <data name="btnChain.ToolTip" xml:space="preserve">
+    <value>使用 proxySettings 把节点串起来</value>
   </data>
   <data name="btnPack.Text" xml:space="preserve">
     <value>打包</value>

@@ -205,12 +205,18 @@ namespace NeoLuna.Models.Apis.Components
             );
         }
 
-        public LuaResult ComposeServersToString(string skelecton, bool isAppend, LuaTable selectors)
+        public LuaResult ComposeServersToString(
+            string skelecton,
+            bool isProxyChain,
+            bool isAppend,
+            LuaTable selectors
+        )
         {
             var opt = new VgcApis.Models.Composer.Options()
             {
                 skelecton = skelecton,
                 isAppend = isAppend,
+                isProxyChain = isProxyChain,
             };
 
             try

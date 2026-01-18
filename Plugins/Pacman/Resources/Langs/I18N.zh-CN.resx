@@ -124,7 +124,7 @@
     <value>删除 {0}？</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>将多个服务器打包成一个服务器。</value>
+    <value>（废弃）将多个服务器打包成一个服务器。</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>

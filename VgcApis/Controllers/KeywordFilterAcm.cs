@@ -6,15 +6,20 @@ using System.Windows.Forms;
 using VgcApis.UserControls;
 using VgcApis.UserControls.AcmComboBoxComps;
 
-namespace V2RayGCon.Controllers.FormMainComponent
+namespace VgcApis.Controllers
 {
-    internal class Acm : IDisposable
+    public class KeywordFilterAcm : IDisposable
     {
         private AutocompleteMenu menu;
 
-        public Acm(AcmComboBox box)
+        public KeywordFilterAcm(AcmToolStripComboBox box)
         {
-            this.menu = CreateAcm(box);
+            this.menu = CreateToolStripComboBoxAcm(box);
+        }
+
+        public KeywordFilterAcm(AcmComboBox box)
+        {
+            this.menu = CreateComboBoxAcm(box);
         }
 
         #region public methods
@@ -28,7 +33,29 @@ namespace V2RayGCon.Controllers.FormMainComponent
             menu.Dispose();
         }
 
-        AutocompleteMenu CreateAcm(AcmComboBox box)
+        AutocompleteMenu CreateComboBoxAcm(AcmComboBox box)
+        {
+            var m = CreateAcmMenu();
+            var tooltips = VgcApis.Libs.Infr.KeywordFilter.GetFilterTips();
+            var snippets = CreateSnippets(tooltips);
+
+            m.TargetControlWrapper = new ExComboBoxWrapper(box);
+            m.SetAutocompleteItems(snippets);
+            return m;
+        }
+
+        AutocompleteMenu CreateToolStripComboBoxAcm(AcmToolStripComboBox box)
+        {
+            var m = CreateAcmMenu();
+            var tooltips = VgcApis.Libs.Infr.KeywordFilter.GetAllTips();
+            var snippets = CreateSnippets(tooltips);
+
+            m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
+            m.SetAutocompleteItems(snippets);
+            return m;
+        }
+
+        private AutocompleteMenu CreateAcmMenu()
         {
             var m = new AutocompleteMenu()
             {
@@ -37,7 +64,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 MinFragmentLength = 0,
                 ImageList = new ImageList(),
             };
-
             var icons = new Bitmap[]
             {
                 Properties.Resources.DomainType_16x, // num
@@ -47,20 +73,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Properties.Resources.GoToLastRow_16x, // #goto
                 Properties.Resources.CPPCommentCode_16x, // #//
             };
-
             m.ImageList.Images.AddRange(icons);
+            return m;
+        }
 
-            var tooltips = VgcApis.Libs.Infr.KeywordFilter.GetTips();
-            var snippets = new List<Snippet>();
+        private static List<KeywordFilterSnippet> CreateSnippets(
+            List<System.Collections.ObjectModel.ReadOnlyCollection<string>> tooltips
+        )
+        {
+            List<KeywordFilterSnippet> snippets = new List<KeywordFilterSnippet>();
             for (int i = 0; i < tooltips.Count; i++)
             {
-                var snp = tooltips[i].Select(tip => new Snippet(tip, i));
+                var snp = tooltips[i].Select(tip => new KeywordFilterSnippet(tip, i));
                 snippets.AddRange(snp);
             }
 
-            m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(snippets);
-            return m;
+            return snippets;
         }
         #endregion
 

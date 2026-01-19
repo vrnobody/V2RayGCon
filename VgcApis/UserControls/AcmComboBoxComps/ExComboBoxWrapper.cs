@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace VgcApis.UserControls.AcmComboBoxComps
 {
-    public class ExToolStripComboBoxWrapper : ITextBoxWrapper
+    public class ExComboBoxWrapper : ITextBoxWrapper
     {
-        public AcmToolStripComboBox target;
+        public AcmComboBox target;
 
-        public ExToolStripComboBoxWrapper(AcmToolStripComboBox target)
+        public ExComboBoxWrapper(AcmComboBox target)
         {
             this.target = target;
         }
@@ -31,7 +31,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
 
         public Control TargetControl
         {
-            get => target.GetCurrentParent();
+            get => target;
         }
 
         public string Text

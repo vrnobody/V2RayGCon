@@ -162,8 +162,6 @@
     <Compile Include="Controllers\Comm\DyMenuGenerator.cs" />
     <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
-    <Compile Include="Controllers\FormMainComponent\Acm.cs" />
-    <Compile Include="Controllers\FormMainComponent\Snippet.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomInboundSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomCoreSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
@@ -179,16 +177,16 @@
     <Compile Include="Models\Datas\SpeedTestConfigInfos.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="Resources\Files\3rd\examples\Others\01.MITM.jsonc" />
     <None Include="Resources\Files\3rd\examples\Others\02.API-stats.json" />
     <None Include="Resources\Files\3rd\examples\Others\03.vless-enc-client.json" />
     <None Include="Resources\Files\3rd\examples\Others\04.vless-enc-serv.json" />
     <None Include="Resources\Files\3rd\examples\Routing\01.CN-direct.json" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -600,11 +598,9 @@
     <None Include="Resources\Icon\TaskTray\NewKey_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CPPCommentCode_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\GoToLastRow_16x.png" />
-    <None Include="Resources\Icon\FormMainToolStrip\GoToTop_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CheckboxUncheckCancel_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\Button_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\SortAscending_16x.png" />
-    <None Include="Resources\Icon\FormMainToolStrip\TextBlock_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\DomainType_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\EditSelectedTag_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\EditPage_16x.png" />

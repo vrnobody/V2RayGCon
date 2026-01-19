@@ -153,7 +153,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #region private methods
         static List<string> CreateTipsCache(IEnumerable<string> keys)
         {
-            var r = new List<string>() { "#0" };
+            var r = new List<string>() { };
             foreach (var tag in Enum.GetNames(typeof(NumberTagNames)))
             {
                 r.Add($"#{tag.ToLower()}");

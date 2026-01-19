@@ -340,7 +340,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
         #endregion
 
 
-
         private void timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
@@ -364,7 +363,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                             return WrapperByControls[control];
                         sender = control.Parent;
                         break;
-                    case AcmComboBox cbox:
+                    case AcmToolStripComboBox cbox:
                         sender = cbox.GetCurrentParent();
                         break;
                     default:

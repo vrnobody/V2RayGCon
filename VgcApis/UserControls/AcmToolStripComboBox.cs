@@ -2,9 +2,9 @@
 
 namespace VgcApis.UserControls
 {
-    public class AcmComboBox : ComboBox
+    public class AcmToolStripComboBox : ToolStripComboBox
     {
-        public AcmComboBox()
+        public AcmToolStripComboBox()
             : base() { }
 
         #region Acm

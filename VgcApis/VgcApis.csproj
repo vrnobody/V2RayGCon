@@ -73,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\KeywordFilterAcm.cs" />
+    <Compile Include="Controllers\KeywordFilterSnippet.cs" />
     <Compile Include="Interfaces\IHasIndex.cs" />
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
@@ -106,6 +108,7 @@
     </Compile>
     <Compile Include="UserControls\AcmComboBoxComps\Colors.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\EventArgs.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\ExComboBoxWrapper.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\ExToolStripComboBoxWrapper.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\IAutocompleteListView.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\ITextBoxWrapper.cs" />
@@ -210,10 +213,13 @@
     </Compile>
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Misc\Utils.cs" />
+    <Compile Include="UserControls\AcmComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\AcmComboBox.cs">
+    <Compile Include="UserControls\AcmToolStripComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\RoundLabel.cs">
@@ -301,6 +307,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons\icon_tun_mode.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\Button_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\CheckboxUncheckCancel_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\CPPCommentCode_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\DomainType_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\GoToLastRow_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\SortAscending_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

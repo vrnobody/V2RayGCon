@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using VgcApis.UserControls.AcmComboBoxComps;
 
-namespace V2RayGCon.Controllers.FormMainComponent
+namespace VgcApis.Controllers
 {
-    internal sealed class Snippet : AutocompleteItem
+    internal sealed class KeywordFilterSnippet : AutocompleteItem
     {
-        public Snippet(string text, int iconIdx)
+        public KeywordFilterSnippet(string text, int iconIdx)
             : base(text, iconIdx) { }
 
         public override CompareResult Compare(string _)

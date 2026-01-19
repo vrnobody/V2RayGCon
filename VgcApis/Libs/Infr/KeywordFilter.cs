@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using VgcApis.Libs.Infr.KwFilterComps;
 
 namespace VgcApis.Libs.Infr
@@ -48,17 +49,29 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region public methods
-
-        public static List<ReadOnlyCollection<string>> GetTips() =>
+        public static List<ReadOnlyCollection<string>> GetFilterTips() =>
             new List<ReadOnlyCollection<string>>()
             {
                 AdvNumberFilter.GetTips(),
                 AdvStringFilter.GetTips(),
                 AdvOrderByFilter.GetTips(),
                 AdvTakeFilter.GetTips(),
+            };
+
+        public static List<ReadOnlyCollection<string>> GetAllTips()
+        {
+            var numTips = new List<string>() { "#0" };
+            numTips = numTips.Concat(AdvNumberFilter.GetTips()).ToList();
+            return new List<ReadOnlyCollection<string>>()
+            {
+                numTips.AsReadOnly(),
+                AdvStringFilter.GetTips(),
+                AdvOrderByFilter.GetTips(),
+                AdvTakeFilter.GetTips(),
                 AdvGotoIndexFilter.GetTips(),
                 AdvEmptyFilter.GetTips(),
             };
+        }
 
         public ISimpleFilter GetFilter() => this.filter;
 

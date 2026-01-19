@@ -13,6 +13,7 @@ namespace Composer.Views.WinForms
     {
         private readonly Settings settings;
         private readonly Models.ServerSelectorItem nodeFilterItem;
+        private readonly VgcApis.Controllers.KeywordFilterAcm acm;
 
         public Models.ServerSelectorItem result = null;
 
@@ -24,6 +25,7 @@ namespace Composer.Views.WinForms
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             InitControls();
+            this.acm = new VgcApis.Controllers.KeywordFilterAcm(this.cboxFilterKw);
         }
 
         #region public methods
@@ -40,7 +42,7 @@ namespace Composer.Views.WinForms
         void UpdateTotal()
         {
             var cFilter = 0;
-            var kw = this.tboxFilterKw.Text;
+            var kw = this.cboxFilterKw.Text;
             if (!string.IsNullOrEmpty(kw))
             {
                 cFilter = settings.GetServers(kw).Count;
@@ -54,7 +56,7 @@ namespace Composer.Views.WinForms
         void InitControls()
         {
             this.tboxTag.Text = nodeFilterItem.tag;
-            this.tboxFilterKw.Text = nodeFilterItem.filter;
+            this.cboxFilterKw.Text = nodeFilterItem.filter;
             RefreshServersPanel();
         }
 
@@ -81,7 +83,7 @@ namespace Composer.Views.WinForms
 
             var r = new Models.ServerSelectorItem()
             {
-                filter = this.tboxFilterKw.Text,
+                filter = this.cboxFilterKw.Text,
                 id = this.nodeFilterItem.id,
                 tag = this.tboxTag.Text,
                 servInfos = si,
@@ -181,6 +183,11 @@ namespace Composer.Views.WinForms
         private void tboxFilterKw_TextChanged(object sender, EventArgs e)
         {
             RefreshServersPanel();
+        }
+
+        private void FormServerSelector_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.acm?.Dispose();
         }
         #endregion
     }

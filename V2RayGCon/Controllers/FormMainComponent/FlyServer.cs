@@ -18,7 +18,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private readonly ToolStripLabel tslbClearKeyword;
         readonly Services.Servers servers;
         readonly Services.Settings setting;
-        readonly VgcApis.UserControls.AcmComboBox cboxKeyword;
+        readonly VgcApis.UserControls.AcmToolStripComboBox cboxKeyword;
         readonly ToolStripStatusLabel tslbTotal,
             tslbPrePage,
             tslbNextPage;
@@ -33,7 +33,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         int totalPageNumber = 1;
         bool isFocusOnFormMain;
 
-        readonly Acm acm;
+        readonly VgcApis.Controllers.KeywordFilterAcm acm;
 
         public FlyServer(
             Form formMain,
@@ -53,7 +53,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             this.formMain = formMain;
             this.flyPanel = panel;
             this.tslbClearKeyword = lbClearKeyword;
-            this.cboxKeyword = cboxKeyword as VgcApis.UserControls.AcmComboBox;
+            this.cboxKeyword = cboxKeyword as VgcApis.UserControls.AcmToolStripComboBox;
             this.tsdbtnPager = tsdbtnPager;
             this.tslbTotal = tslbTotal;
             this.tslbPrePage = tslbPrePage;
@@ -81,7 +81,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitFormControls(lbClearKeyword, miResizeFormMain);
             BindDragDropEvent();
-            this.acm = new Acm(this.cboxKeyword);
+            this.acm = new VgcApis.Controllers.KeywordFilterAcm(this.cboxKeyword);
             WatchServers();
             RefreshFlyPanelNow();
             DoSearchOptimization();

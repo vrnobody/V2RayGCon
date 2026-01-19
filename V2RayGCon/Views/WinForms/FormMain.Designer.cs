@@ -53,7 +53,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonShowFormLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripComboBoxMarkFilter = new VgcApis.UserControls.AcmComboBox();
+            this.toolStripComboBoxMarkFilter = new VgcApis.UserControls.AcmToolStripComboBox();
             this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
             this.mainMneuStrip = new System.Windows.Forms.MenuStrip();
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1064,7 +1064,7 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemSortByUploadTotal;
         private ToolStripLabel toolStripLabelSearch;
         private ToolStripMenuItem toolStripMenuItemTextEditor;
-        private VgcApis.UserControls.AcmComboBox toolStripComboBoxMarkFilter;
+        private VgcApis.UserControls.AcmToolStripComboBox toolStripComboBoxMarkFilter;
         private ToolStripSeparator toolStripMenuItem8;
         private ToolStripMenuItem selectNotSpeedTestedCurPageToolStripMenuItem;
         private ToolStripMenuItem selectTimeoutCurPageToolStripMenuItem;

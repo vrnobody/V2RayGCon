@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tboxTag = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tboxFilterKw = new System.Windows.Forms.TextBox();
+            this.cboxFilterKw = new VgcApis.UserControls.AcmComboBox();
             this.btnPullServers = new System.Windows.Forms.Button();
             this.btnRefreshTotal = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -42,6 +42,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.lbTotal = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panelFilterKeywords = new System.Windows.Forms.Panel();
+            this.panelFilterKeywords.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -54,7 +56,6 @@
             // 
             resources.ApplyResources(this.tboxTag, "tboxTag");
             this.tboxTag.Name = "tboxTag";
-            this.toolTip1.SetToolTip(this.tboxTag, resources.GetString("tboxTag.ToolTip"));
             // 
             // label2
             // 
@@ -62,12 +63,16 @@
             this.label2.Name = "label2";
             this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
-            // tboxFilterKw
+            // cboxFilterKw
             // 
-            resources.ApplyResources(this.tboxFilterKw, "tboxFilterKw");
-            this.tboxFilterKw.Name = "tboxFilterKw";
-            this.toolTip1.SetToolTip(this.tboxFilterKw, resources.GetString("tboxFilterKw.ToolTip"));
-            this.tboxFilterKw.TextChanged += new System.EventHandler(this.tboxFilterKw_TextChanged);
+            resources.ApplyResources(this.cboxFilterKw, "cboxFilterKw");
+            this.cboxFilterKw.Items.AddRange(new object[] {
+            resources.GetString("cboxFilterKw.Items"),
+            resources.GetString("cboxFilterKw.Items1"),
+            resources.GetString("cboxFilterKw.Items2")});
+            this.cboxFilterKw.Name = "cboxFilterKw";
+            this.cboxFilterKw.ReadOnly = false;
+            this.cboxFilterKw.TextChanged += new System.EventHandler(this.tboxFilterKw_TextChanged);
             // 
             // btnPullServers
             // 
@@ -89,18 +94,16 @@
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // flyCustomServers
             // 
-            resources.ApplyResources(this.flyCustomServers, "flyCustomServers");
             this.flyCustomServers.AllowDrop = true;
+            resources.ApplyResources(this.flyCustomServers, "flyCustomServers");
             this.flyCustomServers.BackColor = System.Drawing.SystemColors.Control;
             this.flyCustomServers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flyCustomServers.Name = "flyCustomServers";
-            this.toolTip1.SetToolTip(this.flyCustomServers, resources.GetString("flyCustomServers.ToolTip"));
             this.flyCustomServers.DragDrop += new System.Windows.Forms.DragEventHandler(this.flyCustomServers_DragDrop);
             this.flyCustomServers.DragEnter += new System.Windows.Forms.DragEventHandler(this.flyCustomServers_DragEnter);
             // 
@@ -114,7 +117,6 @@
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
-            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -122,25 +124,31 @@
             // 
             resources.ApplyResources(this.lbTotal, "lbTotal");
             this.lbTotal.Name = "lbTotal";
-            this.toolTip1.SetToolTip(this.lbTotal, resources.GetString("lbTotal.ToolTip"));
+            // 
+            // panelFilterKeywords
+            // 
+            resources.ApplyResources(this.panelFilterKeywords, "panelFilterKeywords");
+            this.panelFilterKeywords.Controls.Add(this.cboxFilterKw);
+            this.panelFilterKeywords.Name = "panelFilterKeywords";
             // 
             // FormServerSelector
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panelFilterKeywords);
             this.Controls.Add(this.lbTotal);
             this.Controls.Add(this.flyCustomServers);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnRefreshTotal);
             this.Controls.Add(this.btnPullServers);
-            this.Controls.Add(this.tboxFilterKw);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tboxTag);
             this.Controls.Add(this.label1);
             this.Name = "FormServerSelector";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormServerSelector_FormClosing);
+            this.panelFilterKeywords.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,7 +159,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tboxTag;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tboxFilterKw;
+        private VgcApis.UserControls.AcmComboBox cboxFilterKw;
         private System.Windows.Forms.Button btnPullServers;
         private System.Windows.Forms.Button btnRefreshTotal;
         private System.Windows.Forms.Button btnCancel;
@@ -160,5 +168,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label lbTotal;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel panelFilterKeywords;
     }
 }

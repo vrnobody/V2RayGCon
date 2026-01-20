@@ -178,6 +178,9 @@
   <data name="tLSCertToolStripMenuItem.Text" xml:space="preserve">
     <value>TLS 证书</value>
   </data>
+  <data name="certHashToolStripMenuItem.Text" xml:space="preserve">
+    <value>计算证书 hash</value>
+  </data>
   <data name="uUIDV4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 22</value>
   </data>
@@ -202,6 +205,9 @@
   <data name="numAlphabetSymbolToolStripMenuItem.Text" xml:space="preserve">
     <value>数字 + 字母 + 符号</value>
   </data>
+  <data name="decodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="decodeToolStripMenuItem.Text" xml:space="preserve">
     <value>解码</value>
   </data>
@@ -211,17 +217,14 @@
   <data name="mobToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>解码 mob://... 内容</value>
   </data>
+  <data name="encodeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="encodeToolStripMenuItem.Text" xml:space="preserve">
     <value>编码</value>
   </data>
-  <data name="base64ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="unicodeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="uRIToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="convertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <data name="convertToolStripMenuItem.Text" xml:space="preserve">
     <value>字符转换</value>
@@ -276,10 +279,6 @@
   </data>
   <data name="currentTextToolStripMenuItem.Text" xml:space="preserve">
     <value>当前文本</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>工具箱</value>

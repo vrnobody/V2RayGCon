@@ -21,6 +21,9 @@
             return appendAllFile ? $"{e}|{AllExt}" : e;
         }
 
+        public static readonly string TlsCertExts =
+            $"{GenExtString("pem", false)}|{GenExtString("crt", true)}";
+
         public static readonly string PngExt = GenExtString("png");
         public static readonly string JsExt = GenExtString("js");
         public static readonly string JsonExt = GenExtString("json");

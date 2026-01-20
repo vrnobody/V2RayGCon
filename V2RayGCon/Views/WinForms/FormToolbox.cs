@@ -276,6 +276,30 @@ namespace V2RayGCon.Views.WinForms
             TryExecCoreCmd("vless encryption", "vlessenc");
         }
 
+        private void calcCertHashToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var path = VgcApis.Misc.UI.ShowSelectFileDialog(
+                VgcApis.Models.Consts.Files.TlsCertExts
+            );
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+            var exe = GetCoreFullPath();
+            if (!File.Exists(exe))
+            {
+                VgcApis.Misc.UI.MsgBox($"{I18N.ExeNotFound}{Environment.NewLine}{exe}");
+                return;
+            }
+            var args = $"tls leafCertHash --cert \"{path}\"";
+            var result = VgcApis.Misc.Utils.ExecuteAndGetStdOut(exe, args, 10000, null);
+            var msg = "error: empty result!";
+            if (!string.IsNullOrEmpty(result))
+            {
+                msg = $"file: {path}\nsha256: {result}";
+            }
+            SetResult("TLS cert sha256 hash", msg);
+        }
         #endregion
 
         #region file menu

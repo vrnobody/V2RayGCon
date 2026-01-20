@@ -39,6 +39,7 @@
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tLSECHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tLSCertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.certHashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x25519ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wireGuardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mLDSA65ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,6 +133,7 @@
             this.generateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tLSECHToolStripMenuItem,
             this.tLSCertToolStripMenuItem,
+            this.certHashToolStripMenuItem,
             this.x25519ToolStripMenuItem,
             this.wireGuardToolStripMenuItem,
             this.mLDSA65ToolStripMenuItem,
@@ -150,6 +152,12 @@
             resources.ApplyResources(this.tLSCertToolStripMenuItem, "tLSCertToolStripMenuItem");
             this.tLSCertToolStripMenuItem.Name = "tLSCertToolStripMenuItem";
             this.tLSCertToolStripMenuItem.Click += new System.EventHandler(this.tLSCertToolStripMenuItem_Click);
+            // 
+            // certHashToolStripMenuItem
+            // 
+            resources.ApplyResources(this.certHashToolStripMenuItem, "certHashToolStripMenuItem");
+            this.certHashToolStripMenuItem.Name = "certHashToolStripMenuItem";
+            this.certHashToolStripMenuItem.Click += new System.EventHandler(this.calcCertHashToolStripMenuItem_Click);
             // 
             // x25519ToolStripMenuItem
             // 
@@ -436,5 +444,6 @@
         private System.Windows.Forms.ToolStripMenuItem fromFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mobToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem certHashToolStripMenuItem;
     }
 }

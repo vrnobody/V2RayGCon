@@ -556,7 +556,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;chkTlsCertSelfSign.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>14</value>
   </data>
   <data name="lbStreamParam3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -649,7 +649,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -682,7 +682,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="label6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -718,142 +718,142 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
-  <data name="lbRealityPubKey.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbTlsParam1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lbRealityPubKey.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lbTlsParam1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lbRealityPubKey.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbTlsParam1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 104</value>
   </data>
-  <data name="lbRealityPubKey.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lbTlsParam1.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="lbRealityPubKey.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbTlsParam1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="lbRealityPubKey.Text" xml:space="preserve">
+  <data name="lbTlsParam1.Text" xml:space="preserve">
     <value>PublicKey</value>
   </data>
-  <data name="lbRealityPubKey.ToolTip" xml:space="preserve">
+  <data name="lbTlsParam1.ToolTip" xml:space="preserve">
     <value>(x)tls.echConfigList / realitySettings.publicKey</value>
   </data>
-  <data name="&gt;&gt;lbRealityPubKey.Name" xml:space="preserve">
-    <value>lbRealityPubKey</value>
+  <data name="&gt;&gt;lbTlsParam1.Name" xml:space="preserve">
+    <value>lbTlsParam1</value>
   </data>
-  <data name="&gt;&gt;lbRealityPubKey.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbRealityPubKey.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam1.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;lbRealityPubKey.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="&gt;&gt;lbTlsParam1.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbTlsParam2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lbTlsParam2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbTlsParam2.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 131</value>
   </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lbTlsParam2.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
   </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbTlsParam2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="label9.Text" xml:space="preserve">
+  <data name="lbTlsParam2.Text" xml:space="preserve">
     <value>ShortId</value>
   </data>
-  <data name="label9.ToolTip" xml:space="preserve">
+  <data name="lbTlsParam2.ToolTip" xml:space="preserve">
     <value>realitySettings.shortId</value>
   </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
+  <data name="&gt;&gt;lbTlsParam2.Name" xml:space="preserve">
+    <value>lbTlsParam2</value>
   </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam2.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;lbTlsParam2.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
-  <data name="label10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="lbTlsParam3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbTlsParam3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lbTlsParam3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbTlsParam3.Location" type="System.Drawing.Point, System.Drawing">
     <value>217, 131</value>
   </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lbTlsParam3.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
   </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbTlsParam3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="label10.Text" xml:space="preserve">
+  <data name="lbTlsParam3.Text" xml:space="preserve">
     <value>SpiderX</value>
   </data>
-  <data name="label10.ToolTip" xml:space="preserve">
+  <data name="lbTlsParam3.ToolTip" xml:space="preserve">
     <value>realitySettings.spiderX</value>
   </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
+  <data name="&gt;&gt;lbTlsParam3.Name" xml:space="preserve">
+    <value>lbTlsParam3</value>
   </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam3.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;lbTlsParam3.ZOrder" xml:space="preserve">
+    <value>16</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbTlsParam4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lbTlsParam4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbTlsParam4.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 157</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lbTlsParam4.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbTlsParam4.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
+  <data name="lbTlsParam4.Text" xml:space="preserve">
     <value>ML-DSA-65</value>
   </data>
-  <data name="label1.ToolTip" xml:space="preserve">
+  <data name="lbTlsParam4.ToolTip" xml:space="preserve">
     <value>realitySettings.mldsa65Verify</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;lbTlsParam4.Name" xml:space="preserve">
+    <value>lbTlsParam4</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbTlsParam4.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;lbTlsParam4.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="tboxStreamParam2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1021,7 +1021,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;cboxTlsType.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1107,6 +1107,30 @@
   <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="tboxTlsParam2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tboxTlsParam2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 127</value>
+  </data>
+  <data name="tboxTlsParam2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 21</value>
+  </data>
+  <data name="tboxTlsParam2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam2.Name" xml:space="preserve">
+    <value>tboxTlsParam2</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam2.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="cboxTlsFingerprint.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -1162,103 +1186,55 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;cboxTlsFingerprint.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tboxTlsSpiderX.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="tboxTlsSpiderX.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 127</value>
-  </data>
-  <data name="tboxTlsSpiderX.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 21</value>
-  </data>
-  <data name="tboxTlsSpiderX.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsSpiderX.Name" xml:space="preserve">
-    <value>tboxTlsSpiderX</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsSpiderX.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsSpiderX.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsSpiderX.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="tboxTlsShortId.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="tboxTlsParam4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="tboxTlsShortId.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 127</value>
-  </data>
-  <data name="tboxTlsShortId.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 21</value>
-  </data>
-  <data name="tboxTlsShortId.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsShortId.Name" xml:space="preserve">
-    <value>tboxTlsShortId</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsShortId.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsShortId.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxTlsShortId.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tboxRealityMlDsa65Verify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="tboxRealityMlDsa65Verify.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tboxTlsParam4.Location" type="System.Drawing.Point, System.Drawing">
     <value>83, 153</value>
   </data>
-  <data name="tboxRealityMlDsa65Verify.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tboxTlsParam4.Size" type="System.Drawing.Size, System.Drawing">
     <value>287, 21</value>
   </data>
-  <data name="tboxRealityMlDsa65Verify.TabIndex" type="System.Int32, mscorlib">
+  <data name="tboxTlsParam4.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;tboxRealityMlDsa65Verify.Name" xml:space="preserve">
-    <value>tboxRealityMlDsa65Verify</value>
+  <data name="&gt;&gt;tboxTlsParam4.Name" xml:space="preserve">
+    <value>tboxTlsParam4</value>
   </data>
-  <data name="&gt;&gt;tboxRealityMlDsa65Verify.Type" xml:space="preserve">
+  <data name="&gt;&gt;tboxTlsParam4.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tboxRealityMlDsa65Verify.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tboxTlsParam4.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;tboxRealityMlDsa65Verify.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="&gt;&gt;tboxTlsParam4.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="tboxTlsPublicKey.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="tboxTlsParam1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="tboxTlsPublicKey.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tboxTlsParam1.Location" type="System.Drawing.Point, System.Drawing">
     <value>83, 100</value>
   </data>
-  <data name="tboxTlsPublicKey.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tboxTlsParam1.Size" type="System.Drawing.Size, System.Drawing">
     <value>287, 21</value>
   </data>
-  <data name="tboxTlsPublicKey.TabIndex" type="System.Int32, mscorlib">
+  <data name="tboxTlsParam1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;tboxTlsPublicKey.Name" xml:space="preserve">
-    <value>tboxTlsPublicKey</value>
+  <data name="&gt;&gt;tboxTlsParam1.Name" xml:space="preserve">
+    <value>tboxTlsParam1</value>
   </data>
-  <data name="&gt;&gt;tboxTlsPublicKey.Type" xml:space="preserve">
+  <data name="&gt;&gt;tboxTlsParam1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tboxTlsPublicKey.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tboxTlsParam1.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;tboxTlsPublicKey.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;tboxTlsParam1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="tboxTlsAlpn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1282,7 +1258,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;tboxTlsAlpn.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="tboxTlsServName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1306,7 +1282,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;tboxTlsServName.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1336,6 +1312,30 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="tboxTlsParam3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tboxTlsParam3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 127</value>
+  </data>
+  <data name="tboxTlsParam3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 21</value>
+  </data>
+  <data name="tboxTlsParam3.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam3.Name" xml:space="preserve">
+    <value>tboxTlsParam3</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam3.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxTlsParam3.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">

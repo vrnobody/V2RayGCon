@@ -51,10 +51,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.lbRealityPubKey = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbTlsParam1 = new System.Windows.Forms.Label();
+            this.lbTlsParam2 = new System.Windows.Forms.Label();
+            this.lbTlsParam3 = new System.Windows.Forms.Label();
+            this.lbTlsParam4 = new System.Windows.Forms.Label();
             this.tboxStreamParam2 = new System.Windows.Forms.TextBox();
             this.tboxStreamParam3 = new System.Windows.Forms.TextBox();
             this.tboxPort = new System.Windows.Forms.TextBox();
@@ -66,10 +66,10 @@
             this.tboxAuth3 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cboxTlsFingerprint = new System.Windows.Forms.ComboBox();
-            this.tboxTlsSpiderX = new System.Windows.Forms.TextBox();
-            this.tboxTlsShortId = new System.Windows.Forms.TextBox();
-            this.tboxRealityMlDsa65Verify = new System.Windows.Forms.TextBox();
-            this.tboxTlsPublicKey = new System.Windows.Forms.TextBox();
+            this.tboxTlsParam3 = new System.Windows.Forms.TextBox();
+            this.tboxTlsParam2 = new System.Windows.Forms.TextBox();
+            this.tboxTlsParam4 = new System.Windows.Forms.TextBox();
+            this.tboxTlsParam1 = new System.Windows.Forms.TextBox();
             this.tboxTlsAlpn = new System.Windows.Forms.TextBox();
             this.tboxTlsServName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -204,29 +204,29 @@
             this.label6.Name = "label6";
             this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
-            // lbRealityPubKey
+            // lbTlsParam1
             // 
-            resources.ApplyResources(this.lbRealityPubKey, "lbRealityPubKey");
-            this.lbRealityPubKey.Name = "lbRealityPubKey";
-            this.toolTip1.SetToolTip(this.lbRealityPubKey, resources.GetString("lbRealityPubKey.ToolTip"));
+            resources.ApplyResources(this.lbTlsParam1, "lbTlsParam1");
+            this.lbTlsParam1.Name = "lbTlsParam1";
+            this.toolTip1.SetToolTip(this.lbTlsParam1, resources.GetString("lbTlsParam1.ToolTip"));
             // 
-            // label9
+            // lbTlsParam2
             // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            this.toolTip1.SetToolTip(this.label9, resources.GetString("label9.ToolTip"));
+            resources.ApplyResources(this.lbTlsParam2, "lbTlsParam2");
+            this.lbTlsParam2.Name = "lbTlsParam2";
+            this.toolTip1.SetToolTip(this.lbTlsParam2, resources.GetString("lbTlsParam2.ToolTip"));
             // 
-            // label10
+            // lbTlsParam3
             // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.Name = "label10";
-            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
+            resources.ApplyResources(this.lbTlsParam3, "lbTlsParam3");
+            this.lbTlsParam3.Name = "lbTlsParam3";
+            this.toolTip1.SetToolTip(this.lbTlsParam3, resources.GetString("lbTlsParam3.ToolTip"));
             // 
-            // label1
+            // lbTlsParam4
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
+            resources.ApplyResources(this.lbTlsParam4, "lbTlsParam4");
+            this.lbTlsParam4.Name = "lbTlsParam4";
+            this.toolTip1.SetToolTip(this.lbTlsParam4, resources.GetString("lbTlsParam4.ToolTip"));
             // 
             // tboxStreamParam2
             // 
@@ -307,16 +307,14 @@
             // groupBox3
             // 
             resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.tboxTlsParam2);
             this.groupBox3.Controls.Add(this.cboxTlsFingerprint);
-            this.groupBox3.Controls.Add(this.tboxTlsSpiderX);
-            this.groupBox3.Controls.Add(this.tboxTlsShortId);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.tboxRealityMlDsa65Verify);
-            this.groupBox3.Controls.Add(this.tboxTlsPublicKey);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.tboxTlsParam4);
+            this.groupBox3.Controls.Add(this.tboxTlsParam1);
+            this.groupBox3.Controls.Add(this.lbTlsParam2);
+            this.groupBox3.Controls.Add(this.lbTlsParam4);
             this.groupBox3.Controls.Add(this.tboxTlsAlpn);
-            this.groupBox3.Controls.Add(this.lbRealityPubKey);
+            this.groupBox3.Controls.Add(this.lbTlsParam1);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.tboxTlsServName);
             this.groupBox3.Controls.Add(this.label2);
@@ -324,6 +322,8 @@
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.chkTlsCertSelfSign);
+            this.groupBox3.Controls.Add(this.tboxTlsParam3);
+            this.groupBox3.Controls.Add(this.lbTlsParam3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
@@ -345,25 +345,25 @@
             resources.GetString("cboxTlsFingerprint.Items10")});
             this.cboxTlsFingerprint.Name = "cboxTlsFingerprint";
             // 
-            // tboxTlsSpiderX
+            // tboxTlsParam3
             // 
-            resources.ApplyResources(this.tboxTlsSpiderX, "tboxTlsSpiderX");
-            this.tboxTlsSpiderX.Name = "tboxTlsSpiderX";
+            resources.ApplyResources(this.tboxTlsParam3, "tboxTlsParam3");
+            this.tboxTlsParam3.Name = "tboxTlsParam3";
             // 
-            // tboxTlsShortId
+            // tboxTlsParam2
             // 
-            resources.ApplyResources(this.tboxTlsShortId, "tboxTlsShortId");
-            this.tboxTlsShortId.Name = "tboxTlsShortId";
+            resources.ApplyResources(this.tboxTlsParam2, "tboxTlsParam2");
+            this.tboxTlsParam2.Name = "tboxTlsParam2";
             // 
-            // tboxRealityMlDsa65Verify
+            // tboxTlsParam4
             // 
-            resources.ApplyResources(this.tboxRealityMlDsa65Verify, "tboxRealityMlDsa65Verify");
-            this.tboxRealityMlDsa65Verify.Name = "tboxRealityMlDsa65Verify";
+            resources.ApplyResources(this.tboxTlsParam4, "tboxTlsParam4");
+            this.tboxTlsParam4.Name = "tboxTlsParam4";
             // 
-            // tboxTlsPublicKey
+            // tboxTlsParam1
             // 
-            resources.ApplyResources(this.tboxTlsPublicKey, "tboxTlsPublicKey");
-            this.tboxTlsPublicKey.Name = "tboxTlsPublicKey";
+            resources.ApplyResources(this.tboxTlsParam1, "tboxTlsParam1");
+            this.tboxTlsParam1.Name = "tboxTlsParam1";
             // 
             // tboxTlsAlpn
             // 
@@ -432,17 +432,17 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboxTlsFingerprint;
-        private System.Windows.Forms.TextBox tboxTlsSpiderX;
-        private System.Windows.Forms.TextBox tboxTlsShortId;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox tboxTlsPublicKey;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tboxTlsParam3;
+        private System.Windows.Forms.TextBox tboxTlsParam2;
+        private System.Windows.Forms.Label lbTlsParam3;
+        private System.Windows.Forms.TextBox tboxTlsParam1;
+        private System.Windows.Forms.Label lbTlsParam2;
         private System.Windows.Forms.TextBox tboxTlsAlpn;
-        private System.Windows.Forms.Label lbRealityPubKey;
+        private System.Windows.Forms.Label lbTlsParam1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tboxRealityMlDsa65Verify;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tboxTlsParam4;
+        private System.Windows.Forms.Label lbTlsParam4;
         private System.Windows.Forms.Label lbAuth3;
         private System.Windows.Forms.TextBox tboxAuth3;
     }

@@ -45,10 +45,10 @@ namespace V2RayGCon.Views.UserControls
                 tlsAlpn = tboxTlsAlpn.Text,
                 tlsFingerPrint = cboxTlsFingerprint.Text,
 
-                tlsParam1 = tboxTlsPublicKey.Text,
-                tlsParam2 = tboxTlsShortId.Text,
-                tlsParam3 = tboxTlsSpiderX.Text,
-                tlsParam4 = tboxRealityMlDsa65Verify.Text,
+                tlsParam1 = tboxTlsParam1.Text,
+                tlsParam2 = tboxTlsParam2.Text,
+                tlsParam3 = tboxTlsParam3.Text,
+                tlsParam4 = tboxTlsParam4.Text,
             };
 
             return meta;
@@ -93,10 +93,10 @@ namespace V2RayGCon.Views.UserControls
 
             tboxTlsAlpn.Text = sc.tlsAlpn;
             cboxTlsFingerprint.Text = sc.tlsFingerPrint;
-            tboxTlsPublicKey.Text = sc.tlsParam1;
-            tboxTlsShortId.Text = sc.tlsParam2;
-            tboxTlsSpiderX.Text = sc.tlsParam3;
-            tboxRealityMlDsa65Verify.Text = sc.tlsParam4;
+            tboxTlsParam1.Text = sc.tlsParam1;
+            tboxTlsParam2.Text = sc.tlsParam2;
+            tboxTlsParam3.Text = sc.tlsParam3;
+            tboxTlsParam4.Text = sc.tlsParam4;
         }
         #endregion
 
@@ -331,16 +331,30 @@ namespace V2RayGCon.Views.UserControls
             bool tlsDisabled = cboxTlsType.Text == "none";
             bool realityEnabled = cboxTlsType.Text == "reality";
 
-            lbRealityPubKey.Text = realityEnabled ? "PublicKey" : "Ech";
+            lbTlsParam1.Text = realityEnabled ? "PublicKey" : "Ech";
 
             chkTlsCertSelfSign.Enabled = !tlsDisabled;
             tboxTlsServName.Enabled = !tlsDisabled;
             cboxTlsFingerprint.Enabled = !tlsDisabled;
             tboxTlsAlpn.Enabled = !tlsDisabled;
-            tboxTlsPublicKey.Enabled = !tlsDisabled;
-            tboxTlsShortId.Enabled = !tlsDisabled && realityEnabled;
-            tboxTlsSpiderX.Enabled = !tlsDisabled && realityEnabled;
-            tboxRealityMlDsa65Verify.Enabled = !tlsDisabled && realityEnabled;
+            tboxTlsParam1.Enabled = !tlsDisabled;
+            tboxTlsParam2.Enabled = !tlsDisabled;
+
+            if (!tlsDisabled && !realityEnabled)
+            {
+                lbTlsParam2.Text = "pcs";
+                toolTip1.SetToolTip(lbTlsParam2, "tlsSettings.pinnedPeerCertSha256");
+                tboxTlsParam2.Width = tboxTlsServName.Width;
+            }
+            else
+            {
+                lbTlsParam2.Text = "ShortID";
+                toolTip1.SetToolTip(lbTlsParam2, "realitySettings.shortId");
+                tboxTlsParam2.Width = cboxTlsFingerprint.Width;
+            }
+
+            tboxTlsParam3.Enabled = !tlsDisabled && realityEnabled;
+            tboxTlsParam4.Enabled = !tlsDisabled && realityEnabled;
         }
 
         #endregion

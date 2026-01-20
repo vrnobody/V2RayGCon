@@ -73,6 +73,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             if (tt == "tls")
             {
                 SetValue("echConfigList", meta.tlsParam1);
+                SetValue("pinnedPeerCertSha256", meta.tlsParam2);
             }
 
             if (!string.IsNullOrEmpty(meta.tlsAlpn))

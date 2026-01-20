@@ -83,6 +83,7 @@ namespace VgcApis.Misc
             if (vc.tlsType == "tls")
             {
                 vc.tlsParam1 = GetValue("ech", "");
+                vc.tlsParam2 = GetValue("pcs", "");
             }
 
             // patch sni
@@ -373,6 +374,7 @@ namespace VgcApis.Misc
             if (tt == "tls")
             {
                 meta.tlsParam1 = reader(prefix, $"{ts}.echConfigList") ?? "";
+                meta.tlsParam2 = reader(prefix, $"{ts}.pinnedPeerCertSha256") ?? "";
             }
 
             try

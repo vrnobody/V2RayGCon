@@ -44,6 +44,8 @@ namespace VgcApis.Models.Datas
         // tls.fingerprint
         public string tlsFingerPrint = string.Empty;
 
+        public string tlsCertHash = string.Empty;
+
         // tls.alpn
         public string tlsAlpn = string.Empty;
 
@@ -239,13 +241,14 @@ namespace VgcApis.Models.Datas
             if (tlsType == "tls")
             {
                 ps["ech"] = tlsParam1;
+                ps["pcs"] = tlsParam2;
             }
             else
             {
                 ps["pbk"] = tlsParam1;
+                ps["sid"] = tlsParam2;
             }
 
-            ps["sid"] = tlsParam2;
             ps["spx"] = tlsParam3;
             ps["pqv"] = tlsParam4;
 

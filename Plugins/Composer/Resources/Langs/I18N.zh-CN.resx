@@ -121,7 +121,7 @@
     <value>删除包裹：</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>（开发中）节点缝合怪。</value>
+    <value>节点缝合怪。</value>
   </data>
   <data name="ErrCanNotOpenMulFormServSelector" xml:space="preserve">
     <value>错误：只能开一个节点选择器窗口！</value>

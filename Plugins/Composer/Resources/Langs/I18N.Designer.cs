@@ -70,7 +70,7 @@ namespace Composer.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 (W.I.P) Compose servers outbound config. 的本地化字符串。
+        ///   查找类似 Compose servers outbound config. 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {

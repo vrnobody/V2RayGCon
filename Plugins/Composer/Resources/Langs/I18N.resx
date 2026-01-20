@@ -121,7 +121,7 @@
     <value>Delete package:</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>(W.I.P) Compose servers outbound config.</value>
+    <value>Compose servers outbound config.</value>
   </data>
   <data name="ErrCanNotOpenMulFormServSelector" xml:space="preserve">
     <value>Can not open multiple server selector windows.</value>

@@ -111,6 +111,12 @@ namespace Commander.Services
                 var result = VgcApis.Misc.Utils.DeserializeObject<Models.Data.UserSettings>(
                     userSettingString
                 );
+
+                // obsolete! delete after 20261001
+                if (result != null)
+                {
+                    VgcApis.Misc.Utils.ResetIndex(result.cmderParams);
+                }
                 return result ?? empty;
             }
             catch { }

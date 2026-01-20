@@ -43,7 +43,7 @@ namespace VgcApis.UserControls
         {
             if (keyData == Keys.Tab)
             {
-                return true;
+                return base.ProcessCmdKey(ref m, keyData);
             }
 
             const int WM_KEYDOWN = 0x100;

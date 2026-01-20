@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.3.6")]
+[assembly: AssemblyVersion("2.2.3.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -42,6 +42,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v2.2.3.7 AcmComboBox supports tab key.
 v2.2.3.6 Commander plug-in supports drag&drop.
 v2.2.3.5 Support auto-complete in FormServerSelector of Composer plug-in.
 v2.2.3.4 Add Proxy-Chain feature to Composer plug-in.

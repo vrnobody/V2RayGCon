@@ -43,19 +43,8 @@ namespace Commander.Views
             rtboxLogs.ReadOnly = true;
 
             currentParam = settings.GetFirstCmderParam();
-            UpdateCmderNames();
+            UpdateFlyCmdNames();
             UpdateUiElements();
-
-            lsboxNames.SelectedValueChanged += (s, a) =>
-            {
-                var name = lsboxNames.Text;
-                if (string.IsNullOrEmpty(name))
-                {
-                    return;
-                }
-                currentParam = settings.GetCmderParamByName(name) ?? new Models.Data.CmderParam();
-                UpdateUiElements();
-            };
             logUpdater.Restart();
         }
 
@@ -85,7 +74,42 @@ namespace Commander.Views
         }
         #endregion
 
+        #region public methods
+        public void DeleteCmd(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ConfigNameIsEmpty);
+                return;
+            }
+            var ok = settings.RemoveCmderParamByName(name);
+            if (ok)
+            {
+                SetTitle("");
+                UpdateFlyCmdNames();
+            }
+            else
+            {
+                var msg = string.Format(I18N.FindNoConfigWihtName, name);
+                VgcApis.Misc.UI.MsgBox(msg);
+            }
+        }
+
+        public void EditCmd(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ConfigNameIsEmpty);
+                return;
+            }
+            currentParam = settings.GetCmderParamByName(name) ?? new Models.Data.CmderParam();
+            UpdateUiElements();
+        }
+        #endregion
+
         #region private methods
+
+
         void TryFormatStdIn()
         {
             try
@@ -144,7 +168,7 @@ namespace Commander.Views
         {
             settings.SaveCmderParam(currentParam);
             SetTitle(name);
-            UpdateCmderNames();
+            UpdateFlyCmdNames();
         }
 
         private void SaveAsNewConfig()
@@ -200,12 +224,14 @@ namespace Commander.Views
             UpdateStdInContentBoxLater();
         }
 
-        void UpdateCmderNames()
+        void UpdateFlyCmdNames()
         {
-            var names = settings.GetCmderParamNames();
-            var c = lsboxNames.Items;
-            c.Clear();
-            c.AddRange(names.ToArray());
+            var names = settings.GetCmderParams();
+            VgcApis.Misc.UI.RefreshFlyPanel(
+                this.flyCmdParams,
+                names,
+                (el) => new Views.CmdParamsUC(this, el)
+            );
         }
 
         void UpdateStdInContentBoxLater()
@@ -335,33 +361,6 @@ namespace Commander.Views
             SaveAsNewConfig();
         }
 
-        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            var name = currentParam.name;
-            if (string.IsNullOrEmpty(name))
-            {
-                VgcApis.Misc.UI.MsgBox(I18N.ConfigNameIsEmpty);
-                return;
-            }
-
-            var msg = string.Format(I18N.ConfirmDeleteConfig, name);
-            if (!VgcApis.Misc.UI.Confirm(msg))
-            {
-                return;
-            }
-            var ok = settings.RemoveCmderParamByName(name);
-            if (ok)
-            {
-                SetTitle("");
-                UpdateCmderNames();
-            }
-            else
-            {
-                msg = string.Format(I18N.FindNoConfigWihtName, name);
-                VgcApis.Misc.UI.MsgBox(msg);
-            }
-        }
-
         private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -438,6 +437,26 @@ namespace Commander.Views
                 }
             );
             VgcApis.Misc.UI.GetUserMultiLineInput(I18N.ModifyEnvVars, currentParam.envVars, onOk);
+        }
+
+        private void flyCfgNames_DragEnter(object sender, DragEventArgs e)
+        {
+            if (Misc.UI.HasDropableCmdNameControl(e))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void flyCfgNames_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetData(typeof(Views.CmdParamsUC)) is Views.CmdParamsUC pkg)
+            {
+                if (!VgcApis.Misc.UI.SwapUserControls(flyCmdParams, pkg, e))
+                {
+                    return;
+                }
+                settings.SaveSettings();
+            }
         }
         #endregion
     }

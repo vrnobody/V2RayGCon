@@ -97,7 +97,7 @@ namespace Composer.Views.WinForms
         public void DeleteNodeFilterItem(string nodeFilterId)
         {
             curPkgItem.selectors = curPkgItem.selectors.Where(el => el.id != nodeFilterId).ToList();
-            Utils.ResetIndex(curPkgItem.selectors);
+            VgcApis.Misc.Utils.ResetIndex(curPkgItem.selectors);
             RefreshNodeFilterPanel(curPkgItem.selectors);
         }
 
@@ -122,7 +122,7 @@ namespace Composer.Views.WinForms
         public void DeletePackageItem(string pkgName)
         {
             this.packageItems = this.packageItems.Where(pkg => pkg.name != pkgName).ToList();
-            Utils.ResetIndex(this.packageItems);
+            VgcApis.Misc.Utils.ResetIndex(this.packageItems);
             SavePackageNameItems();
             RefreshPackageNamePanel();
         }
@@ -168,7 +168,7 @@ namespace Composer.Views.WinForms
 
         void RefreshNodeFilterPanel(List<Models.ServerSelectorItem> nodeFilterItems)
         {
-            UI.RefreshPanel(
+            VgcApis.Misc.UI.RefreshFlyPanel(
                 flySelectors,
                 nodeFilterItems,
                 (el) => new UserControls.ServerSelectorUC(this, el)
@@ -177,7 +177,7 @@ namespace Composer.Views.WinForms
 
         void RefreshPackageNamePanel()
         {
-            UI.RefreshPanel(
+            VgcApis.Misc.UI.RefreshFlyPanel(
                 flyPkgNames,
                 this.packageItems,
                 (el) => new UserControls.PkgNameUC(this, el)
@@ -284,11 +284,11 @@ namespace Composer.Views.WinForms
         {
             if (e.Data.GetData(typeof(UserControls.PkgNameUC)) is UserControls.PkgNameUC pkg)
             {
-                if (!UI.SwapUserControls(flyPkgNames, pkg, e))
+                if (!VgcApis.Misc.UI.SwapUserControls(flyPkgNames, pkg, e))
                 {
                     return;
                 }
-                Utils.ResetIndex(this.packageItems);
+                VgcApis.Misc.Utils.ResetIndex(this.packageItems);
                 SavePackageNameItems();
                 RefreshPackageNamePanel();
             }
@@ -303,7 +303,7 @@ namespace Composer.Views.WinForms
                 )
             )
             {
-                if (!UI.SwapUserControls(flySelectors, nodeFilter, e))
+                if (!VgcApis.Misc.UI.SwapUserControls(flySelectors, nodeFilter, e))
                 {
                     return;
                 }
@@ -345,7 +345,7 @@ namespace Composer.Views.WinForms
                 return;
             }
 
-            Utils.ResetIndex(this.curPkgItem.selectors);
+            VgcApis.Misc.Utils.ResetIndex(this.curPkgItem.selectors);
             RefreshNodeFilterPanel(this.curPkgItem.selectors);
         }
 

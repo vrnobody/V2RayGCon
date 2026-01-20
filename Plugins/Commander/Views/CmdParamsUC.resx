@@ -117,58 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfigIsNull" xml:space="preserve">
-    <value>Config is null!</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vQAADr0BR/uQrQAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
+        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
+        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
+        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="ConfigNameIsEmpty" xml:space="preserve">
-    <value>Config name is empty!</value>
-  </data>
-  <data name="ConfirmClearLogs" xml:space="preserve">
-    <value>Clear logs?</value>
-  </data>
-  <data name="ConfirmDeleteConfig" xml:space="preserve">
-    <value>Delete config [{0}]?</value>
-  </data>
-  <data name="ConfirmDelPkg" xml:space="preserve">
-    <value>Delete: </value>
-  </data>
-  <data name="CopyFail" xml:space="preserve">
-    <value>Copy failed.</value>
-  </data>
-  <data name="CopySuccess" xml:space="preserve">
-    <value>Copy success.</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Command-line tools launcher.</value>
-  </data>
-  <data name="DisableOutputRedirectInWindowMode" xml:space="preserve">
-    <value>Disable STDIN and STDOUT redirect in window-mode or shell-support is enabled.</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="Exited" xml:space="preserve">
-    <value>Exited</value>
-  </data>
-  <data name="FindNoConfigWihtName" xml:space="preserve">
-    <value>Find no config with name [{0}]!</value>
-  </data>
-  <data name="Kill" xml:space="preserve">
-    <value>Kill</value>
-  </data>
-  <data name="ModifyArgs" xml:space="preserve">
-    <value>Modify arguments:</value>
-  </data>
-  <data name="ModifyEnvVars" xml:space="preserve">
-    <value>Modify enviroment variables:</value>
-  </data>
-  <data name="NewConfigName" xml:space="preserve">
-    <value>New config name:</value>
-  </data>
-  <data name="SendStopSignal" xml:space="preserve">
-    <value>Send stop signal to</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Start</value>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>194, 17</value>
+  </metadata>
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vQAADr0BR/uQrQAAAKhJREFUOE/NkDEOAiEQRfdEHoKeytZTeBIPsFfwCnY2Nh7DxmTX7EA7+kiGiNEN
+        UEnyMhDmPyYMqpqIMU7AvmlZeHc4KTRLXoEUHLajCZrIAgtTN/ujni9X9d6rc+4nWUCzhZkEaiRZwIFm
+        QiaokRSCeXqoLFJMYZIQQrp/56sAPiX2NyJSJwAkvGxhapByilUBILnd5zxNswCQcA9dgjX+UNBDFvQT
+        9QkHKOQWh3DrDAAAAABJRU5ErkJggg==
+</value>
   </data>
 </root>

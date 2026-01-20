@@ -18,17 +18,22 @@ namespace Commander.Services
         }
 
         #region public methods
+        public List<string> GetCmderParamNames()
+        {
+            var pps = userSettings.cmderParams;
+            var names = pps.Select(p => p.name).OrderBy(name => name).ToList();
+            return names;
+        }
+
         public Models.Data.CmderParam GetFirstCmderParam()
         {
             var first = userSettings.cmderParams.OrderBy(p => p.name).FirstOrDefault();
             return VgcApis.Misc.Utils.Clone(first) ?? new Models.Data.CmderParam();
         }
 
-        public List<string> GetCmderParamNames()
+        public List<Models.Data.CmderParam> GetCmderParams()
         {
-            var pps = userSettings.cmderParams;
-            var names = pps.Select(p => p.name).OrderBy(name => name).ToList();
-            return names;
+            return userSettings.cmderParams;
         }
 
         public Models.Data.CmderParam GetCmderParamByName(string name)
@@ -57,12 +62,25 @@ namespace Commander.Services
                 return;
             }
 
-            var list = userSettings.cmderParams.Where(p => p.name != cmderParam.name).ToList();
-            var clone = VgcApis.Misc.Utils.Clone(cmderParam);
-            list.Add(clone);
-            userSettings.cmderParams = list;
+            var cmds = userSettings.cmderParams;
+
+            var p = cmds.FirstOrDefault(el => el.name == cmderParam.name);
+            if (p == null)
+            {
+                cmderParam.SetIndex(cmds.Count + 1);
+                cmds.Add(cmderParam);
+            }
+            else
+            {
+                var idx = p.index;
+                p.Copy(cmderParam);
+                p.index = idx;
+            }
+            userSettings.cmderParams = cmds;
             SaveUserSettings();
         }
+
+        public void SaveSettings() => SaveUserSettings();
 
         public void Cleanup() { }
         #endregion
@@ -72,6 +90,7 @@ namespace Commander.Services
         {
             try
             {
+                VgcApis.Misc.Utils.ResetIndex(this.userSettings.cmderParams);
                 var content = VgcApis.Misc.Utils.SerializeObject(userSettings);
                 vgcSetting.SavePluginsSetting(pluginName, content);
             }

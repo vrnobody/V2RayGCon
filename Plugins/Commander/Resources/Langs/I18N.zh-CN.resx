@@ -129,6 +129,9 @@
   <data name="ConfirmDeleteConfig" xml:space="preserve">
     <value>删除配置 [{0}] 吗？</value>
   </data>
+  <data name="ConfirmDelPkg" xml:space="preserve">
+    <value>删除：</value>
+  </data>
   <data name="CopyFail" xml:space="preserve">
     <value>复制失败！</value>
   </data>

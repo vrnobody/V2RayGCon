@@ -97,6 +97,15 @@ namespace Commander.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Delete:  的本地化字符串。
+        /// </summary>
+        internal static string ConfirmDelPkg {
+            get {
+                return ResourceManager.GetString("ConfirmDelPkg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Copy failed. 的本地化字符串。
         /// </summary>
         internal static string CopyFail {

@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Composer.cs" />
     <Compile Include="Misc\UI.cs" />
-    <Compile Include="Misc\Utils.cs" />
     <Compile Include="Models\PackageItem.cs" />
     <Compile Include="Models\ServerInfoItem.cs" />
     <Compile Include="Models\ServerSelectorItem.cs" />

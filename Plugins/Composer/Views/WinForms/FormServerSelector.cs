@@ -65,7 +65,7 @@ namespace Composer.Views.WinForms
             this.nodeFilterItem.servInfos = settings.RemoveNonExistServers(
                 this.nodeFilterItem.servInfos
             );
-            UI.RefreshPanel(
+            VgcApis.Misc.UI.RefreshFlyPanel(
                 flyCustomServers,
                 this.nodeFilterItem.servInfos,
                 (el) => new UserControls.ServerInfoUC(this, el)
@@ -144,11 +144,11 @@ namespace Composer.Views.WinForms
                 is UserControls.ServerInfoUC servInfoUC
             )
             {
-                if (!Misc.UI.SwapUserControls(this.flyCustomServers, servInfoUC, e))
+                if (!VgcApis.Misc.UI.SwapUserControls(this.flyCustomServers, servInfoUC, e))
                 {
                     return;
                 }
-                Utils.ResetIndex(this.nodeFilterItem.servInfos);
+                VgcApis.Misc.Utils.ResetIndex(this.nodeFilterItem.servInfos);
             }
             else if (
                 VgcApis.Misc.UI.TryGetIDropableControlFromDragDropEvent(

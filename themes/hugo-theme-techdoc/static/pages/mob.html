@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,6 +15,7 @@
         padding: 0;
         background-color: #eee;
       }
+
       textarea {
         word-break: break-all;
         padding: 0.3rem;
@@ -24,6 +25,7 @@
         width: 100%;
         border: 0.1rem solid gray;
       }
+
       button {
         padding: 0.25rem 0.5rem;
         margin-right: 0.5rem;
@@ -31,10 +33,12 @@
         background-color: ghostwhite;
         border: 0.1rem gray solid;
       }
+
       span {
         font-family: initial;
         line-height: 1.5rem;
       }
+
       .main {
         border: none;
         background-color: white;
@@ -49,11 +53,13 @@
         max-width: 66rem;
         margin: 0.25rem auto;
       }
+
       .wrapper {
         display: flex;
         width: 98%;
         height: 98%;
       }
+
       .left-panel {
         min-width: 21rem;
         width: 40%;
@@ -61,6 +67,7 @@
         display: flex;
         flex-direction: column;
       }
+
       .right-panel {
         flex-grow: 1;
         min-width: 0;
@@ -68,26 +75,33 @@
         display: flex;
         flex-direction: column;
       }
+
       .row {
         display: flex;
         padding: 0.25rem;
       }
+
       .title {
         text-shadow: 0.1rem 0.1rem lightgray;
       }
+
       .grow {
         flex-grow: 1;
       }
+
       .mr {
         margin-right: 0.25rem;
       }
+
       #link {
         background-color: whitesmoke;
         height: 17vh;
       }
+
       #config-json {
         width: 100%;
       }
+
       #msg-board {
         flex-grow: 1;
         text-align: end;
@@ -99,6 +113,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="main">
       <div class="wrapper">
@@ -191,7 +206,7 @@
               const $this = $(this);
               const value = $this.val();
               $this.val(
-                value.substring(0, start) + indent + value.substring(end)
+                value.substring(0, start) + indent + value.substring(end),
               );
               this.selectionStart = this.selectionEnd = start + indent.length;
               e.preventDefault();
@@ -407,8 +422,14 @@
               grpc: ["multiMode", "serviceName", "authority"],
             },
             enc: {
-              tls: ["serverName", "fingerprint", "alpn", "echConfigList"],
-              xtls: ["serverName", "fingerprint", "alpn", "echConfigList"],
+              tls: [
+                "serverName",
+                "fingerprint",
+                "alpn",
+                "echConfigList",
+                "pinnedPeerCertSha256",
+              ],
+              xtls: ["serverName", "fingerprint", "alpn"],
               reality: [
                 "serverName",
                 "fingerprint",
@@ -458,7 +479,8 @@
                         "http/1.1",
                         "h2"
                       ],
-                      "echConfigList": ""
+                      "echConfigList": "b839c4a39",
+                      "pinnedPeerCertSha256": "4b2cab677b"
                     }
                   }
                 }

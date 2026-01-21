@@ -1,9 +1,9 @@
 V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2ray-core v4.x](https://www.v2fly.org) 的图形（graphic）配置器（configer）。  
 
-[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![Codacy][9]][10] [![Lines of code][11]][12]  
+[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![Codacy][9]][10]
 
-[安装方法 install-guide][13]  
-[唯一联系方式 issue][14]  
+[安装方法 install-guide][11]  
+[唯一联系方式 issue][12]  
 
 [1]: https://github.com/vrnobody/V2RayGCon/actions/workflows/release.yml/badge.svg "Build Status Badge"
 [2]: https://github.com/vrnobody/V2RayGCon/actions "Actions detail"
@@ -15,10 +15,8 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
 [9]: https://app.codacy.com/project/badge/Grade/6fc7a6b73284471fa8e176e2d548315a "Codacy Badge"
 [10]: https://app.codacy.com/gh/vrnobody/V2RayGCon/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade "Codacy Grade"
-[11]: https://tokei.rs/b1/github/vrnobody/V2RayGCon?category=code "Lines of Code Badge"
-[12]: https://github.com/XAMPPRocky/tokei "Tokei project"
-[13]: https://vrnobody.github.io/V2RayGCon/ "Manual"
-[14]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
+[11]: https://vrnobody.github.io/V2RayGCon/ "Manual"
+[12]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
 
 #### 感谢（按字母排序）
 
@@ -66,4 +64,4 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 [sweetalert2/sweetalert2](https://github.com/sweetalert2/sweetalert2) 网页内弹窗  
 [yangss3/vue3-i18n](https://github.com/yangss3/vue3-i18n) 多语言支持  
   
-当然还有 vue, pinia, eslint, tailwind, prettier, fontawesome 等等。  
+还有 vue, pinia, eslint, tailwind, prettier, fontawesome 等等。  

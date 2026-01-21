@@ -40,46 +40,34 @@
             // lbNodeFilterTag
             // 
             this.lbNodeFilterTag.AutoEllipsis = true;
-            this.lbNodeFilterTag.Location = new System.Drawing.Point(6, 2);
+            resources.ApplyResources(this.lbNodeFilterTag, "lbNodeFilterTag");
             this.lbNodeFilterTag.Name = "lbNodeFilterTag";
-            this.lbNodeFilterTag.Size = new System.Drawing.Size(119, 20);
-            this.lbNodeFilterTag.TabIndex = 0;
-            this.lbNodeFilterTag.Text = "MyAwsomeTagName";
-            this.lbNodeFilterTag.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbNodeFilterTag.UseCompatibleTextRendering = true;
             this.lbNodeFilterTag.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbNodeFilterName_MouseDown);
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(146, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(20, 20);
-            this.btnDelete.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnEdit.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
-            this.btnEdit.Location = new System.Drawing.Point(126, 2);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(20, 20);
-            this.btnEdit.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.btnEdit, resources.GetString("btnEdit.ToolTip"));
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // ServerSelectorUC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -88,7 +76,6 @@
             this.Controls.Add(this.lbNodeFilterTag);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ServerSelectorUC";
-            this.Size = new System.Drawing.Size(170, 26);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NodeFilter_MouseDown);
             this.ResumeLayout(false);
 

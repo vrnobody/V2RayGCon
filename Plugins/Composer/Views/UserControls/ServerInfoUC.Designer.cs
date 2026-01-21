@@ -39,31 +39,23 @@
             // lbTitle
             // 
             this.lbTitle.AutoEllipsis = true;
-            this.lbTitle.Location = new System.Drawing.Point(6, 2);
+            resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(284, 20);
-            this.lbTitle.TabIndex = 0;
-            this.lbTitle.Text = "123.very very loooo0000000000000000000000ooooooong server title";
-            this.lbTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbTitle.UseCompatibleTextRendering = true;
             this.lbTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTitle_MouseDown);
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDelete.BackgroundImage")));
-            this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnDelete.Location = new System.Drawing.Point(296, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(20, 20);
-            this.btnDelete.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // ServerInfoUC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -71,7 +63,6 @@
             this.Controls.Add(this.lbTitle);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ServerInfoUC";
-            this.Size = new System.Drawing.Size(320, 26);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ServerTitle_MouseDown);
             this.ResumeLayout(false);
 

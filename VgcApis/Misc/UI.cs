@@ -95,7 +95,15 @@ namespace VgcApis.Misc
         #endregion
 
         #region Controls
-
+        public static void SetTrasparentBackground(params Button[] buttons)
+        {
+            foreach (var button in buttons)
+            {
+                button.FlatStyle = FlatStyle.Flat;
+                button.BackColor = Color.Transparent;
+                button.FlatAppearance.BorderSize = 0;
+            }
+        }
 
         public static void SetSearchIndicator(Scintilla scintilla)
         {

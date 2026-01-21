@@ -16,6 +16,8 @@ namespace Composer.Views.UserControls
         {
             // size: 320, 26
             InitializeComponent();
+            VgcApis.Misc.UI.SetTrasparentBackground(btnDelete);
+
             this.formEditor = formEditor;
             this.servInfo = servItem;
             RefreshTitle();

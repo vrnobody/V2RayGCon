@@ -115,6 +115,12 @@
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Langs\I18N.zh-CN.resx" />
+    <EmbeddedResource Include="Views\UserControls\PkgNameUC.zh-CN.resx">
+      <DependentUpon>PkgNameUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ServerInfoUC.zh-CN.resx">
+      <DependentUpon>ServerInfoUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\ServerSelectorUC.resx">
       <DependentUpon>ServerSelectorUC.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\PkgNameUC.resx">
       <DependentUpon>PkgNameUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ServerSelectorUC.zh-CN.resx">
+      <DependentUpon>ServerSelectorUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

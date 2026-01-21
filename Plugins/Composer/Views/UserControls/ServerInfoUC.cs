@@ -14,7 +14,8 @@ namespace Composer.Views.UserControls
             Models.ServerInfoItem servItem
         )
         {
-            // size: 320, 26
+            // container: 320, 26
+            // btnDelete: 298, 2
             InitializeComponent();
             VgcApis.Misc.UI.SetTrasparentBackground(btnDelete);
 

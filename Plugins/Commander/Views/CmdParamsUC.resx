@@ -163,7 +163,7 @@
 </value>
   </data>
   <data name="btnDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 2</value>
+    <value>148, 1</value>
   </data>
   <data name="btnDelete.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
@@ -208,7 +208,7 @@
 </value>
   </data>
   <data name="btnEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>126, 2</value>
+    <value>128, 1</value>
   </data>
   <data name="btnEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>

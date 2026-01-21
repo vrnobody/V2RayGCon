@@ -36,7 +36,14 @@ namespace Composer.Views.UserControls
 
             this.lbNodeFilterTag.Text = $"{item.GetIndex()}.({mkF1}{mkC}) {item.tag}";
 
-            var mkF2 = hasFilter ? $"\n{I18N.HasFilter}" : "";
+            var mkF2 = "";
+            if (hasFilter)
+            {
+                // #latency ~ 1 10000
+                var s = VgcApis.Misc.Utils.AutoEllipsis(item.filter, 20);
+                mkF2 = $"\n{I18N.Filter}: {s}";
+            }
+
             var tip = $"tag: {item.tag}\n{I18N.Nodes}: {mkC}{mkF2}";
             this.toolTip1.SetToolTip(this.lbNodeFilterTag, tip);
         }

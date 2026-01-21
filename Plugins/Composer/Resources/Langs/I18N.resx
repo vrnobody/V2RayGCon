@@ -135,8 +135,8 @@
   <data name="ErrTagIsEmpty" xml:space="preserve">
     <value>Error: tag is empty!</value>
   </data>
-  <data name="HasFilter" xml:space="preserve">
-    <value>Has filter.</value>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
   </data>
   <data name="Nodes" xml:space="preserve">
     <value>Custom servers</value>

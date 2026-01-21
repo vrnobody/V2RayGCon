@@ -115,11 +115,11 @@ namespace Composer.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Has filter. 的本地化字符串。
+        ///   查找类似 Filter 的本地化字符串。
         /// </summary>
-        internal static string HasFilter {
+        internal static string Filter {
             get {
-                return ResourceManager.GetString("HasFilter", resourceCulture);
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         

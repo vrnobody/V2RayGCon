@@ -135,8 +135,8 @@
   <data name="ErrTagIsEmpty" xml:space="preserve">
     <value>错误：Tag 为空！</value>
   </data>
-  <data name="HasFilter" xml:space="preserve">
-    <value>添加了过滤器</value>
+  <data name="Filter" xml:space="preserve">
+    <value>过滤器</value>
   </data>
   <data name="Nodes" xml:space="preserve">
     <value>节点</value>

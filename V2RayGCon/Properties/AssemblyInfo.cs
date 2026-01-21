@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.3.12")]
+[assembly: AssemblyVersion("2.2.3.13")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -42,6 +42,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v2.2.3.13 Improve tooltip of server selector user control in Composer plug-in.
 v2.2.3.12 Add select-share-link-types window.
 v2.2.3.11 Set buttons background of plug-in user controls to transparent.
 v2.2.3.10 Add calculate TLS cert. hash feature in FormToolbox.

@@ -12,13 +12,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             cboxDefCoreName = null,
             cboxDefSpeedtestUrl = null,
             cboxDefSpeedtestExpectedSize = null;
-        private readonly CheckBox chkImportVmessShareLink;
-        private readonly CheckBox chkImportVlessShareLink;
-        readonly CheckBox chkSetSpeedtestIsUse = null,
-            chkImportSsShareLink = null,
-            chkImportTrojanShareLink = null;
-        private readonly CheckBox chkImportSocksShareLink;
-        private readonly CheckBox chkImportMobShareLink;
+
+        readonly CheckBox chkSetSpeedtestIsUse = null;
+
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null;
@@ -28,12 +24,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefInboundName,
             TextBox tboxDefImportAddr,
             ComboBox cboxDefCoreName,
-            CheckBox chkImportVmessShareLink,
-            CheckBox chkImportVlessShareLink,
-            CheckBox chkImportSsShareLink,
-            CheckBox chkImportTrojanShareLink,
-            CheckBox chkImportSocksShareLink,
-            CheckBox chkImportMobShareLink,
             // speedtest
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
@@ -48,13 +38,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             this.cboxDefInboundName = cboxDefInboundName;
             this.tboxDefImportAddr = tboxDefImportAddr;
-            this.chkImportSsShareLink = chkImportSsShareLink;
-            this.chkImportTrojanShareLink = chkImportTrojanShareLink;
-            this.chkImportSocksShareLink = chkImportSocksShareLink;
-            this.chkImportMobShareLink = chkImportMobShareLink;
             this.cboxDefCoreName = cboxDefCoreName;
-            this.chkImportVmessShareLink = chkImportVmessShareLink;
-            this.chkImportVlessShareLink = chkImportVlessShareLink;
+
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
             this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
@@ -73,10 +58,6 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
-            settings.CustomDefImportMobShareLink = chkImportMobShareLink.Checked;
-            settings.CustomDefImportVlessShareLink = chkImportVlessShareLink.Checked;
-            settings.CustomDefImportVmessShareLink = chkImportVmessShareLink.Checked;
-
             // mode
             if (
                 VgcApis.Misc.Utils.TryParseAddress(
@@ -92,10 +73,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             settings.DefaultCoreName = GetCboxCoreNameText();
             settings.DefaultInboundName = cboxDefInboundName.Text;
-
-            settings.CustomDefImportSocksShareLink = chkImportSocksShareLink.Checked;
-            settings.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
-            settings.CustomDefImportTrojanShareLink = chkImportTrojanShareLink.Checked;
 
             // speedtest
             settings.isUseCustomSpeedtestSettings = chkSetSpeedtestIsUse.Checked;
@@ -124,16 +101,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             );
             if (
                 !success
-                || settings.CustomDefImportMobShareLink != chkImportMobShareLink.Checked
-                || settings.CustomDefImportVlessShareLink != chkImportVlessShareLink.Checked
-                || settings.CustomDefImportVmessShareLink != chkImportVmessShareLink.Checked
                 || settings.CustomDefImportHost != host
                 || settings.CustomDefImportPort != port
                 || settings.DefaultCoreName != GetCboxCoreNameText()
                 || settings.DefaultInboundName != cboxDefInboundName.Text
-                || settings.CustomDefImportSsShareLink != chkImportSsShareLink.Checked
-                || settings.CustomDefImportTrojanShareLink != chkImportTrojanShareLink.Checked
-                || settings.CustomDefImportSocksShareLink != chkImportSocksShareLink.Checked
                 || settings.isUseCustomSpeedtestSettings != chkSetSpeedtestIsUse.Checked
                 || settings.CustomSpeedtestUrl != cboxDefSpeedtestUrl.Text
                 || settings.CustomSpeedtestExpectedSizeInKib
@@ -187,13 +158,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitControls()
         {
-            chkImportMobShareLink.Checked = settings.CustomDefImportMobShareLink;
-            chkImportVmessShareLink.Checked = settings.CustomDefImportVmessShareLink;
-            chkImportVlessShareLink.Checked = settings.CustomDefImportVlessShareLink;
-            chkImportSsShareLink.Checked = settings.CustomDefImportSsShareLink;
-            chkImportTrojanShareLink.Checked = settings.CustomDefImportTrojanShareLink;
-            chkImportSocksShareLink.Checked = settings.CustomDefImportSocksShareLink;
-
             tboxDefImportAddr.TextChanged += OnTboxImportAddrTextChanged;
             tboxDefImportAddr.Text = string.Format(
                 @"{0}:{1}",

@@ -349,6 +349,12 @@
     <Compile Include="Views\WinForms\FormBatchModifyServerSetting.Designer.cs">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormShareLinkTypesSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormShareLinkTypesSelector.Designer.cs">
+      <DependentUpon>FormShareLinkTypesSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormToolbox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -511,6 +517,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormImportLinksResult.zh-CN.resx">
       <DependentUpon>FormImportLinksResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormShareLinkTypesSelector.resx">
+      <DependentUpon>FormShareLinkTypesSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormShareLinkTypesSelector.zh-CN.resx">
+      <DependentUpon>FormShareLinkTypesSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormToolbox.resx">
       <DependentUpon>FormToolbox.cs</DependentUpon>

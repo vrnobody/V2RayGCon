@@ -33,6 +33,7 @@ namespace V2RayGCon.Views.WinForms
 
             this.FormClosing += (s, a) =>
             {
+                linkTypesSelector?.Close();
                 if (!this.optionCtrl.IsOptionsSaved())
                 {
                     a.Cancel = !VgcApis.Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
@@ -117,13 +118,6 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefImportInbName,
                     tboxDefImportAddr,
                     cboxDefImportCoreName,
-                    // decoders
-                    chkDefImportVmessShareLink,
-                    chkDefImportVlessShareLink,
-                    chkDefImportSsShareLink,
-                    chkDefImportTrojanShareLink,
-                    chkDefImportSocksShareLink,
-                    chkDefImportMobShareLink,
                     // speedtest
                     chkDefSpeedtestIsUse,
                     cboxDefSpeedTestUrl,
@@ -161,6 +155,23 @@ namespace V2RayGCon.Views.WinForms
 
             btnOptionSave.Enabled = true;
             btnOptionExit.Enabled = true;
+        }
+
+        Form linkTypesSelector = null;
+        object formLinkTypesSelectorLocker = new object();
+
+        private void btnDefImportLinkTypes_Click(object sender, System.EventArgs e)
+        {
+            lock (formLinkTypesSelectorLocker)
+            {
+                if (linkTypesSelector == null)
+                {
+                    linkTypesSelector = new Views.WinForms.FormShareLinkTypesSelector();
+                    linkTypesSelector.FormClosing += (s, a) => linkTypesSelector = null;
+                    linkTypesSelector.Show();
+                }
+                linkTypesSelector.Activate();
+            }
         }
         #endregion
     }

@@ -22,6 +22,46 @@ namespace VgcApis.Misc
             return false;
         }
 
+        public static SharelinkMetaData ParseHy2ShareLink(string proto, string url)
+        {
+            var header = proto + "://";
+
+            if (!url.StartsWith(header))
+            {
+                return null;
+            }
+
+            // 抄袭自： https://github.com/musva/V2RayW/commit/e54f387e8d8181da833daea8464333e41f0f19e6 GPLv3
+            List<string> parts = url.Substring(header.Length)
+                .Replace("/?", "?")
+                .Split(new char[] { '@', '?', '&', '#', '=' })
+                .Select(s => Uri.UnescapeDataString(s))
+                .ToList();
+
+            if (parts.Count < 2)
+            {
+                return null;
+            }
+
+            var hy = "hysteria";
+
+            var vc = new SharelinkMetaData
+            {
+                name = url.Contains("#") ? parts.Last() : "",
+                proto = hy,
+            };
+
+            var addr = parts[1];
+            if (!VgcApis.Misc.Utils.TryParseAddress(addr, out vc.host, out vc.port))
+            {
+                return null;
+            }
+
+            vc.streamType = hy;
+            vc.streamParam1 = parts[0];
+            return vc;
+        }
+
         public static SharelinkMetaData ParseNonStandarUriShareLink(string proto, string url)
         {
             var header = proto + "://";
@@ -45,7 +85,7 @@ namespace VgcApis.Misc
 
             var vc = new SharelinkMetaData
             {
-                name = parts.Last(),
+                name = url.Contains("#") ? parts.Last() : "",
                 proto = proto,
                 auth1 = parts[0],
             };
@@ -275,6 +315,9 @@ namespace VgcApis.Misc
             var mainParam = "";
             switch (meta.streamType)
             {
+                case "hysteria":
+                    mainParam = GetStr(subPrefix, "hysteriaSettings.auth");
+                    break;
                 case "grpc":
                     mainParam = GetStr(subPrefix, "grpcSettings.multiMode").ToLower();
                     meta.streamParam2 = GetStr(subPrefix, "grpcSettings.serviceName");

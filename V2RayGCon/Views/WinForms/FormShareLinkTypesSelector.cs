@@ -25,6 +25,7 @@ namespace V2RayGCon.Views.WinForms
         #region private methods
         void InitControls()
         {
+            chkHy2.Checked = settings.CustomDefImportHy2ShareLink;
             chkVless.Checked = settings.CustomDefImportVlessShareLink;
             chkTrojan.Checked = settings.CustomDefImportTrojanShareLink;
             chkMob.Checked = settings.CustomDefImportMobShareLink;
@@ -38,6 +39,7 @@ namespace V2RayGCon.Views.WinForms
         #region UI events
         private void btnSave_Click(object sender, EventArgs e)
         {
+            settings.CustomDefImportHy2ShareLink = chkHy2.Checked;
             settings.CustomDefImportVlessShareLink = chkVless.Checked;
             settings.CustomDefImportTrojanShareLink = chkTrojan.Checked;
             settings.CustomDefImportMobShareLink = chkMob.Checked;

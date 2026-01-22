@@ -28,6 +28,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             switch (meta.proto)
             {
+                case "hysteria":
+                    s["version"] = 2;
+                    break;
                 case "ss":
                 case "shadowsocks":
                     s["password"] = meta.auth1;
@@ -57,6 +60,22 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
             }
 
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
+            return GenerateJsonConfing(tpl, outb);
+        }
+
+        public string Hy2ToConfig(VgcApis.Models.Datas.SharelinkMetaData vee)
+        {
+            if (vee == null)
+            {
+                return null;
+            }
+
+            var outb = Misc.Caches.Jsons.LoadTemplate("outbHy2");
+            var node = outb["settings"];
+            node["address"] = vee.host;
+            node["port"] = vee.port;
+            outb["streamSettings"]["hysteriaSettings"]["auth"] = vee.streamParam1;
             var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outb);
         }
@@ -213,26 +232,25 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public void Run(Settings settings)
         {
             this.settings = settings;
-            var ssDecoder = new SsDecoder();
-            var v2cfgDecoder = new V2cfgDecoder();
-            var vmessDecoder = new VmessDecoder();
-            var trojanDecoder = new TrojanDecoder();
-            var vlessDecoder = new VlessDecoder();
-            var socksDecoder = new SocksDecoder();
-            var mobDecoder = new MobDecoder();
 
-            AddChild(vlessDecoder);
-            AddChild(trojanDecoder);
-            AddChild(ssDecoder);
-            AddChild(socksDecoder);
-            AddChild(v2cfgDecoder);
-            AddChild(vmessDecoder);
-            AddChild(mobDecoder);
+            AddChild(new VlessDecoder());
+            AddChild(new TrojanDecoder());
+            AddChild(new SsDecoder());
+            AddChild(new SocksDecoder());
+            AddChild(new V2cfgDecoder());
+            AddChild(new VmessDecoder());
+            AddChild(new MobDecoder());
+            AddChild(new Hy2Decoder());
         }
 
         public List<VgcApis.Interfaces.IShareLinkDecoder> GetDecoders(bool isIncludeV2cfgDecoder)
         {
             var r = new List<VgcApis.Interfaces.IShareLinkDecoder>();
+
+            if (settings.CustomDefImportHy2ShareLink)
+            {
+                r.Add(GetChild<Hy2Decoder>());
+            }
 
             if (settings.CustomDefImportMobShareLink)
             {

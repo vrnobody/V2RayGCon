@@ -23,6 +23,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 "httpupgrade",
                 "splithttp",
                 "xhttp",
+                "hysteria",
             };
             string st = meta?.streamType?.ToLower();
 
@@ -102,6 +103,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             switch (streamType)
             {
+                case "hysteria":
+                    token["hysteriaSettings"]["auth"] = meta.streamParam1;
+                    break;
                 case "grpc":
                     var auth = meta.streamParam3;
                     if (!string.IsNullOrEmpty(auth))

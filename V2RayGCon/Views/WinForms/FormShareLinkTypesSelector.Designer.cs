@@ -40,6 +40,7 @@ namespace V2RayGCon.Views.WinForms
             this.chkSocks = new System.Windows.Forms.CheckBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkHy2 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.flyPanel.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +61,7 @@ namespace V2RayGCon.Views.WinForms
             this.flyPanel.Controls.Add(this.chkVmess);
             this.flyPanel.Controls.Add(this.chkShadowsocks);
             this.flyPanel.Controls.Add(this.chkSocks);
+            this.flyPanel.Controls.Add(this.chkHy2);
             this.flyPanel.Name = "flyPanel";
             // 
             // chkVless
@@ -112,6 +114,12 @@ namespace V2RayGCon.Views.WinForms
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // chkHy2
+            // 
+            resources.ApplyResources(this.chkHy2, "chkHy2");
+            this.chkHy2.Name = "chkHy2";
+            this.chkHy2.UseVisualStyleBackColor = true;
+            // 
             // FormShareLinkTypesSelector
             // 
             resources.ApplyResources(this, "$this");
@@ -120,7 +128,6 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormShareLinkTypesSelector";
-            
             this.groupBox1.ResumeLayout(false);
             this.flyPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -139,5 +146,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.CheckBox chkVmess;
         private System.Windows.Forms.CheckBox chkShadowsocks;
         private System.Windows.Forms.CheckBox chkSocks;
+        private System.Windows.Forms.CheckBox chkHy2;
     }
 }

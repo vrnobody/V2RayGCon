@@ -81,6 +81,23 @@
     "tag": "agentout",
     "streamSettings": {}
   },
+  "outbHy2": {
+    "protocol": "hysteria",
+    "settings": {
+      "address": "",
+      "port": 1234,
+      "version": 2
+    },
+    "tag": "agentout",
+    "streamSettings": {
+      "network": "hysteria",
+      "hysteriaSettings": {
+        "auth": "password",
+        "version": 2
+      },
+      "security": "none"
+    }
+  },
   "outbVless": {
     "protocol": "vmess",
     "settings": {
@@ -268,6 +285,13 @@
     "security": "tls",
     "httpupgradeSettings": {
       "path": "/"
+    }
+  },
+  "hysteria": {
+    "network": "hysteria",
+    "hysteriaSettings": {
+      "auth": "",
+      "version": 2
     }
   },
   "splithttp": {

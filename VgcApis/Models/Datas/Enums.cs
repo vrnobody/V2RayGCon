@@ -94,7 +94,9 @@ namespace VgcApis.Models.Datas
             vless = 7,
 
             socks = 8,
-            mob = 9,
+            hy2 = 9,
+
+            mob = 250,
             unknow = 256, // for enum parse
         }
 

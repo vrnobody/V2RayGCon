@@ -131,6 +131,7 @@ namespace V2RayGCon.Misc
                 case Enums.LinkTypes.trojan:
                 case Enums.LinkTypes.ss:
                 case Enums.LinkTypes.socks:
+                case Enums.LinkTypes.hy2:
                     return LinksTextExtractor(text, protocol, Patterns.NonStandardUriBodyChars);
                 case Enums.LinkTypes.vmess:
                 case Enums.LinkTypes.v2cfg:

@@ -117,59 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;chkSocks.Parent" xml:space="preserve">
-    <value>flyPanel</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="&gt;&gt;chkVmess.Name" xml:space="preserve">
-    <value>chkVmess</value>
-  </data>
-  <data name="chkTrojan.Text" xml:space="preserve">
-    <value>trojan://...</value>
-  </data>
-  <data name="&gt;&gt;chkVless.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;chkVmess.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;chkShadowsocks.Parent" xml:space="preserve">
-    <value>flyPanel</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkMob.Location" type="System.Drawing.Point, System.Drawing">
-    <value>235, 3</value>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkMob.TabIndex" type="System.Int32, mscorlib">
+  <data name="flyPanel.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkVless.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="chkVless.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="chkVless.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;chkShadowsocks.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="chkVmess.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="chkVless.Text" xml:space="preserve">
+    <value>vless://...</value>
   </data>
   <data name="&gt;&gt;chkVless.Name" xml:space="preserve">
     <value>chkVless</value>
   </data>
-  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;chkVless.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;flyPanel.Name" xml:space="preserve">
+  <data name="&gt;&gt;chkVless.Parent" xml:space="preserve">
     <value>flyPanel</value>
   </data>
-  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;chkVless.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="flyPanel.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="chkTrojan.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTrojan.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 3</value>
+  </data>
+  <data name="chkTrojan.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="chkTrojan.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chkTrojan.Text" xml:space="preserve">
+    <value>trojan://...</value>
   </data>
   <data name="&gt;&gt;chkTrojan.Name" xml:space="preserve">
     <value>chkTrojan</value>
@@ -177,8 +171,68 @@
   <data name="&gt;&gt;chkTrojan.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkSocks.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;chkTrojan.Parent" xml:space="preserve">
+    <value>flyPanel</value>
+  </data>
+  <data name="&gt;&gt;chkTrojan.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chkMob.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkMob.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 3</value>
+  </data>
+  <data name="chkMob.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="chkMob.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="chkMob.Text" xml:space="preserve">
+    <value>mob://...</value>
+  </data>
+  <data name="&gt;&gt;chkMob.Name" xml:space="preserve">
+    <value>chkMob</value>
+  </data>
+  <data name="&gt;&gt;chkMob.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkMob.Parent" xml:space="preserve">
+    <value>flyPanel</value>
+  </data>
+  <data name="&gt;&gt;chkMob.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkVmess.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkVmess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
+  </data>
+  <data name="chkVmess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="chkVmess.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chkVmess.Text" xml:space="preserve">
+    <value>vmess://...</value>
+  </data>
+  <data name="&gt;&gt;chkVmess.Name" xml:space="preserve">
+    <value>chkVmess</value>
+  </data>
+  <data name="&gt;&gt;chkVmess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkVmess.Parent" xml:space="preserve">
+    <value>flyPanel</value>
+  </data>
+  <data name="&gt;&gt;chkVmess.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkShadowsocks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkShadowsocks.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 27</value>
@@ -186,226 +240,199 @@
   <data name="chkShadowsocks.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 18</value>
   </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chkShadowsocks.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="flyPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 17</value>
-  </data>
-  <data name="chkSocks.Location" type="System.Drawing.Point, System.Drawing">
-    <value>235, 27</value>
-  </data>
-  <data name="chkVless.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="chkVmess.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkSocks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="chkVless.Text" xml:space="preserve">
-    <value>vless://...</value>
-  </data>
-  <data name="&gt;&gt;chkMob.Parent" xml:space="preserve">
-    <value>flyPanel</value>
-  </data>
-  <data name="btnOk.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="chkVless.TabIndex" type="System.Int32, mscorlib">
+  <data name="chkShadowsocks.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>220, 242</value>
-  </data>
-  <data name="chkSocks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 18</value>
-  </data>
-  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>139, 242</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Sharelink types selector</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;chkSocks.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkVless.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 18</value>
-  </data>
-  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;flyPanel.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;chkSocks.Name" xml:space="preserve">
-    <value>chkSocks</value>
-  </data>
-  <data name="&gt;&gt;chkVmess.Parent" xml:space="preserve">
-    <value>flyPanel</value>
-  </data>
-  <data name="flyPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 204</value>
-  </data>
-  <data name="chkTrojan.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="&gt;&gt;chkVmess.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkTrojan.Parent" xml:space="preserve">
-    <value>flyPanel</value>
-  </data>
-  <data name="&gt;&gt;flyPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>435, 277</value>
-  </data>
-  <data name="chkTrojan.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 3</value>
-  </data>
-  <data name="&gt;&gt;flyPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;chkTrojan.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;chkMob.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkShadowsocks.Text" xml:space="preserve">
     <value>ss://...</value>
   </data>
-  <data name="&gt;&gt;chkMob.Name" xml:space="preserve">
-    <value>chkMob</value>
+  <data name="&gt;&gt;chkShadowsocks.Name" xml:space="preserve">
+    <value>chkShadowsocks</value>
   </data>
-  <data name="flyPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;chkShadowsocks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkMob.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;chkShadowsocks.Parent" xml:space="preserve">
+    <value>flyPanel</value>
   </data>
-  <data name="chkTrojan.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="&gt;&gt;chkShadowsocks.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkSocks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkSocks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 27</value>
+  </data>
+  <data name="chkSocks.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 18</value>
   </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
-    <value>btnOk</value>
-  </data>
-  <data name="&gt;&gt;chkSocks.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormShareLinkTypesSelector</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 224</value>
-  </data>
-  <data name="chkMob.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 18</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
-  </data>
-  <data name="chkVmess.Text" xml:space="preserve">
-    <value>vmess://...</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+  <data name="chkSocks.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="chkSocks.Text" xml:space="preserve">
     <value>socks://...</value>
   </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkSocks.Name" xml:space="preserve">
+    <value>chkSocks</value>
+  </data>
+  <data name="&gt;&gt;chkSocks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkSocks.Parent" xml:space="preserve">
+    <value>flyPanel</value>
+  </data>
+  <data name="&gt;&gt;chkSocks.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chkHy2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkHy2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 51</value>
+  </data>
+  <data name="chkHy2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="chkHy2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chkHy2.Text" xml:space="preserve">
+    <value>hy2://...</value>
+  </data>
+  <data name="&gt;&gt;chkHy2.Name" xml:space="preserve">
+    <value>chkHy2</value>
+  </data>
+  <data name="&gt;&gt;chkHy2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkHy2.Parent" xml:space="preserve">
+    <value>flyPanel</value>
+  </data>
+  <data name="&gt;&gt;chkHy2.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="flyPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="flyPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 17</value>
+  </data>
+  <data name="flyPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>403, 204</value>
   </data>
   <data name="flyPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="chkMob.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;chkVless.Parent" xml:space="preserve">
+  <data name="&gt;&gt;flyPanel.Name" xml:space="preserve">
     <value>flyPanel</value>
   </data>
-  <data name="chkVmess.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 27</value>
+  <data name="&gt;&gt;flyPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;flyPanel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;flyPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;chkVless.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="chkTrojan.TabIndex" type="System.Int32, mscorlib">
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 224</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Select import sharelink types</value>
   </data>
-  <data name="chkVmess.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 18</value>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="chkShadowsocks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;chkShadowsocks.Name" xml:space="preserve">
-    <value>chkShadowsocks</value>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="chkMob.Text" xml:space="preserve">
-    <value>mob://...</value>
+  <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 242</value>
+  </data>
+  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
+    <value>btnOk</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
-  <data name="chkShadowsocks.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 242</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>435, 277</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Sharelink types selector</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormShareLinkTypesSelector</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

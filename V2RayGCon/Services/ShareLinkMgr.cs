@@ -67,6 +67,8 @@ namespace V2RayGCon.Services
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
             {
+                case Enums.LinkTypes.hy2:
+                    return codecs.Decode<Hy2Decoder>(shareLink);
                 case Enums.LinkTypes.ss:
                     return codecs.Decode<SsDecoder>(shareLink);
                 case Enums.LinkTypes.vmess:
@@ -117,10 +119,12 @@ namespace V2RayGCon.Services
                     return codecs.Encode<V2cfgDecoder>(name, config);
                 case Enums.LinkTypes.vless:
                     return codecs.Encode<VlessDecoder>(name, config);
-                case Enums.LinkTypes.mob:
-                    return codecs.Encode<MobDecoder>(name, config);
+                case Enums.LinkTypes.hy2:
+                    return codecs.Encode<Hy2Decoder>(name, config);
                 case Enums.LinkTypes.trojan:
                     return codecs.Encode<TrojanDecoder>(name, config);
+                case Enums.LinkTypes.mob:
+                    return codecs.Encode<MobDecoder>(name, config);
                 default:
                     return null;
             }
@@ -202,6 +206,7 @@ namespace V2RayGCon.Services
             Enums.LinkTypes.vmess,
             Enums.LinkTypes.vless,
             Enums.LinkTypes.trojan,
+            Enums.LinkTypes.hy2,
             Enums.LinkTypes.ss,
             Enums.LinkTypes.socks,
             Enums.LinkTypes.mob,

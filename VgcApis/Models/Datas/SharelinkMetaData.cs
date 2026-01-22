@@ -91,6 +91,8 @@ namespace VgcApis.Models.Datas
         {
             switch (proto)
             {
+                case "hysteria":
+                    return EncodeToHy2ShareLink();
                 case "vless":
                 case "trojan":
                     return EncodeToUriShareLink();
@@ -205,6 +207,18 @@ namespace VgcApis.Models.Datas
                 default:
                     break;
             }
+        }
+
+        string EncodeToHy2ShareLink()
+        {
+            var url = string.Format(
+                "hy2://{0}@{1}:{2}?#{3}",
+                Uri.EscapeDataString(streamParam1),
+                Misc.Utils.FormatHost(host),
+                port,
+                Uri.EscapeDataString(name)
+            );
+            return url;
         }
 
         string EncodeToUriShareLink()

@@ -197,6 +197,21 @@ namespace V2RayGCon.Models.Datas
                     options = new Dictionary<string, string> { { "none", "raw" } },
                 }
             },
+            // hysteria
+            {
+                10, // index (obsolete)
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "hysteria", // name (obsolete)
+                    network = "hysteria",
+                    paths = new List<string>
+                    {
+                        "hysteriaSettings.auth", // must be streamParam1
+                    },
+                    options = new Dictionary<string, string> { },
+                }
+            },
         };
     }
 }

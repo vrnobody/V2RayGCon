@@ -121,7 +121,15 @@ namespace V2RayGCon.Views.UserControls
 
         void InitControls()
         {
-            var protocols = new List<string> { "vless", "trojan", "vmess", "shadowsocks", "socks" };
+            var protocols = new List<string>
+            {
+                "vless",
+                "trojan",
+                "vmess",
+                "shadowsocks",
+                "socks",
+                "hysteria",
+            };
 
             Misc.UI.FillComboBox(cboxProtocol, protocols);
             var streamType = new List<string> { StreamTypeNone };
@@ -166,13 +174,27 @@ namespace V2RayGCon.Views.UserControls
         {
             var t = cboxProtocol.Text.ToLower();
 
+            var hy = @"hysteria";
             var notVmess = t != @"vmess";
-            lbAuth2.Visible = notVmess;
-            cboxAuth2.Visible = notVmess;
+            var isHy2 = t == hy;
+
+            if (isHy2)
+            {
+                SelectByText(cboxStreamType, hy);
+                SelectByText(cboxTlsType, "none");
+            }
+            cboxTlsType.Enabled = !isHy2;
+            cboxStreamType.Enabled = !isHy2;
+
+            lbAuth1.Visible = !isHy2;
+            tboxAuth1.Visible = !isHy2;
+
+            lbAuth2.Visible = notVmess && !isHy2;
+            cboxAuth2.Visible = notVmess && !isHy2;
 
             var isVless = t == @"vless";
-            lbAuth3.Visible = isVless;
-            tboxAuth3.Visible = isVless;
+            lbAuth3.Visible = isVless && !isHy2;
+            tboxAuth3.Visible = isVless && !isHy2;
 
             switch (t)
             {

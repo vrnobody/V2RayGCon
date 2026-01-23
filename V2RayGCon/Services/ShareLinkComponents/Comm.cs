@@ -53,6 +53,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         private static void FillInTlsSetting(SharelinkMetaData meta, JToken token)
         {
             var tt = string.IsNullOrEmpty(meta.tlsType) ? "none" : meta.tlsType;
+            if (meta.proto == "hysteria" && tt == "none")
+            {
+                return;
+            }
+
             token["security"] = tt;
             if (tt == "none")
             {

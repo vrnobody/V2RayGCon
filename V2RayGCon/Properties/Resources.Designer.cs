@@ -102,6 +102,16 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Cancel_16x {
+            get {
+                object obj = ResourceManager.GetObject("Cancel_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap CloseSolution_16x {
             get {
                 object obj = ResourceManager.GetObject("CloseSolution_16x", resourceCulture);

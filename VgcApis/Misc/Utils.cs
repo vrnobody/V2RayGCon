@@ -2469,15 +2469,39 @@ namespace VgcApis.Misc
                 return string.Empty;
             }
 
-            var left = new List<string>() { protocol == "shadowsocks" ? "ss" : protocol };
+            var pTable = new Dictionary<string, string>()
+            {
+                { "shadowsocks", "ss" },
+                { "hysteria", "hy2" },
+            };
+            if (pTable.ContainsKey(protocol))
+            {
+                protocol = pTable[protocol];
+            }
+
             var st = meta.streamType;
+            var sTable = new Dictionary<string, string>()
+            {
+                { "domainsocket", "ds" },
+                { "hysteria", "" },
+            };
+            if (sTable.ContainsKey(st))
+            {
+                st = sTable[st];
+            }
+
+            var left = new List<string>() { protocol };
             if (!string.IsNullOrEmpty(st))
             {
-                left.Add(st == "domainsocket" ? "ds" : st);
-                if (!string.IsNullOrEmpty(meta.tlsType) && meta.tlsType != "none")
-                {
-                    left.Add(meta.tlsType);
-                }
+                left.Add(st);
+            }
+            if (
+                !string.IsNullOrEmpty(meta.streamType)
+                && !string.IsNullOrEmpty(meta.tlsType)
+                && meta.tlsType != "none"
+            )
+            {
+                left.Add(meta.tlsType);
             }
 
             var smm = new List<string>() { string.Join(".", left) };

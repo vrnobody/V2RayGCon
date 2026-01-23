@@ -94,8 +94,7 @@
       "hysteriaSettings": {
         "auth": "password",
         "version": 2
-      },
-      "security": "none"
+      }
     }
   },
   "outbVless": {

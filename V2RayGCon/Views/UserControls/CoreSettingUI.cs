@@ -15,6 +15,7 @@ namespace V2RayGCon.Views.UserControls
         {
             // this.size = 347, 28
             InitializeComponent();
+            VgcApis.Misc.UI.SetTrasparentBackground(btnDelete, btnEdit);
         }
 
         #region public mehtod

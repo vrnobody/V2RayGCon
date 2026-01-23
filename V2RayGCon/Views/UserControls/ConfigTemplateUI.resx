@@ -146,15 +146,21 @@
   <data name="&gt;&gt;lbTitle.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnEdit.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAAKhJREFUOE/NkDEOAiEQRfdEHoKeytZTeBIPsFfwCnY2Nh7DxmTX7EA7+kiGiNEN
+        UEnyMhDmPyYMqpqIMU7AvmlZeHc4KTRLXoEUHLajCZrIAgtTN/ujni9X9d6rc+4nWUCzhZkEaiRZwIFm
+        QiaokRSCeXqoLFJMYZIQQrp/56sAPiX2NyJSJwAkvGxhapByilUBILnd5zxNswCQcA9dgjX+UNBDFvQT
+        9QkHKOQWh3DrDAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btnEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>298, 3</value>
+    <value>298, 2</value>
   </data>
   <data name="btnEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
@@ -162,6 +168,9 @@
   <data name="btnEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="btnEdit.ToolTip" xml:space="preserve">
     <value>Modify.</value>
   </data>
@@ -177,20 +186,20 @@
   <data name="&gt;&gt;btnEdit.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="btnDelete.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAALFJREFUOE+tkDESwiAQRbmA17C2tKb2EBbeICfKEeQGXkZNFWho1/wdlsEMgXVM
-        8cJC9r9ZMET0F/yJMZ6AHK73LaTZJzhY7muhEgj8Y7gRQO3fz3C/nPO+JzFhehEC4/HAIamxqgRLw7WU
-        SBiT9MKA30DGFoF2fGDKMFap1W8gAoBarpMEXfIVAOoFfhPnHFlrm7AAY6RgHhU/0ODnsMmXYM1ugh5N
-        gZaq4Beqh3rIfADNkAPZUpn57QAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="btnDelete.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
+  <data name="btnDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
+        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
+        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
+        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="btnDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>321, 3</value>
+    <value>321, 2</value>
   </data>
   <data name="btnDelete.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
@@ -213,9 +222,6 @@
   <data name="&gt;&gt;btnDelete.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="rlbBinding.Location" type="System.Drawing.Point, System.Drawing">
     <value>258, 5</value>
   </data>

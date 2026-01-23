@@ -17,6 +17,7 @@ namespace Composer.Views.UserControls
         )
         {
             // size: 170, 26
+            // btn: 146, 1
             InitializeComponent();
             VgcApis.Misc.UI.SetTrasparentBackground(btnDelete, btnEdit);
 

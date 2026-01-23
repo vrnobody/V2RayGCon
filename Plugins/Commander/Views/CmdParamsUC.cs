@@ -14,6 +14,7 @@ namespace Commander.Views
         public CmdParamsUC(FormMain formMain, CmderParam pkgItem)
         {
             // size: 170, 26
+            // btn: 146, 1
             InitializeComponent();
             VgcApis.Misc.UI.SetTrasparentBackground(btnDelete, btnEdit);
 

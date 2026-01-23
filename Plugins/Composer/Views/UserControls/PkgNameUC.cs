@@ -14,7 +14,7 @@ namespace Composer.Views.UserControls
         public PkgNameUC(Views.WinForms.FormMain formMain, Models.PackageItem pkgItem)
         {
             // container: 170, 26
-            // btnDelete: 148, 1
+            // btnDelete: 146, 1
             InitializeComponent();
             VgcApis.Misc.UI.SetTrasparentBackground(btnDelete, btnEdit);
 

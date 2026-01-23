@@ -14,6 +14,7 @@ namespace V2RayGCon.Views.UserControls
         {
             // this.size = 347, 28
             InitializeComponent();
+            VgcApis.Misc.UI.SetTrasparentBackground(btnEdit, btnDelete);
 
             this.tplS = tplSettings;
             Reload();
@@ -105,6 +106,11 @@ namespace V2RayGCon.Views.UserControls
             {
                 Parent.Controls.Remove(this);
             }
+        }
+
+        private void lbTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.DoDragDrop(this, DragDropEffects.Move);
         }
         #endregion
     }

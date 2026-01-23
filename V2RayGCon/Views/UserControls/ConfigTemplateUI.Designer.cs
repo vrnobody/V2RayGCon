@@ -42,13 +42,15 @@ namespace V2RayGCon.Views.UserControls
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
+            this.lbTitle.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Click += new System.EventHandler(this.lbTitle_Click);
+            this.lbTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTitle_MouseDown);
             // 
             // btnEdit
             // 
-            this.btnEdit.BackgroundImage = global::V2RayGCon.Properties.Resources.EditWindow_16x;
             resources.ApplyResources(this.btnEdit, "btnEdit");
+            this.btnEdit.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnEdit.Name = "btnEdit";
             this.toolTip1.SetToolTip(this.btnEdit, resources.GetString("btnEdit.ToolTip"));
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -57,6 +59,7 @@ namespace V2RayGCon.Views.UserControls
             // btnDelete
             // 
             resources.ApplyResources(this.btnDelete, "btnDelete");
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnDelete.Name = "btnDelete";
             this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -65,6 +68,7 @@ namespace V2RayGCon.Views.UserControls
             // rlbBinding
             // 
             this.rlbBinding._BackColor = System.Drawing.Color.Wheat;
+            this.rlbBinding.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.rlbBinding, "rlbBinding");
             this.rlbBinding.Name = "rlbBinding";
             this.toolTip1.SetToolTip(this.rlbBinding, resources.GetString("rlbBinding.ToolTip"));
@@ -73,6 +77,7 @@ namespace V2RayGCon.Views.UserControls
             // chkIsInject
             // 
             resources.ApplyResources(this.chkIsInject, "chkIsInject");
+            this.chkIsInject.Cursor = System.Windows.Forms.Cursors.Default;
             this.chkIsInject.Name = "chkIsInject";
             this.toolTip1.SetToolTip(this.chkIsInject, resources.GetString("chkIsInject.ToolTip"));
             this.chkIsInject.UseVisualStyleBackColor = true;
@@ -88,6 +93,7 @@ namespace V2RayGCon.Views.UserControls
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lbTitle);
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ConfigTemplateUI";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CoreSettingUI_MouseDown);
             this.ResumeLayout(false);

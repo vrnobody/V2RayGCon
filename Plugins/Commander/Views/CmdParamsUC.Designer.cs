@@ -47,8 +47,8 @@
             // 
             // btnDelete
             // 
-            resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnDelete.Name = "btnDelete";
             this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
@@ -57,8 +57,8 @@
             // 
             // btnEdit
             // 
-            resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnEdit.Name = "btnEdit";
             this.toolTip1.SetToolTip(this.btnEdit, resources.GetString("btnEdit.ToolTip"));

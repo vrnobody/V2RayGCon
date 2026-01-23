@@ -15,7 +15,7 @@ namespace Composer.Views.UserControls
         )
         {
             // container: 320, 26
-            // btnDelete: 298, 2
+            // btnDelete: 296, 2
             InitializeComponent();
             VgcApis.Misc.UI.SetTrasparentBackground(btnDelete);
 

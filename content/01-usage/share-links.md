@@ -43,11 +43,9 @@ remark 需要进行 URI encode
 
 ##### vless://...
 
-`v1.5.2` 起支持 Xray-core [issues 91](https://github.com/XTLS/Xray-core/issues/91) 提出的 vless 分享链接标准  
-`v1.5.4` 支持到 3 月 7 日的修订，即暂不支持 `gRPC` 传输类型  
+链接定义见 [Xray-core issues #91](https://github.com/XTLS/Xray-core/issues/91)  
 `v1.5.6.1` 起支持 `gRPC` 的 `gun` 及 `multi` 模式，不支持 `guna` 模式  
-`v1.6.9` 起支持 Xray-core 的 reality  
-`v1.9.5` 起支持 HTTPUpgrade 以及 gRPC 的 authority 参数
+`v2.2.4.0` 起支持 `tlsSettings.pinnedPeerCertSha256`
 
 p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-07）实战考验后发现到处是坑
 

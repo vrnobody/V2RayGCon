@@ -5,6 +5,15 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.4.0` 20260124
+
+选项设置中添加分享链接类型选择窗口  
+工具箱窗口添加计算 TLS 证书 hash 功能  
+Composer 插件支持自动补全和生成代理链  
+Commander 插件支持拖放排序  
+mob://... 支持 pinnedPeerCertSha256  
+（试验中）支持 hy2://... 链接
+
 ##### `v2.2.3.1` 20260114
 
 添加 Composer 插件  

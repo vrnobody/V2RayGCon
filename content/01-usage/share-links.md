@@ -5,6 +5,11 @@ draft: false
 weight: 80
 ---
 
+##### hy2://...
+
+`v2.2.4` 起支持解码 hy2://... 链接为 xray-core 的 config.json  
+注：只是按文档写的，我自己并不使用 hy2，如果配置不当请发 issue
+
 ##### mob://...
 
 mob 是 MetaOutBound 的缩写。你可以在 [mob playground](../../pages/mob.html) 在线体验编、解码效果。链接格式详见 [mob://...]({{< relref "01-usage/mob-share-link.md" >}}) 说明。
@@ -18,20 +23,19 @@ remark 需要进行 URI encode
 
 ##### ss://...
 
-仅支持 `ss://(base64)#name` 形式的分享链接  
-`v1.5.8.8` 起支持导入 SIP002 链接
+`v1.5.8.8` 起支持导入 SIP002 链接  
+链接格式：`ss://(base64)#name`
 
 ##### trojan://...
 
-仅支持 [trojan-url](https://github.com/trojan-gfw/trojan-url) 定义的分享链接标准  
-`v1.6.9` 起支持和 `vless://...` 相同的各项参数
+`v1.6.9` 起支持和 `vless://...` 相同的各项参数  
+链接格式： [trojan-url](https://github.com/trojan-gfw/trojan-url)
 
 ##### v://...
 
+注意！`v1.8.4` 起废弃 `v://...` 链接。  
 这是本软件自创的一种分享链接。“简易编辑器” 里的各种配置组合都可以用这种链接导入、导出。  
 它又叫做 vee 链接，主要特点是短，编码思想出自 v2ray-core [issue 1392][2]。具体实现可以看 [VeeDecoder.cs][1]，不过代码是用 Component 的方式写的，比较散比较乱。
-
-注意！`v1.8.4` 废弃 `v://...` 链接。
 
 ##### v2cfg://...
 
@@ -43,9 +47,9 @@ remark 需要进行 URI encode
 
 ##### vless://...
 
-链接定义见 [Xray-core issues #91](https://github.com/XTLS/Xray-core/issues/91)  
 `v1.5.6.1` 起支持 `gRPC` 的 `gun` 及 `multi` 模式，不支持 `guna` 模式  
-`v2.2.4.0` 起支持 `tlsSettings.pinnedPeerCertSha256`
+`v2.2.4.0` 起支持 `tlsSettings.pinnedPeerCertSha256`  
+链接格式：[Xray-core issues #91](https://github.com/XTLS/Xray-core/issues/91)
 
 p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-07）实战考验后发现到处是坑
 
@@ -71,6 +75,7 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 
 | 链接类型          | 平均长度(bytes) |
 | ----------------- | --------------- |
+| hy2               | 70              |
 | v                 | 120             |
 | userSettings.json | 180             |
 | vless             | 200             |

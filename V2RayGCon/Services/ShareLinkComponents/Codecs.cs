@@ -75,7 +75,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var node = outb["settings"];
             node["address"] = vee.host;
             node["port"] = vee.port;
-            outb["streamSettings"]["hysteriaSettings"]["auth"] = vee.streamParam1;
+
+            var stream = outb["streamSettings"];
+            stream["hysteriaSettings"]["auth"] = vee.streamParam1;
+            Comm.FillInTlsSetting(vee, stream);
+
             var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outb);
         }

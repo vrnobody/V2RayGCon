@@ -47,13 +47,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             return token;
         }
-        #endregion
 
-        #region private region
-        private static void FillInTlsSetting(SharelinkMetaData meta, JToken token)
+        public static void FillInTlsSetting(SharelinkMetaData meta, JToken token)
         {
             var tt = string.IsNullOrEmpty(meta.tlsType) ? "none" : meta.tlsType;
-            if (meta.proto == "hysteria" && tt == "none")
+            if (tt == "none")
             {
                 return;
             }
@@ -98,6 +96,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var k = $"{tt}Settings";
             token[k] = o;
         }
+
+        #endregion
+
+        #region private region
 
         private static void FillInStreamSetting(
             SharelinkMetaData meta,

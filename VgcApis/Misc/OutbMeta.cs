@@ -49,6 +49,8 @@ namespace VgcApis.Misc
             {
                 name = url.Contains("#") ? parts.Last() : "",
                 proto = hy,
+                streamType = hy,
+                streamParam1 = parts[0],
             };
 
             var addr = parts[1];
@@ -57,8 +59,24 @@ namespace VgcApis.Misc
                 return null;
             }
 
-            vc.streamType = hy;
-            vc.streamParam1 = parts[0];
+            string GetValue(string key, string def)
+            {
+                if (parts.Contains(key))
+                {
+                    var v = parts[parts.IndexOf(key) + 1];
+                    if (!string.IsNullOrEmpty(v))
+                    {
+                        return v;
+                    }
+                }
+                return def;
+            }
+
+            vc.tlsType = "tls";
+            vc.tlsAlpn = "h3";
+            vc.tlsServName = GetValue("sni", "");
+            vc.tlsParam2 = GetValue("pcs", "");
+
             return vc;
         }
 

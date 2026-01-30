@@ -181,9 +181,7 @@ namespace V2RayGCon.Views.UserControls
             if (isHy2)
             {
                 SelectByText(cboxStreamType, hy);
-                SelectByText(cboxTlsType, "none");
             }
-            cboxTlsType.Enabled = !isHy2;
             cboxStreamType.Enabled = !isHy2;
 
             lbAuth1.Visible = !isHy2;

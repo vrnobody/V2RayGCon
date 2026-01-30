@@ -211,11 +211,23 @@ namespace VgcApis.Models.Datas
 
         string EncodeToHy2ShareLink()
         {
+            var ps = new Dictionary<string, string>() { { "insecure", "1" } };
+            if (tlsType == "tls")
+            {
+                ps["pcs"] = tlsParam2;
+                ps["sni"] = tlsServName;
+            }
+
+            var pms = ps.Where(kv => !string.IsNullOrEmpty(kv.Value))
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
+                .ToList();
+
             var url = string.Format(
-                "hy2://{0}@{1}:{2}?#{3}",
+                "hy2://{0}@{1}:{2}?{3}#{4}",
                 Uri.EscapeDataString(streamParam1),
                 Misc.Utils.FormatHost(host),
                 port,
+                string.Join("&", pms),
                 Uri.EscapeDataString(name)
             );
             return url;

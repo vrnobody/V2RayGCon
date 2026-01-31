@@ -38,6 +38,7 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。你可以在 [mob
 
 | 参数 #1          | 参数 #2   | 参数 #3  | 参数 #4    |
 | ---------------- | --------- | -------- | ---------- |
+| hysteria（暂定） |           |          |            |
 | vmess            | UUID      |          |            |
 | vless            | UUID      | flow     | encryption |
 | trojan           | password  | flow     |            |
@@ -49,6 +50,7 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。你可以在 [mob
 | 参数 #1               | 参数 #2                      | 参数 #3      | 参数 #4   |
 | --------------------- | ---------------------------- | ------------ | --------- |
 | tcp / raw             |                              |              |           |
+| hysteria（暂定）      | auth                         |              |           |
 | ws / h2 / httpupgrade | path                         | host         |           |
 | xhttp                 | mode                         | path         | host      |
 | grpc                  | multi mode: "true" / "false" | service name | authority |

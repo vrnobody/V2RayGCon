@@ -404,6 +404,7 @@
 
           const MOB_SETTINGS = {
             protocol: {
+              hysteria: [],
               vmess: ["id"],
               trojan: ["password", "flow"],
               vless: ["id", "flow", "encryption"],
@@ -415,6 +416,7 @@
             stream: {
               raw: [],
               tcp: [],
+              hysteria: ["auth"],
               ws: ["path", "host"],
               h2: ["path", "host"],
               httpupgrade: ["path", "host"],

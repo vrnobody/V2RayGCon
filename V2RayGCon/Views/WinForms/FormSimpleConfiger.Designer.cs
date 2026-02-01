@@ -64,8 +64,8 @@
             // 
             // panelVeeImporter
             // 
-            resources.ApplyResources(this.panelVeeImporter, "panelVeeImporter");
             this.panelVeeImporter.Controls.Add(this.SimpleConfigerUI1);
+            resources.ApplyResources(this.panelVeeImporter, "panelVeeImporter");
             this.panelVeeImporter.Name = "panelVeeImporter";
             // 
             // SimpleConfigerUI1

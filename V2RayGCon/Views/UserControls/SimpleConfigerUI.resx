@@ -126,7 +126,7 @@
     <value>83, 100</value>
   </data>
   <data name="cboxAuth2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 20</value>
+    <value>285, 20</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cboxAuth2.TabIndex" type="System.Int32, mscorlib">
@@ -151,7 +151,7 @@
     <value>83, 46</value>
   </data>
   <data name="cboxStreamParma1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 20</value>
+    <value>285, 20</value>
   </data>
   <data name="cboxStreamParma1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -193,7 +193,7 @@
     <value>83, 20</value>
   </data>
   <data name="cboxProtocol.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 20</value>
+    <value>285, 20</value>
   </data>
   <data name="cboxProtocol.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -217,7 +217,7 @@
     <value>83, 20</value>
   </data>
   <data name="cboxStreamType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 20</value>
+    <value>285, 20</value>
   </data>
   <data name="cboxStreamType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -241,7 +241,7 @@
     <value>83, 46</value>
   </data>
   <data name="tboxHost.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 21</value>
+    <value>193, 21</value>
   </data>
   <data name="tboxHost.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -265,7 +265,7 @@
     <value>83, 73</value>
   </data>
   <data name="tboxAuth1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxAuth1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -475,7 +475,7 @@
     <value>86, 6</value>
   </data>
   <data name="tboxName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -502,7 +502,7 @@
     <value>9, 10</value>
   </data>
   <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 12</value>
+    <value>362, 12</value>
   </data>
   <data name="lbName.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -532,7 +532,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkTlsCertSelfSign.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 22</value>
+    <value>284, 22</value>
   </data>
   <data name="chkTlsCertSelfSign.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 16</value>
@@ -694,7 +694,7 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 77</value>
+    <value>215, 77</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
@@ -786,9 +786,6 @@
   <data name="&gt;&gt;lbTlsParam2.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="lbTlsParam3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="lbTlsParam3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -796,7 +793,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbTlsParam3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 131</value>
+    <value>6, 158</value>
   </data>
   <data name="lbTlsParam3.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
@@ -829,7 +826,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbTlsParam4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 157</value>
+    <value>6, 183</value>
   </data>
   <data name="lbTlsParam4.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
@@ -862,7 +859,7 @@
     <value>83, 72</value>
   </data>
   <data name="tboxStreamParam2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxStreamParam2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -886,7 +883,7 @@
     <value>83, 99</value>
   </data>
   <data name="tboxStreamParam3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxStreamParam3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -907,7 +904,7 @@
     <value>Top, Right</value>
   </data>
   <data name="tboxPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>319, 46</value>
+    <value>317, 46</value>
   </data>
   <data name="tboxPort.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
@@ -937,7 +934,7 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>284, 49</value>
+    <value>282, 49</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
@@ -967,7 +964,7 @@
     <value>3, 190</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>376, 127</value>
+    <value>374, 127</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1006,7 +1003,7 @@
     <value>83, 20</value>
   </data>
   <data name="cboxTlsType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 20</value>
+    <value>193, 20</value>
   </data>
   <data name="cboxTlsType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1063,7 +1060,7 @@
     <value>83, 126</value>
   </data>
   <data name="tboxAuth3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxAuth3.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1084,7 +1081,7 @@
     <value>3, 30</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>376, 154</value>
+    <value>374, 154</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1114,7 +1111,7 @@
     <value>83, 127</value>
   </data>
   <data name="tboxTlsParam2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxTlsParam2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1171,7 +1168,7 @@
     <value>83, 73</value>
   </data>
   <data name="cboxTlsFingerprint.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 20</value>
+    <value>126, 20</value>
   </data>
   <data name="cboxTlsFingerprint.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1192,10 +1189,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxTlsParam4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 153</value>
+    <value>83, 179</value>
   </data>
   <data name="tboxTlsParam4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxTlsParam4.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1219,7 +1216,7 @@
     <value>83, 100</value>
   </data>
   <data name="tboxTlsParam1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxTlsParam1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1240,7 +1237,7 @@
     <value>Top, Right</value>
   </data>
   <data name="tboxTlsAlpn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 73</value>
+    <value>268, 73</value>
   </data>
   <data name="tboxTlsAlpn.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 21</value>
@@ -1267,7 +1264,7 @@
     <value>83, 46</value>
   </data>
   <data name="tboxTlsServName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxTlsServName.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1315,13 +1312,13 @@
     <value>13</value>
   </data>
   <data name="tboxTlsParam3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Top, Left, Right</value>
   </data>
   <data name="tboxTlsParam3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 127</value>
+    <value>83, 154</value>
   </data>
   <data name="tboxTlsParam3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 21</value>
+    <value>285, 21</value>
   </data>
   <data name="tboxTlsParam3.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1342,7 +1339,7 @@
     <value>3, 323</value>
   </data>
   <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>376, 180</value>
+    <value>374, 207</value>
   </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1369,7 +1366,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 506</value>
+    <value>380, 535</value>
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>

@@ -78,6 +78,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 SetValue("echConfigList", meta.tlsParam1);
                 SetValue("pinnedPeerCertSha256", meta.tlsParam2);
+                SetValue("verifyPeerCertByName", meta.tlsParam3);
             }
 
             if (!string.IsNullOrEmpty(meta.tlsAlpn))

@@ -76,6 +76,7 @@ namespace VgcApis.Misc
             vc.tlsAlpn = "h3";
             vc.tlsServName = GetValue("sni", "");
             vc.tlsParam2 = GetValue("pcs", "");
+            vc.tlsParam3 = GetValue("pcn", "");
 
             return vc;
         }
@@ -142,6 +143,7 @@ namespace VgcApis.Misc
             {
                 vc.tlsParam1 = GetValue("ech", "");
                 vc.tlsParam2 = GetValue("pcs", "");
+                vc.tlsParam3 = GetValue("pcn", "");
             }
 
             // patch sni
@@ -436,6 +438,14 @@ namespace VgcApis.Misc
             {
                 meta.tlsParam1 = reader(prefix, $"{ts}.echConfigList") ?? "";
                 meta.tlsParam2 = reader(prefix, $"{ts}.pinnedPeerCertSha256") ?? "";
+                meta.tlsParam3 = reader(prefix, $"{ts}.verifyPeerCertByName") ?? "";
+            }
+            else if (tt == "reality")
+            {
+                meta.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
+                meta.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
+                meta.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
+                meta.tlsParam4 = reader(prefix, $"{ts}.mldsa65Verify") ?? "";
             }
 
             try
@@ -445,14 +455,6 @@ namespace VgcApis.Misc
                 meta.tlsAlpn = VgcApis.Misc.Utils.JArray2Str(alpn as JArray);
             }
             catch { }
-
-            if (tt == "reality")
-            {
-                meta.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
-                meta.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
-                meta.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
-                meta.tlsParam4 = reader(prefix, $"{ts}.mldsa65Verify") ?? "";
-            }
         }
         #endregion
     }

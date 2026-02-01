@@ -11,6 +11,8 @@ namespace V2RayGCon.Views.UserControls
     {
         public SimpleConfigerUI()
         {
+            // 385, 535
+
             InitializeComponent();
             InitControls();
         }
@@ -359,22 +361,24 @@ namespace V2RayGCon.Views.UserControls
             tboxTlsAlpn.Enabled = !tlsDisabled;
             tboxTlsParam1.Enabled = !tlsDisabled;
             tboxTlsParam2.Enabled = !tlsDisabled;
+            tboxTlsParam3.Enabled = !tlsDisabled;
+
+            tboxTlsParam4.Enabled = !tlsDisabled && realityEnabled;
 
             if (!tlsDisabled && !realityEnabled)
             {
                 lbTlsParam2.Text = "pcs";
                 toolTip1.SetToolTip(lbTlsParam2, "tlsSettings.pinnedPeerCertSha256");
-                tboxTlsParam2.Width = tboxTlsServName.Width;
+                lbTlsParam3.Text = "pcn";
+                toolTip1.SetToolTip(lbTlsParam3, "tlsSettings.verifyPeerCertByName");
             }
             else
             {
                 lbTlsParam2.Text = "ShortID";
                 toolTip1.SetToolTip(lbTlsParam2, "realitySettings.shortId");
-                tboxTlsParam2.Width = cboxTlsFingerprint.Width;
+                lbTlsParam3.Text = "SpiderX";
+                toolTip1.SetToolTip(lbTlsParam3, "realitySettings.spiderX");
             }
-
-            tboxTlsParam3.Enabled = !tlsDisabled && realityEnabled;
-            tboxTlsParam4.Enabled = !tlsDisabled && realityEnabled;
         }
 
         #endregion

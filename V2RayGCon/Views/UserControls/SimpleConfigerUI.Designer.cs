@@ -65,14 +65,14 @@
             this.lbAuth3 = new System.Windows.Forms.Label();
             this.tboxAuth3 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cboxTlsFingerprint = new System.Windows.Forms.ComboBox();
-            this.tboxTlsParam3 = new System.Windows.Forms.TextBox();
             this.tboxTlsParam2 = new System.Windows.Forms.TextBox();
+            this.cboxTlsFingerprint = new System.Windows.Forms.ComboBox();
             this.tboxTlsParam4 = new System.Windows.Forms.TextBox();
             this.tboxTlsParam1 = new System.Windows.Forms.TextBox();
             this.tboxTlsAlpn = new System.Windows.Forms.TextBox();
             this.tboxTlsServName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tboxTlsParam3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -327,6 +327,11 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
+            // tboxTlsParam2
+            // 
+            resources.ApplyResources(this.tboxTlsParam2, "tboxTlsParam2");
+            this.tboxTlsParam2.Name = "tboxTlsParam2";
+            // 
             // cboxTlsFingerprint
             // 
             resources.ApplyResources(this.cboxTlsFingerprint, "cboxTlsFingerprint");
@@ -344,16 +349,6 @@
             resources.GetString("cboxTlsFingerprint.Items9"),
             resources.GetString("cboxTlsFingerprint.Items10")});
             this.cboxTlsFingerprint.Name = "cboxTlsFingerprint";
-            // 
-            // tboxTlsParam3
-            // 
-            resources.ApplyResources(this.tboxTlsParam3, "tboxTlsParam3");
-            this.tboxTlsParam3.Name = "tboxTlsParam3";
-            // 
-            // tboxTlsParam2
-            // 
-            resources.ApplyResources(this.tboxTlsParam2, "tboxTlsParam2");
-            this.tboxTlsParam2.Name = "tboxTlsParam2";
             // 
             // tboxTlsParam4
             // 
@@ -379,6 +374,11 @@
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+            // 
+            // tboxTlsParam3
+            // 
+            resources.ApplyResources(this.tboxTlsParam3, "tboxTlsParam3");
+            this.tboxTlsParam3.Name = "tboxTlsParam3";
             // 
             // SimpleConfigerUI
             // 

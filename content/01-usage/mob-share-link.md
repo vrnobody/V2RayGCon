@@ -59,11 +59,11 @@ mob://... 是 V2RayGCon v2.2.1.2 新增的分享链接类型。你可以在 [mob
 
 #### enc 配置数组
 
-| 参数 #1 | 参数 #2     | 参数 #3     | 参数 #4 | 参数 #5    | 参数 #6              | 参数 #7  | 参数 #8   |
-| ------- | ----------- | ----------- | ------- | ---------- | -------------------- | -------- | --------- | --- |
-| tls     | server name | fingerprint | alpn    | ech        | pinnedPeerCertSha256 |          |           |     |
-| xtls    | server name | fingerprint | alpn    |            |                      |          |           |     |
-| reality | server name | fingerprint | alpn    | public key | short ID             | spider X | ML-DSA-65 |
+| 参数 #1 | 参数 #2     | 参数 #3     | 参数 #4 | 参数 #5    | 参数 #6              | 参数 #7              | 参数 #8   |
+| ------- | ----------- | ----------- | ------- | ---------- | -------------------- | -------------------- | --------- | --- |
+| tls     | server name | fingerprint | alpn    | ech        | pinnedPeerCertSha256 | verifyPeerCertByName |           |     |
+| xtls    | server name | fingerprint | alpn    |            |                      |                      |           |     |
+| reality | server name | fingerprint | alpn    | public key | short ID             | spider X             | ML-DSA-65 |
 
 注1：enc: [] 表示 tls/xtls/... 配置留空。  
 注2：V2RayGCon v2.2.4+ 才支持 tls.pinnedPeerCertSha256。

@@ -49,7 +49,7 @@ remark 需要进行 URI encode
 
 xray-core v26.1.31 有一个 breaking 的修改，kcp 协议会无法启动
 
-不支持 `xhttp`的 `extra` 参数  
+不支持 `xhttp` 的 `extra` 参数  
 不支持 `fm` (Finalmask) 参数
 
 `v1.5.6.1` 起支持 `gRPC` 的 `gun` 及 `multi` 模式，不支持 `guna` 模式  

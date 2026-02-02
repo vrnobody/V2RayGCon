@@ -215,7 +215,7 @@ namespace VgcApis.Models.Datas
             if (tlsType == "tls")
             {
                 ps["pcs"] = tlsParam2;
-                ps["pcn"] = tlsParam3;
+                ps["vcn"] = tlsParam3;
                 ps["sni"] = tlsServName;
             }
 
@@ -269,7 +269,7 @@ namespace VgcApis.Models.Datas
             {
                 ps["ech"] = tlsParam1;
                 ps["pcs"] = tlsParam2;
-                ps["pcn"] = tlsParam3;
+                ps["vcn"] = tlsParam3;
             }
             else if (tlsType == "reality")
             {

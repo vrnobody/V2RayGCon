@@ -369,7 +369,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 lbTlsParam2.Text = "pcs";
                 toolTip1.SetToolTip(lbTlsParam2, "tlsSettings.pinnedPeerCertSha256");
-                lbTlsParam3.Text = "pcn";
+                lbTlsParam3.Text = "vcn";
                 toolTip1.SetToolTip(lbTlsParam3, "tlsSettings.verifyPeerCertByName");
             }
             else

@@ -76,7 +76,7 @@ namespace VgcApis.Misc
             vc.tlsAlpn = "h3";
             vc.tlsServName = GetValue("sni", "");
             vc.tlsParam2 = GetValue("pcs", "");
-            vc.tlsParam3 = GetValue("pcn", "");
+            vc.tlsParam3 = GetValue("vcn", "");
 
             return vc;
         }
@@ -143,7 +143,7 @@ namespace VgcApis.Misc
             {
                 vc.tlsParam1 = GetValue("ech", "");
                 vc.tlsParam2 = GetValue("pcs", "");
-                vc.tlsParam3 = GetValue("pcn", "");
+                vc.tlsParam3 = GetValue("vcn", "");
             }
 
             // patch sni

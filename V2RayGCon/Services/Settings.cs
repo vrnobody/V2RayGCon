@@ -1237,8 +1237,18 @@ namespace V2RayGCon.Services
             return string.Join("", parts);
         }
 
+        private readonly VgcApis.Libs.Tasks.Bar saveUserSettingsBar = new VgcApis.Libs.Tasks.Bar();
+
         void SaveUserSettingsWorker()
         {
+            // prevent multiple calls
+            if (!saveUserSettingsBar.Install())
+            {
+                VgcApis.Libs.Sys.FileLogger.Info(
+                    "Settings.SaveUserSettingsWorker() can not install bar, skip"
+                );
+                return;
+            }
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             string configSlim = null;
             var isPortable = true;
@@ -1274,6 +1284,10 @@ namespace V2RayGCon.Services
                 }
             }
             catch { }
+            finally
+            {
+                saveUserSettingsBar.Remove();
+            }
 
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() error");
             if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)

@@ -26,6 +26,7 @@ namespace Composer.Misc
         static readonly List<string> dropableTypes = new List<string>()
         {
             typeof(Views.UserControls.ServerSelectorUC).FullName,
+            typeof(Views.UserControls.ServerInfoUC).FullName,
             VgcApis.Models.Consts.UI.VgcServUiName,
         };
 

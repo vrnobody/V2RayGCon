@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormServerSelector));
             this.label1 = new System.Windows.Forms.Label();
             this.tboxTag = new System.Windows.Forms.TextBox();
@@ -41,7 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.lbTotal = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.panelFilterKeywords = new System.Windows.Forms.Panel();
             this.panelFilterKeywords.SuspendLayout();
             this.SuspendLayout();

@@ -422,10 +422,10 @@
     <value />
   </data>
   <data name="btnDefImportLinkTypes.Text" xml:space="preserve">
-    <value>选择器</value>
+    <value>选择</value>
   </data>
   <data name="btnDefImportLinkTypes.ToolTip" xml:space="preserve">
-    <value>打开分享链接类型选择器</value>
+    <value>选择可导入的分享链接类型</value>
   </data>
   <data name="cboxDefImportCoreName.ToolTip" xml:space="preserve">
     <value />

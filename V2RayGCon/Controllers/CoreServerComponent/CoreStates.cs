@@ -414,7 +414,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             coreInfo.speedTestResult = latency;
             UpdateStatusWithSpeedTestResult();
-            GetParent().InvokeEventOnPropertyChange();
         }
 
         public string GetRawUid() => coreInfo.uid;

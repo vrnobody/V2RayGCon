@@ -206,6 +206,8 @@ namespace V2RayGCon.Views.UserControls
 
         void RefreshUiLater() => lazyUiUpdater?.Deadline();
 
+        void RefreshUiNow() => lazyUiUpdater?.Throttle();
+
         void RefreshUiWorker(Action done)
         {
             var csc = coreServCtrl;
@@ -710,7 +712,7 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = coreServCtrl;
             ResetControls();
             BindCoreCtrlEvents(coreServCtrl);
-            RefreshUiLater();
+            RefreshUiNow();
         }
 
         public void ChangeHighlighter(VgcApis.Libs.Infr.Highlighter hi)

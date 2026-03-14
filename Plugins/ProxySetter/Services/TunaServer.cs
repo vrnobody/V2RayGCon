@@ -299,7 +299,7 @@ namespace ProxySetter.Services
 
             var list = new List<string>();
             var tpl =
-                $"&& netsh interface {{0}} set dnsservers name={ts.tunName} source=static {{1}} primary";
+                $"&& netsh interface {{0}} set dnsservers name={ts.tunName} source=static {{1}} primary no";
             foreach (var dns in dnses)
             {
                 var isIpv6 = VgcApis.Misc.Utils.IsIpv6(dns);

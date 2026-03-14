@@ -25,6 +25,7 @@
         Tag3,
         Selected,
         Core,
+        Inbounds,
     }
 
     public enum StringOperators

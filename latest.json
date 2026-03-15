@@ -1,13 +1,11 @@
 {
-  "version": "2.2.4.0",
-  "md5": "9CC1596641E25789085001E7308DCAD1",
+  "version": "2.2.5.0",
+  "md5": "E42CEADC416E1648DDEA44618721DDF5",
   "warnings": [],
   "changes": [
-    "选项设置中添加分享链接类型选择窗口",
-    "工具箱窗口添加计算 TLS 证书 hash 功能",
-    "Composer 插件支持自动补全和生成代理链",
-    "Commander 插件支持拖放排序",
-    "mob://... 支持 pinnedPeerCertSha256",
-    "（试验中）支持 hy2://... 链接"
+    "添加 #running #inbounds 两个搜索关键词",
+    "支持 vless://... 分享链接的 vcn 参数",
+    "修复 Composer 插件无法拖放服务器的问题",
+    "主窗口使用更激进的刷新策略"
   ]
 }

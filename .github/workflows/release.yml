@@ -10,9 +10,12 @@ on:
 jobs:
   build:
     permissions:
-      id-token: write
+      # required by release-action
       contents: write
+      # required by attest-action
+      id-token: write
       attestations: write
+      artifact-metadata: write
 
     runs-on: windows-2025
 
@@ -52,10 +55,10 @@ jobs:
           Move-Item -Force -LiteralPath "${env:temp}\net45sdk\build\.NETFramework\v4.5" -Destination "${env:sdkSystemPath}"
 
       - name: Setup .net framework build enviroment
-        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.24
 
       - name: Checkout master
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Restore NuGet packages
         run: nuget restore ${env:projName}.sln
@@ -129,12 +132,12 @@ jobs:
           HashFile "${env:pkgLunaPlugin}" "Luna"
 
       - name: Attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest@v4
         with:
           subject-path: "${{ env.publishDir }}/*.zip"
 
       - name: Publish Release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1
         with:
           name: "v${{ github.ref_name }}"
           body: |

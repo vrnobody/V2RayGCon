@@ -46,10 +46,10 @@ jobs:
           Move-Item -Force -LiteralPath "${env:temp}\net45sdk\build\.NETFramework\v4.5" -Destination "${env:sdkSystemPath}"
 
       - name: Setup .net framework build enviroment
-        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.24
 
       - name: Checkout master
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Restore packages
         run: nuget restore ${env:projName}.sln

@@ -98,6 +98,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 case StringTagNames.Selected:
                     r = cs.IsSelected().ToString();
                     break;
+                case StringTagNames.Running:
+                    r = coreServ.GetCoreCtrl().IsCoreRunning().ToString();
+                    break;
                 case StringTagNames.Inbounds:
                     var inbInfos = coreServ.GetConfiger().GetFormattedInboundsInfoFromCache();
                     r = string.Join(",", inbInfos);

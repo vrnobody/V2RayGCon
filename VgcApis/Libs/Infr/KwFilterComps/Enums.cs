@@ -26,6 +26,7 @@
         Selected,
         Core,
         Inbounds,
+        Running,
     }
 
     public enum StringOperators

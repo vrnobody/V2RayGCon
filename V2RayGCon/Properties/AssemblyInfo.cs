@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.4.6")]
+[assembly: AssemblyVersion("2.2.4.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -42,6 +42,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v2.2.4.7 Add #running filter keyword.
 v2.2.4.6 Add #inbounds filter keyword.
 v2.2.4.5 Using more aggressive refresh strategy in ServerUI.
 v2.2.4.4 Support server drag-drop of FormServerSelector in Composer plug-in.

@@ -86,6 +86,12 @@ namespace NeoLuna.Views.WinForms
             var kc = e.KeyCode;
             switch (kc)
             {
+                case Keys.S:
+                    if (e.Modifiers == Keys.Control)
+                    {
+                        OnOk();
+                    }
+                    return;
                 case Keys.Enter:
                     if (lines < 2)
                     {

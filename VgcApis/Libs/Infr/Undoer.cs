@@ -3,28 +3,33 @@
     public class Undoer<T>
     {
         private readonly object locker = new object();
-        private readonly int capacity;
+        private readonly int size;
         private readonly T[] cache;
         int head = 0;
         int tail = 0;
         int cur = 0;
-
-        public Undoer()
-            : this(128) { }
 
         /// <summary>
         /// [2, 1024)
         /// </summary>
         public Undoer(int capacity)
         {
-            this.capacity = Misc.Utils.Clamp(capacity, 2, 1024) + 1;
-            this.cache = new T[this.capacity];
+            var MAX_SIZE = int.MaxValue - 1;
+            if (capacity < 2 || capacity >= MAX_SIZE)
+            {
+                throw new System.ArgumentOutOfRangeException(
+                    $"capacity must between 2 and {MAX_SIZE}"
+                );
+            }
+
+            this.size = capacity + 1;
+            this.cache = new T[this.size];
         }
 
         #region public methods
-        public int Count() => (head + capacity - tail) % capacity;
+        public int Count() => Normalize(head + size - tail);
 
-        public int Position() => (cur + capacity - tail) % capacity;
+        public int Position() => Normalize(cur + size - tail);
 
         public bool Push(T text)
         {
@@ -34,16 +39,17 @@
             }
             lock (locker)
             {
-                if (Position() > 0 && text.Equals(cache[cur - 1]))
+                var prevIdx = Normalize(cur - 1);
+                if (Position() > 0 && text.Equals(cache[prevIdx]))
                 {
                     return false;
                 }
                 cache[cur] = text;
-                cur = (cur + 1) % capacity;
+                cur = Normalize(cur + 1);
                 head = cur;
                 if (tail == cur)
                 {
-                    tail = (tail + 1) % capacity;
+                    tail = Normalize(tail + 1);
                 }
             }
             return true;
@@ -61,7 +67,7 @@
                     return false;
                 }
                 content = cache[cur];
-                cur = (cur + 1) % capacity;
+                cur = Normalize(cur + 1);
             }
             return true;
         }
@@ -76,10 +82,17 @@
                 {
                     return false;
                 }
-                cur = (cur - 1 + capacity) % capacity;
-                content = cache[cur - 1];
+                cur = Normalize(cur - 1);
+                content = cache[Normalize(cur - 1)];
             }
             return true;
+        }
+        #endregion
+
+        #region private methods
+        int Normalize(int index)
+        {
+            return (index + size) % size;
         }
         #endregion
     }

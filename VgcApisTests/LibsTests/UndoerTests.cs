@@ -6,6 +6,40 @@ namespace VgcApisTests.LibsTests
     public class UndoerTests
     {
         [TestMethod]
+        public void CapacityTest()
+        {
+            var u = new VgcApis.Libs.Infr.Undoer<int>(3);
+            for (var i = 10; i < 20; i++)
+            {
+                u.Push(i);
+            }
+            Assert.AreEqual(3, u.Count());
+
+            var num = 0;
+            var ok = u.TryRedo(out num);
+            Assert.IsFalse(ok);
+            for (var i = 18; i > 16; i--)
+            {
+                ok = u.TryUndo(out num);
+                Assert.IsTrue(ok);
+                Assert.AreEqual(i, num);
+            }
+
+            ok = u.TryUndo(out num);
+            Assert.IsFalse(ok);
+
+            for (var i = 18; i < 20; i++)
+            {
+                ok = u.TryRedo(out num);
+                Assert.IsTrue(ok);
+                Assert.AreEqual(i, num);
+            }
+
+            ok = u.TryRedo(out num);
+            Assert.IsFalse(ok);
+        }
+
+        [TestMethod]
         public void IntTest()
         {
             var c = 0;

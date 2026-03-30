@@ -24,7 +24,9 @@ namespace V2RayGCon.Views.WinForms
         CancellationTokenSource clipboardWatcherCts = new CancellationTokenSource();
         CancellationTokenSource hasherCts = new CancellationTokenSource();
         bool formClosed = false;
-        readonly VgcApis.Libs.Infr.Undoer<string> undoer = new VgcApis.Libs.Infr.Undoer<string>();
+        readonly VgcApis.Libs.Infr.Undoer<string> undoer = new VgcApis.Libs.Infr.Undoer<string>(
+            4 * 1024
+        );
 
         public FormToolbox()
         {

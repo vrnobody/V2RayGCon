@@ -9,9 +9,9 @@
         int tail = 0;
         int cur = 0;
 
-        /// <summary>
-        /// [2, 1024)
-        /// </summary>
+        public Undoer()
+            : this(128) { }
+
         public Undoer(int capacity)
         {
             var MAX_SIZE = int.MaxValue - 1;

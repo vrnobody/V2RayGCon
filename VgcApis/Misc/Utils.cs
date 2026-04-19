@@ -2089,7 +2089,7 @@ namespace VgcApis.Misc
                     var info = new InboundInfo(
                         GetValue<string>(inb, "protocol")?.ToLower() ?? "",
                         GetValue<string>(inb, "listen"),
-                        GetValue<int>(inb, "port")
+                        GetValue<string>(inb, "port")
                     );
                     if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
                     {

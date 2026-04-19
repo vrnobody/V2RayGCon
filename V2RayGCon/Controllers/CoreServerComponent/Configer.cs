@@ -483,7 +483,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
                     var protocol = g[1].Value?.ToLower() ?? "";
-                    var inb = new InboundInfo(protocol, host, port);
+                    var inb = new InboundInfo(protocol, host, $"{port}");
                     r.Add(inb);
                 }
                 match = match.NextMatch();

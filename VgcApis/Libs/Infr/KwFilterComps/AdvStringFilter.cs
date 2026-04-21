@@ -103,7 +103,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                     break;
                 case StringTagNames.Inbounds:
                     var inbInfos = coreServ.GetConfiger().GetFormattedInboundsInfoFromCache();
-                    r = string.Join(",", inbInfos);
+                    r = string.Join("; ", inbInfos);
                     break;
                 default:
                     r = "";

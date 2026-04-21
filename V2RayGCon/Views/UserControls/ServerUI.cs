@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.UserControls;
 
 namespace V2RayGCon.Views.UserControls
 {
@@ -150,6 +151,22 @@ namespace V2RayGCon.Views.UserControls
                 BackColor = Color.LightGray,
             };
             Controls.Add(bottomLine);
+        }
+
+        void FixRoundLabelsColor(int colorIndex)
+        {
+            var now = DateTime.UtcNow.Ticks;
+            if (!VgcApis.Misc.Utils.CheckTimestamp(now, colorIndex))
+            {
+                return;
+            }
+            var color = rlbMark._BackColor;
+            rlbIsRunning._BackColor = color;
+            rlbIsRunning.ForeColor = rlbMark.ForeColor;
+            foreach (RoundLabel c in roundLables)
+            {
+                c._BackColor = color;
+            }
         }
 
         private void ResetControls()
@@ -455,7 +472,7 @@ namespace V2RayGCon.Views.UserControls
             for (int i = 0; i < inbs.Count(); i++)
             {
                 var info = inbs[i];
-                lines.Add($"inbound[{i}] -> {inbs[i]}");
+                lines.Add($"inbounds[{i}] -> {inbs[i]}");
             }
 
             var name = coreState.GetInboundName();
@@ -712,6 +729,8 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = coreServCtrl;
             ResetControls();
             BindCoreCtrlEvents(coreServCtrl);
+            var colorIndex = 6 * 7 - 1;
+            FixRoundLabelsColor(colorIndex);
             RefreshUiNow();
         }
 

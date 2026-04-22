@@ -170,16 +170,16 @@ namespace V2RayGCon.Services
             var sb = new StringBuilder();
             var decoders = codecs.GetDecoders(false);
             var success = 0;
-            var timesup = false;
+            var timesUp = false;
 
             if (timeout > 0)
             {
-                VgcApis.Misc.Utils.DoItLater(() => timesup = true, timeout);
+                VgcApis.Misc.Utils.DoItLater(() => timesUp = true, timeout);
             }
 
             bool cancel()
             {
-                if (timesup)
+                if (timesUp)
                 {
                     return true;
                 }
@@ -193,12 +193,19 @@ namespace V2RayGCon.Services
             void import()
             {
                 var text = sb.ToString();
-                sb.Clear();
                 foreach (var decoder in decoders)
                 {
+                    if (cancel())
+                    {
+                        return;
+                    }
                     var links = decoder.ExtractLinksFromText(text);
                     foreach (var link in links)
                     {
+                        if (cancel())
+                        {
+                            return;
+                        }
                         var r = codecs.Decode(link, decoder);
                         if (r == null || string.IsNullOrEmpty(r.config))
                         {
@@ -208,25 +215,27 @@ namespace V2RayGCon.Services
                         if (!string.IsNullOrEmpty(uid))
                         {
                             success++;
-                            if (cancel())
-                            {
-                                return;
-                            }
                         }
                     }
                 }
                 servers.RequireFormMainReload();
             }
 
-            void push(string line)
+            var chunkSize = Import.ParseImportZipPkgChunkSize;
+            var highWater = chunkSize * 0.8;
+            var overlapSize = 10 * 1024;
+            void push(char[] buff, int len)
             {
-                sb.AppendLine(line);
-                if (sb.Length > Import.ParseImportZipPkgChunkSize)
+                sb.Append(buff, 0, len);
+                if (sb.Length < highWater)
                 {
-                    import();
+                    return;
                 }
+                import();
+                sb.Remove(0, sb.Length - overlapSize);
             }
 
+            var readBuffer = new char[chunkSize];
             void parseFileStream(StreamReader reader)
             {
                 while (true)
@@ -236,17 +245,13 @@ namespace V2RayGCon.Services
                         return;
                     }
 
-                    var line = reader.ReadLine();
-                    if (line == null)
+                    var n = reader.Read(readBuffer, 0, chunkSize);
+                    if (n < 1)
                     {
                         // file ends
                         return;
                     }
-
-                    if (line != "")
-                    {
-                        push(line);
-                    }
+                    push(readBuffer, n);
                 }
             }
 

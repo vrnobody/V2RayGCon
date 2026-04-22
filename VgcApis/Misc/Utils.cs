@@ -247,26 +247,6 @@ namespace VgcApis.Misc
             return true;
         }
 
-        public static void CollectOnHighPressure(params string[] strs)
-        {
-            var pressure = 0;
-            foreach (var str in strs)
-            {
-                if (string.IsNullOrEmpty(str))
-                {
-                    continue;
-                }
-                pressure = Math.Max(pressure, str.Length);
-            }
-
-            if (pressure < 256 * 1024)
-            {
-                return;
-            }
-            Logger.Debug("GC.Collect()");
-            GC.Collect();
-        }
-
         /// <summary>
         /// UseShellExecute = false,
         /// RedirectStandardOutput = true,

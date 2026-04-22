@@ -249,7 +249,6 @@ namespace V2RayGCon.Services
                 : outbounds.Concat(backup).ToList();
 
             var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, nodes);
-            VgcApis.Misc.Utils.CollectOnHighPressure(r);
             return r;
         }
 
@@ -289,7 +288,6 @@ namespace V2RayGCon.Services
             }
 
             var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, outbounds);
-            VgcApis.Misc.Utils.CollectOnHighPressure(r);
             return r;
         }
         #endregion

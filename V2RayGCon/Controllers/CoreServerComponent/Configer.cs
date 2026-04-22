@@ -291,7 +291,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
-            VgcApis.Misc.Utils.CollectOnHighPressure(r, config);
             r = string.IsNullOrEmpty(r) ? config : r;
             return r;
         }

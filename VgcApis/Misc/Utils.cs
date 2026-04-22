@@ -247,8 +247,18 @@ namespace VgcApis.Misc
             return true;
         }
 
-        public static void CollectOnHighPressure(int pressure)
+        public static void CollectOnHighPressure(params string[] strs)
         {
+            var pressure = 0;
+            foreach (var str in strs)
+            {
+                if (string.IsNullOrEmpty(str))
+                {
+                    continue;
+                }
+                pressure = Math.Max(pressure, str.Length);
+            }
+
             if (pressure < 256 * 1024)
             {
                 return;
@@ -1632,6 +1642,30 @@ namespace VgcApis.Misc
             catch { }
             wc.Dispose();
             return success;
+        }
+
+        public static WebClient CreateStreamWebClient(
+            string url,
+            bool isSocks5,
+            int proxyPort,
+            int timeout,
+            string username,
+            string password
+        )
+        {
+            if (!IsHttpLink(url))
+            {
+                url = RelativePath2FullPath(url);
+                proxyPort = -1;
+            }
+
+            var wc = CreateWebClient(url, isSocks5, Webs.LoopBackIP, proxyPort, username, password);
+            if (timeout >= 0)
+            {
+                timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;
+                DoItLater(() => CancelWebClientAsync(wc), timeout);
+            }
+            return wc;
         }
 
         /// <summary>

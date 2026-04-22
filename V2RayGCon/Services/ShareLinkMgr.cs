@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
+using NeoLuna.Misc;
 using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services.ShareLinkComponents;
+using VgcApis.Models.Consts;
 using VgcApis.Models.Datas;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace V2RayGCon.Services
 {
@@ -141,13 +147,145 @@ namespace V2RayGCon.Services
         public int UpdateSubscriptions(bool isSocks5, int proxyPort)
         {
             var enabledSubs = settings.GetSubscriptionItems().Where(s => s.isUse).ToList();
-
             var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, isSocks5, proxyPort);
             var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(links, decoders);
             var n = CountImportSuccessResult(results);
             VgcApis.Misc.Utils.ClearRegexCache();
             return n;
+        }
+
+        // username is proxy username so as password
+        public int ImportZipPackageSync(
+            string url,
+            string mark,
+            int maxCount,
+            int timeout,
+            bool isSocks5,
+            int proxyPort,
+            string proxyUsername,
+            string proxyPassword
+        )
+        {
+            var sb = new StringBuilder();
+            var decoders = codecs.GetDecoders(false);
+            var success = 0;
+            var timesup = false;
+
+            if (timeout > 0)
+            {
+                VgcApis.Misc.Utils.DoItLater(() => timesup = true, timeout);
+            }
+
+            bool cancel()
+            {
+                if (timesup)
+                {
+                    return true;
+                }
+                if (maxCount > 0 && success >= maxCount)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            void import()
+            {
+                var text = sb.ToString();
+                sb.Clear();
+                foreach (var decoder in decoders)
+                {
+                    var links = decoder.ExtractLinksFromText(text);
+                    foreach (var link in links)
+                    {
+                        var r = codecs.Decode(link, decoder);
+                        if (r == null || string.IsNullOrEmpty(r.config))
+                        {
+                            continue;
+                        }
+                        var uid = servers.AddServer(r.name, r.config, mark, true);
+                        if (!string.IsNullOrEmpty(uid))
+                        {
+                            success++;
+                            if (cancel())
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+                servers.RequireFormMainReload();
+            }
+
+            void push(string line)
+            {
+                sb.AppendLine(line);
+                if (sb.Length > Import.ParseImportZipPkgChunkSize)
+                {
+                    import();
+                }
+            }
+
+            void parseFileStream(StreamReader reader)
+            {
+                while (true)
+                {
+                    if (cancel())
+                    {
+                        return;
+                    }
+
+                    var line = reader.ReadLine();
+                    if (line == null)
+                    {
+                        // file ends
+                        return;
+                    }
+
+                    if (line != "")
+                    {
+                        push(line);
+                    }
+                }
+            }
+
+            try
+            {
+                using (
+                    var wc = VgcApis.Misc.Utils.CreateStreamWebClient(
+                        url,
+                        isSocks5,
+                        proxyPort,
+                        timeout,
+                        proxyUsername,
+                        proxyPassword
+                    )
+                )
+                using (var zipStream = wc.OpenRead(url))
+                using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Read))
+                {
+                    foreach (var entry in archive.Entries)
+                    {
+                        if (cancel())
+                        {
+                            break;
+                        }
+
+                        try
+                        {
+                            using (var reader = new StreamReader(entry.Open()))
+                            {
+                                parseFileStream(reader);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                import();
+            }
+            catch { }
+            return success;
         }
 
         public int ImportLinksWithOutV2cfgLinksSync(string links, string mark)

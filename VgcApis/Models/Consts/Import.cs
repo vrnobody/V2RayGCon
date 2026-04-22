@@ -6,6 +6,8 @@
 
         public static readonly int HtmlCacheSize = 30;
 
+        public static readonly int ParseImportZipPkgChunkSize = 5 * 1024 * 1024; // 5 MiB
+
         public static readonly int ParseImportTimeout = 30 * 1000;
 
         public static readonly int ParseImportDepth = 5;

@@ -20,6 +20,17 @@ namespace VgcApis.Interfaces.Services
 
         int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
 
+        int ImportZipPackageSync(
+            string url,
+            string mark,
+            int maxCount,
+            int timeout,
+            bool isSocks5,
+            int proxyPort,
+            string proxyUsername,
+            string proxyPassword
+        );
+
         int UpdateSubscriptions(bool isSocks5, int proxyPort);
     }
 }

@@ -523,6 +523,33 @@ namespace NeoLuna.Interfaces
         /// <returns>成功导入的链接数</returns>
         int ImportLinks(string links, string mark);
 
+        /// <summary>
+        /// 从一个 zip 文件导入链接，不支持密码。
+        /// 不在订阅里面加这个功能，是担心内存会炸。
+        /// </summary>
+        /// <param name="url">可以是本地地址，也可以是网络地址</param>
+        /// <param name="mark">导入链接时设置的“标记”</param>
+        /// <param name="maxCount">最大成功导入数量，主要用于 debug，0 代表不限制</param>
+        /// <param name="timeout">
+        /// 网络耗时和导入链接耗时之和，单位 ms。
+        /// -1 表示直到全部处理完成，0 表示默认 60 秒。
+        /// </param>
+        /// <param name="isSocks5">是否使用 socks5 代理</param>
+        /// <param name="proxyPort"></param>
+        /// <param name="username">代理服务器的用户名</param>
+        /// <param name="password">代理服务器的密码</param>
+        /// <returns>成功导入的链接数量</returns>
+        int ImportZipPackage(
+            string url,
+            string mark,
+            int maxCount,
+            int timeout,
+            bool isSocks5,
+            int proxyPort,
+            string username,
+            string password
+        );
+
         #endregion
     }
 }

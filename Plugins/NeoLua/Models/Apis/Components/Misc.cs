@@ -86,6 +86,27 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.ImportLinks
+        public int ImportZipPackage(
+            string url,
+            string mark,
+            int maxCount,
+            int timeout,
+            bool isSocks5,
+            int proxyPort,
+            string username,
+            string password
+        ) =>
+            vgcSlinkMgr.ImportZipPackageSync(
+                url,
+                mark,
+                maxCount,
+                timeout,
+                isSocks5,
+                proxyPort,
+                username,
+                password
+            );
+
         public int ImportLinks(string links, string mark) =>
             vgcSlinkMgr.ImportLinksWithOutV2cfgLinksSync(links, mark);
 

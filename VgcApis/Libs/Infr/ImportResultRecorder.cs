@@ -12,6 +12,8 @@ namespace VgcApis.Libs.Infr
         int cntOk = 0;
         int cntFails = 0;
 
+        readonly Dictionary<string, int> reasons = new Dictionary<string, int>();
+
         // 序列化需要这个ctor, 不要删除！
         public ImportResultRecorder() { }
 
@@ -29,11 +31,19 @@ namespace VgcApis.Libs.Infr
 
         #region public methods
 
-        public IEnumerable<string[]> GetResults() => results;
+        public List<string[]> GetResults() => results.ToList();
 
-        public int CountFails() => cntFails;
+        public string GetReasonsSubTotal()
+        {
+            lock (this.reasons)
+            {
+                return string.Join(", ", reasons.Select(kv => $"{kv.Key}: {kv.Value}"));
+            }
+        }
 
-        public int CountOk() => cntOk;
+        public int GetTotalCount() => cntFails + cntOk;
+
+        public int GetSuccessCount() => cntOk;
 
         public void Record(bool success)
         {
@@ -50,6 +60,7 @@ namespace VgcApis.Libs.Infr
         public void Record(string mark, string link, bool success, string reason)
         {
             Record(success);
+            CountReason(reason);
 
             var symbol = success
                 ? Models.Consts.Import.MarkImportSuccess
@@ -64,6 +75,23 @@ namespace VgcApis.Libs.Infr
                 reason,
             };
             results.Enqueue(r);
+        }
+        #endregion
+
+        #region private methods
+        void CountReason(string reason)
+        {
+            lock (reasons)
+            {
+                if (reasons.ContainsKey(reason))
+                {
+                    reasons[reason]++;
+                }
+                else
+                {
+                    reasons[reason] = 1;
+                }
+            }
         }
         #endregion
     }

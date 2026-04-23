@@ -195,7 +195,7 @@ namespace V2RayGCon.Services
                 .Where(s => s.isUse && !string.IsNullOrEmpty(s.url))
                 .ToList();
             var recoder = UpdateSubsCore(validSubs, isSocks5, proxyPort, false);
-            return recoder.CountOk();
+            return recoder.GetSuccessCount();
         }
 
         // username is proxy username so as password
@@ -243,7 +243,7 @@ namespace V2RayGCon.Services
                 false,
                 CancellationToken.None
             );
-            return recorder.CountOk();
+            return recorder.GetSuccessCount();
         }
 
         public void ImportLinkWithOutV2cfgUi(string text)
@@ -359,7 +359,7 @@ namespace V2RayGCon.Services
 
         public void ShowImportResults(ImportResultRecorder recoder)
         {
-            var c = recoder.CountOk() + recoder.CountFails();
+            var c = recoder.GetTotalCount();
             if (c <= 0)
             {
                 VgcApis.Misc.UI.MsgBox(I18N.NoLinkFound);
@@ -369,7 +369,7 @@ namespace V2RayGCon.Services
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 servers.RequireFormMainReload();
-                Views.WinForms.FormImportLinksResult.ShowResult(recoder.GetResults());
+                Views.WinForms.FormImportLinksResult.ShowResult(recoder);
             });
         }
 

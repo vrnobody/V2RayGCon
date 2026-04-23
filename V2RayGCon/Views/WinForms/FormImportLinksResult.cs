@@ -9,15 +9,18 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormImportLinksResult : Form
     {
-        public static void ShowResult(IEnumerable<string[]> importResults) =>
-            VgcApis.Misc.UI.Invoke(() => new FormImportLinksResult(importResults).Show());
+        public static void ShowResult(VgcApis.Libs.Infr.ImportResultRecorder recorder) =>
+            VgcApis.Misc.UI.Invoke(() => new FormImportLinksResult(recorder).Show());
 
+        readonly VgcApis.Libs.Infr.ImportResultRecorder recorder;
         readonly List<string[]> results;
 
-        FormImportLinksResult(IEnumerable<string[]> importResults)
+        FormImportLinksResult(VgcApis.Libs.Infr.ImportResultRecorder recorder)
         {
             InitializeComponent();
-            this.results = CopyResults(importResults);
+
+            this.recorder = recorder;
+            this.results = recorder.GetResults();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             VgcApis.Misc.UI.AddTagToFormTitle(this);
         }
@@ -25,7 +28,7 @@ namespace V2RayGCon.Views.WinForms
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
             lvResult.Items.Clear();
-            var total = results.Count;
+            var total = recorder.GetTotalCount();
             if (total > 1000)
             {
                 pbLoading.Visible = true;
@@ -49,28 +52,8 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region loader
-
-        List<string[]> CopyResults(IEnumerable<string[]> importResults)
-        {
-            var r = new List<string[]>();
-            var it = importResults.GetEnumerator();
-            try
-            {
-                while (it.MoveNext())
-                {
-                    r.Add(it.Current);
-                }
-            }
-            finally
-            {
-                it.Dispose();
-            }
-            return r;
-        }
-
         private void ResultLoader(int total, int min, int max)
         {
-            var reasons = new Dictionary<string, int>();
             var len = this.results.Count;
             var idx = 0;
             while (idx < len)
@@ -87,7 +70,7 @@ namespace V2RayGCon.Views.WinForms
                             {
                                 for (int i = 0; i < 200 && idx < len; i++, idx++)
                                 {
-                                    LoadOneRow(reasons, idx);
+                                    LoadOneRow(idx);
                                 }
                                 if ((DateTime.Now - prev).TotalMilliseconds > 500)
                                 {
@@ -95,7 +78,7 @@ namespace V2RayGCon.Views.WinForms
                                 }
                             }
                             lvResult.ResumeLayout();
-                            UpdateTotal(reasons, len);
+                            UpdateTotal(len);
                         }
                 );
                 VgcApis.Misc.Utils.Sleep(100);
@@ -110,30 +93,20 @@ namespace V2RayGCon.Views.WinForms
             );
         }
 
-        private void UpdateTotal(Dictionary<string, int> reasons, int len)
+        private void UpdateTotal(int len)
         {
-            var s = string.Join(", ", reasons.Select(kv => $"{kv.Key}: {kv.Value}"));
+            var s = this.recorder.GetReasonsSubTotal();
             var text = $"{I18N.Total}: {len}, {s}";
             lbResult.Text = text;
             toolTip1.SetToolTip(lbResult, text);
         }
 
-        void LoadOneRow(Dictionary<string, int> reasons, int idx)
+        void LoadOneRow(int idx)
         {
             var result = this.results[idx];
             result[0] = (idx + 1).ToString();
             var item = new ListViewItem(result);
             lvResult.Items.Add(item);
-
-            var reason = result[4];
-            if (reasons.ContainsKey(reason))
-            {
-                reasons[reason]++;
-            }
-            else
-            {
-                reasons[reason] = 1;
-            }
         }
 
         #endregion

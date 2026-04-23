@@ -103,7 +103,7 @@ namespace Luna.Models.Apis.Components
                 username,
                 password
             );
-            return recoder.CountOk();
+            return recoder.GetSuccessCount();
         }
 
         public int ImportLinks(string links, string mark) =>

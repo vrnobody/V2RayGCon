@@ -107,7 +107,7 @@ namespace NeoLuna.Models.Apis.Components
                 username,
                 password
             );
-            var r = new LuaResult(recoder.CountOk(), recoder.ErrorMessage);
+            var r = new LuaResult(recoder.GetSuccessCount(), recoder.ErrorMessage);
             return r;
         }
 

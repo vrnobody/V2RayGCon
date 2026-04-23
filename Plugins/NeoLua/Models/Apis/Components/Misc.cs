@@ -86,7 +86,7 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.ImportLinks
-        public int ImportZipPackage(
+        public LuaResult ImportZipPackage(
             string url,
             string mark,
             int maxCount,
@@ -95,8 +95,9 @@ namespace NeoLuna.Models.Apis.Components
             int proxyPort,
             string username,
             string password
-        ) =>
-            vgcSlinkMgr.ImportZipPackageSync(
+        )
+        {
+            var recoder = vgcSlinkMgr.ImportZipPackageSync(
                 url,
                 mark,
                 maxCount,
@@ -106,9 +107,12 @@ namespace NeoLuna.Models.Apis.Components
                 username,
                 password
             );
+            var r = new LuaResult(recoder.CountOk(), recoder.ErrorMessage);
+            return r;
+        }
 
         public int ImportLinks(string links, string mark) =>
-            vgcSlinkMgr.ImportLinksWithOutV2cfgLinksSync(links, mark);
+            vgcSlinkMgr.ImportLinksWithOutV2cfgSync(links, mark);
 
         #endregion
 

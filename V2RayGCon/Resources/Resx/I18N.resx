@@ -416,9 +416,6 @@ Please check server configuration and log.</value>
   <data name="NoSubsUrlAvailable" xml:space="preserve">
     <value>No subscription links available.</value>
   </data>
-  <data name="DownloadFail" xml:space="preserve">
-    <value>Download fail!</value>
-  </data>
   <data name="ConfirmDeletion" xml:space="preserve">
     <value>Are you sure want to delete this item?</value>
   </data>

@@ -61,7 +61,7 @@ namespace V2RayGCon.Views.UserControls
         private void lbCopyFromClipboard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string text = VgcApis.Misc.Utils.ReadFromClipboard();
-            slinkMgr.ImportLinkWithOutV2cfgLinks(text);
+            slinkMgr.ImportLinkWithOutV2cfgUi(text);
         }
 
         private void lbScanQRCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -73,7 +73,7 @@ namespace V2RayGCon.Views.UserControls
                     VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength
                 );
                 VgcApis.Misc.Logger.Log($"QRCode: {msg}");
-                slinkMgr.ImportLinkWithOutV2cfgLinks(text);
+                slinkMgr.ImportLinkWithOutV2cfgUi(text);
             }
 
             void Fail()

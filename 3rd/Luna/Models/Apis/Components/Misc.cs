@@ -82,8 +82,32 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.ImportLinks
+        public int ImportZipPackage(
+            string url,
+            string mark,
+            int maxCount,
+            int timeout,
+            bool isSocks5,
+            int proxyPort,
+            string username,
+            string password
+        )
+        {
+            var recoder = vgcSlinkMgr.ImportZipPackageSync(
+                url,
+                mark,
+                maxCount,
+                timeout,
+                isSocks5,
+                proxyPort,
+                username,
+                password
+            );
+            return recoder.CountOk();
+        }
+
         public int ImportLinks(string links, string mark) =>
-            vgcSlinkMgr.ImportLinksWithOutV2cfgLinksSync(links, mark);
+            vgcSlinkMgr.ImportLinksWithOutV2cfgSync(links, mark);
 
         #endregion
 

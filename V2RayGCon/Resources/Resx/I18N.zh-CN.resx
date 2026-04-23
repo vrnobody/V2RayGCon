@@ -414,9 +414,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="NoSubsUrlAvailable" xml:space="preserve">
     <value>没有可用的订阅链接</value>
   </data>
-  <data name="DownloadFail" xml:space="preserve">
-    <value>下载失败！</value>
-  </data>
   <data name="ConfirmDeletion" xml:space="preserve">
     <value>确定要删除吗？</value>
   </data>

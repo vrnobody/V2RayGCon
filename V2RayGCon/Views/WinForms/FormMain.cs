@@ -107,7 +107,7 @@ namespace V2RayGCon.Views.WinForms
             toolStripButtonImportFromClipboard.Click += (s, a) =>
             {
                 string text = VgcApis.Misc.Utils.ReadFromClipboard();
-                slinkMgr.ImportLinkWithOutV2cfgLinks(text);
+                slinkMgr.ImportLinkWithOutV2cfgUi(text);
             };
 
             bind(toolStripButtonSelectAllCurPage, selectAllCurPageToolStripMenuItem);

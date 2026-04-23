@@ -95,6 +95,7 @@
     <Compile Include="Models\Consts\UI.cs" />
     <Compile Include="Models\Composer\Options.cs" />
     <Compile Include="Models\Datas\MobItem.cs" />
+    <Compile Include="Libs\Infr\ImportResultRecorder.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteListView.cs">

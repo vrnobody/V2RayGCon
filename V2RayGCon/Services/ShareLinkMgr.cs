@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text;
-using NeoLuna.Misc;
+using System.Threading;
 using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services.ShareLinkComponents;
-using VgcApis.Models.Consts;
+using VgcApis.Interfaces;
+using VgcApis.Libs.Infr;
 using VgcApis.Models.Datas;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace V2RayGCon.Services
 {
@@ -144,19 +141,65 @@ namespace V2RayGCon.Services
             return codecs.GetChild<T>();
         }
 
+        public ImportResultRecorder UpdateSubsCore(
+            List<Models.Datas.SubscriptionItem> validSubs,
+            bool isSocks5,
+            int proxyPort,
+            bool withDetail
+        )
+        {
+            var decoders = codecs.GetDecoders(false);
+            var recorder = new ImportResultRecorder();
+
+            void dispatchSubs(Models.Datas.SubscriptionItem sub)
+            {
+                var mark = sub.isSetMark ? sub.alias : "";
+                var url = sub.url;
+                if (url.ToLower().EndsWith(".zip"))
+                {
+                    handleZipSub(mark, url);
+                }
+                else
+                {
+                    handleTextSub(mark, url);
+                }
+                servers.RequireFormMainReload();
+            }
+
+            void decode(string mark, string text, Action onAddNew, CancellationToken token)
+            {
+                AddServersFromText(decoders, recorder, mark, text, onAddNew, withDetail, token);
+            }
+
+            void handleZipSub(string mark, string url)
+            {
+                var zipTask = new ImportComponents.ZipTask(mark, url);
+                zipTask.Exec(decode, isSocks5, proxyPort);
+            }
+
+            void handleTextSub(string mark, string url)
+            {
+                var textTask = new ImportComponents.TextTask(mark, url);
+                textTask.Exec(decode, isSocks5, proxyPort);
+            }
+
+            VgcApis.Misc.Utils.ExecuteInParallel(validSubs, dispatchSubs);
+            VgcApis.Misc.Utils.ClearRegexCache();
+            return recorder;
+        }
+
         public int UpdateSubscriptions(bool isSocks5, int proxyPort)
         {
-            var enabledSubs = settings.GetSubscriptionItems().Where(s => s.isUse).ToList();
-            var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, isSocks5, proxyPort);
-            var decoders = codecs.GetDecoders(false);
-            var results = ImportLinksBatchModeSync(links, decoders);
-            var n = CountImportSuccessResult(results);
-            VgcApis.Misc.Utils.ClearRegexCache();
-            return n;
+            var validSubs = settings
+                .GetSubscriptionItems()
+                .Where(s => s.isUse && !string.IsNullOrEmpty(s.url))
+                .ToList();
+            var recoder = UpdateSubsCore(validSubs, isSocks5, proxyPort, false);
+            return recoder.CountOk();
         }
 
         // username is proxy username so as password
-        public int ImportZipPackageSync(
+        public ImportResultRecorder ImportZipPackageSync(
             string url,
             string mark,
             int maxCount,
@@ -167,170 +210,50 @@ namespace V2RayGCon.Services
             string proxyPassword
         )
         {
-            var sb = new StringBuilder();
             var decoders = codecs.GetDecoders(false);
-            var success = 0;
-            var timesUp = false;
+            var recorder = new ImportResultRecorder();
 
-            if (timeout > 0)
+            void decode(string mrk, string text, Action onAddNew, CancellationToken token)
             {
-                VgcApis.Misc.Utils.DoItLater(() => timesUp = true, timeout);
+                AddServersFromText(decoders, recorder, mrk, text, onAddNew, false, token);
             }
 
-            bool cancel()
-            {
-                if (timesUp)
-                {
-                    return true;
-                }
-                if (maxCount > 0 && success >= maxCount)
-                {
-                    return true;
-                }
-                return false;
-            }
-
-            void import()
-            {
-                var text = sb.ToString();
-                foreach (var decoder in decoders)
-                {
-                    if (cancel())
-                    {
-                        return;
-                    }
-                    var links = decoder.ExtractLinksFromText(text);
-                    foreach (var link in links)
-                    {
-                        if (cancel())
-                        {
-                            return;
-                        }
-                        var r = codecs.Decode(link, decoder);
-                        if (r == null || string.IsNullOrEmpty(r.config))
-                        {
-                            continue;
-                        }
-                        var uid = servers.AddServer(r.name, r.config, mark, true);
-                        if (!string.IsNullOrEmpty(uid))
-                        {
-                            success++;
-                        }
-                    }
-                }
-                servers.RequireFormMainReload();
-            }
-
-            var chunkSize = Import.ParseImportZipPkgChunkSize;
-            var highWater = chunkSize * 0.8;
-            var overlapSize = 10 * 1024;
-            void push(char[] buff, int len)
-            {
-                sb.Append(buff, 0, len);
-                if (sb.Length < highWater)
-                {
-                    return;
-                }
-                import();
-                sb.Remove(0, sb.Length - overlapSize);
-            }
-
-            var readBuffer = new char[chunkSize];
-            void parseFileStream(StreamReader reader)
-            {
-                while (true)
-                {
-                    if (cancel())
-                    {
-                        return;
-                    }
-
-                    var n = reader.Read(readBuffer, 0, chunkSize);
-                    if (n < 1)
-                    {
-                        // file ends
-                        return;
-                    }
-                    push(readBuffer, n);
-                }
-            }
-
-            try
-            {
-                using (
-                    var wc = VgcApis.Misc.Utils.CreateStreamWebClient(
-                        url,
-                        isSocks5,
-                        proxyPort,
-                        timeout,
-                        proxyUsername,
-                        proxyPassword
-                    )
-                )
-                using (var zipStream = wc.OpenRead(url))
-                using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Read))
-                {
-                    foreach (var entry in archive.Entries)
-                    {
-                        if (cancel())
-                        {
-                            break;
-                        }
-
-                        try
-                        {
-                            using (var reader = new StreamReader(entry.Open()))
-                            {
-                                parseFileStream(reader);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                import();
-            }
-            catch { }
-            return success;
+            var zipTask = new ImportComponents.ZipTask(mark, url, maxCount, timeout);
+            zipTask.Exec(decode, isSocks5, proxyPort);
+            recorder.ErrorMessage = zipTask.GetErrorMessage();
+            servers.RequireFormMainReload();
+            return recorder;
         }
 
-        public int ImportLinksWithOutV2cfgLinksSync(string links, string mark)
+        public int ImportLinksWithOutV2cfgSync(string links, string mark)
         {
             if (string.IsNullOrEmpty(links))
             {
                 return 0;
             }
 
-            var pair = new string[] { links, mark ?? "" };
-            var linkList = new List<string[]> { pair };
             var decoders = codecs.GetDecoders(false);
-            var results = ImportLinksBatchModeSync(linkList, decoders);
-
-            // servers.UpdateAllServersSummary();
-
-            return CountImportSuccessResult(results);
+            var recorder = new ImportResultRecorder();
+            AddServersFromText(
+                decoders,
+                recorder,
+                mark,
+                links,
+                null,
+                false,
+                CancellationToken.None
+            );
+            return recorder.CountOk();
         }
 
-        public void ImportLinkWithOutV2cfgLinksBatchModeSync(IEnumerable<string[]> linkList)
+        public void ImportLinkWithOutV2cfgUi(string text)
         {
-            var decoders = codecs.GetDecoders(false);
-            var results = ImportLinksBatchModeSync(linkList, decoders);
-            ShowImportResults(results);
+            ImportLinksUiCoreBg(text, false);
         }
 
-        public void ImportLinkWithOutV2cfgLinks(string text)
+        public void ImportLinkWithV2cfgUi(string text)
         {
-            var pair = new string[] { text, "" };
-            var linkList = new List<string[]> { pair };
-            var decoders = codecs.GetDecoders(false);
-            ImportLinksBatchModeAsync(linkList, decoders, true);
-        }
-
-        public void ImportLinkWithV2cfgLinks(string text)
-        {
-            var pair = new string[] { text, "" };
-            var linkList = new List<string[]> { pair };
-            var decoders = codecs.GetDecoders(true);
-            ImportLinksBatchModeAsync(linkList, decoders, true);
+            ImportLinksUiCoreBg(text, true);
         }
 
         public void Run(Settings settings, Servers servers)
@@ -344,6 +267,85 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void AddServersFromText(
+            List<IShareLinkDecoder> decoders,
+            ImportResultRecorder recorder,
+            string mark,
+            string text,
+            Action onAddNew,
+            bool withDetail,
+            CancellationToken token
+        )
+        {
+            void record(string link, bool success, string reason)
+            {
+                if (withDetail)
+                {
+                    recorder.Record(mark, link, success, reason);
+                }
+                else
+                {
+                    recorder.Record(success);
+                }
+            }
+
+            foreach (var decoder in decoders)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+                var links = decoder.ExtractLinksFromText(text);
+                foreach (var link in links)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    var r = codecs.Decode(link, decoder);
+                    if (r == null || string.IsNullOrEmpty(r.config))
+                    {
+                        record(link, false, I18N.DecodeFail);
+                        continue;
+                    }
+                    var uid = servers.AddServer(r.name, r.config, mark, true);
+                    if (string.IsNullOrEmpty(uid))
+                    {
+                        record(link, false, I18N.DuplicateServer);
+                    }
+                    else
+                    {
+                        onAddNew?.Invoke();
+                        record(link, true, I18N.Success);
+                    }
+                }
+            }
+        }
+
+        void ImportLinksUiCoreBg(string links, bool includeV2cfgLinks)
+        {
+            if (string.IsNullOrEmpty(links))
+            {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                var decoders = codecs.GetDecoders(includeV2cfgLinks);
+                var recorder = new ImportResultRecorder();
+                AddServersFromText(
+                    decoders,
+                    recorder,
+                    "",
+                    links,
+                    null,
+                    true,
+                    CancellationToken.None
+                );
+                ShowImportResults(recorder);
+            });
+        }
+
         static readonly List<Enums.LinkTypes> linkTypes = new List<Enums.LinkTypes>
         {
             Enums.LinkTypes.vmess,
@@ -355,133 +357,22 @@ namespace V2RayGCon.Services
             Enums.LinkTypes.mob,
         };
 
-        int CountImportSuccessResult(IEnumerable<string[]> result)
+        public void ShowImportResults(ImportResultRecorder recoder)
         {
-            return result.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
-        }
-
-        void ImportLinksBatchModeAsync(
-            IEnumerable<string[]> linkList,
-            IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders,
-            bool isShowImportResults
-        )
-        {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                var results = ImportLinksBatchModeSync(linkList, decoders);
-                if (isShowImportResults)
-                {
-                    ShowImportResults(results);
-                }
-            });
-        }
-
-        /// <summary>
-        /// <para>linkList=List(string[]{0: text, 1: mark}>)</para>
-        /// <para>decoders = List(IShareLinkDecoder)</para>
-        /// </summary>
-        IEnumerable<string[]> ImportLinksBatchModeSync(
-            IEnumerable<string[]> linkList,
-            IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders
-        )
-        {
-            var jobs = new List<Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder>>();
-
-            foreach (var link in linkList)
-            {
-                foreach (var decoder in decoders)
-                {
-                    jobs.Add(
-                        new Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder>(
-                            link[0],
-                            link[1],
-                            decoder
-                        )
-                    );
-                }
-            }
-
-            List<string[]> worker(Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder> job)
-            {
-                return ImportShareLinks(job.Item1, job.Item2, job.Item3);
-            }
-
-            var results = VgcApis.Misc.Utils.ExecuteInParallel(jobs, worker).SelectMany(r => r);
-            servers.RequireFormMainReload();
-            return results;
-        }
-
-        void ShowImportResults(IEnumerable<string[]> results)
-        {
-            var c = results.Count();
-
+            var c = recoder.CountOk() + recoder.CountFails();
             if (c <= 0)
             {
                 VgcApis.Misc.UI.MsgBox(I18N.NoLinkFound);
                 return;
             }
 
-            if (IsImportAnyServer(results))
-            {
-                servers.RequireFormMainReload();
-            }
-
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Views.WinForms.FormImportLinksResult.ShowResult(results);
+                servers.RequireFormMainReload();
+                Views.WinForms.FormImportLinksResult.ShowResult(recoder.GetResults());
             });
         }
 
-        private List<string[]> ImportShareLinks(
-            string text,
-            string mark,
-            VgcApis.Interfaces.IShareLinkDecoder decoder
-        )
-        {
-            var links = decoder.ExtractLinksFromText(text);
-            var results = links
-                .Select(link =>
-                {
-                    var r = codecs.Decode(link, decoder);
-                    var msg = AddLinkToServerList(r, mark);
-                    return GenImportResult(link, msg.Item1, msg.Item2, mark);
-                })
-                .ToList();
-            return results;
-        }
-
-        bool IsImportAnyServer(IEnumerable<string[]> importResults)
-        {
-            return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
-        }
-
-        private Tuple<bool, string> AddLinkToServerList(DecodeResult r, string mark)
-        {
-            if (r == null || string.IsNullOrEmpty(r.config))
-            {
-                return new Tuple<bool, string>(false, I18N.DecodeFail);
-            }
-            var uid = servers.AddServer(r.name, r.config, mark, true);
-            var ok = !string.IsNullOrEmpty(uid);
-            var reason = ok ? I18N.Success : I18N.DuplicateServer;
-            return new Tuple<bool, string>(ok, reason);
-        }
-
-        string[] GenImportResult(string link, bool success, string reason, string mark)
-        {
-            var importSuccessMark = success
-                ? VgcApis.Models.Consts.Import.MarkImportSuccess
-                : VgcApis.Models.Consts.Import.MarkImportFail;
-
-            return new string[]
-            {
-                string.Empty, // reserved for index
-                link,
-                mark,
-                importSuccessMark, // be aware of IsImportResultSuccess()
-                reason,
-            };
-        }
         #endregion
 
         #region protected methods

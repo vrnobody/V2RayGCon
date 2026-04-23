@@ -787,15 +787,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Download fail! 的本地化字符串。
-        /// </summary>
-        internal static string DownloadFail {
-            get {
-                return ResourceManager.GetString("DownloadFail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Downloading, please wait ... 的本地化字符串。
         /// </summary>
         internal static string Downloading {

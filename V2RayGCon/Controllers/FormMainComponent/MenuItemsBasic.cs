@@ -125,7 +125,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             importLinkFromClipboard.Click += (s, a) =>
             {
                 string text = VgcApis.Misc.Utils.ReadFromClipboard();
-                slinkMgr.ImportLinkWithV2cfgLinks(text);
+                slinkMgr.ImportLinkWithV2cfgUi(text);
             };
         }
 

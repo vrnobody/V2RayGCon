@@ -356,7 +356,7 @@ namespace V2RayGCon.Services
                     VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength
                 );
                 VgcApis.Misc.Logger.Log($"QRCode: {msg}");
-                slinkMgr.ImportLinkWithOutV2cfgLinks(link);
+                slinkMgr.ImportLinkWithOutV2cfgUi(link);
             }
 
             void Fail()
@@ -1262,7 +1262,7 @@ namespace V2RayGCon.Services
                         (s, a) =>
                         {
                             string links = VgcApis.Misc.Utils.ReadFromClipboard();
-                            slinkMgr.ImportLinkWithOutV2cfgLinks(links);
+                            slinkMgr.ImportLinkWithOutV2cfgUi(links);
                         }
                     ),
                     new ToolStripMenuItem(

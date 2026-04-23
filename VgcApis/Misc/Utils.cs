@@ -1336,8 +1336,8 @@ namespace VgcApis.Misc
             bool isSocks5,
             string proxyHost,
             int proxyPort,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
@@ -1368,12 +1368,18 @@ namespace VgcApis.Misc
                 return wc;
             }
 
-            var needAuth = !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
+            var needAuth =
+                !string.IsNullOrEmpty(proxyUsername) && !string.IsNullOrEmpty(proxyPassword);
             if (isSocks5)
             {
                 // throw exception if username or password is empty
                 wc.Proxy = needAuth
-                    ? new MihaZupan.HttpToSocks5Proxy(proxyHost, proxyPort, username, password)
+                    ? new MihaZupan.HttpToSocks5Proxy(
+                        proxyHost,
+                        proxyPort,
+                        proxyUsername,
+                        proxyPassword
+                    )
                     : new MihaZupan.HttpToSocks5Proxy(proxyHost, proxyPort);
             }
             else
@@ -1383,7 +1389,7 @@ namespace VgcApis.Misc
                         new Uri(string.Format("http://{0}:{1}", proxyHost, proxyPort)),
                         true,
                         null,
-                        new NetworkCredential(username, password)
+                        new NetworkCredential(proxyUsername, proxyPassword)
                     )
                     : new WebProxy(proxyHost, proxyPort);
             }
@@ -1401,8 +1407,8 @@ namespace VgcApis.Misc
             int port,
             int expectedSizeInKiB,
             int timeout,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             if (string.IsNullOrEmpty(url))
@@ -1413,7 +1419,7 @@ namespace VgcApis.Misc
             long expectedSizeInBytes = expectedSizeInKiB * 1024;
             timeout = timeout > 0 ? timeout : Intervals.DefaultSpeedTestTimeout;
             var localhost = Webs.LoopBackIP;
-            var wc = CreateWebClient(url, isSocks5, localhost, port, username, password);
+            var wc = CreateWebClient(url, isSocks5, localhost, port, proxyUsername, proxyPassword);
             DoItLater(() => CancelWebClientAsync(wc), timeout);
 
             long size = 0;
@@ -1629,8 +1635,8 @@ namespace VgcApis.Misc
             bool isSocks5,
             int proxyPort,
             int timeout,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             if (!IsHttpLink(url))
@@ -1639,7 +1645,14 @@ namespace VgcApis.Misc
                 proxyPort = -1;
             }
 
-            var wc = CreateWebClient(url, isSocks5, Webs.LoopBackIP, proxyPort, username, password);
+            var wc = CreateWebClient(
+                url,
+                isSocks5,
+                Webs.LoopBackIP,
+                proxyPort,
+                proxyUsername,
+                proxyPassword
+            );
             if (timeout >= 0)
             {
                 timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;
@@ -1661,8 +1674,8 @@ namespace VgcApis.Misc
             string host,
             int proxyPort,
             int timeout,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             if (!IsHttpLink(url))
@@ -1671,7 +1684,7 @@ namespace VgcApis.Misc
                 proxyPort = -1;
             }
 
-            var wc = CreateWebClient(url, isSocks5, host, proxyPort, username, password);
+            var wc = CreateWebClient(url, isSocks5, host, proxyPort, proxyUsername, proxyPassword);
             if (timeout >= 0)
             {
                 timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;

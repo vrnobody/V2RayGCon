@@ -1,4 +1,5 @@
-﻿using VgcApis.Models.Datas;
+﻿using VgcApis.Libs.Infr;
+using VgcApis.Models.Datas;
 
 namespace VgcApis.Interfaces.Services
 {
@@ -18,9 +19,9 @@ namespace VgcApis.Interfaces.Services
 
         string EncodeConfigToShareLink(string name, string config, Enums.LinkTypes linkType);
 
-        int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
+        int ImportLinksWithOutV2cfgSync(string links, string mark);
 
-        int ImportZipPackageSync(
+        ImportResultRecorder ImportZipPackageSync(
             string url,
             string mark,
             int maxCount,

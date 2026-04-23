@@ -293,7 +293,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.btnUpdate.Click += (s, a) =>
             {
                 this.btnUpdate.Enabled = false;
-                var subs = GetSubsIsInUse();
+                var subs = GetEnabledSubsItems();
 
                 if (subs.Count <= 0)
                 {
@@ -311,38 +311,15 @@ namespace V2RayGCon.Controllers.OptionComponent
                         return;
                     }
 
-                    var links = Misc.Utils.FetchLinksFromSubcriptions(subs, isSocks5, proxyPort);
-
-                    LogDownloadFails(
-                        links.Where(l => string.IsNullOrEmpty(l[0])).Select(l => l[1])
-                    );
-
-                    slinkMgr.ImportLinkWithOutV2cfgLinksBatchModeSync(
-                        links.Where(l => !string.IsNullOrEmpty(l[0])).ToList()
-                    );
-
+                    var recoder = slinkMgr.UpdateSubsCore(subs, isSocks5, proxyPort, true);
                     UpdateServUiTotal(this, EventArgs.Empty);
-
                     VgcApis.Misc.UI.Invoke(() => this.btnUpdate.Enabled = true);
+                    slinkMgr.ShowImportResults(recoder);
                 });
             };
         }
 
-        private void LogDownloadFails(IEnumerable<string> links)
-        {
-            var downloadFailUrls = links.ToList();
-            if (downloadFailUrls.Count() <= 0)
-            {
-                return;
-            }
-
-            downloadFailUrls.Insert(0, "");
-            VgcApis.Misc.Logger.Log(
-                string.Join(Environment.NewLine + I18N.DownloadFail + @" ", downloadFailUrls)
-            );
-        }
-
-        private List<Models.Datas.SubscriptionItem> GetSubsIsInUse()
+        private List<Models.Datas.SubscriptionItem> GetEnabledSubsItems()
         {
             var subs = new List<Models.Datas.SubscriptionItem>();
             var urlCache = new List<string>();
@@ -351,12 +328,13 @@ namespace V2RayGCon.Controllers.OptionComponent
             foreach (var subUi in subsUi)
             {
                 var subItem = subUi.GetValue();
-                if (!subItem.isUse || urlCache.Contains(subItem.url))
+                var url = subItem.url;
+                if (!subItem.isUse || string.IsNullOrEmpty(url) || urlCache.Contains(url))
                 {
                     continue;
                 }
 
-                urlCache.Add(subItem.url);
+                urlCache.Add(url);
                 subs.Add(subItem);
             }
 

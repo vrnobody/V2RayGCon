@@ -231,6 +231,8 @@
     <Compile Include="BaseClasses\NotifyComponent.cs" />
     <Compile Include="BaseClasses\SingletonService.cs" />
     <Compile Include="Services\ConfigMgr.cs" />
+    <Compile Include="Services\ImportComponents\ZipTask.cs" />
+    <Compile Include="Services\ImportComponents\TextTask.cs" />
     <Compile Include="Services\Launcher.cs" />
     <Compile Include="Services\PluginsComponents\PluginMgr.cs" />
     <Compile Include="Services\PluginsServer.cs" />

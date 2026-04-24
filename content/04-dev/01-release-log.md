@@ -5,6 +5,16 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.6.0` 20260424
+
+修复 undo 超过 100 次会崩溃的问题  
+订阅支持 zip 压缩包，详见在线手册的“订阅及各设置项”  
+任务栏图标信息框支持显示 inbound 端口范围  
+多个 inbounds 信息改为用分号分隔  
+优化导入结果窗口加载速度  
+NeoLuna 插件的用户输入控件添加 ctrl+s 快捷键  
+NeoLuna 插件添加 std.Misc:ImportZipPackage() 函数
+
 ##### `v2.2.5.0` 20260315
 
 添加 `#running` `#inbounds` 两个搜索关键词  

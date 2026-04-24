@@ -1,11 +1,14 @@
 {
-  "version": "2.2.5.0",
-  "md5": "E42CEADC416E1648DDEA44618721DDF5",
+  "version": "2.2.6.0",
+  "md5": "74E89AE8F60D2D75493A0D803B099E9E",
   "warnings": [],
   "changes": [
-    "添加 #running #inbounds 两个搜索关键词",
-    "支持 vless://... 分享链接的 vcn 参数",
-    "修复 Composer 插件无法拖放服务器的问题",
-    "主窗口使用更激进的刷新策略"
+    "修复 undo 超过 100 次会崩溃的问题",
+    "订阅支持 zip 压缩包，详见在线手册的“订阅及各设置项”",
+    "任务栏图标信息框支持显示 inbound 端口范围",
+    "多个 inbounds 信息改为用分号分隔",
+    "优化导入结果窗口加载速度",
+    "NeoLuna 插件的用户输入控件添加 ctrl+s 快捷键",
+    "NeoLuna 插件添加 std.Misc:ImportZipPackage() 函数"
   ]
 }

@@ -93,8 +93,8 @@ namespace NeoLuna.Models.Apis.Components
             int timeout,
             bool isSocks5,
             int proxyPort,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             var recoder = vgcSlinkMgr.ImportZipPackageSync(
@@ -104,8 +104,8 @@ namespace NeoLuna.Models.Apis.Components
                 timeout,
                 isSocks5,
                 proxyPort,
-                username,
-                password
+                proxyUsername,
+                proxyPassword
             );
             var r = new LuaResult(recoder.GetSuccessCount(), recoder.ErrorMessage);
             return r;

@@ -525,7 +525,6 @@ namespace NeoLuna.Interfaces
 
         /// <summary>
         /// 从一个 zip 文件导入链接，不支持密码。
-        /// 不在订阅里面加这个功能，是担心内存会炸。
         /// </summary>
         /// <param name="url">可以是本地地址，也可以是网络地址</param>
         /// <param name="mark">导入链接时设置的“标记”</param>
@@ -536,8 +535,8 @@ namespace NeoLuna.Interfaces
         /// </param>
         /// <param name="isSocks5">是否使用 socks5 代理</param>
         /// <param name="proxyPort"></param>
-        /// <param name="username">代理服务器的用户名</param>
-        /// <param name="password">代理服务器的密码</param>
+        /// <param name="proxyUsername">代理服务器的用户名</param>
+        /// <param name="proxyPassword">代理服务器的密码</param>
         /// <returns>[1] 成功导入的链接数量，[2] 错误信息</returns>
         LuaResult ImportZipPackage(
             string url,
@@ -546,8 +545,8 @@ namespace NeoLuna.Interfaces
             int timeout,
             bool isSocks5,
             int proxyPort,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         );
 
         #endregion

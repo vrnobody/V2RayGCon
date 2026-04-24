@@ -89,8 +89,8 @@ namespace Luna.Models.Apis.Components
             int timeout,
             bool isSocks5,
             int proxyPort,
-            string username,
-            string password
+            string proxyUsername,
+            string proxyPassword
         )
         {
             var recoder = vgcSlinkMgr.ImportZipPackageSync(
@@ -100,8 +100,8 @@ namespace Luna.Models.Apis.Components
                 timeout,
                 isSocks5,
                 proxyPort,
-                username,
-                password
+                proxyUsername,
+                proxyPassword
             );
             return recoder.GetSuccessCount();
         }

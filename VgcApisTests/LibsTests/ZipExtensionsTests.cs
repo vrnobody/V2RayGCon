@@ -13,6 +13,49 @@ namespace VgcApisTests.LibsTests
     {
         public ZipExtensionsTests() { }
 
+        #region zstd with dictionary tests
+        [DataTestMethod]
+        [DataRow(
+            "Abcd😀😁😂中文123",
+            "KLUv/QNYjGXyIQABAP/+QQBiAGMAZAA92ADePdgB3j3YAt4tTodlMQAyADMAAQAA"
+        )]
+        public void ZstdDictStringTest(string src, string exp)
+        {
+            var ver = "v1";
+            var dict = ZipExtensions.ZstdDictGet(ver);
+
+            var b64 = ZipExtensions.ZstdToBase64WithDictVer(ver, src);
+            Assert.AreEqual(exp, b64);
+            var str = ZipExtensions.ZstdFromBase64WithDictVer(ver, b64);
+            Assert.AreEqual(src, str);
+
+            var bytes = ZipExtensions.ZstdDictToBytes(dict, src);
+            str = ZipExtensions.ZstdDictFromBytes(dict, bytes);
+            Assert.AreEqual(src, str);
+        }
+
+        [DataTestMethod]
+        [DataRow("")]
+        [DataRow(null)]
+        public void ZstdDictNullTest(string src)
+        {
+            var ver = "v1";
+            var dict = ZipExtensions.ZstdDictGet(ver);
+
+            var s = ZipExtensions.ZstdToBase64WithDictVer(ver, src);
+            Assert.AreEqual("", s);
+
+            s = ZipExtensions.ZstdFromBase64WithDictVer(ver, src);
+            Assert.AreEqual("", s);
+
+            s = ZipExtensions.ZstdDictFromBytes(dict, new byte[0]);
+            Assert.AreEqual("", s);
+
+            var b = ZipExtensions.ZstdDictToBytes(dict, src);
+            Assert.AreEqual(0, b.Length);
+        }
+        #endregion
+
         [TestMethod]
         public void IsZipBase64StringTest()
         {

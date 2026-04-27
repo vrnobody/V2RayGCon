@@ -171,7 +171,11 @@ namespace V2RayGCon.Misc
         )
         {
             var links = new List<string>();
-            if (string.IsNullOrEmpty(protocol) || string.IsNullOrEmpty(bodyChars))
+            if (
+                string.IsNullOrEmpty(text)
+                || string.IsNullOrEmpty(protocol)
+                || string.IsNullOrEmpty(bodyChars)
+            )
             {
                 return links;
             }

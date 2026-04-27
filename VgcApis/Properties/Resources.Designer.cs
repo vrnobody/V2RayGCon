@@ -158,5 +158,15 @@ namespace VgcApis.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] zstd_dict_ver1 {
+            get {
+                object obj = ResourceManager.GetObject("zstd_dict_ver1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

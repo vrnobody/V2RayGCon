@@ -37,11 +37,18 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// <returns>完整配置</returns>
         string GetConfig();
 
+        #region for debugging
         /// <summary>
         /// 获取config的原始数据
         /// </summary>
         /// <returns>（可能）压缩后的conig</returns>
         string GetRawConfig();
+
+        string GetZConfigVer();
+        int GetZConfigLen();
+        byte[] GetZConfigBytes();
+
+        #endregion
 
         /// <summary>
         /// 获取ss/vless/vmess分享链接

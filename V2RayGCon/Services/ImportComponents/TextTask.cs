@@ -64,12 +64,11 @@ namespace V2RayGCon.Services.ImportComponents
                     continue;
                 }
 
-                try
+                var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
+                if (!string.IsNullOrEmpty(text))
                 {
-                    var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
                     htmls.Add(text);
                 }
-                catch { }
             }
             return htmls;
         }

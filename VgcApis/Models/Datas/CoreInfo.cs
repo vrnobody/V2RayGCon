@@ -4,8 +4,14 @@ namespace VgcApis.Models.Datas
 {
     public class CoreInfo
     {
+        static readonly string defZConfigVersion = "v1";
+        static readonly byte[] zConfigEmpty = new byte[0];
+
         // plain text of config.json
         public string config;
+
+        public string zConfigVer = "";
+        public byte[] zConfigBytes = zConfigEmpty;
 
         public string templates;
 
@@ -96,15 +102,35 @@ namespace VgcApis.Models.Datas
 
         public void SetConfig(string config)
         {
-            var c = CompressOnDemand(config);
-            this.config = c;
+            var len = Misc.Utils.StrLenInBytes(config);
+            if (len >= Consts.Libs.MaxCompressConfigLength)
+            {
+                this.config = config;
+                this.zConfigVer = "";
+                this.zConfigBytes = zConfigEmpty;
+            }
+            else
+            {
+                this.zConfigVer = defZConfigVersion;
+                this.zConfigBytes = Libs.Infr.ZipExtensions.ZstdDictToBytes(
+                    defZConfigVersion,
+                    config
+                );
+                this.config = "";
+            }
         }
         #endregion
 
         #region private methods
         string DeCompressOndemand(string s)
         {
-            if (Libs.Infr.ZipExtensions.IsZstdBase64(s))
+            if (!string.IsNullOrEmpty(zConfigVer))
+            {
+                var c = Libs.Infr.ZipExtensions.ZstdDictFromBytes(zConfigVer, zConfigBytes);
+                this.config = "";
+                return c;
+            }
+            else if (Libs.Infr.ZipExtensions.IsZstdBase64(s))
             {
                 return Libs.Infr.ZipExtensions.ZstdFromBase64(s);
             }
@@ -115,18 +141,6 @@ namespace VgcApis.Models.Datas
             return s;
         }
 
-        string CompressOnDemand(string s)
-        {
-            var len = Misc.Utils.StrLenInBytes(s);
-            if (
-                len > Consts.Libs.MinCompressStringLength
-                && len < Consts.Libs.MaxCompressStringLength
-            )
-            {
-                return Libs.Infr.ZipExtensions.ZstdToBase64(s);
-            }
-            return s;
-        }
         #endregion
     }
 }

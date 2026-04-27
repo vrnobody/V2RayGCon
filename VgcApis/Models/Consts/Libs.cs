@@ -2,8 +2,9 @@
 {
     public static class Libs
     {
-        public static readonly int MinCompressStringLength = 128 * 1024;
-        public static readonly int MaxCompressStringLength = 6 * 1024 * 1024;
+        public static readonly int MinCompressPluginSettingsLength = 128 * 1024;
+        public static readonly int DefCompressConfigLevel = 6;
+        public static readonly int MaxCompressConfigLength = 1 * 1024 * 1024;
         public static readonly int DefaultBufferSize = 4 * 1024;
         public static readonly int FilestreamBufferSize = 512 * 1024;
 

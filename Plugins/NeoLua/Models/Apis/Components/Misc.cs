@@ -236,6 +236,33 @@ namespace NeoLuna.Models.Apis.Components
         public string ZstdFromBase64(string b64) =>
             VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64(b64);
 
+        #region zConfig functions
+        public string ZstdToBase64WithDictFile(string externalDictFilePath, string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64WithDictFile(externalDictFilePath, str);
+
+        public string ZstdFromBase64WithDictFile(string externalDictFilePath, string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64WithDictFile(externalDictFilePath, b64);
+
+        public int ZstdBuildDictFile(
+            IReadOnlyCollection<ICoreServCtrl> allServs,
+            string outDictFilePath,
+            int startIdx,
+            int maxCount
+        ) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdBuildDictFile(
+                allServs,
+                outDictFilePath,
+                startIdx,
+                maxCount
+            );
+
+        public string ZstdToBase64WithDictVer(string internalDictVerStr, string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64WithDictVer(internalDictVerStr, str);
+
+        public string ZstdFromBase64WithDictVer(string internalDictVerStr, string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64WithDictVer(internalDictVerStr, b64);
+        #endregion
+
         public string Md5(string str)
         {
             return VgcApis.Misc.Utils.Md5Hex(str);

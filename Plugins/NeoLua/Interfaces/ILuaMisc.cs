@@ -423,6 +423,57 @@ namespace NeoLuna.Interfaces
 
         string ZstdFromBase64(string b64);
 
+        #region zConfig functions
+
+        /// <summary>
+        /// 使用外部字典压缩字符串
+        /// </summary>
+        /// <param name="dictFilePath">字典文件的路径</param>
+        /// <param name="str">明文字符串内容</param>
+        /// <returns>压缩后的 base64 编码字符串</returns>
+        string ZstdToBase64WithDictFile(string dictFilePath, string str);
+
+        /// <summary>
+        /// 使用外部字典解缩字符串
+        /// </summary>
+        /// <param name="dictFilePath">字典文件的路径</param>
+        /// <param name="b64">压缩后的 base64 编码字符串</param>
+        /// <returns>明文字符串内容</returns>
+        string ZstdFromBase64WithDictFile(string dictFilePath, string b64);
+
+        /// <summary>
+        /// 使用内建字典压缩字符串
+        /// </summary>
+        /// <param name="dictVersionStr">内建字典版本号，目前只有 "v1"</param>
+        /// <param name="str">明文字符串内容</param>
+        /// <returns>压缩后的 base64 编码字符串</returns>
+        string ZstdToBase64WithDictVer(string dictVersionStr, string str);
+
+        /// <summary>
+        /// 使用内建字典解缩字符串
+        /// </summary>
+        /// <param name="dictVersionStr">内建字典版本号，目前只有 "v1"</param>
+        /// <param name="b64">压缩后的 base64 编码字符串</param>
+        /// <returns>明文字符串内容</returns>
+        string ZstdFromBase64WithDictVer(string dictVersionStr, string b64);
+
+        /// <summary>
+        /// 从当前服务器的 config 构建压缩字典文件
+        /// </summary>
+        /// <param name="allServs">必需是 std.Server:GetAllServers() 的返回值</param>
+        /// <param name="outDictFilePath">字典存放路径</param>
+        /// <param name="startIdx">allServs 的起始序号</param>
+        /// <param name="maxCount">用于构建服务器配置数</param>
+        /// <returns>读取了多少个配置</returns>
+        int ZstdBuildDictFile(
+            IReadOnlyCollection<ICoreServCtrl> allServs,
+            string outDictFilePath,
+            int startIdx,
+            int maxCount
+        );
+
+        #endregion
+
         string Md5(string str);
 
         string Sha1(string str);

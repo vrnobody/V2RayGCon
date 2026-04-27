@@ -910,7 +910,7 @@ namespace V2RayGCon.Services
             }
             if (
                 VgcApis.Misc.Utils.StrLenInBytes(config)
-                > VgcApis.Models.Consts.Libs.MinCompressStringLength
+                > VgcApis.Models.Consts.Libs.MinCompressPluginSettingsLength
             )
             {
                 config = VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64(config);

@@ -143,7 +143,16 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void ClearFinalConfigCache() => Misc.Caches.ZipStrLru.TryRemove(states.GetUid());
 
+        #region for debugging
         public string GetRawConfig() => coreInfo.config;
+
+        public string GetZConfigVer() => coreInfo.zConfigVer;
+
+        public int GetZConfigLen() => coreInfo.zConfigBytes.Length;
+
+        public byte[] GetZConfigBytes() => coreInfo.zConfigBytes;
+
+        #endregion
 
         public string GetConfig() => coreInfo.GetConfig();
 

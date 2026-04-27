@@ -17,7 +17,7 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             "Abcd😀😁😂中文123",
-            "KLUv/QNYjGXyIQABAP/+QQBiAGMAZAA92ADePdgB3j3YAt4tTodlMQAyADMAAQAA"
+            "KLUv/QNY0FOyEgABAP/+QQBiAGMAZAA92ADePdgB3j3YAt4tTodlMQAyADMAAQAA"
         )]
         public void ZstdDictStringTest(string src, string exp)
         {
@@ -25,7 +25,9 @@ namespace VgcApisTests.LibsTests
             var dict = ZipExtensions.ZstdDictGet(ver);
 
             var b64 = ZipExtensions.ZstdToBase64WithDictVer(ver, src);
+            Assert.IsTrue(ZipExtensions.IsZstdBase64(b64));
             Assert.AreEqual(exp, b64);
+
             var str = ZipExtensions.ZstdFromBase64WithDictVer(ver, b64);
             Assert.AreEqual(src, str);
 

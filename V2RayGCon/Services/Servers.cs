@@ -352,10 +352,10 @@ namespace V2RayGCon.Services
                 var inbs = serv.GetConfiger().GetAllInboundsInfo();
                 foreach (var inb in inbs)
                 {
-                    if (inb.protocol != null && protocols.Contains(inb.protocol))
+                    if (inb.GetProtocol() != null && protocols.Contains(inb.GetProtocol()))
                     {
-                        isSocks5 = inb.protocol != "http";
-                        port = inb.port;
+                        isSocks5 = inb.GetProtocol() != "http";
+                        port = inb.GetPort();
                         return true;
                     }
                 }
@@ -1009,9 +1009,9 @@ namespace V2RayGCon.Services
                 var inbs = serv.GetConfiger().GetAllInboundsInfo();
                 foreach (var inb in inbs)
                 {
-                    if (inb.protocol != null && protocols.Contains(inb.protocol))
+                    if (inb.GetProtocol() != null && protocols.Contains(inb.GetProtocol()))
                     {
-                        return inb.port;
+                        return inb.GetPort();
                     }
                 }
             }

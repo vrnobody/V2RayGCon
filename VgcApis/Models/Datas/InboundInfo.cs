@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VgcApis.Models.Datas
 {
     public class InboundInfo
     {
+        static readonly List<string> caches = new List<string>();
+
         public string protocol;
         public string host;
 
@@ -13,11 +17,22 @@ namespace VgcApis.Models.Datas
         // first port: 1080
         public int port;
 
+        #region props
+
+        public int GetPort() => port;
+
+        public string GetProtocol() => protocol;
+
+        public string GetHost() => host;
+
+        #endregion
+
+
         public InboundInfo(string protocol, string host, string ports)
         {
-            this.protocol = protocol;
-            this.host = host;
-            this.ports = ports;
+            this.protocol = RefFromCache(protocol);
+            this.host = RefFromCache(host);
+            this.ports = RefFromCache(ports);
 
             if (!string.IsNullOrEmpty(ports))
             {
@@ -33,11 +48,38 @@ namespace VgcApis.Models.Datas
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(ports))
-            {
-                return $"{protocol}://{host}:{port}";
-            }
-            return $"{protocol}://{host}:{ports}";
+            var s = string.IsNullOrEmpty(ports)
+                ? $"{protocol}://{host}:{port}"
+                : $"{protocol}://{host}:{ports}";
+            return RefFromCache(s);
         }
+
+        #region private methods
+        string RefFromCache(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return "";
+            }
+
+            lock (caches)
+            {
+                var idx = caches.IndexOf(content);
+                if (idx < 0)
+                {
+                    caches.Add(content);
+                    if (caches.Count > 500)
+                    {
+                        while (caches.Count > 250)
+                        {
+                            caches.RemoveAt(0);
+                        }
+                    }
+                    return content;
+                }
+                return caches[idx];
+            }
+        }
+        #endregion
     }
 }

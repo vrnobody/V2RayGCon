@@ -73,7 +73,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 // VgcApis.Misc.Logger.Debug("get inbounds info from cache");
             }
             return cache.Select(c => c.ToString()).ToList().AsReadOnly();
-            ;
         }
 
         public void GatherInfoForNotifyIcon(Action<string> next)
@@ -170,10 +169,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             port = 0;
 
             var inbs = GetAllInboundsInfo();
-            var info = inbs.FirstOrDefault(inb => inb.protocol == "http");
+            var info = inbs.FirstOrDefault(inb => inb.GetProtocol() == "http");
             if (info == null)
             {
-                info = inbs.FirstOrDefault(inb => inb.protocol == "socks");
+                info = inbs.FirstOrDefault(inb => inb.GetProtocol() == "socks");
             }
 
             if (info == null)
@@ -182,8 +181,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return false;
             }
 
-            var protocol = info.protocol ?? "";
-            port = info.port;
+            var protocol = info.GetProtocol() ?? "";
+            port = info.GetPort();
 
             if (!IsProtocolMatchProxyRequirment(isGlobal, protocol))
             {

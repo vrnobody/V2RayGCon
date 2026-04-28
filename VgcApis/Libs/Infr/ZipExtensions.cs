@@ -18,12 +18,16 @@ namespace VgcApis.Libs.Infr
         #region ZSTD with dictionary
         static readonly int ZSTD_DICT_COMPRESS_LEVEL = Models.Consts.Libs.DefCompressConfigLevel;
 
+        public static readonly string ZSTD_DICT_TAG_CORE_INFO_V1 = "v1";
+        public static readonly string ZSTD_DICT_TAG_V2CFG_V3 = "v2cfg_v3";
+
         static readonly Dictionary<string, byte[]> zstd_dicts = new Dictionary<string, byte[]>()
         {
-            { "v1", Properties.Resources.zstd_dict_ver1 },
+            { ZSTD_DICT_TAG_CORE_INFO_V1, Properties.Resources.zstd_dict_ver1 },
+            { ZSTD_DICT_TAG_V2CFG_V3, Properties.Resources.zstd_dict_v2cfg_ver3 },
         };
 
-        public static byte[] ZstdDictGet(string version) => zstd_dicts[version];
+        public static byte[] ZstdDictGet(string tag) => zstd_dicts[tag];
 
         public static string ZstdToBase64WithDictFile(string dictFile, string data)
         {
@@ -56,9 +60,9 @@ namespace VgcApis.Libs.Infr
             return bytes.Length;
         }
 
-        public static string ZstdToBase64WithDictVer(string version, string data)
+        public static string ZstdToBase64WithDictTag(string tag, string data)
         {
-            var dict = ZstdDictGet(version);
+            var dict = ZstdDictGet(tag);
             return ZstdDictToBase64Core(dict, data);
         }
 
@@ -88,9 +92,9 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static byte[] ZstdDictToBytes(string version, string data)
+        public static byte[] ZstdDictToBytes(string tag, string data)
         {
-            var dict = ZstdDictGet(version);
+            var dict = ZstdDictGet(tag);
             return ZstdDictToBytes(dict, data);
         }
 
@@ -115,9 +119,9 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static string ZstdFromBase64WithDictVer(string version, string data)
+        public static string ZstdFromBase64WithDictTag(string tag, string data)
         {
-            var dict = ZstdDictGet(version);
+            var dict = ZstdDictGet(tag);
             return ZstdDictFromBase64Core(dict, data);
         }
 
@@ -141,9 +145,9 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static string ZstdDictFromBytes(string version, byte[] data)
+        public static string ZstdDictFromBytes(string tag, byte[] data)
         {
-            var dict = ZstdDictGet(version);
+            var dict = ZstdDictGet(tag);
             return ZstdDictFromBytes(dict, data);
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using VgcApis.Libs.Infr;
+using VgcApis.Models.Consts;
 
 namespace VgcApisTests.LibsTests
 {
@@ -21,14 +22,14 @@ namespace VgcApisTests.LibsTests
         )]
         public void ZstdDictStringTest(string src, string exp)
         {
-            var ver = "v1";
-            var dict = ZipExtensions.ZstdDictGet(ver);
+            var tag = VgcApis.Libs.Infr.ZipExtensions.ZSTD_DICT_TAG_CORE_INFO_V1;
+            var dict = ZipExtensions.ZstdDictGet(tag);
 
-            var b64 = ZipExtensions.ZstdToBase64WithDictVer(ver, src);
+            var b64 = ZipExtensions.ZstdToBase64WithDictTag(tag, src);
             Assert.IsTrue(ZipExtensions.IsZstdBase64(b64));
             Assert.AreEqual(exp, b64);
 
-            var str = ZipExtensions.ZstdFromBase64WithDictVer(ver, b64);
+            var str = ZipExtensions.ZstdFromBase64WithDictTag(tag, b64);
             Assert.AreEqual(src, str);
 
             var bytes = ZipExtensions.ZstdDictToBytes(dict, src);
@@ -41,13 +42,13 @@ namespace VgcApisTests.LibsTests
         [DataRow(null)]
         public void ZstdDictNullTest(string src)
         {
-            var ver = "v1";
-            var dict = ZipExtensions.ZstdDictGet(ver);
+            var tag = ZipExtensions.ZSTD_DICT_TAG_CORE_INFO_V1;
+            var dict = ZipExtensions.ZstdDictGet(tag);
 
-            var s = ZipExtensions.ZstdToBase64WithDictVer(ver, src);
+            var s = ZipExtensions.ZstdToBase64WithDictTag(tag, src);
             Assert.AreEqual("", s);
 
-            s = ZipExtensions.ZstdFromBase64WithDictVer(ver, src);
+            s = ZipExtensions.ZstdFromBase64WithDictTag(tag, src);
             Assert.AreEqual("", s);
 
             s = ZipExtensions.ZstdDictFromBytes(dict, new byte[0]);

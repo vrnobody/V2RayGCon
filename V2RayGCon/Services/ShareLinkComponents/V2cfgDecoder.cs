@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -19,9 +20,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             try
             {
                 var linkBody = VgcApis.Misc.Utils.GetLinkBody(shareLink);
+                if (VgcApis.Libs.Infr.ZipExtensions.IsZstdBase64(linkBody))
+                {
+                    return DecodeV2cfgVer3(linkBody);
+                }
                 if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(linkBody))
                 {
-                    return DecodeV2cfg(linkBody);
+                    return DecodeV2cfgVer2(linkBody);
                 }
                 return DecodeV2cfgVer1(linkBody);
             }
@@ -48,12 +53,22 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-        VgcApis.Models.Datas.DecodeResult DecodeV2cfg(string linkBody)
+        VgcApis.Models.Datas.DecodeResult DecodeV2cfgVer3(string linkBody)
         {
-            var v2cfg = new VgcApis.Models.Datas.V2Cfg(linkBody);
-            if (v2cfg.IsValid())
+            var v = V2Cfg.FromVer3Body(linkBody);
+            if (v != null)
             {
-                return new VgcApis.Models.Datas.DecodeResult(v2cfg.name, v2cfg.config);
+                return new VgcApis.Models.Datas.DecodeResult(v.name, v.config);
+            }
+            return null;
+        }
+
+        VgcApis.Models.Datas.DecodeResult DecodeV2cfgVer2(string linkBody)
+        {
+            var v = V2Cfg.FromVer2Body(linkBody);
+            if (v != null)
+            {
+                return new VgcApis.Models.Datas.DecodeResult(v.name, v.config);
             }
             return null;
         }

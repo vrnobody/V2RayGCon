@@ -1,8 +1,12 @@
-﻿namespace VgcApis.Models.Datas
+﻿using Newtonsoft.Json;
+
+namespace VgcApis.Models.Datas
 {
     public class V2Cfg
     {
-        public int version = 2;
+        static readonly byte[] zdict = Properties.Resources.zstd_dict_v2cfg_ver3;
+
+        public int version = 3;
         public string name = string.Empty;
         public string hash = string.Empty;
         public string config = string.Empty;
@@ -10,41 +14,59 @@
         // 序列化需要这个ctor, 不要删除！
         public V2Cfg() { }
 
-        public V2Cfg(string compressedString)
-        {
-            try
-            {
-                var v2cfg =
-                    Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<V2Cfg>(
-                        compressedString
-                    );
-                if (v2cfg.IsValid())
-                {
-                    this.name = v2cfg.name;
-                    this.config = v2cfg.config;
-                    Create(name, config);
-                }
-            }
-            catch { }
-        }
-
         public V2Cfg(string name, string config) => Create(name, config);
 
         #region public
-        public string ToCompressedString()
+        public static V2Cfg FromVer3Body(string body)
         {
             try
             {
-                UpdateHash();
-                return Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(this);
+                var json = VgcApis.Libs.Infr.ZipExtensions.ZstdDictFromBase64Core(zdict, body);
+                var v = JsonConvert.DeserializeObject<V2Cfg>(json);
+                if (v.IsValid(3))
+                {
+                    return v;
+                }
             }
             catch { }
             return null;
         }
 
-        public bool IsValid()
+        public static V2Cfg FromVer2Body(string body)
         {
-            if (version != 2)
+            try
+            {
+                var v =
+                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<V2Cfg>(
+                        body
+                    );
+                if (v.IsValid(2))
+                {
+                    return v;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        public string ToCompressedString()
+        {
+            try
+            {
+                UpdateHash();
+                var json = JsonConvert.SerializeObject(this);
+                return Libs.Infr.ZipExtensions.ZstdDictToBase64Core(zdict, json);
+            }
+            catch { }
+            return null;
+        }
+
+        #endregion
+
+        #region private
+        bool IsValid(int expVer)
+        {
+            if (expVer != this.version)
             {
                 return false;
             }
@@ -58,8 +80,6 @@
             return false;
         }
 
-        #endregion
-        #region private
         void Create(string name, string config)
         {
             this.name = name;

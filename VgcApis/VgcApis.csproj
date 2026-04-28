@@ -290,8 +290,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Resources\Zdicts\zstd-dict-ver1-lv9.zst" />
     <None Include="Resources\Zdicts\zstd-dict-ver1.zst" />
+    <None Include="Resources\Zdicts\zstd_dict_v2cfg_ver3.zst" />
     <None Include="UserControls\AcmComboBoxComps\README.md" />
     <None Include="packages.config" />
     <None Include="Resources\icons\icon_dark.ico" />

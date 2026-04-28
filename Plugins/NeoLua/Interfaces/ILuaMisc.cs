@@ -444,25 +444,40 @@ namespace NeoLuna.Interfaces
         /// <summary>
         /// 使用内建字典压缩字符串
         /// </summary>
-        /// <param name="dictVersionStr">内建字典版本号，目前只有 "v1"</param>
+        /// <param name="tag">内建字典 tag，目前只有 "v1" 和 "v2cfg_v3"</param>
         /// <param name="str">明文字符串内容</param>
         /// <returns>压缩后的 base64 编码字符串</returns>
-        string ZstdToBase64WithDictVer(string dictVersionStr, string str);
+        string ZstdToBase64WithDictTag(string tag, string str);
 
         /// <summary>
         /// 使用内建字典解缩字符串
         /// </summary>
-        /// <param name="dictVersionStr">内建字典版本号，目前只有 "v1"</param>
+        /// <param name="tag">内建字典 tag，目前只有 "v1" 和 "v2cfg_v3"</param>
         /// <param name="b64">压缩后的 base64 编码字符串</param>
         /// <returns>明文字符串内容</returns>
-        string ZstdFromBase64WithDictVer(string dictVersionStr, string b64);
+        string ZstdFromBase64WithDictTag(string tag, string b64);
 
+        /// <summary>
+        /// 构建压缩字典
+        /// </summary>
+        /// <param name="outputFile">保存字典文件的路径</param>
+        /// <param name="samples">样本字符串列表，最多几千个就行</param>
+        /// <param name="encoding">字符串编码格式 utf8, cp***，留空使用 unicode</param>
+        /// <param name="dictCapacity">字典初始容量，默认 零 就行</param>
+        /// <returns></returns>
         int ZstdBuildDictFile(
             string outputFile,
             LuaTable samples,
             string encoding,
             int dictCapacity
         );
+
+        /// <summary>
+        /// 把内建压缩字典保存为文件
+        /// </summary>
+        /// <param name="tag">字典标签，"v1", "v2cfg_v3"</param>
+        /// <param name="file">输出文件路径</param>
+        void ZstdSaveDict(string tag, string file);
 
         #endregion
 

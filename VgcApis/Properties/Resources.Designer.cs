@@ -162,6 +162,16 @@ namespace VgcApis.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] zstd_dict_v2cfg_ver3 {
+            get {
+                object obj = ResourceManager.GetObject("zstd_dict_v2cfg_ver3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] zstd_dict_ver1 {
             get {
                 object obj = ResourceManager.GetObject("zstd_dict_ver1", resourceCulture);

@@ -6,7 +6,9 @@ namespace VgcApis.Models.Datas
 {
     public class CoreInfo
     {
-        static readonly string defZConfigVersion = "v1";
+        static readonly string defZConfigVersion = Libs.Infr
+            .ZipExtensions
+            .ZSTD_DICT_TAG_CORE_INFO_V1;
         static readonly byte[] zConfigEmpty = new byte[0];
 
         // plain text of config.json

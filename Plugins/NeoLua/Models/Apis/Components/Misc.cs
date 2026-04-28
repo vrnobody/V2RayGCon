@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -282,11 +283,17 @@ namespace NeoLuna.Models.Apis.Components
             );
         }
 
-        public string ZstdToBase64WithDictVer(string internalDictVerStr, string str) =>
-            VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64WithDictVer(internalDictVerStr, str);
+        public string ZstdToBase64WithDictTag(string dictTag, string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64WithDictTag(dictTag, str);
 
-        public string ZstdFromBase64WithDictVer(string internalDictVerStr, string b64) =>
-            VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64WithDictVer(internalDictVerStr, b64);
+        public string ZstdFromBase64WithDictTag(string dictTag, string b64) =>
+            VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64WithDictTag(dictTag, b64);
+
+        public void ZstdSaveDict(string tag, string file)
+        {
+            var dict = VgcApis.Libs.Infr.ZipExtensions.ZstdDictGet(tag);
+            File.WriteAllBytes(file, dict);
+        }
         #endregion
 
         public string Md5(string str)

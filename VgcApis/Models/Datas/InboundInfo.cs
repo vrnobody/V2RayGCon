@@ -10,16 +10,16 @@ namespace VgcApis.Models.Datas
     {
         static readonly List<string> caches = new List<string>();
 
-        [DefaultValue("")]
+        [DefaultValue("http")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string protocol = "http";
 
-        [DefaultValue("")]
+        [DefaultValue("127.0.0.1")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string host = Consts.Webs.LoopBackIP;
 
         // all ports: "1080,3000,8080-8888"
-        [DefaultValue("")]
+        [DefaultValue("8080")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ports = "8080";
 

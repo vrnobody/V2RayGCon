@@ -46,9 +46,9 @@ namespace VgcApis.Models.Datas
             title = "",
             uid = "";
 
-        [DefaultValue("")]
+        [DefaultValue("http")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string inbName = "";
+        public string inbName = "http";
 
         [DefaultValue("127.0.0.1")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Neo.IronLua;
 using NeoLuna.Services;
 using Newtonsoft.Json;
 using VgcApis.Interfaces;
+using VgcApis.Misc;
 
 namespace NeoLuna.Models.Apis.Components
 {
@@ -244,17 +246,41 @@ namespace NeoLuna.Models.Apis.Components
             VgcApis.Libs.Infr.ZipExtensions.ZstdFromBase64WithDictFile(externalDictFilePath, b64);
 
         public int ZstdBuildDictFile(
-            IReadOnlyCollection<ICoreServCtrl> allServs,
-            string outDictFilePath,
-            int startIdx,
-            int maxCount
-        ) =>
-            VgcApis.Libs.Infr.ZipExtensions.ZstdBuildDictFile(
-                allServs,
-                outDictFilePath,
-                startIdx,
-                maxCount
+            string outputFile,
+            LuaTable samples,
+            string codePage,
+            int dictCapacity
+        )
+        {
+            var ec = Encoding.Unicode;
+            codePage = (codePage ?? "").ToLower();
+            if (codePage == "utf8")
+            {
+                ec = Encoding.UTF8;
+            }
+            else if (codePage.StartsWith("cp"))
+            {
+                var cpIdx = Utils.Str2Int(codePage.Substring(2));
+                ec = Encoding.GetEncoding(cpIdx);
+            }
+
+            var bytes = new List<byte[]>();
+            foreach (var kv in samples)
+            {
+                var sample = (string)kv.Value;
+                if (string.IsNullOrEmpty(sample))
+                {
+                    continue;
+                }
+                bytes.Add(ec.GetBytes(sample));
+            }
+
+            return VgcApis.Libs.Infr.ZipExtensions.ZstdBuildDictFile(
+                bytes,
+                outputFile,
+                dictCapacity
             );
+        }
 
         public string ZstdToBase64WithDictVer(string internalDictVerStr, string str) =>
             VgcApis.Libs.Infr.ZipExtensions.ZstdToBase64WithDictVer(internalDictVerStr, str);

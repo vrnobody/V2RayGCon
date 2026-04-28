@@ -38,38 +38,22 @@ namespace VgcApis.Libs.Infr
         }
 
         public static int ZstdBuildDictFile(
-            IReadOnlyCollection<ICoreServCtrl> allServs,
+            IEnumerable<byte[]> samples,
             string outputFile,
-            int idxStart,
-            int maxCount
+            int dictCapacity
         )
         {
-            int idxEnd = idxStart + maxCount;
-            List<byte[]> samples = new List<byte[]>();
-            foreach (var coreServ in allServs)
+            byte[] bytes;
+            if (dictCapacity > 0)
             {
-                var idx = (int)coreServ.GetCoreStates().GetIndex();
-                if (idxStart > 0 && idx < idxStart)
-                {
-                    continue;
-                }
-                // star = 1, max = 1 -> end = 2
-                if (maxCount > 0 && idx >= idxEnd)
-                {
-                    break;
-                }
-                var config = coreServ.GetConfiger().GetConfig();
-                if (string.IsNullOrEmpty(config) || config.Length < 200 || config.Length > 2000)
-                {
-                    continue;
-                }
-                // var sample = Encoding.ASCII.GetBytes(config);
-                var sample = Encoding.Unicode.GetBytes(config);
-                samples.Add(sample);
+                bytes = DictBuilder.TrainFromBuffer(samples, dictCapacity);
             }
-            var bytes = DictBuilder.TrainFromBuffer(samples);
+            else
+            {
+                bytes = DictBuilder.TrainFromBuffer(samples);
+            }
             File.WriteAllBytes(outputFile, bytes);
-            return samples.Count();
+            return bytes.Length;
         }
 
         public static string ZstdToBase64WithDictVer(string version, string data)

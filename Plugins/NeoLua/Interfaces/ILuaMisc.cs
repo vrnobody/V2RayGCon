@@ -457,19 +457,11 @@ namespace NeoLuna.Interfaces
         /// <returns>明文字符串内容</returns>
         string ZstdFromBase64WithDictVer(string dictVersionStr, string b64);
 
-        /// <summary>
-        /// 从当前服务器的 config 构建压缩字典文件
-        /// </summary>
-        /// <param name="allServs">必需是 std.Server:GetAllServers() 的返回值</param>
-        /// <param name="outDictFilePath">字典存放路径</param>
-        /// <param name="startIdx">allServs 的起始序号</param>
-        /// <param name="maxCount">用于构建服务器配置数</param>
-        /// <returns>读取了多少个配置</returns>
         int ZstdBuildDictFile(
-            IReadOnlyCollection<ICoreServCtrl> allServs,
-            string outDictFilePath,
-            int startIdx,
-            int maxCount
+            string outputFile,
+            LuaTable samples,
+            string encoding,
+            int dictCapacity
         );
 
         #endregion

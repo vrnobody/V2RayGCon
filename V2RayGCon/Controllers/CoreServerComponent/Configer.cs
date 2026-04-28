@@ -193,6 +193,35 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return true;
         }
 
+        public bool SetRawConfigQuiet(string rawConfig)
+        {
+            if (string.IsNullOrEmpty(rawConfig))
+            {
+                return false;
+            }
+            if (!coreInfo.SetRawConfig(rawConfig))
+            {
+                return false;
+            }
+            var uid = GetParent().GetCoreStates().GetUid();
+            servers.TryUpdateConfigCache(uid, rawConfig);
+            UpdateSummary();
+            return true;
+        }
+
+        public void SetRawConfig(string rawConfig)
+        {
+            if (!SetRawConfigQuiet(rawConfig))
+            {
+                return;
+            }
+
+            if (coreCtrl.IsCoreRunning())
+            {
+                coreCtrl.RestartCoreThen();
+            }
+        }
+
         public bool SetConfigQuiet(string newConfig)
         {
             if (string.IsNullOrEmpty(newConfig) || coreInfo.GetConfig() == newConfig)

@@ -93,6 +93,18 @@ namespace VgcApis.Models.Datas
             return DeCompressOndemand(config);
         }
 
+        public bool SetRawConfig(string config)
+        {
+            if (config == this.config)
+            {
+                return false;
+            }
+            this.config = config ?? "";
+            this.zConfigVer = "";
+            this.zConfigBytes = new byte[0];
+            return true;
+        }
+
         public void SetConfig(string config)
         {
             var len = Misc.Utils.StrLenInBytes(config);

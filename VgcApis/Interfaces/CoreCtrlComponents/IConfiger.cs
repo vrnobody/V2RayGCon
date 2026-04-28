@@ -82,6 +82,22 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void SetConfig(string newConfig);
 
         /// <summary>
+        /// 修改 raw config，但不重启服务器。
+        /// 见下面的 SetRawConfig()
+        /// </summary>
+        /// <param name="rawConfig">新的config.json</param>
+        /// <returns>是否修改成功</returns>
+        bool SetRawConfigQuiet(string rawConfig);
+
+        /// <summary>
+        /// 修改 raw config，并重启正在运行的服务器。
+        /// 使用 SetConfig(）时，软件有可能压缩 config。
+        /// SetRawConfig() 则保持原样不进行压缩。
+        /// </summary>
+        /// <param name="rawConfig">新的config.json</param>
+        void SetRawConfig(string rawConfig);
+
+        /// <summary>
         /// 判断当前服务器是否能设置为系统代理
         /// </summary>
         /// <param name="isGlobal">系统代理是否为全局模式</param>

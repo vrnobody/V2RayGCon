@@ -198,7 +198,8 @@ namespace VgcApis.Libs.Infr
                         CryptoStreamMode.Write
                     )
                 )
-                using (var zstd = new CompressionStream(b64))
+                using (var option = new CompressionOptions(6))
+                using (var zstd = new CompressionStream(b64, option, 4 * 1024))
                 using (var writer = new StreamWriter(zstd, Encoding.Unicode))
                 using (var jsonWriter = new JsonTextWriter(writer))
                 {
@@ -241,7 +242,8 @@ namespace VgcApis.Libs.Infr
             using (
                 var b64 = new CryptoStream(wrapper, new ToBase64Transform(), CryptoStreamMode.Write)
             )
-            using (var zstd = new CompressionStream(b64))
+            using (var option = new CompressionOptions(6))
+            using (var zstd = new CompressionStream(b64, option, 4 * 1024))
             using (var w = new StreamWriter(zstd, Encoding.Unicode))
             using (var jw = new JsonTextWriter(w))
             {

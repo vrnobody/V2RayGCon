@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace VgcApis.Models.Datas
 {
@@ -8,91 +10,80 @@ namespace VgcApis.Models.Datas
         static readonly byte[] zConfigEmpty = new byte[0];
 
         // plain text of config.json
-        public string config;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string config = "";
 
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string zConfigVer = "";
+
         public byte[] zConfigBytes = zConfigEmpty;
 
-        public string templates;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string templates = "",
+            customCoreName = "";
 
+        [DefaultValue(true)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool isAcceptInjection = true;
 
-        public bool ignoreSendThrough = false;
-
         // flags
-        public bool isAutoRun,
-            isSelected,
-            isUntrack;
+        [DefaultValue(false)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool isAutoRun = false,
+            isSelected = false,
+            isUntrack = false,
+            ignoreSendThrough = false;
 
-        public string name,
-            longName,
-            shortName,
-            summary,
-            title,
-            customMark,
-            uid,
-            customRemark,
-            customCoreName;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string name = "",
+            longName = "",
+            shortName = "",
+            summary = "",
+            title = "",
+            uid = "";
 
-        public string inbName,
-            inbIp;
-        public int inbPort;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string inbName = "";
 
-        public double index;
+        [DefaultValue("127.0.0.1")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string inbIp = Consts.Webs.LoopBackIP;
 
-        public long lastModifiedUtcTicks,
-            lastSpeedTestUtcTicks,
-            speedTestResult;
+        [DefaultValue(8080)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int inbPort = Consts.Webs.DefaultProxyPort;
 
-        public long totalUplinkInBytes,
-            totalDownlinkInBytes;
+        // new server in the bottom
+        public double index = double.MaxValue;
 
-        public string tag1,
-            tag2,
-            tag3;
+        public long lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks,
+            lastSpeedTestUtcTicks = System.DateTime.UtcNow.Ticks;
+
+        [DefaultValue(-1)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public long speedTestResult = -1;
+
+        [DefaultValue(0)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public long totalUplinkInBytes = 0,
+            totalDownlinkInBytes = 0;
+
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string customMark = "",
+            customRemark = "",
+            tag1 = "",
+            tag2 = "",
+            tag3 = "";
 
         public List<InboundInfo> inboundsInfoCache = null;
 
-        public CoreInfo()
-        {
-            customCoreName = string.Empty;
-
-            lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks;
-            lastSpeedTestUtcTicks = System.DateTime.UtcNow.Ticks;
-
-            speedTestResult = -1;
-
-            totalUplinkInBytes = 0;
-            totalDownlinkInBytes = 0;
-
-            // new server will displays at the bottom
-            index = double.MaxValue;
-
-            isSelected = false;
-            isUntrack = false;
-
-            isAutoRun = false;
-
-            customMark = string.Empty;
-            customRemark = string.Empty;
-
-            name = string.Empty;
-            longName = string.Empty;
-            shortName = string.Empty;
-            title = string.Empty;
-            summary = string.Empty;
-            config = string.Empty;
-            templates = string.Empty;
-            uid = string.Empty;
-
-            inbName = string.Empty;
-            inbIp = Consts.Webs.LoopBackIP;
-            inbPort = Consts.Webs.DefaultProxyPort;
-
-            tag1 = string.Empty;
-            tag2 = string.Empty;
-            tag3 = string.Empty;
-        }
+        public CoreInfo() { }
 
         #region public methods
         public string GetConfig()
@@ -111,11 +102,11 @@ namespace VgcApis.Models.Datas
             }
             else
             {
-                this.zConfigVer = defZConfigVersion;
                 this.zConfigBytes = Libs.Infr.ZipExtensions.ZstdDictToBytes(
                     defZConfigVersion,
                     config
                 );
+                this.zConfigVer = defZConfigVersion;
                 this.config = "";
             }
         }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace VgcApis.Models.Datas
 {
@@ -8,14 +10,23 @@ namespace VgcApis.Models.Datas
     {
         static readonly List<string> caches = new List<string>();
 
-        public string protocol;
-        public string host;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string protocol = "http";
+
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string host = Consts.Webs.LoopBackIP;
 
         // all ports: "1080,3000,8080-8888"
-        public string ports;
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string ports = "8080";
 
         // first port: 1080
-        public int port;
+        [DefaultValue(8080)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int port = Consts.Webs.DefaultProxyPort;
 
         #region props
 

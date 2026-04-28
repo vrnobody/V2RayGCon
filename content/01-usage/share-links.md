@@ -39,7 +39,7 @@ remark 需要进行 URI encode
 
 ##### v2cfg://...
 
-这也是本软件自创的一种分享链接，主要用于备份、还原数据，目前有两个版本。 `v1` 直接把整个 config.json 进行 base64 编码得出。`v1.8.5` 起 `v2cfg://...` 升级为 `v2`。它内部使用 json 格式，序列化后 gzip 压缩成二进制，最后 base64 编码成文本，细节见 [V2Cfg.cs](https://github.com/vrnobody/V2RayGCon/blob/master/VgcApis/Models/Datas/V2Cfg.cs)。旧版客户端导出的 `v1` 链接可以在新版客户端导入，但旧版客户端无法导入 `v2` 链接。升级到 `v2` 主要目的是支持 `yaml` 等其他配置格式。
+这也是本软件自创的一种分享链接，主要用于备份、还原数据，目前有三个版本。 `v1` 直接把整个 config.json 进行 base64 编码得出。`v1.8.5` 起 `v2cfg://...` 升级为 `v2`。它内部使用 json 格式，序列化后 gzip 压缩成二进制，最后 base64 编码成文本，细节见 [V2Cfg.cs](https://github.com/vrnobody/V2RayGCon/blob/master/VgcApis/Models/Datas/V2Cfg.cs)。升级到 `v2` 的主要目是支持 `yaml` 等其他配置格式。V2RayGCon v2.2.7 起升级 `v2cfg://...` 到 `v3`。`v3` 沿用 `v2` 定义的格式，只是压缩时改为使用自定义字典的 ZSTD 算法。config.json 编码出来的链接长度是 `v2` 的三分之一左右。新版客户端可以导入所有版本的链接，但只能导出最新版链接。
 
 因为 v2ray 功能过于强大，有可能被有心人利用，通过 revers 把本地端口暴露到公网，所以 `v2cfg://...` 链接除了 “主窗口” - “文件” - “从剪切板导入” 之外，其他地方都不能导入。
 
@@ -84,6 +84,7 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 | v                 | 120             |
 | vless             | 200             |
 | trojan            | 200             |
+| v2cfg v3          | 240             |
 | userSettings.json | 260             |
 | mob               | 300             |
 | vmess             | 300             |
@@ -99,7 +100,7 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 
 | 每 1 万个服务器   | 数值 | 单位 | 补充说明             |
 | :---------------- | :--: | :--: | :------------------- |
-| 内存（memory）    |  50  | MiB  | 增加值               |
+| 内存（memory）    |  50  | MiB  | 增加量               |
 | userSettings.json | 2.5  | MiB  |                      |
 | 存盘耗时          | 2.5  |  秒  |                      |
 | 十年写盘量        | 1.3  | TiB  | 7 \* 24 高强度使用下 |

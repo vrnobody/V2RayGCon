@@ -145,11 +145,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #region for debugging
         public string GetRawConfig() => coreInfo.config;
 
-        public string GetZConfigVer() => coreInfo.zConfigVer;
+        public string GetZConfigVer() => coreInfo.zstdDictTag;
 
-        public int GetZConfigLen() => coreInfo.zConfigBytes.Length;
+        public int GetZConfigLen() => coreInfo.zstdConfig.Length;
 
-        public byte[] GetZConfigBytes() => coreInfo.zConfigBytes;
+        public byte[] GetZConfigBytes() => coreInfo.zstdConfig;
 
         #endregion
 
@@ -169,10 +169,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             port = 0;
 
             var inbs = GetAllInboundsInfo();
-            var info = inbs.FirstOrDefault(inb => inb.GetProtocol() == "http");
+            var info = inbs.FirstOrDefault(inb => inb.protocol == "http");
             if (info == null)
             {
-                info = inbs.FirstOrDefault(inb => inb.GetProtocol() == "socks");
+                info = inbs.FirstOrDefault(inb => inb.protocol == "socks");
             }
 
             if (info == null)
@@ -181,8 +181,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return false;
             }
 
-            var protocol = info.GetProtocol() ?? "";
-            port = info.GetPort();
+            var protocol = info.protocol ?? "";
+            port = info.port;
 
             if (!IsProtocolMatchProxyRequirment(isGlobal, protocol))
             {

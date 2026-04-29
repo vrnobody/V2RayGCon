@@ -74,14 +74,14 @@ namespace VgcApisTests.MiscTests
             Assert.AreNotEqual(null, inbsInfo);
             Assert.AreEqual(3, inbsInfo.Count);
             var info = inbsInfo.Last();
-            Assert.AreEqual("dokodemo-door", info.GetProtocol());
-            Assert.AreEqual("127.0.0.1", info.GetHost());
-            Assert.AreEqual(10085, info.GetPort());
+            Assert.AreEqual("dokodemo-door", info.protocol);
+            Assert.AreEqual("127.0.0.1", info.host);
+            Assert.AreEqual(10085, info.port);
 
             info = inbsInfo.First();
-            Assert.AreEqual("http", info.GetProtocol());
-            Assert.AreEqual("127.0.0.1", info.GetHost());
-            Assert.AreEqual(8080, info.GetPort());
+            Assert.AreEqual("http", info.protocol);
+            Assert.AreEqual("127.0.0.1", info.host);
+            Assert.AreEqual(8080, info.port);
         }
 
         [TestMethod]
@@ -92,9 +92,9 @@ namespace VgcApisTests.MiscTests
             Assert.AreNotEqual(null, inbsInfo);
             Assert.AreEqual(1, inbsInfo.Count);
             var first = inbsInfo[0];
-            Assert.AreEqual("socks", first.GetProtocol());
-            Assert.AreEqual("127.0.0.1", first.GetHost());
-            Assert.AreEqual(1080, first.GetPort());
+            Assert.AreEqual("socks", first.protocol);
+            Assert.AreEqual("127.0.0.1", first.host);
+            Assert.AreEqual(1080, first.port);
         }
 
         [TestMethod]

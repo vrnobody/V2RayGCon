@@ -22,7 +22,7 @@ namespace VgcApisTests.LibsTests
         )]
         public void ZstdDictStringTest(string src, string exp)
         {
-            var tag = VgcApis.Libs.Infr.ZipExtensions.ZSTD_DICT_TAG_CORE_INFO_V1;
+            var tag = VgcApis.Libs.Infr.ZipExtensions.ZSTD_DICT_TAG_CONFIG_JSON_V1;
             var dict = ZipExtensions.ZstdDictGet(tag);
 
             var b64 = ZipExtensions.ZstdToBase64WithDictTag(tag, src);
@@ -42,7 +42,7 @@ namespace VgcApisTests.LibsTests
         [DataRow(null)]
         public void ZstdDictNullTest(string src)
         {
-            var tag = ZipExtensions.ZSTD_DICT_TAG_CORE_INFO_V1;
+            var tag = ZipExtensions.ZSTD_DICT_TAG_CONFIG_JSON_V1;
             var dict = ZipExtensions.ZstdDictGet(tag);
 
             var s = ZipExtensions.ZstdToBase64WithDictTag(tag, src);

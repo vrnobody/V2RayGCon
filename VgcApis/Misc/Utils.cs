@@ -2118,10 +2118,7 @@ namespace VgcApis.Misc
                         GetValue<string>(inb, "listen"),
                         GetValue<string>(inb, "port")
                     );
-                    if (
-                        !string.IsNullOrEmpty(info.GetProtocol())
-                        && !string.IsNullOrEmpty(info.GetHost())
-                    )
+                    if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
                     {
                         r.Add(info);
                     }

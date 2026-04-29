@@ -444,7 +444,7 @@ namespace NeoLuna.Interfaces
         /// <summary>
         /// 使用内建字典压缩字符串
         /// </summary>
-        /// <param name="tag">内建字典 tag，目前只有 "v1" 和 "v2cfg_v3"</param>
+        /// <param name="tag">内建字典 tag，目前只有 "config_json_v1" 和 "v2cfg_v3"</param>
         /// <param name="str">明文字符串内容</param>
         /// <returns>压缩后的 base64 编码字符串</returns>
         string ZstdToBase64WithDictTag(string tag, string str);
@@ -452,7 +452,7 @@ namespace NeoLuna.Interfaces
         /// <summary>
         /// 使用内建字典解缩字符串
         /// </summary>
-        /// <param name="tag">内建字典 tag，目前只有 "v1" 和 "v2cfg_v3"</param>
+        /// <param name="tag">内建字典 tag，目前只有 "config_json_v1" 和 "v2cfg_v3"</param>
         /// <param name="b64">压缩后的 base64 编码字符串</param>
         /// <returns>明文字符串内容</returns>
         string ZstdFromBase64WithDictTag(string tag, string b64);
@@ -475,7 +475,7 @@ namespace NeoLuna.Interfaces
         /// <summary>
         /// 把内建压缩字典保存为文件
         /// </summary>
-        /// <param name="tag">字典标签，"v1", "v2cfg_v3"</param>
+        /// <param name="tag">字典标签，"config_json_v1", "v2cfg_v3"</param>
         /// <param name="file">输出文件路径</param>
         void ZstdSaveDict(string tag, string file);
 

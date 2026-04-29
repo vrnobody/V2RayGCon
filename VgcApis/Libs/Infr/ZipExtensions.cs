@@ -18,12 +18,12 @@ namespace VgcApis.Libs.Infr
         #region ZSTD with dictionary
         static readonly int ZSTD_DICT_COMPRESS_LEVEL = Models.Consts.Libs.DefCompressConfigLevel;
 
-        public static readonly string ZSTD_DICT_TAG_CORE_INFO_V1 = "v1";
+        public static readonly string ZSTD_DICT_TAG_CONFIG_JSON_V1 = "config_json_v1";
         public static readonly string ZSTD_DICT_TAG_V2CFG_V3 = "v2cfg_v3";
 
         static readonly Dictionary<string, byte[]> zstd_dicts = new Dictionary<string, byte[]>()
         {
-            { ZSTD_DICT_TAG_CORE_INFO_V1, Properties.Resources.zstd_dict_ver1 },
+            { ZSTD_DICT_TAG_CONFIG_JSON_V1, Properties.Resources.zstd_dict_ver1 },
             { ZSTD_DICT_TAG_V2CFG_V3, Properties.Resources.zstd_dict_v2cfg_ver3 },
         };
 

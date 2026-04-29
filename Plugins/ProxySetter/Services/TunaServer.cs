@@ -235,17 +235,17 @@ namespace ProxySetter.Services
                 .ToList();
 
             var info =
-                inbs.FirstOrDefault(inb => inb.GetProtocol() == "socks")
-                ?? inbs.FirstOrDefault(inb => inb.GetProtocol() == "http");
+                inbs.FirstOrDefault(inb => inb.protocol == "socks")
+                ?? inbs.FirstOrDefault(inb => inb.protocol == "http");
 
             if (info == null)
             {
                 return def;
             }
 
-            var proto = info.GetProtocol() == "socks" ? "socks5" : info.GetProtocol();
-            var host = VgcApis.Misc.Utils.FormatHost(info.GetHost());
-            return $"{proto}://{host}:{info.GetPort()}";
+            var proto = info.protocol == "socks" ? "socks5" : info.protocol;
+            var host = VgcApis.Misc.Utils.FormatHost(info.host);
+            return $"{proto}://{host}:{info.port}";
         }
 
         NicInfos GetNicInfoFromRoutes(string tunIpv4)

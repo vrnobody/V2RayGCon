@@ -6,26 +6,48 @@ namespace VgcApis.Models.Datas
 {
     public class CoreInfo
     {
-        static readonly string defZConfigVersion = Libs.Infr
+        static readonly string DefaultZstdDictTag = Libs.Infr
             .ZipExtensions
-            .ZSTD_DICT_TAG_CORE_INFO_V1;
-        static readonly byte[] zConfigEmpty = new byte[0];
+            .ZSTD_DICT_TAG_CONFIG_JSON_V1;
+
+        static readonly byte[] ZstdEmptyConfig = new byte[0];
 
         // plain text of config.json
         [DefaultValue("")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string config = "";
 
-        [DefaultValue("")]
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string zConfigVer = "";
-
-        public byte[] zConfigBytes = zConfigEmpty;
+        string _zstdDictTag = "";
 
         [DefaultValue("")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string templates = "",
-            customCoreName = "";
+        public string zstdDictTag
+        {
+            get { return _zstdDictTag; }
+            private set { _zstdDictTag = Libs.Infr.StringRefCache.Ref(value); }
+        }
+
+        public byte[] zstdConfig = ZstdEmptyConfig;
+
+        string _templates = "";
+
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string templates
+        {
+            get { return _templates; }
+            set { _templates = Libs.Infr.StringRefCache.Ref(value); }
+        }
+
+        string _customCoreName = "";
+
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string customCoreName
+        {
+            get { return _customCoreName; }
+            set { _customCoreName = Libs.Infr.StringRefCache.Ref(value); }
+        }
 
         [DefaultValue(true)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -48,13 +70,25 @@ namespace VgcApis.Models.Datas
             title = "",
             uid = "";
 
+        string _inbName = "http";
+
         [DefaultValue("http")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string inbName = "http";
+        public string inbName
+        {
+            get { return _inbName; }
+            set { _inbName = Libs.Infr.StringRefCache.Ref(value); }
+        }
+
+        string _inbIp = Consts.Webs.LoopBackIP;
 
         [DefaultValue("127.0.0.1")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string inbIp = Consts.Webs.LoopBackIP;
+        public string inbIp
+        {
+            get { return _inbIp; }
+            set { _inbIp = Libs.Infr.StringRefCache.Ref(value); }
+        }
 
         [DefaultValue(8080)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -75,16 +109,26 @@ namespace VgcApis.Models.Datas
         public long totalUplinkInBytes = 0,
             totalDownlinkInBytes = 0;
 
+        string _customMark = "";
+
         [DefaultValue("")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string customMark = "",
-            customRemark = "",
+        public string customMark
+        {
+            get { return _customMark; }
+            set { _customMark = Libs.Infr.StringRefCache.Ref(value); }
+        }
+
+        [DefaultValue("")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string customRemark = "",
             tag1 = "",
             tag2 = "",
             tag3 = "";
 
         public List<InboundInfo> inboundsInfoCache = null;
 
+        // json serializer requires this ctor!!
         public CoreInfo() { }
 
         #region public methods
@@ -100,8 +144,8 @@ namespace VgcApis.Models.Datas
                 return false;
             }
             this.config = config ?? "";
-            this.zConfigVer = "";
-            this.zConfigBytes = new byte[0];
+            this.zstdDictTag = "";
+            this.zstdConfig = new byte[0];
             return true;
         }
 
@@ -111,16 +155,16 @@ namespace VgcApis.Models.Datas
             if (len >= Consts.Libs.MaxCompressConfigLength)
             {
                 this.config = config;
-                this.zConfigVer = "";
-                this.zConfigBytes = zConfigEmpty;
+                this.zstdDictTag = "";
+                this.zstdConfig = ZstdEmptyConfig;
             }
             else
             {
-                this.zConfigBytes = Libs.Infr.ZipExtensions.ZstdDictToBytes(
-                    defZConfigVersion,
+                this.zstdConfig = Libs.Infr.ZipExtensions.ZstdDictToBytes(
+                    DefaultZstdDictTag,
                     config
                 );
-                this.zConfigVer = defZConfigVersion;
+                this.zstdDictTag = DefaultZstdDictTag;
                 this.config = "";
             }
         }
@@ -129,9 +173,9 @@ namespace VgcApis.Models.Datas
         #region private methods
         string DeCompressOndemand(string s)
         {
-            if (!string.IsNullOrEmpty(zConfigVer))
+            if (!string.IsNullOrEmpty(zstdDictTag))
             {
-                var c = Libs.Infr.ZipExtensions.ZstdDictFromBytes(zConfigVer, zConfigBytes);
+                var c = Libs.Infr.ZipExtensions.ZstdDictFromBytes(zstdDictTag, zstdConfig);
                 this.config = "";
                 return c;
             }

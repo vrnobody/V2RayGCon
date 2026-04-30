@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.6.8")]
+[assembly: AssemblyVersion("2.2.6.9")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // xray-core v25.9.11 simplify vless outbound config
@@ -41,8 +41,8 @@ using System.Runtime.InteropServices;
 // config example https://github.com/XTLS/Xray-core/pull/5124
 
 /*
-
-v2.2.6.8 Refactor coreServ event handling code.
+v2.3.6.9 Refactor Servers.configCache.
+v2.2.6.8 Refactor and coreServ event handling code.
 v2.2.6.7 Add StringRefCache().
 v2.2.6.6 Add wserv:SetRawConfig().
 v2.2.6.5 Upgrade v2cfg://... to version 3.

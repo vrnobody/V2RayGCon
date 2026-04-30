@@ -300,7 +300,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         string GenFinalConfigCore(bool resetStatsPort)
         {
-            VgcApis.Misc.Logger.Debug("regenerate final config");
+            // VgcApis.Misc.Logger.Debug("regenerate final config");
 
             var config = GetConfig();
             var tpls = GetCustomTemplates();

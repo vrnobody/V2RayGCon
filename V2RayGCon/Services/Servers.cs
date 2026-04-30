@@ -645,7 +645,7 @@ namespace V2RayGCon.Services
 
         public void WakeupServersInBootList()
         {
-            List<Controllers.CoreServerCtrl> bootList = GenServersBootList();
+            List<VgcApis.Interfaces.ICoreServCtrl> bootList = GenServersBootList();
 
             void worker(int index, Action next)
             {
@@ -819,8 +819,9 @@ namespace V2RayGCon.Services
 
         public bool DeleteServerByConfig(string config, bool isQuiet)
         {
-            if (configCache.TryGetValue(config, out var uid) && !string.IsNullOrEmpty(uid))
+            if (configCache.TryGetValue(config, out var coreServ) && coreServ != null)
             {
+                var uid = coreServ.GetCoreStates().GetUid();
                 return DeleteServerByUid(uid);
             }
 
@@ -867,10 +868,15 @@ namespace V2RayGCon.Services
 
         public bool TryUpdateConfigCache(string uid, string newConfig)
         {
+            var coreServ = GetServerByUid(uid);
+            if (coreServ == null)
+            {
+                return false;
+            }
             locker.EnterReadLock();
             try
             {
-                return configCache.TryUpdate(uid, newConfig);
+                return configCache.TryUpdate(coreServ, newConfig);
             }
             finally
             {
@@ -880,27 +886,10 @@ namespace V2RayGCon.Services
 
         public bool ReplaceServerConfig(string orgConfig, string newConfig)
         {
-            Controllers.CoreServerCtrl coreServ = null;
-            string uid;
-
-            locker.EnterReadLock();
-            try
-            {
-                if (configCache.TryGetValue(orgConfig, out uid) && !string.IsNullOrEmpty(uid))
-                {
-                    coreServCache.TryGetValue(uid, out coreServ);
-                }
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            if (coreServ == null)
+            if (!configCache.TryGetValue(orgConfig, out var coreServ))
             {
                 return false;
             }
-
             coreServ.GetConfiger().SetConfig(newConfig);
             coreServ.GetCoreStates().SetLastModifiedUtcTicks(DateTime.UtcNow.Ticks);
             return true;
@@ -908,12 +897,9 @@ namespace V2RayGCon.Services
 
         public ICoreServCtrl GetServerByConfig(string config)
         {
-            if (configCache.TryGetValue(config, out var uid) && !string.IsNullOrEmpty(uid))
+            if (configCache.TryGetValue(config, out var coreServ))
             {
-                if (coreServCache.TryGetValue(uid, out var coreServ))
-                {
-                    return coreServ;
-                }
+                return coreServ;
             }
             return null;
         }
@@ -1066,7 +1052,7 @@ namespace V2RayGCon.Services
                 // double check
                 if (!IsConfigInCache(config))
                 {
-                    configCache.TryAdd(config, coreInfo.uid);
+                    configCache.TryAdd(config, newServer);
                     newServer.GetCoreStates().SetName(name);
                     coreServCache.Add(coreInfo.uid, newServer);
                     var idx = coreServCache.Count();
@@ -1102,18 +1088,14 @@ namespace V2RayGCon.Services
             return uid;
         }
 
-        void AddToBootList(HashSet<Controllers.CoreServerCtrl> set, string config)
+        void AddToBootList(HashSet<ICoreServCtrl> set, string config)
         {
             if (string.IsNullOrEmpty(config))
             {
                 return;
             }
-            if (!configCache.TryGetValue(config, out var uid) || string.IsNullOrEmpty(uid))
-            {
-                return;
-            }
             if (
-                !coreServCache.TryGetValue(uid, out var coreServ)
+                !configCache.TryGetValue(config, out var coreServ)
                 || coreServ == null
                 || coreServ.GetCoreStates().IsUntrack()
             )
@@ -1123,11 +1105,11 @@ namespace V2RayGCon.Services
             set.Add(coreServ);
         }
 
-        List<Controllers.CoreServerCtrl> GenServersBootList()
+        List<ICoreServCtrl> GenServersBootList()
         {
             var tracker = setting.GetServerTrackerSetting();
 
-            var set = new HashSet<Controllers.CoreServerCtrl>();
+            var set = new HashSet<ICoreServCtrl>();
             locker.EnterReadLock();
             try
             {
@@ -1293,7 +1275,7 @@ namespace V2RayGCon.Services
                 var coreServ = kv.Value;
                 coreServ.Run(setting, configMgr, this);
                 var cfg = coreServ.GetConfiger().GetConfig();
-                configCache.TryAdd(cfg, coreServ.GetCoreStates().GetUid());
+                configCache.TryAdd(cfg, coreServ);
                 BeginListeningTo(coreServ);
             }
         }

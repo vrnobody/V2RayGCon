@@ -229,6 +229,11 @@ namespace V2RayGCon.Libs.V2Ray
 
         void RestartCoreWorker(string config, bool quiet)
         {
+            if (disposedValue)
+            {
+                return;
+            }
+
             if (!IsCoreExcutableExist())
             {
                 if (quiet)

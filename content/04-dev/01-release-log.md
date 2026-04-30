@@ -5,6 +5,14 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.7.0` 20260430
+
+修复导入订阅可能崩溃的 bug  
+降低一丢丢内存占用  
+v2cfg://... 链接升级到 v3  
+NeoLuna 插件添加 wserv:SetRawConfig()  
+NeoLuna 插件添加几个 ZSTD 压缩相关的函数
+
 ##### `v2.2.6.0` 20260424
 
 修复 undo 超过 100 次会崩溃的问题  

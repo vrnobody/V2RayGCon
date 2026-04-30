@@ -29,6 +29,7 @@ namespace V2RayGCon.Controllers
             this.coreInfo = coreInfo;
         }
 
+        public bool isParentListening = false;
         Services.Servers servSvc = null;
 
         public void Run(
@@ -55,21 +56,53 @@ namespace V2RayGCon.Controllers
             states.Prepare();
             logger.Prepare();
             configer.Prepare();
-
-            //other initializiations
-            coreCtrl.BindEvents();
         }
 
         #region event relay
-        public void InvokeEventOnCoreClosing() => OnCoreClosing?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreClosing()
+        {
+            OnCoreClosing?.Invoke(this, EventArgs.Empty);
+            if (isParentListening)
+            {
+                servSvc?.InvokeEventOnCoreClosingIgnoreError(this);
+            }
+        }
 
-        public void InvokeEventOnIndexChange() => InvokeEmptyEventIgnoreError(OnIndexChanged);
+        public void InvokeEventOnIndexChange()
+        {
+            InvokeEmptyEventIgnoreError(OnIndexChanged);
+            if (isParentListening)
+            {
+                servSvc?.ClearSortedCoreServCache();
+            }
+        }
 
-        public void InvokeEventOnPropertyChange() => InvokeEmptyEventIgnoreError(OnPropertyChanged);
+        public void InvokeEventOnPropertyChange()
+        {
+            InvokeEmptyEventIgnoreError(OnPropertyChanged);
+            if (isParentListening)
+            {
+                servSvc?.InvokeEventOnServerPropertyChange();
+            }
+        }
 
-        public void InvokeEventOnCoreStop() => OnCoreStop?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreStop()
+        {
+            OnCoreStop?.Invoke(this, EventArgs.Empty);
+            if (isParentListening)
+            {
+                servSvc?.TrackCoreRunningState(this, false);
+            }
+        }
 
-        public void InvokeEventOnCoreStart() => OnCoreStart?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreStart()
+        {
+            OnCoreStart?.Invoke(this, EventArgs.Empty);
+            if (isParentListening)
+            {
+                servSvc?.TrackCoreRunningState(this, true);
+            }
+        }
 
         #endregion
 
@@ -184,8 +217,8 @@ namespace V2RayGCon.Controllers
 
             if (indexChanged)
             {
-                servSvc.ResetIndexQuiet();
-                servSvc.RequireFormMainReload();
+                servSvc?.ResetIndexQuiet();
+                servSvc?.RequireFormMainReload();
             }
 
             if (restartCore && GetCoreCtrl().IsCoreRunning())

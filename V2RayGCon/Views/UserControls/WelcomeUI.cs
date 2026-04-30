@@ -24,7 +24,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void WelcomeFlyPanelComponent_Load(object sender, System.EventArgs e)
         {
-            using (var core = new Libs.V2Ray.Core(setting))
+            using (var core = new Libs.V2Ray.Core(setting, null))
             {
                 if (!core.IsV2RayExecutableExist())
                 {

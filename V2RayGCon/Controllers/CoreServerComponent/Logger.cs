@@ -65,10 +65,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
         #endregion
 
-        #region private methods
-
-        #endregion
-
         #region protected methods
         protected override void CleanupAfterChildrenDisposed()
         {

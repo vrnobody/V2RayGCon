@@ -76,7 +76,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 string version;
-                using (var core = new Libs.V2Ray.Core(setting))
+                using (var core = new Libs.V2Ray.Core(setting, null))
                 {
                     version = core.GetV2RayCoreVersion();
                 }

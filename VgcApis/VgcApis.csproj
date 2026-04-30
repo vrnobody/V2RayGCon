@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="Controllers\KeywordFilterAcm.cs" />
     <Compile Include="Controllers\KeywordFilterSnippet.cs" />
+    <Compile Include="Interfaces\CoreCtrlComponents\IRoutineOwner.cs" />
+    <Compile Include="Interfaces\CoreCtrlComponents\IV2RayCoreOwner.cs" />
     <Compile Include="Interfaces\IHasIndex.cs" />
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

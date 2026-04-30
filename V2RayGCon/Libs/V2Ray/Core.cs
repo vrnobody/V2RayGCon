@@ -11,10 +11,8 @@ namespace V2RayGCon.Libs.V2Ray
 {
     public class Core : IDisposable
     {
-        public event Action<string> OnLog;
-        public event EventHandler OnCoreStatusChanged;
-
         readonly Services.Settings setting;
+        private readonly VgcApis.Interfaces.CoreCtrlComponents.IV2RayCoreOwner coreCtrl;
         readonly object coreStartStopLocker = new object();
         readonly VgcApis.Libs.Tasks.Waiter coreReadyWaiter = new VgcApis.Libs.Tasks.Waiter();
         Process coreProc;
@@ -22,10 +20,14 @@ namespace V2RayGCon.Libs.V2Ray
         bool isForcedExit = false;
         string customCoreName = string.Empty;
 
-        public Core(Services.Settings setting)
+        public Core(
+            Services.Settings setting,
+            VgcApis.Interfaces.CoreCtrlComponents.IV2RayCoreOwner coreCtrl
+        )
         {
             coreProc = null;
             this.setting = setting;
+            this.coreCtrl = coreCtrl;
         }
 
         #region property
@@ -321,7 +323,14 @@ namespace V2RayGCon.Libs.V2Ray
         {
             try
             {
-                OnCoreStatusChanged?.Invoke(this, EventArgs.Empty);
+                if (isRunning)
+                {
+                    coreCtrl?.OnV2RayCoreStart();
+                }
+                else
+                {
+                    coreCtrl?.OnV2RayCoreStop();
+                }
             }
             catch { }
         }
@@ -619,7 +628,7 @@ namespace V2RayGCon.Libs.V2Ray
         {
             try
             {
-                OnLog?.Invoke(log);
+                coreCtrl?.OnV2RayCoreLog(log);
             }
             catch { }
         }

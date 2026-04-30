@@ -1,20 +1,34 @@
 ﻿using System;
 using System.Threading.Tasks;
+using VgcApis.Interfaces.CoreCtrlComponents;
 
 namespace VgcApis.Libs.Tasks
 {
     public sealed class Routine : BaseClasses.Disposable
     {
+        readonly IRoutineOwner owner;
         readonly Action action;
         readonly int interval;
         readonly object locker = new object();
+
         bool isRunning = false;
         bool again = false;
 
-        public Routine(Action action, int interval)
-        {
-            this.action = action ?? throw new ArgumentException("Job must not empty!");
+        public Routine(IRoutineOwner owner, int interval)
+            : this(null, owner, interval) { }
 
+        public Routine(Action action, int interval)
+            : this(action, null, interval) { }
+
+        Routine(Action action, IRoutineOwner rtAction, int interval)
+        {
+            if (action == null && rtAction == null)
+            {
+                throw new ArgumentException("Job must not empty!");
+            }
+
+            this.action = action;
+            this.owner = rtAction;
             if (interval <= 0)
             {
                 throw new ArgumentException("Interval must greater then zero.");
@@ -79,7 +93,14 @@ namespace VgcApis.Libs.Tasks
                             return;
                         }
                     }
-                    action();
+                    if (owner != null)
+                    {
+                        owner.OnRoutineAction();
+                    }
+                    else
+                    {
+                        action();
+                    }
                     DoWork();
                 });
         }

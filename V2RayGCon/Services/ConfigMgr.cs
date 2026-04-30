@@ -59,7 +59,7 @@ namespace V2RayGCon.Services
             {
                 return text;
             }
-            var core = new Libs.V2Ray.Core(setting) { title = title };
+            var core = new Libs.V2Ray.Core(setting, null) { title = title };
             try
             {
                 var sci = CreateSpeedTestConfig(coreName, rawConfig, port);
@@ -404,7 +404,7 @@ namespace V2RayGCon.Services
             string coreName,
             string testUrl,
             int testTimeout,
-            Action<string> logDeliever
+            VgcApis.Interfaces.CoreCtrlComponents.IV2RayCoreOwner v2rayCtrl
         )
         {
             var result = new LatencyTestResult(Core.SpeedtestAbort, 0);
@@ -412,15 +412,7 @@ namespace V2RayGCon.Services
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
                 var sci = CreateSpeedTestConfig(coreName, rawConfig, port);
-                result = SpeedTestCore(
-                    sci,
-                    title,
-                    coreName,
-                    testUrl,
-                    testTimeout,
-                    port,
-                    logDeliever
-                );
+                result = SpeedTestCore(sci, title, coreName, testUrl, testTimeout, port, v2rayCtrl);
             }
             return result;
         }
@@ -432,22 +424,18 @@ namespace V2RayGCon.Services
             string testUrl,
             int testTimeout,
             int port,
-            Action<string> log
+            VgcApis.Interfaces.CoreCtrlComponents.IV2RayCoreOwner v2rayCtrl
         )
         {
-            log($"{I18N.SpeedtestPortNum}{port}");
+            v2rayCtrl.OnV2RayCoreLog($"{I18N.SpeedtestPortNum}{port}");
             if (string.IsNullOrEmpty(sci.config))
             {
-                log(I18N.DecodeImportFail);
+                v2rayCtrl.OnV2RayCoreLog(I18N.DecodeImportFail);
                 return new LatencyTestResult(TIMEOUT, 0);
             }
 
-            var core = new Libs.V2Ray.Core(setting) { title = title };
+            var core = new Libs.V2Ray.Core(setting, v2rayCtrl) { title = title };
             core.SetCustomCoreName(coreName);
-            if (log != null)
-            {
-                core.OnLog += log;
-            }
 
             long latency = TIMEOUT;
             long len = 0;
@@ -474,10 +462,6 @@ namespace V2RayGCon.Services
                 core.StopCore();
             }
             catch { }
-            if (log != null)
-            {
-                core.OnLog -= log;
-            }
             core.Dispose();
             return new LatencyTestResult(latency, len);
         }
@@ -588,7 +572,7 @@ namespace V2RayGCon.Services
                     coreName,
                     url,
                     GetDefaultTimeout(),
-                    coreLogger.Log
+                    coreCtrl
                 );
                 curDelay = sr.latency;
                 coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.size));

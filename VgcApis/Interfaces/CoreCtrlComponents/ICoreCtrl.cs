@@ -2,7 +2,7 @@
 
 namespace VgcApis.Interfaces.CoreCtrlComponents
 {
-    public interface ICoreCtrl
+    public interface ICoreCtrl : IV2RayCoreOwner, IRoutineOwner
     {
         /// <summary>
         /// 获取自定义core名字

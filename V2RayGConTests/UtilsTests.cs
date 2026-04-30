@@ -345,7 +345,7 @@ stat: <
         [TestMethod]
         public void GetLocalCoreVersion()
         {
-            var core = new Libs.V2Ray.Core(Services.Settings.Instance);
+            var core = new Libs.V2Ray.Core(Services.Settings.Instance, null);
             var version = core.GetV2RayCoreVersion();
 
             if (core.IsV2RayExecutableExist())

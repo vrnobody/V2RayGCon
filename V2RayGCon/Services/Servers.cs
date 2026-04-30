@@ -77,7 +77,7 @@ namespace V2RayGCon.Services
             var coreList = queryHandler.GetServersByUids(uids);
             indexHandler.MoveCoreServCtrlListTo(ref coreList, destTopIndex);
             RequireFormMainReload();
-            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+            InvokeEventOnServerPropertyChange();
         }
 
         public void ResetIndex() => indexHandler.ResetIndex(false);
@@ -234,18 +234,29 @@ namespace V2RayGCon.Services
         }
 
         // must transfer sender!
-        void InvokeEventOnCoreStartIgnoreError(object sender, EventArgs args) =>
-            InvokeEventHandlerIgnoreError(OnCoreStart, sender, EventArgs.Empty);
-
-        // must transfer sender!
-        void InvokeEventOnCoreClosingIgnoreError(object sender, EventArgs args) =>
+        public void InvokeEventOnCoreClosingIgnoreError(object sender) =>
             InvokeEventHandlerIgnoreError(OnCoreClosing, sender, EventArgs.Empty);
 
-        // must transfer sender!
-        void InvokeEventOnCoreStopIgnoreError(object sender, EventArgs args) =>
-            InvokeEventHandlerIgnoreError(OnCoreStop, sender, EventArgs.Empty);
+        public void TrackCoreRunningState(object sender, bool isCoreStart)
+        {
+            // for plugins
+            if (isCoreStart)
+            {
+                InvokeEventHandlerIgnoreError(OnCoreStart, sender, EventArgs.Empty);
+            }
+            else
+            {
+                InvokeEventHandlerIgnoreError(OnCoreStop, sender, EventArgs.Empty);
+            }
 
-        void InvokeEventOnServerPropertyChange(object sender, EventArgs arg)
+            if (!serverTrackerEnabled)
+            {
+                return;
+            }
+            DoServerTrackingLater(UpdateTrackerUidsOnly);
+        }
+
+        public void InvokeEventOnServerPropertyChange()
         {
             if (selectedServersCountCache != -1)
             {
@@ -255,28 +266,14 @@ namespace V2RayGCon.Services
             InvokeEventHandlerIgnoreError(OnServerPropertyChange, null, EventArgs.Empty);
         }
 
-        void OnTrackCoreStartHandler(object sender, EventArgs args) =>
-            TrackCoreRunningStateHandler(sender, true);
-
-        void OnTrackCoreStopHandler(object sender, EventArgs args) =>
-            TrackCoreRunningStateHandler(sender, false);
-
-        void BindEventsTo(Controllers.CoreServerCtrl server)
+        void BeginListeningTo(Controllers.CoreServerCtrl coreServ)
         {
-            server.OnCoreClosing += InvokeEventOnCoreClosingIgnoreError;
-            server.OnCoreStart += OnTrackCoreStartHandler;
-            server.OnCoreStop += OnTrackCoreStopHandler;
-            server.OnPropertyChanged += InvokeEventOnServerPropertyChange;
-            server.OnIndexChanged += ClearSortedCoreServCacheHandler;
+            coreServ.isParentListening = true;
         }
 
-        void ReleaseEventsFrom(Controllers.CoreServerCtrl server)
+        void StopListeningFrom(Controllers.CoreServerCtrl coreServ)
         {
-            server.OnCoreClosing -= InvokeEventOnCoreClosingIgnoreError;
-            server.OnCoreStart -= OnTrackCoreStartHandler;
-            server.OnCoreStop -= OnTrackCoreStopHandler;
-            server.OnPropertyChanged -= InvokeEventOnServerPropertyChange;
-            server.OnIndexChanged -= ClearSortedCoreServCacheHandler;
+            coreServ.isParentListening = false;
         }
 
         #endregion
@@ -293,27 +290,19 @@ namespace V2RayGCon.Services
             lazyServerTrackingTimer.Start();
         }
 
-        void TrackCoreRunningStateHandler(object sender, bool isCoreStart)
-        {
-            // for plugins
-            if (isCoreStart)
-            {
-                InvokeEventOnCoreStartIgnoreError(sender, EventArgs.Empty);
-            }
-            else
-            {
-                InvokeEventOnCoreStopIgnoreError(sender, EventArgs.Empty);
-            }
-
-            if (!serverTrackerEnabled)
-            {
-                return;
-            }
-            DoServerTrackingLater(UpdateTrackerUidsOnly);
-        }
         #endregion
 
         #region public method
+        public void ClearSortedCoreServCache()
+        {
+            if (sortedCoreServListCache != null)
+            {
+                lock (sortedCoreServListCache)
+                {
+                    sortedCoreServListCache = null;
+                }
+            }
+        }
 
         public void SaveServersSettingNow()
         {
@@ -728,7 +717,7 @@ namespace V2RayGCon.Services
 
             if (coreServ != null)
             {
-                ReleaseEventsFrom(coreServ);
+                StopListeningFrom(coreServ);
                 coreServ.Dispose();
                 RefreshUiAfterCoreServersAreDeleted();
             }
@@ -764,7 +753,7 @@ namespace V2RayGCon.Services
             {
                 foreach (var coreServ in coreServs)
                 {
-                    ReleaseEventsFrom(coreServ);
+                    StopListeningFrom(coreServ);
                     coreServ.Dispose();
                 }
             }
@@ -804,7 +793,7 @@ namespace V2RayGCon.Services
                 foreach (var serv in servs)
                 {
                     var coreServ = (Controllers.CoreServerCtrl)serv;
-                    ReleaseEventsFrom(coreServ);
+                    StopListeningFrom(coreServ);
                     coreServ.Dispose();
                 }
             }
@@ -825,7 +814,7 @@ namespace V2RayGCon.Services
                 catch { }
             }
             RequireFormMainReload();
-            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+            InvokeEventOnServerPropertyChange();
         }
 
         public bool DeleteServerByConfig(string config, bool isQuiet)
@@ -1018,16 +1007,8 @@ namespace V2RayGCon.Services
             return -1;
         }
 
-        void ClearSortedCoreServCacheHandler(object sender, EventArgs args)
-        {
-            if (sortedCoreServListCache != null)
-            {
-                lock (sortedCoreServListCache)
-                {
-                    sortedCoreServListCache = null;
-                }
-            }
-        }
+        void ClearSortedCoreServCacheHandler(object sender, EventArgs args) =>
+            ClearSortedCoreServCache();
 
         Controllers.CoreServerCtrl DeleteServerByUidWorker(string uid)
         {
@@ -1105,11 +1086,11 @@ namespace V2RayGCon.Services
                 return "";
             }
 
-            BindEventsTo(newServer);
+            BeginListeningTo(newServer);
             newServer.GetConfiger().UpdateSummary();
 
             // clear sorted core serv list cache
-            ClearSortedCoreServCacheHandler(newServer, EventArgs.Empty);
+            ClearSortedCoreServCache();
 
             if (!quiet)
             {
@@ -1181,7 +1162,7 @@ namespace V2RayGCon.Services
         {
             UpdateMarkList();
             ResetIndexQuiet();
-            ClearSortedCoreServCacheHandler(null, EventArgs.Empty);
+            ClearSortedCoreServCache();
             InvokeEventOnServerCountChange(this, EventArgs.Empty);
             RequireFormMainReload();
             lazyServerSettingsRecorder.Deadline();
@@ -1210,7 +1191,7 @@ namespace V2RayGCon.Services
             // do not lock here, sorter will apply write lock itself
             sorter?.Invoke(coreServs);
             RequireFormMainReload();
-            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+            InvokeEventOnServerPropertyChange();
         }
 
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
@@ -1313,7 +1294,7 @@ namespace V2RayGCon.Services
                 coreServ.Run(setting, configMgr, this);
                 var cfg = coreServ.GetConfiger().GetConfig();
                 configCache.TryAdd(cfg, coreServ.GetCoreStates().GetUid());
-                BindEventsTo(coreServ);
+                BeginListeningTo(coreServ);
             }
         }
         #endregion

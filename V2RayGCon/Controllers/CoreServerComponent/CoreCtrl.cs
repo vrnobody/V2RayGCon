@@ -31,14 +31,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public override void Prepare()
         {
-            core = new Libs.V2Ray.Core(setting);
+            core = new Libs.V2Ray.Core(setting, this);
             core.SetCustomCoreName(coreInfo.customCoreName);
 
             coreStates = GetSibling<CoreStates>();
             configer = GetSibling<Configer>();
             logger = GetSibling<Logger>();
 
-            bookKeeper = new VgcApis.Libs.Tasks.Routine(RecordStatSample, 3000);
+            bookKeeper = new VgcApis.Libs.Tasks.Routine(this, 3000);
         }
 
         #region public mehtods
@@ -46,7 +46,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void DisposeCore()
         {
             StopCoreWorker(null);
-            ReleaseEvents();
             core.Dispose();
             speedTestWaiter.Dispose();
         }
@@ -69,22 +68,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             core.SetCustomCoreName(name);
             GetParent().InvokeEventOnPropertyChange();
             return true;
-        }
-
-        // 非正常终止时调用
-        public void SetTitle(string title) => core.title = title;
-
-        public void BindEvents()
-        {
-            core.OnLog += OnLogHandler;
-            core.OnCoreStatusChanged += OnCoreStateChangedHandler;
-        }
-
-        public void ReleaseEvents()
-        {
-            bookKeeper?.Dispose();
-            core.OnLog -= OnLogHandler;
-            core.OnCoreStatusChanged -= OnCoreStateChangedHandler;
         }
 
         public string Fetch(string url) => Fetch(url, -1);
@@ -132,8 +115,17 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         #endregion
 
-        #region private methods
-        void RecordStatSample()
+        #region IV2RayCtrl
+        public void OnV2RayCoreLog(string msg) => logger.Log(msg);
+
+        public void OnV2RayCoreStart() => GetParent().InvokeEventOnCoreStart();
+
+        public void OnV2RayCoreStop() => GetParent().InvokeEventOnCoreStop();
+
+        #endregion
+
+        #region IRoutinAction
+        public void OnRoutineAction()
         {
             if (
                 !setting.isEnableStatistics
@@ -158,18 +150,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             catch { }
             isRecordingBar.Remove();
         }
+        #endregion
 
-        void OnCoreStateChangedHandler(object sender, EventArgs args)
-        {
-            if (core.isRunning)
-            {
-                GetParent().InvokeEventOnCoreStart();
-            }
-            else
-            {
-                GetParent().InvokeEventOnCoreStop();
-            }
-        }
+        #region private methods
+
 
         void AddToSpeedTestQueue()
         {
@@ -178,8 +162,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreStates.SetStatus(I18N.Testing);
             configMgr.AddToSpeedTestQueue(GetParent());
         }
-
-        void OnLogHandler(string msg) => logger.Log(msg);
 
         void StopCoreWorker(Action next)
         {

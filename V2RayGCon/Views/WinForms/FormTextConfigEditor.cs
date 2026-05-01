@@ -131,6 +131,9 @@ namespace V2RayGCon.Views.WinForms
         {
             switch (keyCode)
             {
+                case (Keys.Control | Keys.Shift | Keys.Z):
+                    ctrl.GetEditor().Redo();
+                    break;
                 case (Keys.Control | Keys.K):
                     ctrl.GetEditor().Format();
                     break;
@@ -238,7 +241,6 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #endregion
-
 
 
         #region UI

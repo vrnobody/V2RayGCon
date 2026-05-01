@@ -112,6 +112,9 @@ namespace VgcApis.Misc
                 keys.AddRange(extra);
             }
 
+            // for redo
+            scintilla.ClearCmdKey(Keys.Control | Keys.Shift | Keys.Z);
+
             foreach (var key in keys)
             {
                 // clear default keyboard shortcut

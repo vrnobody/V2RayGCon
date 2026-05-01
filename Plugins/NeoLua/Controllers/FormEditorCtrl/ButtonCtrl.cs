@@ -119,6 +119,12 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             {
                 switch (keyCode)
                 {
+                    case Keys.Z:
+                        if (keyEvent.Shift)
+                        {
+                            editor.Redo();
+                        }
+                        break;
                     case Keys.OemOpenBrackets:
                         editor.ZoomOut();
                         break;

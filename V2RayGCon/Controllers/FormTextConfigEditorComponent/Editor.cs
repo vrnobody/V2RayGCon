@@ -48,6 +48,8 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             AttachEditorEvents();
         }
 
+        public void Redo() => editor.Redo();
+
         public void Format()
         {
             SaveCurrentPosition();

@@ -22,7 +22,7 @@ namespace NeoLuna.Services
             this.snpCache = new Libs.LuaSnippet.SnippetsCache();
             UpdateRequireModuleNameCache();
             fsWatcher = CreateFileSystemWatcher(@"3rd/neolua");
-            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 10 * 60 * 1000, 1000);
+            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheNow, 10 * 60 * 1000, 1000);
         }
 
         #region constants
@@ -106,7 +106,7 @@ namespace NeoLuna.Services
 
         void RenewCacheLater() => cacheRecycler.Postpone();
 
-        void RenewCacheWorker()
+        public void RenewCacheNow()
         {
             astCodeCache = new VgcApis.Libs.Infr.StringLruCache<JObject>();
             astModuleCache = new VgcApis.Libs.Infr.StringLruCache<JObject>();
@@ -117,11 +117,12 @@ namespace NeoLuna.Services
         {
             SourceCode,
             Module,
-            ModuleEx
+            ModuleEx,
         }
         #endregion
 
         #region public methods
+
 
         public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(
             ScintillaNET.Scintilla editor
@@ -207,7 +208,7 @@ namespace NeoLuna.Services
                     var chunk = state.CompileChunk(
                         script,
                         name,
-                        new LuaCompileOptions() { ClrEnabled = false, DebugEngine = null, }
+                        new LuaCompileOptions() { ClrEnabled = false, DebugEngine = null }
                     );
 
                     var rs = g.DoChunk(chunk);

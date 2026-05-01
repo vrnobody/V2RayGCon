@@ -318,6 +318,11 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
+        public void ClearAstCache()
+        {
+            formMgr.astServer.RenewCacheNow();
+        }
+
         public void ClearRegexCache()
         {
             VgcApis.Misc.Utils.ClearRegexCache();

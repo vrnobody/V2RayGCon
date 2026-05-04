@@ -345,8 +345,16 @@ namespace V2RayGCon.Services
                     try
                     {
                         var data = queue.Take();
+                        if (data == null)
+                        {
+                            return;
+                        }
                         var mark = data[0];
                         var text = data[1];
+                        if (string.IsNullOrEmpty(text))
+                        {
+                            continue;
+                        }
                         AddServersFromText(
                             decoders,
                             recoder,

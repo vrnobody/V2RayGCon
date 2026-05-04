@@ -35,18 +35,22 @@ namespace V2RayGCon.Services.ImportComponents
             int timeout
         )
         {
-            var cts = new CancellationTokenSource(timeout);
+            var cts =
+                timeout > 0 ? new CancellationTokenSource(timeout) : new CancellationTokenSource();
             var token = cts.Token;
             void enqueue()
             {
                 var text = sb.ToString();
                 try
                 {
-                    queue.Add(new string[] { this.mark, text });
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        queue.Add(new string[] { this.mark, text });
+                    }
                 }
                 catch
                 {
-                    SetTimeoutError();
+                    recoder.SetTimeoutErrorMessage();
                     throw;
                 }
             }
@@ -116,21 +120,15 @@ namespace V2RayGCon.Services.ImportComponents
             }
             catch (Exception ex)
             {
-                SetError(ex.Message);
+                recoder.SetErrorMessage(ex.Message);
             }
 
             if (token.IsCancellationRequested)
             {
-                SetTimeoutError();
+                recoder.SetTimeoutErrorMessage();
             }
         }
 
-        #endregion
-
-        #region private methods
-        void SetTimeoutError() => recoder.SetErrorMessage("Timeout.");
-
-        void SetError(string msg) => recoder.SetErrorMessage(msg);
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services.ShareLinkComponents;
@@ -23,6 +24,7 @@ namespace V2RayGCon.Services.ImportComponents
         }
 
         #region private methods
+
         public void Fetch(
             BlockingCollection<string[]> queue,
             bool isSocks5,
@@ -39,12 +41,35 @@ namespace V2RayGCon.Services.ImportComponents
                 null,
                 null
             );
+
             if (string.IsNullOrEmpty(html) || !TryAdd(queue, html))
             {
                 return;
             }
 
-            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(html, 200 * 4 / 3);
+            var sb = new StringBuilder();
+            bool enqueue()
+            {
+                var text = sb.ToString();
+                sb.Clear();
+                if (string.IsNullOrEmpty(text))
+                {
+                    return true;
+                }
+                return TryAdd(queue, text);
+            }
+
+            bool push(string text)
+            {
+                sb.AppendLine(text);
+                if (sb.Length < Import.ParseImportZipPkgChunkSize)
+                {
+                    return true;
+                }
+                return enqueue();
+            }
+
+            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(html, 300 * 4 / 3);
             foreach (var b64 in b64s)
             {
                 if (b64.StartsWith("//"))
@@ -57,11 +82,12 @@ namespace V2RayGCon.Services.ImportComponents
                 {
                     continue;
                 }
-                if (!TryAdd(queue, text))
+                if (!push(text))
                 {
                     return;
                 }
             }
+            enqueue();
         }
         #endregion
         #region private methods
@@ -70,6 +96,7 @@ namespace V2RayGCon.Services.ImportComponents
             try
             {
                 queue.Add(new string[] { this.mark, html });
+
                 return true;
             }
             catch { }

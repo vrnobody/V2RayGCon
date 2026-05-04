@@ -20,6 +20,7 @@ namespace VgcApis.Libs.Infr
         public ImportResultRecorder() { }
 
         #region public methods
+        public void SetTimeoutErrorMessage() => SetErrorMessage("Timeout!");
 
         public string GetErrorMessage() => errorMessage;
 

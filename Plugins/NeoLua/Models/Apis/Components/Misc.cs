@@ -110,7 +110,7 @@ namespace NeoLuna.Models.Apis.Components
                 proxyUsername,
                 proxyPassword
             );
-            var r = new LuaResult(recoder.GetSuccessCount(), recoder.ErrorMessage);
+            var r = new LuaResult(recoder.GetSuccessCount(), recoder.GetErrorMessage());
             return r;
         }
 

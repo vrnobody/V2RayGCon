@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
+using V2RayGCon.Services.ImportComponents;
 using V2RayGCon.Services.ShareLinkComponents;
 using VgcApis.Interfaces;
 using VgcApis.Libs.Infr;
+using VgcApis.Models.Consts;
 using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Services
@@ -135,11 +139,6 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
-        public T GetCodec<T>()
-            where T : VgcApis.BaseClasses.ComponentOf<Codecs>
-        {
-            return codecs.GetChild<T>();
-        }
 
         public ImportResultRecorder UpdateSubsCore(
             List<Models.Datas.SubscriptionItem> validSubs,
@@ -148,42 +147,56 @@ namespace V2RayGCon.Services
             bool withDetail
         )
         {
+            var timeout = Import.DefaultImportTimeout;
             var decoders = codecs.GetDecoders(false);
             var recorder = new ImportResultRecorder();
 
-            void dispatchSubs(Models.Datas.SubscriptionItem sub)
+            // string[] = { mark, text }
+            var textQueue = new BlockingCollection<string[]>(2);
+            void complete()
+            {
+                try
+                {
+                    textQueue.CompleteAdding();
+                }
+                catch { }
+            }
+
+            var decodeTasks = CreateDecodeTasks(
+                decoders,
+                recorder,
+                textQueue,
+                Import.ImportWorkerMaxNum,
+                0,
+                withDetail,
+                timeout
+            );
+
+            var downloadTasks = new List<Task>();
+            foreach (var sub in validSubs)
             {
                 var mark = sub.isSetMark ? sub.alias : "";
                 var url = sub.url;
+                IDownloadTask worker;
                 if (url.ToLower().EndsWith(".zip"))
                 {
-                    handleZipSub(mark, url);
+                    worker = new ZipDownloadTask(recorder, mark, url);
                 }
                 else
                 {
-                    handleTextSub(mark, url);
+                    worker = new TextDownloadTask(mark, url);
                 }
-                servers.RequireFormMainReload();
+                var task = VgcApis.Misc.Utils.RunInBackground(() =>
+                    worker.Fetch(textQueue, isSocks5, proxyPort, timeout)
+                );
+                downloadTasks.Add(task);
             }
 
-            void decode(string mark, string text, Action onAddNew, CancellationToken token)
-            {
-                AddServersFromText(decoders, recorder, mark, text, onAddNew, withDetail, token);
-            }
+            Task.WhenAll(downloadTasks).ContinueWith(_ => complete());
+            Task.WhenAll(decodeTasks).Wait();
+            complete();
 
-            void handleZipSub(string mark, string url)
-            {
-                var zipTask = new ImportComponents.ZipTask(mark, url);
-                zipTask.Exec(decode, isSocks5, proxyPort);
-            }
-
-            void handleTextSub(string mark, string url)
-            {
-                var textTask = new ImportComponents.TextTask(mark, url);
-                textTask.Exec(decode, isSocks5, proxyPort);
-            }
-
-            VgcApis.Misc.Utils.ExecuteInParallel(validSubs, dispatchSubs);
+            servers.RequireFormMainReload();
             VgcApis.Misc.Utils.ClearRegexCache();
             return recorder;
         }
@@ -198,7 +211,7 @@ namespace V2RayGCon.Services
             return recoder.GetSuccessCount();
         }
 
-        // username is proxy username so as password
+        // maxCount 非精确
         public ImportResultRecorder ImportZipPackageSync(
             string url,
             string mark,
@@ -210,18 +223,45 @@ namespace V2RayGCon.Services
             string proxyPassword
         )
         {
+            timeout = timeout == 0 ? Import.DefaultImportTimeout : timeout;
             var decoders = codecs.GetDecoders(false);
             var recorder = new ImportResultRecorder();
 
-            void decode(string mrk, string text, Action onAddNew, CancellationToken token)
+            // string[] = { mark, text }
+            var queue = new BlockingCollection<string[]>(4);
+
+            void complete()
             {
-                AddServersFromText(decoders, recorder, mrk, text, onAddNew, false, token);
+                try
+                {
+                    queue.CompleteAdding();
+                }
+                catch { }
             }
 
-            var zipTask = new ImportComponents.ZipTask(mark, url, maxCount, timeout);
-            zipTask.Exec(decode, isSocks5, proxyPort);
-            recorder.ErrorMessage = zipTask.GetErrorMessage();
+            var decodeTasks = CreateDecodeTasks(
+                decoders,
+                recorder,
+                queue,
+                Import.ImportWorkerMaxNum,
+                maxCount,
+                false,
+                timeout
+            );
+
+            var zipTask = new ZipDownloadTask(recorder, mark, url);
+            VgcApis
+                .Misc.Utils.RunInBackground(() =>
+                {
+                    zipTask.Fetch(queue, isSocks5, proxyPort, timeout);
+                })
+                .ContinueWith(_ => complete());
+
+            Task.WhenAll(decodeTasks).Wait();
+            complete();
+
             servers.RequireFormMainReload();
+            VgcApis.Misc.Utils.ClearRegexCache();
             return recorder;
         }
 
@@ -267,12 +307,78 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        List<Task> CreateDecodeTasks(
+            List<IShareLinkDecoder> decoders,
+            ImportResultRecorder recoder,
+            BlockingCollection<string[]> queue,
+            int workerNum,
+            int maxCount,
+            bool withDetails,
+            int timeout
+        )
+        {
+            var cts =
+                timeout > 0 ? new CancellationTokenSource(timeout) : new CancellationTokenSource();
+            var success = 0;
+            bool shouldAbort()
+            {
+                if (maxCount < 1)
+                {
+                    return false;
+                }
+
+                var c = Interlocked.Increment(ref success);
+                if (c >= maxCount)
+                {
+                    // consider reach maxCount as success
+                    recoder.SetErrorMessage("");
+                    cts.Cancel();
+                    return true;
+                }
+                return false;
+            }
+
+            void createOneTask()
+            {
+                while (!cts.Token.IsCancellationRequested)
+                {
+                    try
+                    {
+                        var data = queue.Take();
+                        var mark = data[0];
+                        var text = data[1];
+                        AddServersFromText(
+                            decoders,
+                            recoder,
+                            mark,
+                            text,
+                            shouldAbort,
+                            withDetails,
+                            cts.Token
+                        );
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+            }
+
+            var r = new List<Task>();
+            for (var i = 0; i < workerNum; i++)
+            {
+                var task = VgcApis.Misc.Utils.RunInBackground(createOneTask);
+                r.Add(task);
+            }
+            return r;
+        }
+
         void AddServersFromText(
             List<IShareLinkDecoder> decoders,
             ImportResultRecorder recorder,
             string mark,
             string text,
-            Action onAddNew,
+            Func<bool> shouldAbort,
             bool withDetail,
             CancellationToken token
         )
@@ -312,11 +418,13 @@ namespace V2RayGCon.Services
                     if (string.IsNullOrEmpty(uid))
                     {
                         record(link, false, I18N.DuplicateServer);
+                        continue;
                     }
-                    else
+
+                    record(link, true, I18N.Success);
+                    if (shouldAbort != null && shouldAbort.Invoke())
                     {
-                        onAddNew?.Invoke();
-                        record(link, true, I18N.Success);
+                        return;
                     }
                 }
             }

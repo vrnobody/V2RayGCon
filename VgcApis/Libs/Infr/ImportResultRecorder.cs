@@ -1,35 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json.Linq;
 
 namespace VgcApis.Libs.Infr
 {
     public class ImportResultRecorder
     {
         readonly ConcurrentQueue<string[]> results = new ConcurrentQueue<string[]>();
-        int cntOk = 0;
-        int cntFails = 0;
-
         readonly Dictionary<string, int> reasons = new Dictionary<string, int>();
 
-        // 序列化需要这个ctor, 不要删除！
-        public ImportResultRecorder() { }
-
-        #region properties
-
+        int cntOk = 0;
+        int cntFails = 0;
         private string errorMessage = null;
 
-        public string ErrorMessage
-        {
-            get { return errorMessage; }
-            set { errorMessage = value; }
-        }
-
-        #endregion
+        public ImportResultRecorder() { }
 
         #region public methods
+
+        public string GetErrorMessage() => errorMessage;
+
+        public void SetErrorMessage(string msg)
+        {
+            if (errorMessage == null)
+            {
+                errorMessage = msg;
+            }
+        }
 
         public List<string[]> GetResults() => results.ToList();
 

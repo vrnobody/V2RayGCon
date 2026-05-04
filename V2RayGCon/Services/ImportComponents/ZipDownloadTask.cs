@@ -1,100 +1,82 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Threading;
 using V2RayGCon.Services.ShareLinkComponents;
+using VgcApis.Libs.Infr;
 using VgcApis.Models.Consts;
 
 namespace V2RayGCon.Services.ImportComponents
 {
-    internal class ZipTask
+    internal class ZipDownloadTask : IDownloadTask
     {
+        private readonly ImportResultRecorder recoder;
         readonly string mark;
         readonly string url;
-        private readonly int timeout;
+
         readonly StringBuilder sb = new StringBuilder();
-        private readonly int maxCount;
-        string errorMsg = null;
 
-        public ZipTask(string mark, string url)
-            : this(mark, url, 0, Import.ParseImportTimeout) { }
-
-        public ZipTask(string mark, string url, int maxCount, int timeout)
+        public ZipDownloadTask(ImportResultRecorder recoder, string mark, string url)
         {
+            this.recoder = recoder;
             this.mark = mark;
             this.url = url;
-            this.maxCount = maxCount;
-            this.timeout = timeout;
         }
 
         #region public methods
-        public string GetErrorMessage() => errorMsg;
 
-        public void Exec(
-            Action<string, string, Action, CancellationToken> decode,
+
+        public void Fetch(
+            BlockingCollection<string[]> queue,
             bool isSocks5,
-            int proxyPort
+            int proxyPort,
+            int timeout
         )
         {
-            var cts =
-                this.timeout > 0
-                    ? new CancellationTokenSource(timeout)
-                    : new CancellationTokenSource();
+            var cts = new CancellationTokenSource(timeout);
             var token = cts.Token;
-
-            var success = 0;
-            void onAddNew()
-            {
-                if (maxCount < 1)
-                {
-                    return;
-                }
-                success++;
-                if (success >= maxCount)
-                {
-                    SetError("Reach max server count limit.");
-                    cts.Cancel();
-                }
-            }
-
-            void import()
+            void enqueue()
             {
                 var text = sb.ToString();
-                decode(mark, text, onAddNew, token);
+                try
+                {
+                    queue.Add(new string[] { this.mark, text });
+                }
+                catch
+                {
+                    SetTimeoutError();
+                    throw;
+                }
             }
 
             var chunkSize = Import.ParseImportZipPkgChunkSize;
             var highWater = chunkSize * 0.8;
             var overlapSize = 10 * 1024;
-            void push(char[] buff, int len)
+            void readChars(char[] buff, int len)
             {
                 sb.Append(buff, 0, len);
                 if (sb.Length < highWater)
                 {
                     return;
                 }
-                import();
+                enqueue();
                 sb.Remove(0, sb.Length - overlapSize);
             }
 
             var readBuffer = new char[chunkSize];
-            void parseFileStream(StreamReader reader)
+            void readChunks(StreamReader reader)
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
-                    if (token.IsCancellationRequested)
-                    {
-                        return;
-                    }
-
                     var n = reader.Read(readBuffer, 0, chunkSize);
                     if (n < 1)
                     {
                         // file ends
                         return;
                     }
-                    push(readBuffer, n);
+                    readChars(readBuffer, n);
                 }
             }
 
@@ -124,13 +106,13 @@ namespace V2RayGCon.Services.ImportComponents
                         {
                             using (var reader = new StreamReader(entry.Open()))
                             {
-                                parseFileStream(reader);
+                                readChunks(reader);
                             }
                         }
                         catch { }
                     }
                 }
-                import();
+                enqueue();
             }
             catch (Exception ex)
             {
@@ -139,21 +121,16 @@ namespace V2RayGCon.Services.ImportComponents
 
             if (token.IsCancellationRequested)
             {
-                SetError("Timeout.");
+                SetTimeoutError();
             }
         }
 
         #endregion
 
         #region private methods
-        void SetError(string msg)
-        {
-            if (!string.IsNullOrEmpty(errorMsg))
-            {
-                return;
-            }
-            this.errorMsg = msg;
-        }
+        void SetTimeoutError() => recoder.SetErrorMessage("Timeout.");
+
+        void SetError(string msg) => recoder.SetErrorMessage(msg);
         #endregion
     }
 }

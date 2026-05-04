@@ -474,7 +474,7 @@ namespace Luna.Interfaces
         /// </summary>
         /// <param name="url">可以是本地地址，也可以是网络地址</param>
         /// <param name="mark">导入链接时设置的“标记”</param>
-        /// <param name="maxCount">最大成功导入数量，主要用于 debug，0 代表不限制</param>
+        /// <param name="maxCount">最大成功导入数量（有可能刹不住，多导入几个），0 代表不限制</param>
         /// <param name="timeout">
         /// 网络耗时和导入链接耗时之和，单位 ms。
         /// -1 表示直到全部处理完成，0 表示默认 60 秒。

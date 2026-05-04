@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
@@ -10,52 +11,39 @@ using static ScintillaNET.Style;
 
 namespace V2RayGCon.Services.ImportComponents
 {
-    internal class TextTask
+    internal class TextDownloadTask : IDownloadTask
     {
         public readonly string mark;
         public readonly string url;
 
-        public TextTask(string mark, string url)
+        public TextDownloadTask(string mark, string url)
         {
             this.mark = mark;
             this.url = url;
         }
 
         #region private methods
-        public void Exec(
-            Action<string, string, Action, CancellationToken> decode,
+        public void Fetch(
+            BlockingCollection<string[]> queue,
             bool isSocks5,
-            int proxyPort
+            int proxyPort,
+            int timeout
         )
         {
-            var htmls = Download(isSocks5, proxyPort);
-            foreach (var html in htmls)
-            {
-                decode(mark, html, null, CancellationToken.None);
-            }
-        }
-        #endregion
-        #region private methods
-
-        List<string> Download(bool isSocks5, int proxyPort)
-        {
-            var htmls = new List<string>();
-
             var html = VgcApis.Misc.Utils.FetchWorker(
                 isSocks5,
                 this.url,
                 Webs.LoopBackIP,
                 proxyPort,
-                Import.ParseImportTimeout,
+                timeout,
                 null,
                 null
             );
-            if (string.IsNullOrEmpty(html))
+            if (string.IsNullOrEmpty(html) || !TryAdd(queue, html))
             {
-                return htmls;
+                return;
             }
 
-            htmls.Add(html);
             var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(html, 200 * 4 / 3);
             foreach (var b64 in b64s)
             {
@@ -65,13 +53,29 @@ namespace V2RayGCon.Services.ImportComponents
                 }
 
                 var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
-                if (!string.IsNullOrEmpty(text))
+                if (string.IsNullOrEmpty(text))
                 {
-                    htmls.Add(text);
+                    continue;
+                }
+                if (!TryAdd(queue, text))
+                {
+                    return;
                 }
             }
-            return htmls;
         }
+        #endregion
+        #region private methods
+        bool TryAdd(BlockingCollection<string[]> queue, string html)
+        {
+            try
+            {
+                queue.Add(new string[] { this.mark, html });
+                return true;
+            }
+            catch { }
+            return false;
+        }
+
         #endregion
     }
 }

@@ -340,63 +340,6 @@ namespace V2RayGCon.Misc
             return versions;
         }
 
-        /// <summary>
-        /// List( success ? ( vmess://... , mark ) : ( "", [alias] url ) )
-        /// </summary>
-        /// <param name="subscriptions"></param>
-        /// <param name="proxyPort"></param>
-        /// <returns></returns>
-        public static List<string[]> FetchLinksFromSubcriptions(
-            List<Models.Datas.SubscriptionItem> subscriptions,
-            bool isSocks5,
-            int proxyPort
-        )
-        {
-            string[] worker(Models.Datas.SubscriptionItem subItem)
-            {
-                var url = subItem.url;
-                var mark = subItem.isSetMark ? subItem.alias : null;
-
-                var subsString = VgcApis.Misc.Utils.FetchWorker(
-                    isSocks5,
-                    url,
-                    VgcApis.Models.Consts.Webs.LoopBackIP,
-                    proxyPort,
-                    VgcApis.Models.Consts.Import.ParseImportTimeout,
-                    null,
-                    null
-                );
-
-                if (string.IsNullOrEmpty(subsString))
-                {
-                    return new string[] { string.Empty, $"[{subItem.alias}] {url}" };
-                }
-
-                var links = new List<string> { subsString };
-
-                // average length of vless://... is 200
-                var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(subsString, 200 * 4 / 3);
-                foreach (var b64 in b64s)
-                {
-                    if (b64.StartsWith("//"))
-                    {
-                        continue;
-                    }
-
-                    try
-                    {
-                        var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
-                        links.Add(text);
-                    }
-                    catch { }
-                }
-
-                return new string[] { string.Join("\n", links), mark };
-            }
-
-            return VgcApis.Misc.Utils.ExecuteInParallel(subscriptions, worker);
-        }
-
         #endregion
 
         #region files

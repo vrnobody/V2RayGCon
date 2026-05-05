@@ -511,6 +511,34 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+
+        public static string StringBuilderKeepLastLine(StringBuilder sb, int maxKeep)
+        {
+            string r;
+            if (maxKeep <= 0)
+            {
+                r = sb.ToString();
+                sb.Clear();
+                return r;
+            }
+
+            var len = sb.Length;
+            var max = Math.Min(maxKeep, len);
+            int idx = 0;
+            for (var i = 0; i < max; i++)
+            {
+                idx = len - i - 1;
+                if (sb[idx] == '\n')
+                {
+                    break;
+                }
+            }
+
+            r = sb.ToString(0, idx);
+            sb.Remove(0, idx);
+            return r;
+        }
+
         public static string GetUtf8StringWithoutBom(byte[] data)
         {
             var bom = Encoding.UTF8.GetPreamble();

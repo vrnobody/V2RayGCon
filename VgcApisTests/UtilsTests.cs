@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static VgcApis.Misc.Utils;
@@ -15,6 +16,33 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow("abc\n\ne\n\n\ndf", 8, "abc\n\ne\n\n", 3)]
+        [DataRow("abc\ne\n\ndf\n\n\n", 5, "abc\ne\n\ndf\n\n", 1)]
+        [DataRow("abc\ne\ndf\n", 5, "abc\ne\ndf", 1)]
+        [DataRow("vless://.....\nvless://....\nvmess://...", 20, "vless://.....\nvless://....", 12)]
+        [DataRow("abc\ne\ndf", 2, "abc\ne\n", 2)]
+        [DataRow("abc\ne\nd", 1, "abc\ne\n", 1)]
+        [DataRow("abc\ne\nd", 10, "abc\ne", 2)]
+        [DataRow("abc", 1, "ab", 1)]
+        [DataRow("abc", -1, "abc", 0)]
+        [DataRow("abc", 0, "abc", 0)]
+        [DataRow("abc", 10, "", 3)]
+        [DataRow("", 100, "", 0)]
+        [DataRow(null, 100, "", 0)]
+        public void StringBuilderKeepLastLineTest(
+            string src,
+            int keep,
+            string expStr,
+            int expRemain
+        )
+        {
+            var sb = new StringBuilder(src);
+            var s = StringBuilderKeepLastLine(sb, keep);
+            Assert.AreEqual(expStr, s);
+            Assert.AreEqual(expRemain, sb.Length);
+        }
+
         #region short date int
 
         [DataTestMethod]

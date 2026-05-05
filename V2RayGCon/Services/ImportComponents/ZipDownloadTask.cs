@@ -38,9 +38,11 @@ namespace V2RayGCon.Services.ImportComponents
             var cts =
                 timeout > 0 ? new CancellationTokenSource(timeout) : new CancellationTokenSource();
             var token = cts.Token;
+            var overlapSize = 10 * 1024;
+
             void enqueue()
             {
-                var text = sb.ToString();
+                var text = VgcApis.Misc.Utils.StringBuilderKeepLastLine(sb, overlapSize);
                 try
                 {
                     if (!string.IsNullOrEmpty(text))
@@ -57,7 +59,7 @@ namespace V2RayGCon.Services.ImportComponents
 
             var chunkSize = Import.ParseImportZipPkgChunkSize;
             var highWater = chunkSize * 0.8;
-            var overlapSize = 10 * 1024;
+
             void readChars(char[] buff, int len)
             {
                 sb.Append(buff, 0, len);
@@ -66,7 +68,6 @@ namespace V2RayGCon.Services.ImportComponents
                     return;
                 }
                 enqueue();
-                sb.Remove(0, sb.Length - overlapSize);
             }
 
             var readBuffer = new char[chunkSize];

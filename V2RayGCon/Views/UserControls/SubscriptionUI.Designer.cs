@@ -40,13 +40,17 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkIsSetMark = new System.Windows.Forms.CheckBox();
             this.lbTotal = new System.Windows.Forms.Label();
+            this.btnBrowseFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbIndex
             // 
+            this.lbIndex.Cursor = System.Windows.Forms.Cursors.SizeAll;
             resources.ApplyResources(this.lbIndex, "lbIndex");
-            this.lbIndex.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbIndex.ForeColor = System.Drawing.Color.DarkGray;
             this.lbIndex.Name = "lbIndex";
+            this.toolTip1.SetToolTip(this.lbIndex, resources.GetString("lbIndex.ToolTip"));
+            this.lbIndex.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbIndex_MouseDown);
             // 
             // tboxAlias
             // 
@@ -79,6 +83,7 @@
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Name = "btnDelete";
+            this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -106,20 +111,30 @@
             this.toolTip1.SetToolTip(this.lbTotal, resources.GetString("lbTotal.ToolTip"));
             this.lbTotal.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTotal_MouseDown);
             // 
+            // btnBrowseFile
+            // 
+            this.btnBrowseFile.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.btnBrowseFile, "btnBrowseFile");
+            this.btnBrowseFile.Name = "btnBrowseFile";
+            this.toolTip1.SetToolTip(this.btnBrowseFile, resources.GetString("btnBrowseFile.ToolTip"));
+            this.btnBrowseFile.UseVisualStyleBackColor = true;
+            this.btnBrowseFile.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
             // SubscriptionUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.lbIndex);
             this.Controls.Add(this.lbTotal);
             this.Controls.Add(this.chkIsSetMark);
             this.Controls.Add(this.chkIsUse);
+            this.Controls.Add(this.btnBrowseFile);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.tboxUrl);
             this.Controls.Add(this.tboxAlias);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.lbIndex);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "SubscriptionUI";
             this.Tag = "";
@@ -142,5 +157,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkIsSetMark;
         private System.Windows.Forms.Label lbTotal;
+        private System.Windows.Forms.Button btnBrowseFile;
     }
 }

@@ -17,7 +17,9 @@ namespace V2RayGCon.Views.UserControls
 
         public SubscriptionUI(Subscription subsCtrl, Models.Datas.SubscriptionItem subscriptItem)
         {
+            // size: 353, 82
             InitializeComponent();
+            VgcApis.Misc.UI.SetTrasparentBackground(btnBrowseFile);
 
             this.subsCtrl = subsCtrl;
 
@@ -195,6 +197,19 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbTotal_MouseDown(object sender, MouseEventArgs e) =>
             DoDragDrop(this, DragDropEffects.Move);
+
+        private void lbIndex_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(this, DragDropEffects.Move);
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            var ext = VgcApis.Models.Consts.Files.GenExtWithAllFile("zip", "txt");
+            var folder = VgcApis.Misc.UI.ShowSelectFileDialog(ext);
+            if (!string.IsNullOrEmpty(folder))
+            {
+                tboxUrl.Text = folder;
+            }
+        }
         #endregion
 
         #region protected

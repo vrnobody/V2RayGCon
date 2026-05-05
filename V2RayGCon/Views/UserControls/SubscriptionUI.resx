@@ -117,20 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbIndex.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbIndex.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 12pt, style=Bold</value>
   </data>
   <data name="lbIndex.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 7</value>
+    <value>325, 7</value>
   </data>
   <data name="lbIndex.Size" type="System.Drawing.Size, System.Drawing">
-    <value>26, 16</value>
+    <value>21, 16</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lbIndex.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -138,7 +135,13 @@
     <value>78</value>
   </data>
   <data name="lbIndex.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+    <value>MiddleRight</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="lbIndex.ToolTip" xml:space="preserve">
+    <value>Index</value>
   </data>
   <data name="&gt;&gt;lbIndex.Name" xml:space="preserve">
     <value>lbIndex</value>
@@ -150,13 +153,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbIndex.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>0</value>
   </data>
   <data name="tboxAlias.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 5</value>
+    <value>48, 5</value>
   </data>
   <data name="tboxAlias.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 21</value>
+    <value>271, 21</value>
   </data>
   <data name="tboxAlias.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -171,10 +174,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tboxAlias.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 9</value>
+    <value>3, 9</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 12</value>
@@ -198,10 +201,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 34</value>
+    <value>3, 34</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 12</value>
@@ -225,13 +228,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="tboxUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 30</value>
+    <value>48, 30</value>
   </data>
   <data name="tboxUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 21</value>
+    <value>271, 21</value>
   </data>
   <data name="tboxUrl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -246,23 +249,26 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tboxUrl.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>281, 54</value>
+    <value>266, 54</value>
   </data>
   <data name="btnDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 21</value>
+    <value>53, 21</value>
   </data>
   <data name="btnDelete.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="btnDelete.Text" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="btnDelete.ToolTip" xml:space="preserve">
+    <value>Delete this.</value>
   </data>
   <data name="&gt;&gt;btnDelete.Name" xml:space="preserve">
     <value>btnDelete</value>
@@ -274,13 +280,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnDelete.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="chkIsUse.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chkIsUse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 56</value>
+    <value>48, 56</value>
   </data>
   <data name="chkIsUse.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 16</value>
@@ -291,9 +297,6 @@
   <data name="chkIsUse.Text" xml:space="preserve">
     <value>Use</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="chkIsUse.ToolTip" xml:space="preserve">
     <value>Use this subscription.</value>
   </data>
@@ -307,13 +310,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkIsUse.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="chkIsSetMark.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chkIsSetMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 56</value>
+    <value>96, 56</value>
   </data>
   <data name="chkIsSetMark.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
@@ -337,7 +340,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkIsSetMark.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="lbTotal.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -349,7 +352,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbTotal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>195, 58</value>
+    <value>150, 58</value>
   </data>
   <data name="lbTotal.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 12</value>
@@ -373,7 +376,45 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbTotal.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
+  </data>
+  <data name="btnBrowseFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAASFJREFUOE+lks9KAlEUh+8b5Bv0Bj2CzyC0Dty1b5kuoqWPEIEURLgIF4J/WtSi
+        zeimTTQSoRCViKKiMtvT/Q5eGfMOKh74cWfOOb9vzrmMiaIoayUbdGGSgobuU0E+q+deUbM9Y6vUwrIa
+        AGjk9AnAsBP4atmtAJjjE6HO46XMpyPqqY0An+jfG8C51Qo+xfvXAP33ur47sW+33ZJC+VVyd02pNdvy
+        3brR/BpgNuppIQ4AmM5X5ODkVo7OHsQcXyuEvPU8rwAgx81o8huqqfTyoT1AmIRnq8wSQON/s8sDwBR+
+        DeTw9N4BxstL1D0T/kamumq8KcSJdYLwB0gRQBEIX0oS9d5woiYHcxCdYpfggw7CvSzSuwUQ7oPTiMge
+        EvMH7hzdlDzjmN0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnBrowseFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnBrowseFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>325, 30</value>
+  </data>
+  <data name="btnBrowseFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 21</value>
+  </data>
+  <data name="btnBrowseFile.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnBrowseFile.ToolTip" xml:space="preserve">
+    <value>Browse local file.</value>
+  </data>
+  <data name="&gt;&gt;btnBrowseFile.Name" xml:space="preserve">
+    <value>btnBrowseFile</value>
+  </data>
+  <data name="&gt;&gt;btnBrowseFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnBrowseFile.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnBrowseFile.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

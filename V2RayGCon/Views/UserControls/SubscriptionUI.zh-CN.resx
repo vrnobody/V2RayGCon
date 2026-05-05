@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="lbIndex.ToolTip" xml:space="preserve">
-    <value />
+    <value>序号</value>
   </data>
   <data name="tboxAlias.ToolTip" xml:space="preserve">
     <value />
@@ -139,7 +139,7 @@
     <value>删除</value>
   </data>
   <data name="btnDelete.ToolTip" xml:space="preserve">
-    <value />
+    <value>删除</value>
   </data>
   <data name="chkIsUse.Text" xml:space="preserve">
     <value>启用</value>
@@ -153,14 +153,23 @@
   <data name="chkIsSetMark.ToolTip" xml:space="preserve">
     <value>更新订阅时将新服务器的标记设为别名</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>合计</value>
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value>使用此别名作为标记的服务器数量</value>
-  </data>
   <data name="lbTotal.ToolTip" xml:space="preserve">
     <value>使用此别名作为标记的服务器数量</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnBrowseFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAASFJREFUOE+lks9KAlEUh+8b5Bv0Bj2CzyC0Dty1b5kuoqWPEIEURLgIF4J/WtSi
+        zeimTTQSoRCViKKiMtvT/Q5eGfMOKh74cWfOOb9vzrmMiaIoayUbdGGSgobuU0E+q+deUbM9Y6vUwrIa
+        AGjk9AnAsBP4atmtAJjjE6HO46XMpyPqqY0An+jfG8C51Qo+xfvXAP33ur47sW+33ZJC+VVyd02pNdvy
+        3brR/BpgNuppIQ4AmM5X5ODkVo7OHsQcXyuEvPU8rwAgx81o8huqqfTyoT1AmIRnq8wSQON/s8sDwBR+
+        DeTw9N4BxstL1D0T/kamumq8KcSJdYLwB0gRQBEIX0oS9d5woiYHcxCdYpfggw7CvSzSuwUQ7oPTiMge
+        EvMH7hzdlDzjmN0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnBrowseFile.ToolTip" xml:space="preserve">
+    <value>浏览本地文件</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放可以调整顺序</value>

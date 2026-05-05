@@ -1,4 +1,8 @@
-﻿namespace VgcApis.Models.Consts
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+
+namespace VgcApis.Models.Consts
 {
     public static class Files
     {
@@ -14,24 +18,37 @@
 
         public static readonly string AllExt = @"All File|*.*";
 
-        static string GenExtString(string extension, bool appendAllFile = true)
+        public static string GenExtWithAllFile(params string[] exts)
         {
-            var l = extension.ToLower();
-            var e = $"{l} file|*.{l}";
-            return appendAllFile ? $"{e}|{AllExt}" : e;
+            return GenExtStr(true, exts);
         }
 
-        public static readonly string TlsCertExts =
-            $"{GenExtString("pem", false)}|{GenExtString("crt", true)}";
+        public static string GenExtStr(bool appendAllFile, params string[] exts)
+        {
+            var list = new List<string>();
+            foreach (var ext in exts)
+            {
+                var l = ext.ToLower();
+                var e = $"{l} file|*.{l}";
+                list.Add(e);
+            }
+            if (appendAllFile)
+            {
+                list.Add(AllExt);
+            }
+            return string.Join("|", list);
+        }
 
-        public static readonly string PngExt = GenExtString("png");
-        public static readonly string JsExt = GenExtString("js");
-        public static readonly string JsonExt = GenExtString("json");
-        public static readonly string PacExt = GenExtString("pac");
-        public static readonly string LuaExt = GenExtString("lua");
-        public static readonly string ExeExt = GenExtString("exe");
-        public static readonly string TxtExt = GenExtString("txt");
-        public static readonly string CsvExt = GenExtString("csv");
+        public static readonly string TlsCertExts = GenExtWithAllFile("pem", "crt");
+
+        public static readonly string PngExt = GenExtWithAllFile("png");
+        public static readonly string JsExt = GenExtWithAllFile("js");
+        public static readonly string JsonExt = GenExtWithAllFile("json");
+        public static readonly string PacExt = GenExtWithAllFile("pac");
+        public static readonly string LuaExt = GenExtWithAllFile("lua");
+        public static readonly string ExeExt = GenExtWithAllFile("exe");
+        public static readonly string TxtExt = GenExtWithAllFile("txt");
+        public static readonly string CsvExt = GenExtWithAllFile("csv");
 
         #region helper functions
 

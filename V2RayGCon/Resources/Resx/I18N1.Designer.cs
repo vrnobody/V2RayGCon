@@ -1130,6 +1130,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Index 的本地化字符串。
+        /// </summary>
+        internal static string Index {
+            get {
+                return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Inject packageing imports fail, ignore imports. 的本地化字符串。
         /// </summary>
         internal static string InjectPackagingImportsFail {

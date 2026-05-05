@@ -838,4 +838,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
     <value>使用旧版 GUI 可能导致配置数据丢失！
 继续启动程序吗？</value>
   </data>
+  <data name="Index" xml:space="preserve">
+    <value>序号</value>
+  </data>
 </root>

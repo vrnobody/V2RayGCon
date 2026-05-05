@@ -93,7 +93,8 @@ namespace V2RayGCon.Views.UserControls
 
         public void SetIndex(int index)
         {
-            lbIndex.Text = index.ToString();
+            lbIndex.Text = $"{index}";
+            toolTip1.SetToolTip(lbIndex, $"{I18N.Index}: {index}");
         }
         #endregion
 

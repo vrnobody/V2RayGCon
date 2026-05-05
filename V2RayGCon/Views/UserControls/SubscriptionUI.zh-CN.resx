@@ -139,7 +139,7 @@
     <value>删除</value>
   </data>
   <data name="btnDelete.ToolTip" xml:space="preserve">
-    <value>删除</value>
+    <value />
   </data>
   <data name="chkIsUse.Text" xml:space="preserve">
     <value>启用</value>

@@ -119,23 +119,23 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbIndex.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 12pt, style=Bold</value>
+    <value>宋体, 10.5pt, style=Bold</value>
   </data>
   <data name="lbIndex.Location" type="System.Drawing.Point, System.Drawing">
-    <value>325, 7</value>
+    <value>324, 7</value>
   </data>
   <data name="lbIndex.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 16</value>
+    <value>23, 16</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lbIndex.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="lbIndex.Text" xml:space="preserve">
-    <value>78</value>
+    <value>67</value>
   </data>
   <data name="lbIndex.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+    <value>MiddleCenter</value>
   </data>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -266,9 +266,6 @@
   </data>
   <data name="btnDelete.Text" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="btnDelete.ToolTip" xml:space="preserve">
-    <value>Delete this.</value>
   </data>
   <data name="&gt;&gt;btnDelete.Name" xml:space="preserve">
     <value>btnDelete</value>

@@ -531,7 +531,7 @@ namespace V2RayGCon.Services
             json["inbounds"] = VgcApis.Misc.Utils.GenHttpInbound(port);
 
             // inject log config
-            var nodeLog = VgcApis.Misc.Utils.GetKey(json, "log");
+            var nodeLog = VgcApis.Misc.Utils.GetJToken(json, "log");
             if (nodeLog != null && nodeLog is JObject)
             {
                 nodeLog["loglevel"] = "warning";

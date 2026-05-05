@@ -213,19 +213,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SelectAllPagesWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
-            GetFlyPanel()
-                .GetFilteredList()
-                .ForEach(s => s.GetCoreStates().SetIsSelected(condiction(s)));
+            var servs = GetFlyPanel().GetFilteredList();
+            VgcApis.Misc.Utils.RunInBackground(() =>
+                servs.ForEach(s => s.GetCoreStates().SetIsSelected(condiction(s)))
+            );
         }
 
         void SelectAllServersWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
-            var servs = servers.GetAllServersOrderByIndex();
-            foreach (var serv in servs)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var isSelected = condiction(serv);
-                serv.GetCoreStates().SetIsSelected(isSelected);
-            }
+                var servs = servers.GetAllServersOrderByIndex();
+                foreach (var serv in servs)
+                {
+                    var isSelected = condiction(serv);
+                    serv.GetCoreStates().SetIsSelected(isSelected);
+                }
+            });
         }
 
         FlyServer GetFlyPanel()

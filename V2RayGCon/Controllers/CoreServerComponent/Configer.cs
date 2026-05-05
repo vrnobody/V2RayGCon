@@ -479,7 +479,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             JObject uTlsFingerprint
         )
         {
-            if (VgcApis.Misc.Utils.GetKey(json, "streamSettings") is JObject streamS)
+            if (VgcApis.Misc.Utils.GetJToken(json, "streamSettings") is JObject streamS)
             {
                 if (selfSigned != null)
                 {

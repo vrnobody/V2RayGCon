@@ -76,27 +76,33 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
-        void ClearSelectedServersStatRecord()
+        void ClearSelectedServersStatRecordBg()
         {
-            var servs = servers.GetSelectedServers();
-
-            foreach (var serv in servs)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var cst = serv.GetCoreStates();
-                cst.SetDownlinkTotal(0);
-                cst.SetUplinkTotal(0);
-            }
+                var servs = servers.GetSelectedServers();
+
+                foreach (var serv in servs)
+                {
+                    var cst = serv.GetCoreStates();
+                    cst.SetDownlinkTotal(0);
+                    cst.SetUplinkTotal(0);
+                }
+            });
         }
 
-        void ClearSelectedServersSpeedTestResults()
+        void ClearSelectedServersSpeedTestResultsBg()
         {
-            var servs = servers.GetSelectedServers();
-
-            foreach (var serv in servs)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var cst = serv.GetCoreStates();
-                cst.SetSpeedTestResult(0);
-            }
+                var servs = servers.GetSelectedServers();
+
+                foreach (var serv in servs)
+                {
+                    var cst = serv.GetCoreStates();
+                    cst.SetSpeedTestResult(0);
+                }
+            });
         }
 
         EventHandler RunWhenSelectionIsNotEmptyHandler(Action action)
@@ -126,7 +132,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearStat))
                 {
-                    ClearSelectedServersStatRecord();
+                    ClearSelectedServersStatRecordBg();
                 }
             });
 
@@ -134,7 +140,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
                 {
-                    ClearSelectedServersSpeedTestResults();
+                    ClearSelectedServersSpeedTestResultsBg();
                 }
             });
 
@@ -192,7 +198,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     return;
                 }
-                Services.Servers.Instance.DeleteAllServers();
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    Services.Servers.Instance.DeleteAllServers();
+                });
             };
 
             deleteSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
@@ -201,7 +210,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     return;
                 }
-                servers.DeleteSelectedServers();
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    servers.DeleteSelectedServers();
+                });
             });
         }
 
@@ -213,24 +225,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             copyAsMobLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.mob
-                );
-                Misc.Utils.CopyToClipboardAndPrompt(links);
+                CopySelectedAsShareLinkBg(VgcApis.Models.Datas.Enums.LinkTypes.mob);
             });
 
             copyAsV2cfgLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
-                );
-                Misc.Utils.CopyToClipboardAndPrompt(links);
+                CopySelectedAsShareLinkBg(VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
             });
 
             copyAsVmixLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeSelectedServersIntoVmixShareLinks();
-                Misc.Utils.CopyToClipboardAndPrompt(links);
+                CopySelectedAsVmixShareLinksBg();
             });
         }
 
@@ -242,16 +247,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             moveToTop.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var selected = servers.GetSelectedServers();
-                var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
-                servers.MoveTo(uids, 1);
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    var selected = servers.GetSelectedServers();
+                    var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
+                    servers.MoveTo(uids, 1);
+                });
             });
 
             moveToBottom.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var selected = servers.GetSelectedServers();
-                var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
-                servers.MoveTo(uids, servers.Count() + 1);
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    var selected = servers.GetSelectedServers();
+                    var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
+                    servers.MoveTo(uids, servers.Count() + 1);
+                });
             });
 
             moveToCustomIndex.Click += RunWhenSelectionIsNotEmptyHandler(() =>
@@ -262,9 +273,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     {
                         if (double.TryParse(str, out var index))
                         {
-                            var selected = servers.GetSelectedServers();
-                            var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
-                            servers.MoveTo(uids, index);
+                            VgcApis.Misc.Utils.RunInBackground(() =>
+                            {
+                                var selected = servers.GetSelectedServers();
+                                var uids = selected
+                                    .Select(s => s.GetCoreStates().GetUid())
+                                    .ToList();
+                                servers.MoveTo(uids, index);
+                            });
                         }
                         else
                         {
@@ -285,90 +301,86 @@ namespace V2RayGCon.Controllers.FormMainComponent
         )
         {
             sortByDownloadTotal.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.SortSelectedByDownloadTotal()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.SortSelectedByDownloadTotal())
             );
 
             sortByUploadTotal.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.SortSelectedByUploadTotal()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.SortSelectedByUploadTotal())
             );
 
             reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.ReverseSelectedByIndex()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.ReverseSelectedByIndex())
             );
 
             sortByDate.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.SortSelectedByLastModifiedDate()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.SortSelectedByLastModifiedDate())
             );
 
             sortBySummary.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.SortSelectedBySummary()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.SortSelectedBySummary())
             );
 
             sortBySpeed.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-                servers.SortSelectedBySpeedTest()
+                VgcApis.Misc.Utils.RunInBackground(() => servers.SortSelectedBySpeedTest())
             );
         }
 
-        void RemoveAllControlsAndRefreshFlyPanel()
+        void CopySelectedAsVmixShareLinksBg()
         {
-            var panel = GetFlyPanel();
-            panel.RemoveAllServersConrol();
-            panel.RefreshFlyPanelLater();
-        }
-
-        string EncodeSelectedServersIntoVmixShareLinks()
-        {
-            var serverList = servers.GetAllServersOrderByIndex();
-
-            StringBuilder result = new StringBuilder("");
-
-            foreach (var server in serverList)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                if (!server.GetCoreStates().IsSelected())
+                var serverList = servers.GetAllServersOrderByIndex();
+
+                StringBuilder result = new StringBuilder("");
+
+                foreach (var server in serverList)
                 {
-                    continue;
+                    if (!server.GetCoreStates().IsSelected())
+                    {
+                        continue;
+                    }
+
+                    var shareLink = server.GetConfiger().GetShareLink();
+
+                    if (!string.IsNullOrEmpty(shareLink))
+                    {
+                        result.Append(shareLink).Append(Environment.NewLine);
+                    }
                 }
 
-                var shareLink = server.GetConfiger().GetShareLink();
-
-                if (!string.IsNullOrEmpty(shareLink))
-                {
-                    result.Append(shareLink).Append(Environment.NewLine);
-                }
-            }
-
-            return result.ToString();
+                var links = result.ToString();
+                VgcApis.Misc.UI.Invoke(() => Misc.Utils.CopyToClipboardAndPrompt(links));
+            });
         }
 
-        string EncodeSelectedServersIntoShareLinks(VgcApis.Models.Datas.Enums.LinkTypes linkType)
+        void CopySelectedAsShareLinkBg(VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
-            var serverList = servers.GetAllServersOrderByIndex();
-
-            StringBuilder result = new StringBuilder("");
-
-            foreach (var server in serverList)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                if (!server.GetCoreStates().IsSelected())
+                var serverList = servers.GetAllServersOrderByIndex();
+
+                StringBuilder result = new StringBuilder("");
+
+                foreach (var server in serverList)
                 {
-                    continue;
+                    if (!server.GetCoreStates().IsSelected())
+                    {
+                        continue;
+                    }
+
+                    var name = server.GetCoreStates().GetName();
+                    var configString = server.GetConfiger().GetConfig();
+                    var shareLink = slinkMgr.EncodeConfigToShareLink(name, configString, linkType);
+
+                    if (!string.IsNullOrEmpty(shareLink))
+                    {
+                        result.Append(shareLink).Append(Environment.NewLine);
+                    }
                 }
 
-                var name = server.GetCoreStates().GetName();
-                var configString = server.GetConfiger().GetConfig();
-                var shareLink = slinkMgr.EncodeConfigToShareLink(name, configString, linkType);
-
-                if (!string.IsNullOrEmpty(shareLink))
-                {
-                    result.Append(shareLink).Append(Environment.NewLine);
-                }
-            }
-
-            return result.ToString();
-        }
-
-        FlyServer GetFlyPanel()
-        {
-            return this.GetContainer().GetComponent<FlyServer>();
+                var links = result.ToString();
+                VgcApis.Misc.UI.Invoke(() => Misc.Utils.CopyToClipboardAndPrompt(links));
+            });
         }
         #endregion
     }

@@ -448,13 +448,8 @@ namespace VgcApis.Misc
                 meta.tlsParam4 = reader(prefix, $"{ts}.mldsa65Verify") ?? "";
             }
 
-            try
-            {
-                // do not support v3.x config
-                var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
-                meta.tlsAlpn = VgcApis.Misc.Utils.JArray2Str(alpn as JArray);
-            }
-            catch { }
+            var alpn = Utils.GetJToken(config, $"outbounds.0.streamSettings.{ts}.alpn");
+            meta.tlsAlpn = Utils.JArray2Str(alpn as JArray);
         }
         #endregion
     }

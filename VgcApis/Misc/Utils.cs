@@ -2422,21 +2422,17 @@ namespace VgcApis.Misc
                 return result;
             }
 
-            try
+            var outbs = GetJToken(json, "outbounds");
+            if (outbs != null && outbs is JArray)
             {
-                var outbs = GetKey(json, "outbounds");
-                if (outbs != null && outbs is JArray)
+                foreach (var item in outbs)
                 {
-                    foreach (var item in outbs)
+                    if (item is JObject outb)
                     {
-                        if (item is JObject outb)
-                        {
-                            result.Add(outb);
-                        }
+                        result.Add(outb);
                     }
                 }
             }
-            catch { }
 
             return result;
         }
@@ -2683,7 +2679,7 @@ namespace VgcApis.Misc
             var key = parts.Item2;
             var parent = parts.Item1;
 
-            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+            var node = string.IsNullOrEmpty(parent) ? json : GetJToken(json, parent);
             if (node == null)
             {
                 return false;
@@ -2720,7 +2716,7 @@ namespace VgcApis.Misc
                 return false;
             }
 
-            var node = GetKey(source, path);
+            var node = GetJToken(source, path);
             if (node == null)
             {
                 // throw new KeyNotFoundException("This JObject has no key: " + path);
@@ -2729,7 +2725,7 @@ namespace VgcApis.Misc
 
             result = CreateJObject(parentPath);
 
-            var parent = string.IsNullOrEmpty(parentPath) ? result : GetKey(result, parentPath);
+            var parent = string.IsNullOrEmpty(parentPath) ? result : GetJToken(result, parentPath);
 
             if (parent == null || !(parent is JObject))
             {
@@ -2753,7 +2749,7 @@ namespace VgcApis.Misc
                 throw new KeyNotFoundException();
             }
 
-            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+            var node = string.IsNullOrEmpty(parent) ? json : GetJToken(json, parent);
 
             if (node == null || !(node is JObject))
             {
@@ -2986,7 +2982,7 @@ namespace VgcApis.Misc
         /// <returns></returns>
         public static T GetValue<T>(JToken json, string path)
         {
-            var key = GetKey(json, path);
+            var key = GetJToken(json, path);
 
             var def =
                 default(T) == null && typeof(T) == typeof(string)
@@ -3015,7 +3011,7 @@ namespace VgcApis.Misc
         /// <param name="json"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static JToken GetKey(JToken json, string path)
+        public static JToken GetJToken(JToken json, string path)
         {
             if (string.IsNullOrEmpty(path))
             {

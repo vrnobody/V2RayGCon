@@ -39,7 +39,7 @@ namespace V2RayGCon.Misc.Caches
         #region private method
         static JToken LoadJObjectPart(JObject source, string path)
         {
-            var result = VgcApis.Misc.Utils.GetKey(source, path);
+            var result = VgcApis.Misc.Utils.GetJToken(source, path);
             if (result == null)
             {
                 throw new JsonReaderException();

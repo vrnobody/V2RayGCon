@@ -1,12 +1,12 @@
 {
-  "version": "2.2.7.0",
-  "md5": "B5BA1CB9E55C55BA992FD91949E897BF",
+  "version": "2.2.8.0",
+  "md5": "123A5AF7E403098E5C89A84EBAF9A770",
   "warnings": [],
   "changes": [
-    "修复导入订阅可能崩溃的 bug",
-    "降低一丢丢内存占用",
-    "v2cfg://... 链接升级到 v3",
-    "NeoLuna 插件添加 wserv:SetRawConfig()",
-    "NeoLuna 插件添加几个 ZSTD 压缩相关的函数"
+    "订阅界面添加“浏览本地文件”按钮",
+    "编辑器支持 redo 快捷键",
+    "改进主窗口批量操作会卡顿的问题",
+    "优化更新订阅时导入链接的速度",
+    "添加 std.Misc:ClearAstCache() 函数"
   ]
 }

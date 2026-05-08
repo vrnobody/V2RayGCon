@@ -501,6 +501,9 @@
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+  <data name="btnTemplates.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="btnTemplates.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 233</value>
   </data>
@@ -520,7 +523,7 @@
     <value>btnTemplates</value>
   </data>
   <data name="&gt;&gt;btnTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnTemplates.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -789,6 +792,9 @@
   <data name="&gt;&gt;tboxTemplates.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="btnOK.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="btnOK.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -808,7 +814,7 @@
     <value>btnOK</value>
   </data>
   <data name="&gt;&gt;btnOK.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnOK.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -987,6 +993,9 @@
   <data name="&gt;&gt;cboxShareLinkType.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="btnSaveQrcode.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="btnSaveQrcode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1006,13 +1015,16 @@
     <value>btnSaveQrcode</value>
   </data>
   <data name="&gt;&gt;btnSaveQrcode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnSaveQrcode.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;btnSaveQrcode.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="btnCopyShareLink.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnCopyShareLink.Location" type="System.Drawing.Point, System.Drawing">
     <value>62, 359</value>
@@ -1030,7 +1042,7 @@
     <value>btnCopyShareLink</value>
   </data>
   <data name="&gt;&gt;btnCopyShareLink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnCopyShareLink.Parent" xml:space="preserve">
     <value>groupBox4</value>

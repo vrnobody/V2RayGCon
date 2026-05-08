@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
-            this.btnNext = new System.Windows.Forms.Button();
-            this.btnPrevious = new System.Windows.Forms.Button();
+            this.btnNext = new VgcApis.UserControls.RoundButton();
+            this.btnPrevious = new VgcApis.UserControls.RoundButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnReplaceOne = new System.Windows.Forms.Button();
-            this.btnReplaceAll = new System.Windows.Forms.Button();
+            this.btnReplaceOne = new VgcApis.UserControls.RoundButton();
+            this.btnReplaceAll = new VgcApis.UserControls.RoundButton();
             this.cboxReplaceKeyword = new System.Windows.Forms.ComboBox();
             this.cboxSearchKeyword = new System.Windows.Forms.ComboBox();
             this.groupBoxOptions = new System.Windows.Forms.GroupBox();
@@ -42,22 +42,24 @@
             this.chkOptionMatchCase = new System.Windows.Forms.CheckBox();
             this.chkOptionWholeWord = new System.Windows.Forms.CheckBox();
             this.chkOptionRegex = new System.Windows.Forms.CheckBox();
-            this.btnNewSearch = new System.Windows.Forms.Button();
+            this.btnNewSearch = new VgcApis.UserControls.RoundButton();
             this.groupBoxOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnNext
             // 
             resources.ApplyResources(this.btnNext, "btnNext");
+            this.btnNext.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnNext.Name = "btnNext";
-            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.UseVisualStyleBackColor = false;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnPrevious
             // 
             resources.ApplyResources(this.btnPrevious, "btnPrevious");
+            this.btnPrevious.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.UseVisualStyleBackColor = false;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // label2
@@ -73,15 +75,17 @@
             // btnReplaceOne
             // 
             resources.ApplyResources(this.btnReplaceOne, "btnReplaceOne");
+            this.btnReplaceOne.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnReplaceOne.Name = "btnReplaceOne";
-            this.btnReplaceOne.UseVisualStyleBackColor = true;
+            this.btnReplaceOne.UseVisualStyleBackColor = false;
             this.btnReplaceOne.Click += new System.EventHandler(this.btnReplaceOne_Click);
             // 
             // btnReplaceAll
             // 
             resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
+            this.btnReplaceAll.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnReplaceAll.Name = "btnReplaceAll";
-            this.btnReplaceAll.UseVisualStyleBackColor = true;
+            this.btnReplaceAll.UseVisualStyleBackColor = false;
             this.btnReplaceAll.Click += new System.EventHandler(this.btnReplaceAll_Click);
             // 
             // cboxReplaceKeyword
@@ -140,8 +144,9 @@
             // btnNewSearch
             // 
             resources.ApplyResources(this.btnNewSearch, "btnNewSearch");
+            this.btnNewSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnNewSearch.Name = "btnNewSearch";
-            this.btnNewSearch.UseVisualStyleBackColor = true;
+            this.btnNewSearch.UseVisualStyleBackColor = false;
             this.btnNewSearch.Click += new System.EventHandler(this.btnNewSearch_Click);
             // 
             // FormSearch
@@ -171,19 +176,19 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnReplaceOne;
-        private System.Windows.Forms.Button btnReplaceAll;
         private System.Windows.Forms.ComboBox cboxReplaceKeyword;
         private System.Windows.Forms.ComboBox cboxSearchKeyword;
         private System.Windows.Forms.GroupBox groupBoxOptions;
-        private System.Windows.Forms.Button btnNewSearch;
         private System.Windows.Forms.CheckBox chkOptionWordStart;
         private System.Windows.Forms.CheckBox chkOptionMatchCase;
         private System.Windows.Forms.CheckBox chkOptionWholeWord;
         private System.Windows.Forms.CheckBox chkOptionRegex;
+        private UserControls.RoundButton btnNext;
+        private UserControls.RoundButton btnPrevious;
+        private UserControls.RoundButton btnReplaceOne;
+        private UserControls.RoundButton btnReplaceAll;
+        private UserControls.RoundButton btnNewSearch;
     }
 }

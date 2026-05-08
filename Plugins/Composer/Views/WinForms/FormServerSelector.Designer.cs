@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormServerSelector));
             this.label1 = new System.Windows.Forms.Label();
             this.tboxTag = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboxFilterKw = new VgcApis.UserControls.AcmComboBox();
-            this.btnPullServers = new System.Windows.Forms.Button();
-            this.btnRefreshTotal = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnPullServers = new VgcApis.UserControls.RoundButton();
+            this.btnRefreshTotal = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.flyCustomServers = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSave = new VgcApis.UserControls.RoundButton();
             this.lbTotal = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelFilterKeywords = new System.Windows.Forms.Panel();
             this.panelFilterKeywords.SuspendLayout();
             this.SuspendLayout();
@@ -75,25 +76,28 @@
             // 
             // btnPullServers
             // 
+            this.btnPullServers.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnPullServers, "btnPullServers");
             this.btnPullServers.Name = "btnPullServers";
             this.toolTip1.SetToolTip(this.btnPullServers, resources.GetString("btnPullServers.ToolTip"));
-            this.btnPullServers.UseVisualStyleBackColor = true;
+            this.btnPullServers.UseVisualStyleBackColor = false;
             this.btnPullServers.Click += new System.EventHandler(this.btnPullServers_Click);
             // 
             // btnRefreshTotal
             // 
             resources.ApplyResources(this.btnRefreshTotal, "btnRefreshTotal");
+            this.btnRefreshTotal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnRefreshTotal.Name = "btnRefreshTotal";
             this.toolTip1.SetToolTip(this.btnRefreshTotal, resources.GetString("btnRefreshTotal.ToolTip"));
-            this.btnRefreshTotal.UseVisualStyleBackColor = true;
+            this.btnRefreshTotal.UseVisualStyleBackColor = false;
             this.btnRefreshTotal.Click += new System.EventHandler(this.btnRefreshTotal_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // flyCustomServers
@@ -115,8 +119,9 @@
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSave.Name = "btnSave";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // lbTotal
@@ -159,14 +164,14 @@
         private System.Windows.Forms.TextBox tboxTag;
         private System.Windows.Forms.Label label2;
         private VgcApis.UserControls.AcmComboBox cboxFilterKw;
-        private System.Windows.Forms.Button btnPullServers;
-        private System.Windows.Forms.Button btnRefreshTotal;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.FlowLayoutPanel flyCustomServers;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label lbTotal;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel panelFilterKeywords;
+        private VgcApis.UserControls.RoundButton btnPullServers;
+        private VgcApis.UserControls.RoundButton btnRefreshTotal;
+        private VgcApis.UserControls.RoundButton btnCancel;
+        private VgcApis.UserControls.RoundButton btnSave;
     }
 }

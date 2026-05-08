@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tboxName = new System.Windows.Forms.TextBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSave = new VgcApis.UserControls.RoundButton();
             this.chkHidden = new System.Windows.Forms.CheckBox();
             this.chkClrSupports = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
@@ -56,8 +56,9 @@
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSave.Name = "btnSave";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // chkHidden
@@ -95,8 +96,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tboxName;
         private System.Windows.Forms.CheckBox chkAutorun;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.CheckBox chkClrSupports;
+        private VgcApis.UserControls.RoundButton btnSave;
     }
 }

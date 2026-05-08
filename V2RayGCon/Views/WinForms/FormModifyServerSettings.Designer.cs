@@ -44,7 +44,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tboxServIndex = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnTemplates = new System.Windows.Forms.Button();
+            this.btnTemplates = new VgcApis.UserControls.RoundButton();
             this.chkInject = new System.Windows.Forms.CheckBox();
             this.chkSendThrough = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@
             this.pboxQrcode = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tboxTemplates = new System.Windows.Forms.TextBox();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnOK = new VgcApis.UserControls.RoundButton();
             this.tboxTag3 = new System.Windows.Forms.TextBox();
             this.tboxTag2 = new System.Windows.Forms.TextBox();
             this.tboxTag1 = new System.Windows.Forms.TextBox();
@@ -63,8 +63,8 @@
             this.cboxZoomMode = new System.Windows.Forms.ComboBox();
             this.cboxShareLinkType = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnSaveQrcode = new System.Windows.Forms.Button();
-            this.btnCopyShareLink = new System.Windows.Forms.Button();
+            this.btnSaveQrcode = new VgcApis.UserControls.RoundButton();
+            this.btnCopyShareLink = new VgcApis.UserControls.RoundButton();
             this.label8 = new System.Windows.Forms.Label();
             this.tboxShareLink = new System.Windows.Forms.TextBox();
             this.lbServerTitle = new System.Windows.Forms.Label();
@@ -160,10 +160,11 @@
             // 
             // btnTemplates
             // 
+            this.btnTemplates.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnTemplates, "btnTemplates");
             this.btnTemplates.Name = "btnTemplates";
             this.toolTip1.SetToolTip(this.btnTemplates, resources.GetString("btnTemplates.ToolTip"));
-            this.btnTemplates.UseVisualStyleBackColor = true;
+            this.btnTemplates.UseVisualStyleBackColor = false;
             this.btnTemplates.Click += new System.EventHandler(this.btnTemplates_Click);
             // 
             // chkInject
@@ -254,9 +255,10 @@
             // 
             // btnOK
             // 
+            this.btnOK.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnOK, "btnOK");
             this.btnOK.Name = "btnOK";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // tboxTag3
@@ -320,16 +322,18 @@
             // 
             // btnSaveQrcode
             // 
+            this.btnSaveQrcode.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnSaveQrcode, "btnSaveQrcode");
             this.btnSaveQrcode.Name = "btnSaveQrcode";
-            this.btnSaveQrcode.UseVisualStyleBackColor = true;
+            this.btnSaveQrcode.UseVisualStyleBackColor = false;
             this.btnSaveQrcode.Click += new System.EventHandler(this.btnSaveQrcode_Click);
             // 
             // btnCopyShareLink
             // 
+            this.btnCopyShareLink.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnCopyShareLink, "btnCopyShareLink");
             this.btnCopyShareLink.Name = "btnCopyShareLink";
-            this.btnCopyShareLink.UseVisualStyleBackColor = true;
+            this.btnCopyShareLink.UseVisualStyleBackColor = false;
             this.btnCopyShareLink.Click += new System.EventHandler(this.btnCopyShareLink_Click);
             // 
             // label8
@@ -391,16 +395,12 @@
         private System.Windows.Forms.ComboBox cboxZoomMode;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button btnSaveQrcode;
-        private System.Windows.Forms.Button btnCopyShareLink;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tboxShareLink;
-        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lbServerTitle;
         private System.Windows.Forms.TextBox tboxServIndex;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboxCoreName;
-        private System.Windows.Forms.Button btnTemplates;
         private System.Windows.Forms.TextBox tboxTemplates;
         private System.Windows.Forms.CheckBox chkInject;
         private System.Windows.Forms.CheckBox chkSendThrough;
@@ -410,5 +410,9 @@
         private System.Windows.Forms.TextBox tboxTag3;
         private System.Windows.Forms.TextBox tboxTag2;
         private System.Windows.Forms.TextBox tboxTag1;
+        private VgcApis.UserControls.RoundButton btnSaveQrcode;
+        private VgcApis.UserControls.RoundButton btnCopyShareLink;
+        private VgcApis.UserControls.RoundButton btnOK;
+        private VgcApis.UserControls.RoundButton btnTemplates;
     }
 }

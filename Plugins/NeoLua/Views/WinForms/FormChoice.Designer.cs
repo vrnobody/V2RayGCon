@@ -30,32 +30,31 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChoice));
-            this.btnOk = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
-            this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.toolTip1.SetToolTip(this.lbTitle, resources.GetString("lbTitle.ToolTip"));
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormChoice
@@ -69,7 +68,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormChoice";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormChoice_Load);
             this.Shown += new System.EventHandler(this.FormChoice_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormChoice_KeyDown);
@@ -79,10 +77,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip1;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

@@ -30,17 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChoices));
-            this.btnOk = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // lbTitle
@@ -51,8 +52,9 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormChoices
@@ -74,10 +76,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip1;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

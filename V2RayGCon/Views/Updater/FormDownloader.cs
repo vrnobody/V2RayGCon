@@ -275,7 +275,7 @@ namespace V2RayGCon.Views.Updater
                 servers.GetAvailableProxyInfo(out isSocks5, out port);
             }
 
-            MyWebClient wc = new MyWebClient { Encoding = Encoding.UTF8, };
+            MyWebClient wc = new MyWebClient { Encoding = Encoding.UTF8 };
 
             wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 

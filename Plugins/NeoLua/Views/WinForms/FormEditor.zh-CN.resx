@@ -151,7 +151,7 @@
   <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
+        wQAADsEBuJFr7QAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
         b2bSMlUS1lpNbIhOEHuaZUfQMCaaqa5clyaujZRH7GEGDbRsW8Hmsc+zg1FyKAuEjF4ILQwGIUOIHGI2
         s8bRQsIr8nU0Ahp55zPsNfDAiwBvAJ5B6uD9ScDnj/jtN3IXzJ0WbvSKBNBiqfKdNgarDHDIu8e0Bw0f
         PGelZoKjbA1QHzFCAAAAAElFTkSuQmCC
@@ -160,10 +160,10 @@
   <data name="btnKillScript.ToolTip" xml:space="preserve">
     <value>强制终止(F7)</value>
   </data>
-  <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnClearOutput.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        vwAADr8BOAVTJAAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
         IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
         zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
         c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
@@ -174,7 +174,7 @@
   <data name="btnClearOutput.ToolTip" xml:space="preserve">
     <value>清除输出框(F8)</value>
   </data>
-  <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAJRJREFUOE/t
         kMsNgCAQRKnDKqyBvrzSlolV2IIn9cIVHWTX5SMSz27yRGTmaVRyrLWOCI+q41yIyeI0dHwPrkR5IgEV
@@ -185,20 +185,20 @@
   <data name="btnNewScript.ToolTip" xml:space="preserve">
     <value>新脚本</value>
   </data>
-  <data name="btnStopScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnStopScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        vgAADr4B6kKxwAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
         jpx4AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="btnStopScript.ToolTip" xml:space="preserve">
     <value>停止(F6)</value>
   </data>
-  <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnSaveScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        vwAADr8BOAVTJAAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
         F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
         AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
 </value>
@@ -206,10 +206,10 @@
   <data name="btnSaveScript.ToolTip" xml:space="preserve">
     <value>保存脚本</value>
   </data>
-  <data name="btnRunScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnRunScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        vwAADr8BOAVTJAAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
         0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
         iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
         YII=
@@ -224,10 +224,10 @@
   <data name="pnlScriptEditor.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="btnGotoLine.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnGotoLine.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAHpJREFUOE9joAr4+vXr/G/fvv1HxyBxqBLCAGZIzIR9/xmC54Bpog1BtpUsQ0CK
+        vgAADr4B6kKxwAAAAHpJREFUOE9joAr4+vXr/G/fvv1HxyBxqBLCAGZIzIR9/xmC54Bpog1BtpUsQ0CK
         QBqwYaIMoYoByBjdC7gwVDsEAAX6QYLomtva2v47OTlhYBQDYDFAKoZqRwCQIDbbsGHaGUAKhmpDAJAg
         NtuwYZwGkIKh2gYUMDAAAGbutJT12UwwAAAAAElFTkSuQmCC
 </value>
@@ -238,7 +238,7 @@
   <data name="btnShowFormSearch.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAXZJREFUOE+dkrFqwmAUhYNurh18jA4+QhbR3SVDMmYVXJUUAj5AB5csBurwt5Og
+        wQAADsEBuJFr7QAAAXZJREFUOE+dkrFqwmAUhYNurh18jA4+QhbR3SVDMmYVXJUUAj5AB5csBurwt5Og
         gx2cpO3gEzRLWrBbtUHEoXJ7TvwllMRCPfARvDnn+v/3xjin3W5XAjZYgD04gAj0wZW2FQuGCpgul0vp
         dDpSr9fFNE1xHEeUUrLdbld4f63teeFlOJlMpNlsShiGEr1G8ha/y2z2KLZtS7fbPTXJnwTFWhzH0mg0
         5PnpRTbrr1+sVh9pE54E3r6OZWIxCALxPC8XPsGT8DrwRjqWCUXV6/XkXj0Uhgmvw5nAe9CxTCiOfN+X
@@ -256,7 +256,7 @@
   <data name="panel4.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
+        wAAADsABataJCQAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
         7osJEzB8dGceO7vZ93ZDElHXdcUgC4hnYqqhGKTl9khiIQn+JxEubLr/J8IEFyyROaNgIIb3NFObgwxo
         AQUpJfm+rzzHEI01e3ALVJYlRVFESbKi8+miPGLkef0zDX/wE69dMroFQUD5Iadn9WqAGHkzTd8xqpHT
         dNciGyCPddTpjbTNCGT7jMIwVOODCI8Y+UkCNmm93rTEJgsYuOJRgfvt4RRAfkyg6p6CEfg6BZfxgsco
@@ -275,7 +275,7 @@
   <data name="panel5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
+        vwAADr8BOAVTJAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
         w0QZQhUDkHHOrMPEa4YBoMJ+kGKS/Q8CIEUgxaRgqFbsAKTAyckJJx41YMgYQAhDlQIBAwMAFgSXtfZW
         CQsAAAAASUVORK5CYII=
 </value>

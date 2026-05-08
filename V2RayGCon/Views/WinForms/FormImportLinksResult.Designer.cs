@@ -36,9 +36,9 @@
             this.mark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.msg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnCopySelected = new System.Windows.Forms.Button();
-            this.btnCopyAll = new System.Windows.Forms.Button();
+            this.btnClose = new VgcApis.UserControls.RoundButton();
+            this.btnCopySelected = new VgcApis.UserControls.RoundButton();
+            this.btnCopyAll = new VgcApis.UserControls.RoundButton();
             this.pbLoading = new System.Windows.Forms.ProgressBar();
             this.lbResult = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -83,22 +83,25 @@
             // btnClose
             // 
             resources.ApplyResources(this.btnClose, "btnClose");
+            this.btnClose.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnClose.Name = "btnClose";
-            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnCopySelected
             // 
             resources.ApplyResources(this.btnCopySelected, "btnCopySelected");
+            this.btnCopySelected.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCopySelected.Name = "btnCopySelected";
-            this.btnCopySelected.UseVisualStyleBackColor = true;
+            this.btnCopySelected.UseVisualStyleBackColor = false;
             this.btnCopySelected.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnCopyAll
             // 
             resources.ApplyResources(this.btnCopyAll, "btnCopyAll");
+            this.btnCopyAll.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCopyAll.Name = "btnCopyAll";
-            this.btnCopyAll.UseVisualStyleBackColor = true;
+            this.btnCopyAll.UseVisualStyleBackColor = false;
             this.btnCopyAll.Click += new System.EventHandler(this.btnCopyAll_Click);
             // 
             // pbLoading
@@ -132,16 +135,16 @@
         #endregion
 
         private System.Windows.Forms.ListView lvResult;
-        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ColumnHeader index;
         private System.Windows.Forms.ColumnHeader Link;
         private System.Windows.Forms.ColumnHeader status;
         private System.Windows.Forms.ColumnHeader msg;
-        private System.Windows.Forms.Button btnCopySelected;
-        private System.Windows.Forms.Button btnCopyAll;
         private System.Windows.Forms.ColumnHeader mark;
         private System.Windows.Forms.ProgressBar pbLoading;
         private System.Windows.Forms.Label lbResult;
         private System.Windows.Forms.ToolTip toolTip1;
+        private VgcApis.UserControls.RoundButton btnClose;
+        private VgcApis.UserControls.RoundButton btnCopySelected;
+        private VgcApis.UserControls.RoundButton btnCopyAll;
     }
 }

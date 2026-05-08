@@ -124,6 +124,9 @@
   <data name="btnClient.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
+  <data name="btnClient.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="btnClient.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -148,7 +151,7 @@
     <value>btnClient</value>
   </data>
   <data name="&gt;&gt;btnClient.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnClient.Parent" xml:space="preserve">
     <value>$this</value>
@@ -158,6 +161,9 @@
   </data>
   <data name="btnServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
+  </data>
+  <data name="btnServer.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnServer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -181,7 +187,7 @@
     <value>btnServer</value>
   </data>
   <data name="&gt;&gt;btnServer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnServer.Parent" xml:space="preserve">
     <value>$this</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="btnExit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
+  </data>
+  <data name="btnExit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnExit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -211,7 +220,7 @@
     <value>btnExit</value>
   </data>
   <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnExit.Parent" xml:space="preserve">
     <value>$this</value>
@@ -238,7 +247,7 @@
     <value>SimpleConfigerUI1</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.2.4.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.2.8.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>
@@ -278,9 +287,6 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>399, 579</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>400, 425</value>

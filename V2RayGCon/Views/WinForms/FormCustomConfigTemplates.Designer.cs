@@ -33,15 +33,15 @@ namespace V2RayGCon.Views.WinForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCustomConfigTemplates));
             this.label1 = new System.Windows.Forms.Label();
             this.tboxName = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSave = new VgcApis.UserControls.RoundButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnFormat = new System.Windows.Forms.Button();
+            this.btnFormat = new VgcApis.UserControls.RoundButton();
             this.chkIsSocks5Inbound = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.rtboxTemplate = new VgcApis.UserControls.ExRichTextBox();
-            this.btnTest = new System.Windows.Forms.Button();
+            this.btnTest = new VgcApis.UserControls.RoundButton();
             this.cboxMergeOption = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tboxMergeParams = new System.Windows.Forms.TextBox();
@@ -61,8 +61,9 @@ namespace V2RayGCon.Views.WinForms
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSave.Name = "btnSave";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label2
@@ -74,16 +75,18 @@ namespace V2RayGCon.Views.WinForms
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnFormat
             // 
             resources.ApplyResources(this.btnFormat, "btnFormat");
+            this.btnFormat.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnFormat.Name = "btnFormat";
             this.toolTip1.SetToolTip(this.btnFormat, resources.GetString("btnFormat.ToolTip"));
-            this.btnFormat.UseVisualStyleBackColor = true;
+            this.btnFormat.UseVisualStyleBackColor = false;
             this.btnFormat.Click += new System.EventHandler(this.btnFormat_Click);
             // 
             // chkIsSocks5Inbound
@@ -108,8 +111,9 @@ namespace V2RayGCon.Views.WinForms
             // btnTest
             // 
             resources.ApplyResources(this.btnTest, "btnTest");
+            this.btnTest.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnTest.Name = "btnTest";
-            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.UseVisualStyleBackColor = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // cboxMergeOption
@@ -158,18 +162,18 @@ namespace V2RayGCon.Views.WinForms
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tboxName;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip1;
         private VgcApis.UserControls.ExRichTextBox rtboxTemplate;
-        private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.Button btnFormat;
         private System.Windows.Forms.ComboBox cboxMergeOption;
         private System.Windows.Forms.Label label3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.CheckBox chkIsSocks5Inbound;
         private System.Windows.Forms.TextBox tboxMergeParams;
         private System.Windows.Forms.Label label4;
+        private VgcApis.UserControls.RoundButton btnSave;
+        private VgcApis.UserControls.RoundButton btnCancel;
+        private VgcApis.UserControls.RoundButton btnTest;
+        private VgcApis.UserControls.RoundButton btnFormat;
     }
 }

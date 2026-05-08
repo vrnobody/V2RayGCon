@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInput));
-            this.btnOk = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.rtboxInput = new VgcApis.UserControls.ExRichTextBox();
             this.SuspendLayout();
@@ -40,23 +40,23 @@
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
             this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.toolTip1.SetToolTip(this.lbTitle, resources.GetString("lbTitle.ToolTip"));
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // rtboxInput
@@ -65,7 +65,6 @@
             resources.ApplyResources(this.rtboxInput, "rtboxInput");
             this.rtboxInput.DetectUrls = false;
             this.rtboxInput.Name = "rtboxInput";
-            this.toolTip1.SetToolTip(this.rtboxInput, resources.GetString("rtboxInput.ToolTip"));
             // 
             // FormInput
             // 
@@ -77,7 +76,6 @@
             this.Controls.Add(this.btnOk);
             this.KeyPreview = true;
             this.Name = "FormInput";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormInput_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormInput_KeyDown);
             this.ResumeLayout(false);
@@ -86,11 +84,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Button btnCancel;
         private VgcApis.UserControls.ExRichTextBox rtboxInput;
         private System.Windows.Forms.ToolTip toolTip1;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

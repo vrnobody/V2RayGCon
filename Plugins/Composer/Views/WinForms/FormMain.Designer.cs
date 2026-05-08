@@ -39,19 +39,19 @@
             this.cboxSkelectonTpl = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.rtboxSkelecton = new VgcApis.UserControls.ExRichTextBox();
-            this.btnSkFormat = new System.Windows.Forms.Button();
-            this.btnLoadSkTpl = new System.Windows.Forms.Button();
+            this.btnSkFormat = new VgcApis.UserControls.RoundButton();
+            this.btnLoadSkTpl = new VgcApis.UserControls.RoundButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cboxNodeInsertPos = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.flySelectors = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnOpenFormServerSelector = new System.Windows.Forms.Button();
+            this.btnOpenFormServerSelector = new VgcApis.UserControls.RoundButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tboxPkgName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnChain = new System.Windows.Forms.Button();
-            this.btnPack = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnChain = new VgcApis.UserControls.RoundButton();
+            this.btnPack = new VgcApis.UserControls.RoundButton();
+            this.btnSave = new VgcApis.UserControls.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanelBackGroundLeftRight.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -80,7 +80,7 @@
             // 
             this.flyPkgNames.AllowDrop = true;
             resources.ApplyResources(this.flyPkgNames, "flyPkgNames");
-            this.flyPkgNames.BackColor = System.Drawing.SystemColors.Control;
+            this.flyPkgNames.BackColor = System.Drawing.SystemColors.Window;
             this.flyPkgNames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flyPkgNames.Name = "flyPkgNames";
             this.flyPkgNames.DragDrop += new System.Windows.Forms.DragEventHandler(this.flyPkgNames_DragDrop);
@@ -134,17 +134,19 @@
             // btnSkFormat
             // 
             resources.ApplyResources(this.btnSkFormat, "btnSkFormat");
+            this.btnSkFormat.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSkFormat.Name = "btnSkFormat";
             this.toolTip1.SetToolTip(this.btnSkFormat, resources.GetString("btnSkFormat.ToolTip"));
-            this.btnSkFormat.UseVisualStyleBackColor = true;
+            this.btnSkFormat.UseVisualStyleBackColor = false;
             this.btnSkFormat.Click += new System.EventHandler(this.btnSkFormat_Click);
             // 
             // btnLoadSkTpl
             // 
             resources.ApplyResources(this.btnLoadSkTpl, "btnLoadSkTpl");
+            this.btnLoadSkTpl.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnLoadSkTpl.Name = "btnLoadSkTpl";
             this.toolTip1.SetToolTip(this.btnLoadSkTpl, resources.GetString("btnLoadSkTpl.ToolTip"));
-            this.btnLoadSkTpl.UseVisualStyleBackColor = true;
+            this.btnLoadSkTpl.UseVisualStyleBackColor = false;
             this.btnLoadSkTpl.Click += new System.EventHandler(this.btnLoadSkTpl_Click);
             // 
             // groupBox3
@@ -177,7 +179,7 @@
             // 
             this.flySelectors.AllowDrop = true;
             resources.ApplyResources(this.flySelectors, "flySelectors");
-            this.flySelectors.BackColor = System.Drawing.SystemColors.Control;
+            this.flySelectors.BackColor = System.Drawing.SystemColors.Window;
             this.flySelectors.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flySelectors.Name = "flySelectors";
             this.flySelectors.DragDrop += new System.Windows.Forms.DragEventHandler(this.flySelectors_DragDrop);
@@ -186,9 +188,10 @@
             // btnOpenFormServerSelector
             // 
             resources.ApplyResources(this.btnOpenFormServerSelector, "btnOpenFormServerSelector");
+            this.btnOpenFormServerSelector.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOpenFormServerSelector.Name = "btnOpenFormServerSelector";
             this.toolTip1.SetToolTip(this.btnOpenFormServerSelector, resources.GetString("btnOpenFormServerSelector.ToolTip"));
-            this.btnOpenFormServerSelector.UseVisualStyleBackColor = true;
+            this.btnOpenFormServerSelector.UseVisualStyleBackColor = false;
             this.btnOpenFormServerSelector.Click += new System.EventHandler(this.btnNewNodeFilter_Click);
             // 
             // groupBox4
@@ -216,25 +219,28 @@
             // btnChain
             // 
             resources.ApplyResources(this.btnChain, "btnChain");
+            this.btnChain.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnChain.Name = "btnChain";
             this.toolTip1.SetToolTip(this.btnChain, resources.GetString("btnChain.ToolTip"));
-            this.btnChain.UseVisualStyleBackColor = true;
+            this.btnChain.UseVisualStyleBackColor = false;
             this.btnChain.Click += new System.EventHandler(this.btnChain_Click);
             // 
             // btnPack
             // 
             resources.ApplyResources(this.btnPack, "btnPack");
+            this.btnPack.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnPack.Name = "btnPack";
             this.toolTip1.SetToolTip(this.btnPack, resources.GetString("btnPack.ToolTip"));
-            this.btnPack.UseVisualStyleBackColor = true;
+            this.btnPack.UseVisualStyleBackColor = false;
             this.btnPack.Click += new System.EventHandler(this.btnPack_Click);
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSave.Name = "btnSave";
             this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // FormMain

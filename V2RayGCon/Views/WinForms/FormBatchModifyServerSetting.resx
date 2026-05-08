@@ -450,6 +450,9 @@
   <data name="btnModify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
+  <data name="btnModify.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="btnModify.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 410</value>
   </data>
@@ -472,7 +475,7 @@
     <value>btnModify</value>
   </data>
   <data name="&gt;&gt;btnModify.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnModify.Parent" xml:space="preserve">
     <value>$this</value>
@@ -482,6 +485,9 @@
   </data>
   <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
+  </data>
+  <data name="btnCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>202, 410</value>
@@ -502,13 +508,16 @@
     <value>btnCancel</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="btnTemplates.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnTemplates.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 165</value>
@@ -529,7 +538,7 @@
     <value>btnTemplates</value>
   </data>
   <data name="&gt;&gt;btnTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnTemplates.Parent" xml:space="preserve">
     <value>groupBox2</value>

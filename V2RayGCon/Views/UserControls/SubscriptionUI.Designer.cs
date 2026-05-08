@@ -35,7 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tboxUrl = new System.Windows.Forms.TextBox();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnDelete = new VgcApis.UserControls.RoundButton();
             this.chkIsUse = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkIsSetMark = new System.Windows.Forms.CheckBox();
@@ -80,6 +80,7 @@
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Name = "btnDelete";
@@ -151,7 +152,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tboxUrl;
-        private System.Windows.Forms.Button btnDelete;
+        private VgcApis.UserControls.RoundButton  btnDelete;
         private System.Windows.Forms.CheckBox chkIsUse;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkIsSetMark;

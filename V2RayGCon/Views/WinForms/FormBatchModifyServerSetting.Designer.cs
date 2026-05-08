@@ -41,31 +41,31 @@
             this.chkShareOverLAN = new System.Windows.Forms.CheckBox();
             this.cboxInName = new System.Windows.Forms.ComboBox();
             this.cboxMark = new System.Windows.Forms.ComboBox();
-            this.btnModify = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnModify = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnTemplates = new System.Windows.Forms.Button();
+            this.btnTemplates = new VgcApis.UserControls.RoundButton();
             this.cboxUntrack = new System.Windows.Forms.ComboBox();
             this.cboxCustomCoreName = new System.Windows.Forms.ComboBox();
             this.cboxSendThrough = new System.Windows.Forms.ComboBox();
             this.cboxInject = new System.Windows.Forms.ComboBox();
             this.cboxAutorun = new System.Windows.Forms.ComboBox();
             this.tboxTemplates = new System.Windows.Forms.TextBox();
+            this.tboxTag3 = new System.Windows.Forms.TextBox();
+            this.tboxTag2 = new System.Windows.Forms.TextBox();
+            this.tboxTag1 = new System.Windows.Forms.TextBox();
             this.tboxRemark = new System.Windows.Forms.TextBox();
+            this.chkTag3 = new System.Windows.Forms.CheckBox();
             this.chkUntrack = new System.Windows.Forms.CheckBox();
+            this.chkTag2 = new System.Windows.Forms.CheckBox();
             this.chkTemplates = new System.Windows.Forms.CheckBox();
+            this.chkTag1 = new System.Windows.Forms.CheckBox();
             this.chkSendThough = new System.Windows.Forms.CheckBox();
             this.chkRemark = new System.Windows.Forms.CheckBox();
             this.chkInject = new System.Windows.Forms.CheckBox();
             this.chkCustomCore = new System.Windows.Forms.CheckBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.chkTag1 = new System.Windows.Forms.CheckBox();
-            this.tboxTag1 = new System.Windows.Forms.TextBox();
-            this.chkTag2 = new System.Windows.Forms.CheckBox();
-            this.tboxTag2 = new System.Windows.Forms.TextBox();
-            this.chkTag3 = new System.Windows.Forms.CheckBox();
-            this.tboxTag3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -155,16 +155,18 @@
             // btnModify
             // 
             resources.ApplyResources(this.btnModify, "btnModify");
+            this.btnModify.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnModify.Name = "btnModify";
             this.toolTip1.SetToolTip(this.btnModify, resources.GetString("btnModify.ToolTip"));
-            this.btnModify.UseVisualStyleBackColor = true;
+            this.btnModify.UseVisualStyleBackColor = false;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // groupBox2
@@ -198,10 +200,11 @@
             // 
             // btnTemplates
             // 
+            this.btnTemplates.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnTemplates, "btnTemplates");
             this.btnTemplates.Name = "btnTemplates";
             this.toolTip1.SetToolTip(this.btnTemplates, resources.GetString("btnTemplates.ToolTip"));
-            this.btnTemplates.UseVisualStyleBackColor = true;
+            this.btnTemplates.UseVisualStyleBackColor = false;
             this.btnTemplates.Click += new System.EventHandler(this.btnTemplates_Click);
             // 
             // cboxUntrack
@@ -259,10 +262,31 @@
             resources.ApplyResources(this.tboxTemplates, "tboxTemplates");
             this.tboxTemplates.Name = "tboxTemplates";
             // 
+            // tboxTag3
+            // 
+            resources.ApplyResources(this.tboxTag3, "tboxTag3");
+            this.tboxTag3.Name = "tboxTag3";
+            // 
+            // tboxTag2
+            // 
+            resources.ApplyResources(this.tboxTag2, "tboxTag2");
+            this.tboxTag2.Name = "tboxTag2";
+            // 
+            // tboxTag1
+            // 
+            resources.ApplyResources(this.tboxTag1, "tboxTag1");
+            this.tboxTag1.Name = "tboxTag1";
+            // 
             // tboxRemark
             // 
             resources.ApplyResources(this.tboxRemark, "tboxRemark");
             this.tboxRemark.Name = "tboxRemark";
+            // 
+            // chkTag3
+            // 
+            resources.ApplyResources(this.chkTag3, "chkTag3");
+            this.chkTag3.Name = "chkTag3";
+            this.chkTag3.UseVisualStyleBackColor = true;
             // 
             // chkUntrack
             // 
@@ -271,12 +295,24 @@
             this.toolTip1.SetToolTip(this.chkUntrack, resources.GetString("chkUntrack.ToolTip"));
             this.chkUntrack.UseVisualStyleBackColor = true;
             // 
+            // chkTag2
+            // 
+            resources.ApplyResources(this.chkTag2, "chkTag2");
+            this.chkTag2.Name = "chkTag2";
+            this.chkTag2.UseVisualStyleBackColor = true;
+            // 
             // chkTemplates
             // 
             resources.ApplyResources(this.chkTemplates, "chkTemplates");
             this.chkTemplates.Name = "chkTemplates";
             this.toolTip1.SetToolTip(this.chkTemplates, resources.GetString("chkTemplates.ToolTip"));
             this.chkTemplates.UseVisualStyleBackColor = true;
+            // 
+            // chkTag1
+            // 
+            resources.ApplyResources(this.chkTag1, "chkTag1");
+            this.chkTag1.Name = "chkTag1";
+            this.chkTag1.UseVisualStyleBackColor = true;
             // 
             // chkSendThough
             // 
@@ -311,39 +347,6 @@
             this.chkAutorun.Name = "chkAutorun";
             this.chkAutorun.UseVisualStyleBackColor = true;
             // 
-            // chkTag1
-            // 
-            resources.ApplyResources(this.chkTag1, "chkTag1");
-            this.chkTag1.Name = "chkTag1";
-            this.chkTag1.UseVisualStyleBackColor = true;
-            // 
-            // tboxTag1
-            // 
-            resources.ApplyResources(this.tboxTag1, "tboxTag1");
-            this.tboxTag1.Name = "tboxTag1";
-            // 
-            // chkTag2
-            // 
-            resources.ApplyResources(this.chkTag2, "chkTag2");
-            this.chkTag2.Name = "chkTag2";
-            this.chkTag2.UseVisualStyleBackColor = true;
-            // 
-            // tboxTag2
-            // 
-            resources.ApplyResources(this.tboxTag2, "tboxTag2");
-            this.tboxTag2.Name = "tboxTag2";
-            // 
-            // chkTag3
-            // 
-            resources.ApplyResources(this.chkTag3, "chkTag3");
-            this.chkTag3.Name = "chkTag3";
-            this.chkTag3.UseVisualStyleBackColor = true;
-            // 
-            // tboxTag3
-            // 
-            resources.ApplyResources(this.tboxTag3, "tboxTag3");
-            this.tboxTag3.Name = "tboxTag3";
-            // 
             // FormBatchModifyServerSetting
             // 
             resources.ApplyResources(this, "$this");
@@ -376,8 +379,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboxInName;
         private System.Windows.Forms.ComboBox cboxMark;
-        private System.Windows.Forms.Button btnModify;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cboxUntrack;
@@ -390,7 +391,6 @@
         private System.Windows.Forms.CheckBox chkRemark;
         private System.Windows.Forms.ComboBox cboxCustomCoreName;
         private System.Windows.Forms.CheckBox chkCustomCore;
-        private System.Windows.Forms.Button btnTemplates;
         private System.Windows.Forms.ComboBox cboxSendThrough;
         private System.Windows.Forms.ComboBox cboxInject;
         private System.Windows.Forms.TextBox tboxTemplates;
@@ -403,5 +403,8 @@
         private System.Windows.Forms.CheckBox chkTag3;
         private System.Windows.Forms.CheckBox chkTag2;
         private System.Windows.Forms.CheckBox chkTag1;
+        private VgcApis.UserControls.RoundButton btnModify;
+        private VgcApis.UserControls.RoundButton btnCancel;
+        private VgcApis.UserControls.RoundButton btnTemplates;
     }
 }

@@ -1,29 +1,34 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VgcApis.UserControls
 {
-    // https://stackoverflow.com/questions/42627293/label-with-smooth-rounded-corners
-    public class RoundLabel : Label
+    // https://stackoverflow.com/questions/3708113/round-shaped-buttons
+    public class RoundButton : Button
     {
-        [Browsable(true)]
-        public Color _BackColor { get; set; }
-
-        public RoundLabel() { }
+        public RoundButton()
+            : base()
+        {
+            this.FlatAppearance.BorderSize = 0;
+            this.FlatStyle = FlatStyle.Flat;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
             using (var graphicsPath = _getRoundRectangle(this.ClientRectangle))
             {
                 e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
-                using (var brush = new SolidBrush(_BackColor))
-                    e.Graphics.FillPath(brush, graphicsPath);
-                using (var pen = new Pen(_BackColor, 1.0f))
+                using (var pen = new Pen(Color.Gray, 1.0f))
                     e.Graphics.DrawPath(pen, graphicsPath);
             }
-            base.OnPaint(e);
         }
 
         private GraphicsPath _getRoundRectangle(Rectangle rectangle)

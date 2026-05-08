@@ -38,9 +38,9 @@ namespace V2RayGCon.Views.WinForms
             this.chkVmess = new System.Windows.Forms.CheckBox();
             this.chkShadowsocks = new System.Windows.Forms.CheckBox();
             this.chkSocks = new System.Windows.Forms.CheckBox();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.chkHy2 = new System.Windows.Forms.CheckBox();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.groupBox1.SuspendLayout();
             this.flyPanel.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +48,7 @@ namespace V2RayGCon.Views.WinForms
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.flyPanel);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
@@ -55,6 +56,7 @@ namespace V2RayGCon.Views.WinForms
             // flyPanel
             // 
             resources.ApplyResources(this.flyPanel, "flyPanel");
+            this.flyPanel.BackColor = System.Drawing.SystemColors.Window;
             this.flyPanel.Controls.Add(this.chkVless);
             this.flyPanel.Controls.Add(this.chkTrojan);
             this.flyPanel.Controls.Add(this.chkMob);
@@ -100,25 +102,27 @@ namespace V2RayGCon.Views.WinForms
             this.chkSocks.Name = "chkSocks";
             this.chkSocks.UseVisualStyleBackColor = true;
             // 
-            // btnOk
-            // 
-            resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnCancel
-            // 
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // chkHy2
             // 
             resources.ApplyResources(this.chkHy2, "chkHy2");
             this.chkHy2.Name = "chkHy2";
             this.chkHy2.UseVisualStyleBackColor = true;
+            // 
+            // btnOk
+            // 
+            resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOk.Name = "btnOk";
+            this.btnOk.UseVisualStyleBackColor = false;
+            this.btnOk.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormShareLinkTypesSelector
             // 
@@ -137,8 +141,6 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.FlowLayoutPanel flyPanel;
         private System.Windows.Forms.CheckBox chkVless;
         private System.Windows.Forms.CheckBox chkTrojan;
@@ -147,5 +149,7 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.CheckBox chkShadowsocks;
         private System.Windows.Forms.CheckBox chkSocks;
         private System.Windows.Forms.CheckBox chkHy2;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

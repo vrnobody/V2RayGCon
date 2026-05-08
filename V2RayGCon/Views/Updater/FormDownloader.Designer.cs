@@ -35,7 +35,7 @@ namespace V2RayGCon.Views.Updater
             this.lbSize = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbSpeed = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.lbSource = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -67,8 +67,9 @@ namespace V2RayGCon.Views.Updater
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lbSource

@@ -32,11 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataGrid));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOk = new System.Windows.Forms.Button();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnCopy = new VgcApis.UserControls.RoundButton();
             this.cboxColumnIdx = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tboxFilter = new System.Windows.Forms.TextBox();
@@ -63,15 +63,17 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // dgvData
@@ -87,9 +89,10 @@
             // btnCopy
             // 
             resources.ApplyResources(this.btnCopy, "btnCopy");
+            this.btnCopy.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCopy.Name = "btnCopy";
             this.toolTip1.SetToolTip(this.btnCopy, resources.GetString("btnCopy.ToolTip"));
-            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.UseVisualStyleBackColor = false;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // cboxColumnIdx
@@ -212,8 +215,6 @@
         #endregion
 
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ComboBox cboxColumnIdx;
@@ -227,9 +228,11 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autosizeByHeaderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autosizeByContentToolStripMenuItem;
-        private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.ToolStripMenuItem disableAutosizeToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbTotal;
+        private VgcApis.UserControls.RoundButton btnCancel;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCopy;
     }
 }

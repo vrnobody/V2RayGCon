@@ -38,8 +38,8 @@
             this.rtboxBlackList = new System.Windows.Forms.RichTextBox();
             this.btnSortBlackList = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -51,19 +51,22 @@
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.rtboxWhiteList);
             this.groupBox1.Controls.Add(this.btnSortWhiteList);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // rtboxWhiteList
             // 
             resources.ApplyResources(this.rtboxWhiteList, "rtboxWhiteList");
             this.rtboxWhiteList.Name = "rtboxWhiteList";
+            this.toolTip1.SetToolTip(this.rtboxWhiteList, resources.GetString("rtboxWhiteList.ToolTip"));
             // 
             // btnSortWhiteList
             // 
@@ -75,16 +78,18 @@
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.rtboxBlackList);
             this.groupBox2.Controls.Add(this.btnSortBlackList);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // rtboxBlackList
             // 
             resources.ApplyResources(this.rtboxBlackList, "rtboxBlackList");
             this.rtboxBlackList.Name = "rtboxBlackList";
+            this.toolTip1.SetToolTip(this.rtboxBlackList, resources.GetString("rtboxBlackList.ToolTip"));
             // 
             // btnSortBlackList
             // 
@@ -97,16 +102,19 @@
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnSave.Name = "btnSave";
             this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormModifyPacList
@@ -117,6 +125,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormModifyPacList";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormModifyPacList_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -135,7 +144,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.RichTextBox rtboxBlackList;
         private System.Windows.Forms.Button btnSortBlackList;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
+        private VgcApis.UserControls.RoundButton btnSave;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

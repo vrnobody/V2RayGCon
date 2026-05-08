@@ -32,8 +32,8 @@ namespace V2RayGCon.Views.WinForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTemplateNameSelector));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flyPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.tboxNames = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -49,20 +49,23 @@ namespace V2RayGCon.Views.WinForms
             // flyPanel
             // 
             resources.ApplyResources(this.flyPanel, "flyPanel");
+            this.flyPanel.BackColor = System.Drawing.SystemColors.Window;
             this.flyPanel.Name = "flyPanel";
             // 
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tboxNames
@@ -96,10 +99,10 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.FlowLayoutPanel flyPanel;
         private System.Windows.Forms.TextBox tboxNames;
         private System.Windows.Forms.Label label1;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
     }
 }

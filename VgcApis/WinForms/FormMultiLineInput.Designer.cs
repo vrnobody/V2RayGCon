@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMultiLineInput));
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.rtboxContent = new VgcApis.UserControls.ExRichTextBox();
             this.lbTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -38,15 +38,17 @@
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // rtboxContent
@@ -75,10 +77,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private UserControls.ExRichTextBox rtboxContent;
         private System.Windows.Forms.Label lbTitle;
+        private UserControls.RoundButton btnOk;
+        private UserControls.RoundButton btnCancel;
     }
 }

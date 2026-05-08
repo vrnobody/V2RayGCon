@@ -12,7 +12,10 @@ namespace NeoLuna.Views.UserControls
 
         public LuaUI()
         {
+            // size 400, 30
+
             InitializeComponent();
+            VgcApis.Misc.UI.SetTrasparentBackground(btnRun, btnStop, btnMenuMore);
         }
 
         private void LuaUI_Load(object sender, EventArgs e)

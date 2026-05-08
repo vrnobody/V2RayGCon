@@ -115,13 +115,12 @@ namespace NeoLuna.Views.WinForms
         #region private methods
         void KeyDownHandler(object sender, KeyEventArgs a)
         {
-            VgcApis.Misc.Utils.RunInBackground(
-                () =>
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        editorCtrl?.KeyBoardShortcutHandler(a);
-                        acmCtrl?.KeyBoardShortcutHandler(a);
-                    })
+            VgcApis.Misc.Utils.RunInBackground(() =>
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    editorCtrl?.KeyBoardShortcutHandler(a);
+                    acmCtrl?.KeyBoardShortcutHandler(a);
+                })
             );
         }
 

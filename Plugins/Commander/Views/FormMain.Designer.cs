@@ -34,14 +34,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rtboxStdInContent = new VgcApis.UserControls.ExRichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flyCmdParams = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnEnvVars = new System.Windows.Forms.Button();
-            this.btnArgs = new System.Windows.Forms.Button();
-            this.btnWrkDir = new System.Windows.Forms.Button();
-            this.btnExe = new System.Windows.Forms.Button();
             this.chkWriteStdIn = new System.Windows.Forms.CheckBox();
             this.chkUseShell = new System.Windows.Forms.CheckBox();
             this.chkHideWindow = new System.Windows.Forms.CheckBox();
@@ -55,7 +50,6 @@
             this.tboxWrkDir = new System.Windows.Forms.TextBox();
             this.panelRight = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rtboxLogs = new VgcApis.UserControls.ExRichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +73,12 @@
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.rtboxStdInContent = new VgcApis.UserControls.ExRichTextBox();
+            this.btnEnvVars = new VgcApis.UserControls.RoundButton();
+            this.btnArgs = new VgcApis.UserControls.RoundButton();
+            this.btnWrkDir = new VgcApis.UserControls.RoundButton();
+            this.btnExe = new VgcApis.UserControls.RoundButton();
+            this.rtboxLogs = new VgcApis.UserControls.ExRichTextBox();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -133,20 +133,15 @@
             // groupBox3
             // 
             resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox3.Controls.Add(this.rtboxStdInContent);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
-            // rtboxStdInContent
-            // 
-            this.rtboxStdInContent.AcceptsTab = true;
-            resources.ApplyResources(this.rtboxStdInContent, "rtboxStdInContent");
-            this.rtboxStdInContent.Name = "rtboxStdInContent";
-            this.rtboxStdInContent.TextChanged += new System.EventHandler(this.rtboxStdInContent_TextChanged);
-            // 
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.flyCmdParams);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
@@ -155,7 +150,7 @@
             // 
             this.flyCmdParams.AllowDrop = true;
             resources.ApplyResources(this.flyCmdParams, "flyCmdParams");
-            this.flyCmdParams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flyCmdParams.BackColor = System.Drawing.SystemColors.Window;
             this.flyCmdParams.Name = "flyCmdParams";
             this.flyCmdParams.DragDrop += new System.Windows.Forms.DragEventHandler(this.flyCfgNames_DragDrop);
             this.flyCmdParams.DragEnter += new System.Windows.Forms.DragEventHandler(this.flyCfgNames_DragEnter);
@@ -163,6 +158,7 @@
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox2.Controls.Add(this.btnEnvVars);
             this.groupBox2.Controls.Add(this.btnArgs);
             this.groupBox2.Controls.Add(this.btnWrkDir);
@@ -180,38 +176,6 @@
             this.groupBox2.Controls.Add(this.tboxWrkDir);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            // 
-            // btnEnvVars
-            // 
-            resources.ApplyResources(this.btnEnvVars, "btnEnvVars");
-            this.btnEnvVars.Name = "btnEnvVars";
-            this.toolTip1.SetToolTip(this.btnEnvVars, resources.GetString("btnEnvVars.ToolTip"));
-            this.btnEnvVars.UseVisualStyleBackColor = true;
-            this.btnEnvVars.Click += new System.EventHandler(this.btnEnvVars_Click);
-            // 
-            // btnArgs
-            // 
-            resources.ApplyResources(this.btnArgs, "btnArgs");
-            this.btnArgs.Name = "btnArgs";
-            this.toolTip1.SetToolTip(this.btnArgs, resources.GetString("btnArgs.ToolTip"));
-            this.btnArgs.UseVisualStyleBackColor = true;
-            this.btnArgs.Click += new System.EventHandler(this.btnArgs_Click);
-            // 
-            // btnWrkDir
-            // 
-            resources.ApplyResources(this.btnWrkDir, "btnWrkDir");
-            this.btnWrkDir.Name = "btnWrkDir";
-            this.toolTip1.SetToolTip(this.btnWrkDir, resources.GetString("btnWrkDir.ToolTip"));
-            this.btnWrkDir.UseVisualStyleBackColor = true;
-            this.btnWrkDir.Click += new System.EventHandler(this.btnWrkDir_Click);
-            // 
-            // btnExe
-            // 
-            resources.ApplyResources(this.btnExe, "btnExe");
-            this.btnExe.Name = "btnExe";
-            this.toolTip1.SetToolTip(this.btnExe, resources.GetString("btnExe.ToolTip"));
-            this.btnExe.UseVisualStyleBackColor = true;
-            this.btnExe.Click += new System.EventHandler(this.btnExe_Click);
             // 
             // chkWriteStdIn
             // 
@@ -306,15 +270,10 @@
             // groupBox4
             // 
             resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox4.Controls.Add(this.rtboxLogs);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
-            // 
-            // rtboxLogs
-            // 
-            this.rtboxLogs.BackColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.rtboxLogs, "rtboxLogs");
-            this.rtboxLogs.Name = "rtboxLogs";
             // 
             // menuStrip1
             // 
@@ -464,10 +423,62 @@
             resources.ApplyResources(this.copyToClipboardToolStripMenuItem, "copyToClipboardToolStripMenuItem");
             this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
             // 
+            // rtboxStdInContent
+            // 
+            this.rtboxStdInContent.AcceptsTab = true;
+            this.rtboxStdInContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.rtboxStdInContent, "rtboxStdInContent");
+            this.rtboxStdInContent.Name = "rtboxStdInContent";
+            this.rtboxStdInContent.TextChanged += new System.EventHandler(this.rtboxStdInContent_TextChanged);
+            // 
+            // btnEnvVars
+            // 
+            this.btnEnvVars.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnEnvVars, "btnEnvVars");
+            this.btnEnvVars.Name = "btnEnvVars";
+            this.toolTip1.SetToolTip(this.btnEnvVars, resources.GetString("btnEnvVars.ToolTip"));
+            this.btnEnvVars.UseVisualStyleBackColor = false;
+            this.btnEnvVars.Click += new System.EventHandler(this.btnEnvVars_Click);
+            // 
+            // btnArgs
+            // 
+            this.btnArgs.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnArgs, "btnArgs");
+            this.btnArgs.Name = "btnArgs";
+            this.toolTip1.SetToolTip(this.btnArgs, resources.GetString("btnArgs.ToolTip"));
+            this.btnArgs.UseVisualStyleBackColor = false;
+            this.btnArgs.Click += new System.EventHandler(this.btnArgs_Click);
+            // 
+            // btnWrkDir
+            // 
+            this.btnWrkDir.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnWrkDir, "btnWrkDir");
+            this.btnWrkDir.Name = "btnWrkDir";
+            this.toolTip1.SetToolTip(this.btnWrkDir, resources.GetString("btnWrkDir.ToolTip"));
+            this.btnWrkDir.UseVisualStyleBackColor = false;
+            this.btnWrkDir.Click += new System.EventHandler(this.btnWrkDir_Click);
+            // 
+            // btnExe
+            // 
+            this.btnExe.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnExe, "btnExe");
+            this.btnExe.Name = "btnExe";
+            this.toolTip1.SetToolTip(this.btnExe, resources.GetString("btnExe.ToolTip"));
+            this.btnExe.UseVisualStyleBackColor = false;
+            this.btnExe.Click += new System.EventHandler(this.btnExe_Click);
+            // 
+            // rtboxLogs
+            // 
+            this.rtboxLogs.BackColor = System.Drawing.SystemColors.Control;
+            this.rtboxLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.rtboxLogs, "rtboxLogs");
+            this.rtboxLogs.Name = "rtboxLogs";
+            // 
             // FormMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
@@ -541,10 +552,10 @@
         private System.Windows.Forms.ToolStripMenuItem pasteFromClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.Button btnEnvVars;
-        private System.Windows.Forms.Button btnArgs;
-        private System.Windows.Forms.Button btnWrkDir;
-        private System.Windows.Forms.Button btnExe;
+        private VgcApis.UserControls.RoundButton btnEnvVars;
+        private VgcApis.UserControls.RoundButton btnArgs;
+        private VgcApis.UserControls.RoundButton btnWrkDir;
+        private VgcApis.UserControls.RoundButton btnExe;
         private System.Windows.Forms.FlowLayoutPanel flyCmdParams;
     }
 }

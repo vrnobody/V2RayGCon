@@ -31,8 +31,8 @@ namespace VgcApis.WinForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInput));
             this.tboxContent = new System.Windows.Forms.TextBox();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.lbTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -44,16 +44,18 @@ namespace VgcApis.WinForms
             // 
             // btnOk
             // 
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnOk, "btnOk");
             this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lbTitle
@@ -78,8 +80,8 @@ namespace VgcApis.WinForms
         #endregion
 
         private System.Windows.Forms.TextBox tboxContent;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
+        private VgcApis.UserControls.RoundButton btnOk;
+        private VgcApis.UserControls.RoundButton btnCancel;
         private System.Windows.Forms.Label lbTitle;
     }
 }

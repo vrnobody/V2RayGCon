@@ -28,17 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDownloadCore));
             this.cboxVer = new System.Windows.Forms.ComboBox();
-            this.btnRefreshVer = new System.Windows.Forms.Button();
-            this.btnDownload = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnCheckVersion = new System.Windows.Forms.Button();
+            this.btnRefreshVer = new VgcApis.UserControls.RoundButton();
+            this.btnDownload = new VgcApis.UserControls.RoundButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
+            this.btnCheckVersion = new VgcApis.UserControls.RoundButton();
             this.chkUseProxy = new System.Windows.Forms.CheckBox();
             this.chkWin7 = new System.Windows.Forms.CheckBox();
-            this.btnExit = new System.Windows.Forms.Button();
+            this.btnExit = new VgcApis.UserControls.RoundButton();
             this.pgBarDownload = new System.Windows.Forms.ProgressBar();
             this.cboxArch = new System.Windows.Forms.ComboBox();
             this.labelCoreVersion = new System.Windows.Forms.Label();
@@ -57,34 +56,38 @@
             // 
             // btnRefreshVer
             // 
+            this.btnRefreshVer.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnRefreshVer, "btnRefreshVer");
             this.btnRefreshVer.Name = "btnRefreshVer";
             this.toolTip1.SetToolTip(this.btnRefreshVer, resources.GetString("btnRefreshVer.ToolTip"));
-            this.btnRefreshVer.UseVisualStyleBackColor = true;
+            this.btnRefreshVer.UseVisualStyleBackColor = false;
             this.btnRefreshVer.Click += new System.EventHandler(this.BtnRefreshVer_Click);
             // 
             // btnDownload
             // 
+            this.btnDownload.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnDownload, "btnDownload");
             this.btnDownload.Name = "btnDownload";
             this.toolTip1.SetToolTip(this.btnDownload, resources.GetString("btnDownload.ToolTip"));
-            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.UseVisualStyleBackColor = false;
             this.btnDownload.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnCheckVersion
             // 
+            this.btnCheckVersion.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnCheckVersion, "btnCheckVersion");
             this.btnCheckVersion.Name = "btnCheckVersion";
             this.toolTip1.SetToolTip(this.btnCheckVersion, resources.GetString("btnCheckVersion.ToolTip"));
-            this.btnCheckVersion.UseVisualStyleBackColor = true;
+            this.btnCheckVersion.UseVisualStyleBackColor = false;
             this.btnCheckVersion.Click += new System.EventHandler(this.BtnCheckVersion_Click);
             // 
             // chkUseProxy
@@ -104,9 +107,10 @@
             // 
             // btnExit
             // 
+            this.btnExit.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
-            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // pgBarDownload
@@ -184,19 +188,19 @@
         #endregion
 
         private System.Windows.Forms.ComboBox cboxVer;
-        private System.Windows.Forms.Button btnRefreshVer;
-        private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ProgressBar pgBarDownload;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ComboBox cboxArch;
         private System.Windows.Forms.Label labelCoreVersion;
-        private System.Windows.Forms.Button btnCheckVersion;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.CheckBox chkUseProxy;
         private System.Windows.Forms.ComboBox cboxDownloadSource;
         private System.Windows.Forms.CheckBox chkWin7;
+        private VgcApis.UserControls.RoundButton btnRefreshVer;
+        private VgcApis.UserControls.RoundButton btnDownload;
+        private VgcApis.UserControls.RoundButton btnCancel;
+        private VgcApis.UserControls.RoundButton btnCheckVersion;
+        private VgcApis.UserControls.RoundButton btnExit;
     }
 }

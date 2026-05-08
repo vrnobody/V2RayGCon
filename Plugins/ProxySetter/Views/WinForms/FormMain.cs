@@ -61,6 +61,14 @@ namespace ProxySetter.Views.WinForms
             };
 
             InitializeComponent();
+
+            VgcApis.Misc.UI.SetTrasparentBackground(
+                btnBaiscCopyProxyLink,
+                btnBasicStartPacServer,
+                btnBasicStopPacServer,
+                btnBasicViewInNotepad,
+                btnBasicDebugPacServer
+            );
         }
 
         private void FormPluginMain_Shown(object sender, EventArgs e)

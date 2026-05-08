@@ -16,6 +16,7 @@ namespace ProxySetter.Views.WinForms
             this.setting = setting;
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.SetTrasparentBackground(btnSortBlackList, btnSortWhiteList);
         }
 
         private void FormModifyPacList_Load(object sender, EventArgs e)

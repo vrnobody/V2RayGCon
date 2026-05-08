@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnRun.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnRun.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnRun.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        vQAADr0BR/uQrQAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
         0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
         iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
         YII=
 </value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnRun.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
   </data>
   <data name="btnRun.Location" type="System.Drawing.Point, System.Drawing">
     <value>290, 4</value>
@@ -165,15 +165,15 @@
   <data name="&gt;&gt;btnRun.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="btnStop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
-        jpx4AAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
+  </data>
+  <data name="btnStop.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        jpx4AAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="btnStop.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -307,15 +307,15 @@
   <data name="&gt;&gt;rlbOptions.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnMenuMore.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAERJREFUOE+1zqENADAMA8HOlv3nCXVZSR/ErQxOigJeXpK+4NNxju6WAwNVNZIL
-        ODIBmktyAUcmQHNJLuC4Aq/wOae1ARVS/s9sUlFoAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="btnMenuMore.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
+  </data>
+  <data name="btnMenuMore.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vQAADr0BR/uQrQAAAERJREFUOE+1zqENADAMA8HOlv3nCXVZSR/ErQxOigJeXpK+4NNxju6WAwNVNZIL
+        ODIBmktyAUcmQHNJLuC4Aq/wOae1ARVS/s9sUlFoAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="btnMenuMore.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

@@ -226,6 +226,9 @@
     <Compile Include="UserControls\AcmToolStripComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UserControls\RoundButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\RoundLabel.cs">
       <SubType>Component</SubType>
     </Compile>

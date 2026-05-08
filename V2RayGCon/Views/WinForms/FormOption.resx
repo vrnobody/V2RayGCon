@@ -499,7 +499,7 @@
     <value>True</value>
   </data>
   <data name="chkSetCheckV2RayCoreUpdateWhenStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>265, 18</value>
+    <value>204, 18</value>
   </data>
   <data name="chkSetCheckV2RayCoreUpdateWhenStart.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 16</value>
@@ -529,7 +529,7 @@
     <value>True</value>
   </data>
   <data name="chkSetCheckVgcUpdateWhenStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 18</value>
+    <value>121, 18</value>
   </data>
   <data name="chkSetCheckVgcUpdateWhenStart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -628,7 +628,7 @@
     <value>Flat</value>
   </data>
   <data name="btnSetOpenStartupFolder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>265, 15</value>
+    <value>204, 15</value>
   </data>
   <data name="btnSetOpenStartupFolder.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 23</value>
@@ -727,7 +727,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 92</value>
+    <value>121, 92</value>
   </data>
   <data name="chkSetServStatistics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -763,7 +763,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSetSelfSignedCert.Location" type="System.Drawing.Point, System.Drawing">
-    <value>265, 92</value>
+    <value>204, 92</value>
   </data>
   <data name="chkSetSelfSignedCert.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 16</value>
@@ -1736,13 +1736,13 @@ Zero means ignore latency value.</value>
     <value>255, 42</value>
   </data>
   <data name="btnDefImportLinkTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+    <value>80, 23</value>
   </data>
   <data name="btnDefImportLinkTypes.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
   <data name="btnDefImportLinkTypes.Text" xml:space="preserve">
-    <value>Select window</value>
+    <value>Select</value>
   </data>
   <data name="btnDefImportLinkTypes.ToolTip" xml:space="preserve">
     <value>Select supported share link types.</value>
@@ -2769,7 +2769,7 @@ Zero means ignore latency value.</value>
     <value>NoControl</value>
   </data>
   <data name="btnOptionSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>179, 440</value>
+    <value>171, 440</value>
   </data>
   <data name="btnOptionSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2825,7 +2825,7 @@ Zero means ignore latency value.</value>
     <value>NoControl</value>
   </data>
   <data name="btnOptionExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 440</value>
+    <value>260, 440</value>
   </data>
   <data name="btnOptionExit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>

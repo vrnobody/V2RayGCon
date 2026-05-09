@@ -184,7 +184,7 @@
     <value>Flat</value>
   </data>
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>355, 325</value>
+    <value>366, 325</value>
   </data>
   <data name="btnClose.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -256,7 +256,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnCopyAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>161, 325</value>
+    <value>148, 325</value>
   </data>
   <data name="btnCopyAll.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>

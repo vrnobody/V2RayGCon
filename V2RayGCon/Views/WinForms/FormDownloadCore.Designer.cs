@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDownloadCore));
             this.cboxVer = new System.Windows.Forms.ComboBox();
             this.btnRefreshVer = new VgcApis.UserControls.RoundButton();
             this.btnDownload = new VgcApis.UserControls.RoundButton();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.btnCheckVersion = new VgcApis.UserControls.RoundButton();
             this.chkUseProxy = new System.Windows.Forms.CheckBox();

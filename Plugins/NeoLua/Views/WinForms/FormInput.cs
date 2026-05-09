@@ -87,7 +87,7 @@ namespace NeoLuna.Views.WinForms
             switch (kc)
             {
                 case Keys.S:
-                    if (e.Modifiers == Keys.Control)
+                    if (e.Control)
                     {
                         OnOk();
                     }

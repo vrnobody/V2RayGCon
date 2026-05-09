@@ -192,17 +192,47 @@
   <data name="label1.ToolTip" xml:space="preserve">
     <value>包裹名字</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnChain.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAAXZJREFUOE+dkr1qwlAYhgWha4fSDgXvovQC/BtcvQNBECeXxk0tuAWsXoKgS5sK
+        uji6tRfQWeiflRhN4pL17fceE4l/RfvCi8Gc5/F8xxMBEDklnudFpV3pQHp2lEAWnkuvpAoejUZg5Xnw
+        p0AW3EhfbNuGZVkEHIKZTCYQdA8K5GXccRyvWq0ilUqp5vP5DVga3SsI4FKpBO1Ow8f7J6zZHK1WC7lc
+        jrCrYGZbEIaz2SxmpgXXWarOrQXS6TSm0ykl1woIC+TLmOu6S8LlchmFQgG12j3shaME318TJJNJmKZJ
+        wYWCtgR6u91WIH/tZzJdS7gTjlOpVAi/+siOYKhpGnrPvfW2AwnH4c44nuTWR3YEHV3X0Wg0NubmOCE4
+        7i9fJRDIC16SvmEYSCQSaD408fRooFgsHoYZCnxY3TD+z5RwJxyHZ8KD3QszvqA+Ho/Dl6Qv7UiHUl0a
+        85fvxhdcSt8okc/VDTs2oTOgpH4SzFDw/yLyCzYS8Re23zXmAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="btnChain.Text" xml:space="preserve">
     <value>串联</value>
   </data>
   <data name="btnChain.ToolTip" xml:space="preserve">
     <value>使用 proxySettings 把节点串起来</value>
   </data>
+  <data name="btnPack.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAALVJREFUOE+9
+        jzEOAiEQRTkCtacx9NzBglOQ2HIdC3pMPIVXsFptaEdmwpAJi7jJGid5gdnhfRYlK+cMTP20raR4Ox/a
+        HqlH5iXFfq1zXThWNElceAh53K8kMdjzbMClcCrodjsz6o0xkFKCGCNYayGEQD3OVu+XIoMBKHnvac99
+        mS3tGSz1q3OOBLy5k4kWwIxu/wTOKYBLiiw/lxfBkuxXAbJ+FjDjP3+wO2DG14AtKIA9gHoD0Ww1uPXx
+        3NIAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnPack.Text" xml:space="preserve">
     <value>打包</value>
   </data>
   <data name="btnPack.ToolTip" xml:space="preserve">
     <value>创建服务器包</value>
+  </data>
+  <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
+        AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
+</value>
   </data>
   <data name="btnSave.Text" xml:space="preserve">
     <value>保存</value>

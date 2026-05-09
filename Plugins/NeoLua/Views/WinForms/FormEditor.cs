@@ -174,16 +174,29 @@ namespace NeoLuna.Views.WinForms
         public void SetOutputPanelCollapseState(bool isCollapsed)
         {
             splitContainerTabEditor.Panel2Collapsed = isCollapsed;
-            outputPanelToolStripMenuItem.Checked = !isCollapsed;
+            showPanelToolStripMenuItem.Checked = !isCollapsed;
         }
         #endregion
 
 
         #region UI event handlers
-        private void outputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+
+        private void showPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             var isCollapsed = !splitContainerTabEditor.Panel2Collapsed;
             SetOutputPanelCollapseState(isCollapsed);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var logs = rtBoxOutput.Text;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ? I18N.CopySuccess : I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            btnClearOutput.PerformClick();
         }
 
         #endregion

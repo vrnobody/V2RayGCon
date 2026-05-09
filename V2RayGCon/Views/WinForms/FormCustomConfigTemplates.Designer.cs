@@ -82,8 +82,8 @@ namespace V2RayGCon.Views.WinForms
             // 
             // btnFormat
             // 
-            resources.ApplyResources(this.btnFormat, "btnFormat");
             this.btnFormat.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnFormat, "btnFormat");
             this.btnFormat.Name = "btnFormat";
             this.toolTip1.SetToolTip(this.btnFormat, resources.GetString("btnFormat.ToolTip"));
             this.btnFormat.UseVisualStyleBackColor = false;
@@ -110,8 +110,8 @@ namespace V2RayGCon.Views.WinForms
             // 
             // btnTest
             // 
-            resources.ApplyResources(this.btnTest, "btnTest");
             this.btnTest.BackColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.btnTest, "btnTest");
             this.btnTest.Name = "btnTest";
             this.btnTest.UseVisualStyleBackColor = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);

@@ -13,6 +13,7 @@ namespace VgcApis.WinForms
 
             Misc.UI.AutoSetFormIcon(this);
 
+            VgcApis.Misc.UI.AddContextMenu(rtboxContent);
             this.rtboxContent.Text = content;
             if (!string.IsNullOrEmpty(title))
             {
@@ -32,6 +33,23 @@ namespace VgcApis.WinForms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormMultiLineInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            var kc = e.KeyCode;
+            switch (kc)
+            {
+                case Keys.S:
+                    if (e.Control)
+                    {
+                        btnOk.PerformClick();
+                    }
+                    return;
+                case Keys.Escape:
+                    btnCancel.PerformClick();
+                    return;
+            }
         }
     }
 }

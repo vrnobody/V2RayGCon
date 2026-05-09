@@ -28,20 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMultiLineInput));
-            this.btnOk = new VgcApis.UserControls.RoundButton();
-            this.btnCancel = new VgcApis.UserControls.RoundButton();
-            this.rtboxContent = new VgcApis.UserControls.ExRichTextBox();
             this.lbTitle = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.rtboxContent = new VgcApis.UserControls.ExRichTextBox();
+            this.btnCancel = new VgcApis.UserControls.RoundButton();
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.SuspendLayout();
             // 
-            // btnOk
+            // lbTitle
             // 
-            resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnOk.Name = "btnOk";
-            this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            resources.ApplyResources(this.lbTitle, "lbTitle");
+            this.lbTitle.Name = "lbTitle";
+            // 
+            // rtboxContent
+            // 
+            this.rtboxContent.AcceptsTab = true;
+            resources.ApplyResources(this.rtboxContent, "rtboxContent");
+            this.rtboxContent.DetectUrls = false;
+            this.rtboxContent.Name = "rtboxContent";
             // 
             // btnCancel
             // 
@@ -51,16 +57,14 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // rtboxContent
+            // btnOk
             // 
-            this.rtboxContent.AcceptsTab = true;
-            resources.ApplyResources(this.rtboxContent, "rtboxContent");
-            this.rtboxContent.Name = "rtboxContent";
-            // 
-            // lbTitle
-            // 
-            resources.ApplyResources(this.lbTitle, "lbTitle");
-            this.lbTitle.Name = "lbTitle";
+            resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOk.Name = "btnOk";
+            this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
+            this.btnOk.UseVisualStyleBackColor = false;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // FormMultiLineInput
             // 
@@ -70,7 +74,9 @@
             this.Controls.Add(this.rtboxContent);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.KeyPreview = true;
             this.Name = "FormMultiLineInput";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMultiLineInput_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,5 +87,6 @@
         private System.Windows.Forms.Label lbTitle;
         private UserControls.RoundButton btnOk;
         private UserControls.RoundButton btnCancel;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

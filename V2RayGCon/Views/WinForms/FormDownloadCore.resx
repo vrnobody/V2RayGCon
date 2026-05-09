@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cboxVer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 46</value>
+    <value>86, 48</value>
   </data>
   <data name="cboxVer.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 20</value>
@@ -148,7 +148,7 @@
     <value>8, 46</value>
   </data>
   <data name="btnRefreshVer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 20</value>
+    <value>75, 24</value>
   </data>
   <data name="btnRefreshVer.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -178,7 +178,7 @@
     <value>Flat</value>
   </data>
   <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 103</value>
+    <value>92, 107</value>
   </data>
   <data name="btnDownload.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 24</value>
@@ -208,7 +208,7 @@
     <value>Flat</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 103</value>
+    <value>173, 107</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 24</value>
@@ -244,7 +244,7 @@
     <value>8, 20</value>
   </data>
   <data name="btnCheckVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 20</value>
+    <value>75, 24</value>
   </data>
   <data name="btnCheckVersion.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -271,7 +271,7 @@
     <value>True</value>
   </data>
   <data name="chkUseProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 107</value>
+    <value>8, 111</value>
   </data>
   <data name="chkUseProxy.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 16</value>
@@ -304,7 +304,7 @@
     <value>True</value>
   </data>
   <data name="chkWin7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>281, 48</value>
+    <value>281, 50</value>
   </data>
   <data name="chkWin7.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
@@ -337,7 +337,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>254, 103</value>
+    <value>254, 107</value>
   </data>
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 24</value>
@@ -361,7 +361,7 @@
     <value>2</value>
   </data>
   <data name="pgBarDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 72</value>
+    <value>6, 76</value>
   </data>
   <data name="pgBarDownload.Size" type="System.Drawing.Size, System.Drawing">
     <value>321, 25</value>
@@ -391,7 +391,7 @@
     <value>64 bit</value>
   </data>
   <data name="cboxArch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 46</value>
+    <value>203, 48</value>
   </data>
   <data name="cboxArch.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 20</value>
@@ -415,7 +415,7 @@
     <value>True</value>
   </data>
   <data name="labelCoreVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>90, 24</value>
+    <value>89, 26</value>
   </data>
   <data name="labelCoreVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 12</value>
@@ -442,7 +442,7 @@
     <value>13, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>337, 51</value>
+    <value>337, 52</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -484,10 +484,10 @@
     <value>5</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 69</value>
+    <value>13, 70</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>337, 135</value>
+    <value>337, 141</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -514,7 +514,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>364, 217</value>
+    <value>364, 224</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

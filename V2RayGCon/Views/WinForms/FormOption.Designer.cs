@@ -850,8 +850,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageSubscribe;
         private System.Windows.Forms.FlowLayoutPanel flySubsUrlContainer;
-        private VgcApis.UserControls.RoundButton btnAddSubsUrl;
-        private VgcApis.UserControls.RoundButton btnUpdateViaSubscription;
+        private System.Windows.Forms.Button btnAddSubsUrl;
+        private System.Windows.Forms.Button btnUpdateViaSubscription;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TabPage tabPageSetting;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -887,9 +887,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tboxDefSpeedtestTimeout;
-        private VgcApis.UserControls.RoundButton btnSetOpenStartupFolder;
-        private VgcApis.UserControls.RoundButton btnSubsInvertSelection;
-        private VgcApis.UserControls.RoundButton btnSubsUseAll;
+        private System.Windows.Forms.Button btnSetOpenStartupFolder;
+        private System.Windows.Forms.Button btnSubsInvertSelection;
+        private System.Windows.Forms.Button btnSubsUseAll;
         private System.Windows.Forms.TextBox tboxSettingsMaxCoreNum;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -902,7 +902,7 @@
         private System.Windows.Forms.CheckBox chkSetSelfSignedCert;
         private System.Windows.Forms.CheckBox chkSetEnableDebugFile;
         private System.Windows.Forms.TextBox tboxSetDebugFilePath;
-        private VgcApis.UserControls.RoundButton btnSetBrowseDebugFile;
+        private System.Windows.Forms.Button btnSetBrowseDebugFile;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkSetCheckV2RayCoreUpdateWhenStart;
         private System.Windows.Forms.ComboBox cboxSettingsUtlsFingerprint;
@@ -916,21 +916,21 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox chkIsUseCustomUserAgent;
         private System.Windows.Forms.CheckBox chkIsLoad3rdPartyPlugins;
-        private VgcApis.UserControls.RoundButton btnRefreshPluginsPanel;
+        private System.Windows.Forms.Button btnRefreshPluginsPanel;
         private System.Windows.Forms.TabPage tabPageCustomCoresSetting;
-        private VgcApis.UserControls.RoundButton btnCoresSettingAdd;
+        private System.Windows.Forms.Button btnCoresSettingAdd;
         private System.Windows.Forms.FlowLayoutPanel flyCoresSetting;
         private System.Windows.Forms.ComboBox cboxDefImportCoreName;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPageConfigTemplates;
-        private VgcApis.UserControls.RoundButton btnCustomTemplatesAdd;
+        private System.Windows.Forms.Button btnCustomTemplatesAdd;
         private System.Windows.Forms.FlowLayoutPanel flyCustomTemplates;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RichTextBox rtboxCustomFilterKeywords;
         private System.Windows.Forms.Label label21;
-        private VgcApis.UserControls.RoundButton btnDefImportLinkTypes;
-        private VgcApis.UserControls.RoundButton btnOptionSave;
-        private VgcApis.UserControls.RoundButton btnOptionExit;
+        private System.Windows.Forms.Button btnDefImportLinkTypes;
+        private System.Windows.Forms.Button btnOptionSave;
+        private System.Windows.Forms.Button btnOptionExit;
     }
 }

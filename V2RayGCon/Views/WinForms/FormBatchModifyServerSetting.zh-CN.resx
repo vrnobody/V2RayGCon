@@ -138,27 +138,17 @@
   <data name="chkMark.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkInMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
-  </data>
   <data name="chkInMode.Text" xml:space="preserve">
     <value>模板名</value>
   </data>
   <data name="chkInMode.ToolTip" xml:space="preserve">
     <value>自定义模板名</value>
   </data>
-  <data name="chkIncrement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
   <data name="chkIncrement.Text" xml:space="preserve">
     <value>递增</value>
   </data>
   <data name="chkIncrement.ToolTip" xml:space="preserve">
     <value>端口号递增</value>
-  </data>
-  <data name="chkShareOverLAN.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
   </data>
   <data name="chkShareOverLAN.Text" xml:space="preserve">
     <value>共享</value>
@@ -175,11 +165,28 @@
   <data name="cboxMark.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnModify.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vwAADr8BOAVTJAAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
+        AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btnModify.Text" xml:space="preserve">
-    <value>修改</value>
+    <value>保存</value>
   </data>
   <data name="btnModify.ToolTip" xml:space="preserve">
     <value>只有勾选的项才会被修改</value>
+  </data>
+  <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DgAACw4BQL7hQQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
+        GyCLE2UASLNu4dr/MRP2gdR9QDaEKAOev/nwH2QAQ/AcDEMwDADR2DAuQ7AaAFJECMMMoY0B2DDRXsCG
+        SQpEbJjiaARhaEJC0QzCKAYQi7EaQCzGagCpGGHAfwYAY+QSRF2yUJsAAAAASUVORK5CYII=
+</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>取消</value>
@@ -211,11 +218,20 @@
   <data name="tboxTemplates.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tboxTag3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTag2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTag1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tboxRemark.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
+  <data name="chkTag3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkUntrack.Text" xml:space="preserve">
     <value>不追踪</value>
@@ -223,26 +239,26 @@
   <data name="chkUntrack.ToolTip" xml:space="preserve">
     <value>停止记录server的运行状态</value>
   </data>
+  <data name="chkTag2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkTemplates.Text" xml:space="preserve">
     <value>模板</value>
   </data>
   <data name="chkTemplates.ToolTip" xml:space="preserve">
     <value>合并这些模板</value>
   </data>
+  <data name="chkTag1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkSendThough.ToolTip" xml:space="preserve">
     <value>接受tun模式下自动设置sendThough项</value>
-  </data>
-  <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
   </data>
   <data name="chkRemark.Text" xml:space="preserve">
     <value>备注</value>
   </data>
   <data name="chkRemark.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="chkInject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
   </data>
   <data name="chkInject.Text" xml:space="preserve">
     <value>注入</value>
@@ -252,9 +268,6 @@
   </data>
   <data name="chkCustomCore.ToolTip" xml:space="preserve">
     <value>自定义core</value>
-  </data>
-  <data name="chkAutorun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
   </data>
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>自启动</value>

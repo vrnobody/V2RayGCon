@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="tableLayoutPanel2.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -168,8 +165,8 @@
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value>Global hotkey for switching proxy mode.</value>
+  <data name="rtboxTunaDns.Text" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;tboxTunaTunName.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -198,6 +195,12 @@
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
+  <data name="&gt;&gt;rtboxTunaStartupScript.Name" xml:space="preserve">
+    <value>rtboxTunaStartupScript</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
   <data name="btnTunaDetect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -219,8 +222,8 @@
   <data name="panel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;btnBasicBrowseCustomPac.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="btnBasicStartPacServer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
   </data>
   <data name="chkBasicUseAlt.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -233,9 +236,6 @@
   </data>
   <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
-  </data>
-  <data name="btnBasicStartPacServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
   </data>
   <data name="btnBasicStopPacServer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -260,9 +260,6 @@
   </data>
   <data name="chkTunaEnableIpv6.Text" xml:space="preserve">
     <value>IPv6</value>
-  </data>
-  <data name="&gt;&gt;btnBasicBrowseCustomPac.Name" xml:space="preserve">
-    <value>btnBasicBrowseCustomPac</value>
   </data>
   <data name="groupBox6.ToolTip" xml:space="preserve">
     <value />
@@ -291,8 +288,8 @@
   <data name="&gt;&gt;lbTunaStatus.Name" xml:space="preserve">
     <value>lbTunaStatus</value>
   </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnBasicViewInNotepad.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
@@ -318,6 +315,9 @@
   <data name="lbBasicProxyLink.ToolTip" xml:space="preserve">
     <value>Current system proxy.</value>
   </data>
+  <data name="lbBasicCurPacServerStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 24</value>
+  </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
@@ -341,6 +341,9 @@
   </data>
   <data name="&gt;&gt;lbBasicCurPacServerStatus.Name" xml:space="preserve">
     <value>lbBasicCurPacServerStatus</value>
+  </data>
+  <data name="panel2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxBasicPacMode.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -366,20 +369,20 @@
   <data name="tabUsage.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxBasicGlobalPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 46</value>
+  <data name="&gt;&gt;btnBaiscCopyProxyLink.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>
+  </data>
+  <data name="tboxTunaTunIpv4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;chkTunaAutoUpdateArguments.Name" xml:space="preserve">
     <value>chkTunaAutoUpdateArguments</value>
   </data>
   <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="chkBasicPacAlwaysOn.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="&gt;&gt;btnTunaStop.ZOrder" xml:space="preserve">
     <value>21</value>
@@ -417,14 +420,14 @@
   <data name="btnBasicStartPacServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="&gt;&gt;tboxTunaExePath.Name" xml:space="preserve">
-    <value>tboxTunaExePath</value>
-  </data>
   <data name="&gt;&gt;label8.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;btnTunaStart.ZOrder" xml:space="preserve">
     <value>22</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;label11.Name" xml:space="preserve">
     <value>label11</value>
@@ -435,13 +438,16 @@
   <data name="btnBasicViewInNotepad.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAR9JREFUOE9jQAbfvn37TwB/BGJzqHJMAFO4YO/1/zfuPfmfkZHx38nJCY4LCgr+
+        vAAADrwBlbxySQAAAR9JREFUOE9jQAbfvn37TwB/BGJzqHJMAFO4YO/1/zfuPfmfkZHx38nJCY4LCgr+
         v3v37hNOQ2AGRPTu+a+Vv+b/vaev/z97+vz/h/cfwQbk5+djNwTIiQHiazADPn/5+j8casijl+/hBrx8
         8QrTECCRcOHui//Gpev/MwTPwcAh3bvhBoBoZEM+f/78EWTAfcOSdf8L5h4F2/b8zYf/T169/+/Vsh3D
         Bej49evX/8H+Btn04Pk7WEijOP/Tx09gA9AxsgEPdArW/C9bePz/2w+fwQZM234Zr2YQRjYg7fTNZ/+1
         gYZkzzoMNuDLly94NYMw3ABoLKQA8cNPn7+CDcCmAR2jGAADIAGQBDYN6Hi4G0AsxjDg69evYEHi8ev/
         AF2bz1tCf+8RAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaDns.Name" xml:space="preserve">
+    <value>rtboxTunaDns</value>
   </data>
   <data name="tboxTunaNicIpv4.Size" type="System.Drawing.Size, System.Drawing">
     <value>255, 21</value>
@@ -458,8 +464,11 @@
   <data name="chkTunaAutoUpdateArguments.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;btnTunaDetect.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="rtboxTunaStartupScript.ToolTip" xml:space="preserve">
     <value />
@@ -488,17 +497,20 @@
   <data name="groupBox5.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;chkBasicUseCustomPac.Name" xml:space="preserve">
-    <value>chkBasicUseCustomPac</value>
-  </data>
   <data name="&gt;&gt;tboxTunaExePath.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>PAC mode</value>
   </data>
   <data name="&gt;&gt;rtboxTunaStartupScript.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;tabUsage.Name" xml:space="preserve">
     <value>tabUsage</value>
+  </data>
+  <data name="lbBasicProxyLink.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;btnBasicDebugPacServer.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -515,8 +527,11 @@
   <data name="rtboxTunaStartupScript.Size" type="System.Drawing.Size, System.Drawing">
     <value>312, 260</value>
   </data>
-  <data name="tboxBasicCustomPacPath.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
+    <value>tabTun</value>
   </data>
   <data name="rtboxTunaDns.ToolTip" xml:space="preserve">
     <value />
@@ -530,9 +545,6 @@
   <data name="tboxTunaTunName.Location" type="System.Drawing.Point, System.Drawing">
     <value>70, 199</value>
   </data>
-  <data name="tboxBasicGlobalPort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 21</value>
-  </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
@@ -542,8 +554,14 @@
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
   </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tboxBasicHotkey.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnTunaBrowseExe.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="&gt;&gt;tboxTunaTunIpv6.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -572,6 +590,9 @@
   <data name="chkBasicPacAlwaysOn.Location" type="System.Drawing.Point, System.Drawing">
     <value>227, 75</value>
   </data>
+  <data name="panel3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;label12.Parent" xml:space="preserve">
     <value>tabTun</value>
   </data>
@@ -593,6 +614,9 @@
   <data name="chkTunaModifySendThrough.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="chkBasicUseAlt.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -601,6 +625,9 @@
   </data>
   <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
     <value>btnCancel</value>
+  </data>
+  <data name="tboxBasicGlobalPort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 46</value>
   </data>
   <data name="&gt;&gt;lbTunaStatus.Parent" xml:space="preserve">
     <value>tabTun</value>
@@ -632,8 +659,8 @@
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>671, 398</value>
   </data>
-  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -644,8 +671,8 @@
   <data name="btnBasicStartPacServer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>PAC mode</value>
+  <data name="&gt;&gt;tableLayoutPanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -662,11 +689,11 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Proxy mode</value>
   </data>
+  <data name="&gt;&gt;chkBasicPacAlwaysOn.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
   <data name="&gt;&gt;chkBasicUseHotkey.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkTunaAutorun.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -683,8 +710,8 @@
   <data name="label14.Text" xml:space="preserve">
     <value>TUN IPv6</value>
   </data>
-  <data name="&gt;&gt;chkBasicUseShift.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="lbBasicCurPacServerStatus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tboxBaiscPacPort.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -696,13 +723,13 @@
     <value>True</value>
   </data>
   <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>254, 6</value>
+    <value>226, 6</value>
+  </data>
+  <data name="lbBasicCurPacServerStatus.Text" xml:space="preserve">
+    <value>PAC server is stopped.</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>319, 314</value>
-  </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnTunaStart.ToolTip" xml:space="preserve">
     <value />
@@ -713,11 +740,17 @@
   <data name="&gt;&gt;btnTunaBrowseExe.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
+  <data name="tboxBasicHotkey.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tboxTunaTunIpv6.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rtboxTunaDns.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
+  </data>
+  <data name="&gt;&gt;btnBasicBrowseCustomPac.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="tboxTunaExePath.Location" type="System.Drawing.Point, System.Drawing">
     <value>70, 172</value>
@@ -725,20 +758,14 @@
   <data name="&gt;&gt;chkBasicUseAlt.Name" xml:space="preserve">
     <value>chkBasicUseAlt</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
   <data name="&gt;&gt;chkBasicPacAlwaysOn.Name" xml:space="preserve">
     <value>chkBasicPacAlwaysOn</value>
   </data>
-  <data name="panel3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;tboxTunaExePath.Name" xml:space="preserve">
+    <value>tboxTunaExePath</value>
   </data>
   <data name="btnTunaDetect.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
   </data>
   <data name="chkTunaModifySendThrough.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 16</value>
@@ -773,6 +800,12 @@
   <data name="tboxBasicCustomPacPath.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
+  <data name="chkBasicUseShift.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tboxTunaNicIpv4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
@@ -788,23 +821,14 @@
   <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>tableLayoutPanel1</value>
   </data>
-  <data name="btnBasicViewInNotepad.ToolTip" xml:space="preserve">
-    <value>View PAC file in notepad.</value>
+  <data name="&gt;&gt;chkTunaEnableIpv6.Name" xml:space="preserve">
+    <value>chkTunaEnableIpv6</value>
   </data>
   <data name="tboxTunaExePath.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="chkBasicUseShift.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
-  </data>
-  <data name="&gt;&gt;cboxBasicPacMode.Name" xml:space="preserve">
-    <value>cboxBasicPacMode</value>
-  </data>
-  <data name="btnTunaStart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkBasicUseHotkey.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="chkTunaEnableIpv6.ToolTip" xml:space="preserve">
     <value>Enable IPv6 supports.</value>
@@ -815,7 +839,7 @@
   <data name="btnBasicDebugPacServer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAMxJREFUOE+9U7sNgzAU9CgZITN4Cg/gNtSEAeg9QUagcO+eLSiStCQStssXnYWR
+        vAAADrwBlbxySQAAAMxJREFUOE+9U7sNgzAU9CgZITN4Cg/gNtSEAeg9QUagcO+eLSiStCQStssXnYWR
         iQJOQMqTTsf73PFsyWx3OOdoD4IB53wT/mdQVRUZY6ht28DIUZ8MclBKzQyRx97qBvgThsvyTLfrnR79
         MzBy1K21l1UDrAuO4gjkqGc3wJnBqThCCEFd1+XvAAabN0BPSknFqZhMwMjHi2wWDbTWVNd1+IZJ2hvF
         vff+8NEgFYMxjLkETRAvvYV38TAMxzCcCwxCAOHP4hjR5DsxYy+1KlKi/qW/8wAAAABJRU5ErkJggg==
@@ -830,8 +854,8 @@
   <data name="btnBaiscCopyProxyLink.ToolTip" xml:space="preserve">
     <value>Copy system proxy URL to clipboard.</value>
   </data>
-  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
+  <data name="btnTunaStart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
@@ -863,6 +887,9 @@
   <data name="&gt;&gt;btnTunaBrowseExe.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
+  <data name="tboxBasicCustomPacPath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;tboxBasicGlobalPort.Name" xml:space="preserve">
     <value>tboxBasicGlobalPort</value>
   </data>
@@ -875,8 +902,8 @@
   <data name="&gt;&gt;cboxBasicPacMode.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.Name" xml:space="preserve">
-    <value>rtboxTunaStartupScript</value>
+  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>331, 8</value>
   </data>
   <data name="chkBasicUseCustomPac.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -887,8 +914,8 @@
   <data name="&gt;&gt;tableLayoutPanel2.Parent" xml:space="preserve">
     <value>tabBasic</value>
   </data>
-  <data name="chkBasicUseShift.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="chkBasicUseHotkey.Location" type="System.Drawing.Point, System.Drawing">
+    <value>227, 181</value>
   </data>
   <data name="btnTunaBrowseExe.ToolTip" xml:space="preserve">
     <value>Browse tun2socks.exe</value>
@@ -902,17 +929,14 @@
   <data name="&gt;&gt;tboxUsageReadMe.Name" xml:space="preserve">
     <value>tboxUsageReadMe</value>
   </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="cboxBasicSysProxyMode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;tboxTunaProxy.Parent" xml:space="preserve">
     <value>tabTun</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 12</value>
   </data>
   <data name="&gt;&gt;lbBasicCurPacServerStatus.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -923,8 +947,11 @@
   <data name="chkTunaDebug.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 23</value>
+  </data>
   <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>92, 23</value>
   </data>
   <data name="&gt;&gt;btnBasicStopPacServer.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -934,9 +961,6 @@
   </data>
   <data name="tboxBasicCustomPacPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>85, 152</value>
-  </data>
-  <data name="btnBasicStartPacServer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>225, 20</value>
   </data>
   <data name="&gt;&gt;chkTunaEnableIpv6.Parent" xml:space="preserve">
     <value>tabTun</value>
@@ -968,8 +992,8 @@
   <data name="&gt;&gt;tboxTunaNicIpv4.Name" xml:space="preserve">
     <value>tboxTunaNicIpv4</value>
   </data>
-  <data name="tboxBasicHotkey.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;chkBasicUseCustomPac.Name" xml:space="preserve">
+    <value>chkBasicUseCustomPac</value>
   </data>
   <data name="lbTunaStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -992,9 +1016,6 @@
   <data name="&gt;&gt;lbBasicProxyLink.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="cboxBasicPacMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 20</value>
-  </data>
   <data name="&gt;&gt;btnBasicViewInNotepad.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1002,7 +1023,7 @@
     <value>2</value>
   </data>
   <data name="chkBasicPacAlwaysOn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
+    <value>84, 16</value>
   </data>
   <data name="label11.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1028,8 +1049,14 @@
   <data name="cboxBasicPacProtocol.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 12</value>
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value>Global hotkey for switching proxy mode.</value>
   </data>
   <data name="btnPacModifyList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1046,8 +1073,8 @@
   <data name="tboxBaiscPacPort.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>318, 280</value>
+  <data name="&gt;&gt;chkTunaModifySendThrough.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnSave.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -1064,20 +1091,20 @@
   <data name="btnTunaBrowseExe.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;tboxTunaTunIpv6.Parent" xml:space="preserve">
-    <value>tabTun</value>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
   </data>
-  <data name="chkBasicUseHotkey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
-  </data>
-  <data name="lbBasicCurPacServerStatus.Text" xml:space="preserve">
-    <value>PAC server is stopped.</value>
+  <data name="tabBasic.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="&gt;&gt;btnBasicViewInNotepad.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>665, 34</value>
+  </data>
+  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="btnTunaStart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -1127,20 +1154,14 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>671, 398</value>
   </data>
-  <data name="chkBasicUseCustomPac.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="label12.Text" xml:space="preserve">
+    <value>TUN Name</value>
   </data>
   <data name="label14.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="panel3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <data name="&gt;&gt;btnBasicStartPacServer.Parent" xml:space="preserve">
     <value>groupBox2</value>
-  </data>
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
   </data>
   <data name="chkTunaDebug.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1148,11 +1169,11 @@
   <data name="chkTunaAutorun.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="&gt;&gt;chkBasicPacAlwaysOn.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="rtboxTunaStartupScript.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;btnBasicBrowseCustomPac.Name" xml:space="preserve">
+    <value>btnBasicBrowseCustomPac</value>
   </data>
   <data name="&gt;&gt;chkBasicPacAlwaysOn.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1178,6 +1199,9 @@
   <data name="btnBasicStopPacServer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
   <data name="chkBasicUseShift.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -1187,17 +1211,26 @@
   <data name="rtboxTunaStartupScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>19</value>
+  <data name="lbBasicProxyLink.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;tboxBaiscPacPort.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="lbBasicProxyLink.Size" type="System.Drawing.Size, System.Drawing">
     <value>226, 14</value>
   </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tboxBasicGlobalPort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>17</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="btnBasicViewInNotepad.ToolTip" xml:space="preserve">
+    <value>View PAC file in notepad.</value>
   </data>
   <data name="tabTun.ToolTip" xml:space="preserve">
     <value />
@@ -1208,14 +1241,17 @@
   <data name="panel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkBasicAutoUpdateSysProxy.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;label10.Name" xml:space="preserve">
     <value>label10</value>
   </data>
-  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;tboxTunaTunIpv4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkBasicUseAlt.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1223,26 +1259,23 @@
   <data name="&gt;&gt;lbBasicProxyLink.Name" xml:space="preserve">
     <value>lbBasicProxyLink</value>
   </data>
-  <data name="&gt;&gt;btnTunaDetect.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="btnBasicViewInNotepad.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;tboxUsageReadMe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;rtboxTunaStartupScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxBaiscPacPort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="tabBasic.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
   </data>
-  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="tabUsage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="tboxTunaProxy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 8</value>
   </data>
   <data name="btnBasicViewInNotepad.Location" type="System.Drawing.Point, System.Drawing">
     <value>270, 20</value>
   </data>
-  <data name="chkBasicUseAlt.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Parent" xml:space="preserve">
+    <value>tabTun</value>
   </data>
   <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1274,8 +1307,8 @@
   <data name="chkTunaModifySendThrough.Text" xml:space="preserve">
     <value>Modify</value>
   </data>
-  <data name="btnTunaStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 294</value>
+  <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
+    <value>Update arguments base on NIC IP before Tuna starts.</value>
   </data>
   <data name="chkBasicUseShift.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 16</value>
@@ -1289,9 +1322,6 @@
   <data name="&gt;&gt;panel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
   <data name="&gt;&gt;chkBasicUseHotkey.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
@@ -1300,6 +1330,9 @@
   </data>
   <data name="chkBasicPacAlwaysOn.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
@@ -1319,12 +1352,6 @@
   <data name="&gt;&gt;tabTun.Name" xml:space="preserve">
     <value>tabTun</value>
   </data>
-  <data name="chkTunaDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 16</value>
-  </data>
-  <data name="chkBasicUseHotkey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 181</value>
-  </data>
   <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1337,14 +1364,14 @@
   <data name="btnBaiscCopyProxyLink.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAJVJREFUOE+10EEKgCAQQFFv1V6X4tpreJxa1BE1W7idmmDAxrSEEj4RNQ9VAIBI
+        vAAADrwBlbxySQAAAJVJREFUOE+10EEKgCAQQFFv1V6X4tpreJxa1BE1W7idmmDAxrSEEj4RNQ9VAIBI
         KUGleDSI1iJASlnknAPv/dZEcmAN8dIyL89IC8iREML9kWqAtRaMMaC1bh+pBuAwf5/GqUR6AHwW99IL
         YIQcc7ELoOhecO41wPsHyLeplLodpAqAx3fE4wDvG+Ap/O8E+MIP70qwA3iV0qEij2QHAAAAAElFTkSu
         QmCC
 </value>
   </data>
-  <data name="btnPacModifyList.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>19</value>
   </data>
   <data name="chkBasicUseAlt.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 16</value>
@@ -1358,8 +1385,8 @@
   <data name="chkBasicUseShift.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;chkTunaAutorun.Parent" xml:space="preserve">
-    <value>tabTun</value>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1378,9 +1405,6 @@
   </data>
   <data name="btnPacModifyList.Text" xml:space="preserve">
     <value>Modify</value>
-  </data>
-  <data name="rtboxTunaStartupScript.Text" xml:space="preserve">
-    <value />
   </data>
   <data name="tboxTunaTunName.ToolTip" xml:space="preserve">
     <value>TUN device name</value>
@@ -1424,6 +1448,9 @@
   <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;btnBasicStopPacServer.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
@@ -1436,11 +1463,11 @@
   <data name="tboxTunaTunIpv4.Location" type="System.Drawing.Point, System.Drawing">
     <value>70, 62</value>
   </data>
-  <data name="tboxUsageReadMe.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="btnBaiscCopyProxyLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
   </data>
-  <data name="&gt;&gt;chkBasicPacAlwaysOn.ZOrder" xml:space="preserve">
-    <value>18</value>
+  <data name="&gt;&gt;chkBasicUseShift.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkTunaModifySendThrough.Parent" xml:space="preserve">
     <value>tabTun</value>
@@ -1458,7 +1485,7 @@
     <value>1</value>
   </data>
   <data name="chkBasicAutoUpdateSysProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 22</value>
+    <value>227, 22</value>
   </data>
   <data name="chkBasicUseCustomPac.ToolTip" xml:space="preserve">
     <value>Use custom PAC file.</value>
@@ -1469,8 +1496,8 @@
   <data name="&gt;&gt;tboxTunaNicIpv4.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
+  <data name="tabUsage.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="btnBasicBrowseCustomPac.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1499,23 +1526,23 @@
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabTun.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
   <data name="btnBasicViewInNotepad.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="chkBasicUseHotkey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 16</value>
   </data>
-  <data name="lbBasicProxyLink.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
+  <data name="cboxBasicPacProtocol.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 20</value>
   </data>
   <data name="btnTunaStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="chkTunaDebug.Location" type="System.Drawing.Point, System.Drawing">
     <value>271, 226</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
   </data>
   <data name="chkTunaAutorun.Location" type="System.Drawing.Point, System.Drawing">
     <value>421, 297</value>
@@ -1525,6 +1552,14 @@
   </data>
   <data name="btnBaiscCopyProxyLink.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
+        AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
+</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
     <value>DNSes</value>
@@ -1547,8 +1582,8 @@
   <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="btnBasicBrowseCustomPac.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 150</value>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>657, 326</value>
@@ -1592,17 +1627,14 @@
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;tboxTunaTunIpv4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="btnBasicBrowseCustomPac.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
   <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;tboxTunaTunIpv4.Parent" xml:space="preserve">
     <value>tabTun</value>
@@ -1637,9 +1669,6 @@
   <data name="label11.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tabBasic.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -1658,14 +1687,11 @@
   <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkBasicAutoUpdateSysProxy.ToolTip" xml:space="preserve">
-    <value>Update system proxy setting after switching proxy server. For Global mode and PAC mode only.</value>
+  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>318, 280</value>
   </data>
   <data name="chkBasicUseShift.Location" type="System.Drawing.Point, System.Drawing">
     <value>130, 206</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Setting</value>
   </data>
   <data name="tboxUsageReadMe.ToolTip" xml:space="preserve">
     <value />
@@ -1679,14 +1705,11 @@
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 12</value>
   </data>
-  <data name="&gt;&gt;tboxBasicGlobalPort.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+    <value>panel3</value>
   </data>
   <data name="btnCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="tboxUsageReadMe.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1739,17 +1762,26 @@
   <data name="&gt;&gt;tabTun.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="panel2.ToolTip" xml:space="preserve">
+  <data name="&gt;&gt;chkBasicPacAlwaysOn.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="tboxUsageReadMe.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;lbTunaStatus.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+  <data name="&gt;&gt;chkTunaModifySendThrough.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
     <value>tabUsage</value>
   </data>
-  <data name="&gt;&gt;tabTun.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;chkTunaDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkBasicPacAlwaysOn.ToolTip" xml:space="preserve">
     <value>Keep pac server running.</value>
@@ -1757,8 +1789,8 @@
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabUsage.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="chkBasicAutoUpdateSysProxy.ToolTip" xml:space="preserve">
+    <value>Update system proxy setting after switching proxy server. For Global mode and PAC mode only.</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>318, 280</value>
@@ -1802,26 +1834,31 @@
   <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;chkTunaAutorun.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
   <data name="chkBasicUseHotkey.ToolTip" xml:space="preserve">
     <value>Enable / disable global hotkey.</value>
   </data>
   <data name="cboxBasicPacMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="btnCancel.ToolTip" xml:space="preserve">
-    <value />
+  <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EAAACxABrSO9dQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
+        GyCLE2UASLNu4dr/MRP2gdR9QDaEKAOev/nwH2QAQ/AcDEMwDADR2DAuQ7AaAFJECMMMoY0B2DDRXsCG
+        SQpEbJjiaARhaEJC0QzCKAYQi7EaQCzGagCpGGHAfwYAY+QSRF2yUJsAAAAASUVORK5CYII=
+</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 12</value>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label1.ToolTip" xml:space="preserve">
     <value>System proxy mode.</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
-  </data>
-  <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
-    <value>tabTun</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
@@ -1838,23 +1875,20 @@
   <data name="&gt;&gt;btnTunaBrowseExe.Parent" xml:space="preserve">
     <value>tabTun</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>11</value>
+  <data name="chkBasicUseCustomPac.Text" xml:space="preserve">
+    <value>Custom PAC</value>
   </data>
   <data name="&gt;&gt;btnBaiscCopyProxyLink.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="btnBasicViewInNotepad.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;tabTun.Parent" xml:space="preserve">
+    <value>tabControl1</value>
   </data>
-  <data name="label10.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkTunaDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 16</value>
   </data>
-  <data name="tboxBasicGlobalPort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;chkTunaDebug.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkTunaAutorun.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="btnBasicStopPacServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1866,7 +1900,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkBasicAutoUpdateSysProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
+    <value>84, 16</value>
   </data>
   <data name="&gt;&gt;lbBasicCurPacServerStatus.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -1901,26 +1935,20 @@
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 129</value>
   </data>
-  <data name="&gt;&gt;tboxBaiscPacPort.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnTunaDetect.Text" xml:space="preserve">
     <value>Generate</value>
   </data>
-  <data name="tabBasic.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="rtboxTunaDns.Text" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;btnPacModifyList.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
+    <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;tabUsage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1937,11 +1965,14 @@
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="btnCancel.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>V2RayGCon plugin</value>
   </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>panel3</value>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>About</value>
   </data>
   <data name="&gt;&gt;cboxBasicSysProxyMode.ZOrder" xml:space="preserve">
     <value>10</value>
@@ -1952,11 +1983,8 @@
   <data name="btnTunaStop.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="&gt;&gt;rtboxTunaDns.Name" xml:space="preserve">
-    <value>rtboxTunaDns</value>
-  </data>
-  <data name="chkBasicPacAlwaysOn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Setting</value>
   </data>
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,Absolute,40" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -2003,8 +2031,8 @@
   <data name="&gt;&gt;lbBasicProxyLink.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>NIC IPv4</value>
+  <data name="tboxBaiscPacPort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="btnTunaStart.Text" xml:space="preserve">
     <value>Start</value>
@@ -2021,8 +2049,8 @@
   <data name="tabBasic.Text" xml:space="preserve">
     <value>PAC</value>
   </data>
-  <data name="cboxBasicPacProtocol.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 20</value>
+  <data name="btnBasicDebugPacServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;tboxBasicHotkey.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -2045,14 +2073,8 @@
   <data name="&gt;&gt;label9.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxTunaProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
-    <value>Update arguments base on NIC IP before Tuna starts.</value>
+  <data name="&gt;&gt;tboxBasicGlobalPort.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="tboxBasicHotkey.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 21</value>
@@ -2069,29 +2091,17 @@
   <data name="&gt;&gt;btnTunaStart.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundButton, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="lbBasicProxyLink.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>331, 8</value>
-  </data>
   <data name="btnTunaStop.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;btnBaiscCopyProxyLink.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="&gt;&gt;tboxBasicHotkey.Name" xml:space="preserve">
     <value>tboxBasicHotkey</value>
   </data>
   <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
     <value>panel1</value>
-  </data>
-  <data name="tboxTunaProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 8</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 2</value>
@@ -2108,7 +2118,7 @@
   <data name="btnBasicStartPacServer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        vAAADrwBlbxySQAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
         0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
         iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
         YII=
@@ -2116,9 +2126,6 @@
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;chkTunaAutorun.ZOrder" xml:space="preserve">
-    <value>9</value>
   </data>
   <data name="&gt;&gt;label6.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2141,8 +2148,8 @@
   <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnTunaBrowseExe.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 49</value>
   </data>
   <data name="&gt;&gt;btnBasicViewInNotepad.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -2153,6 +2160,9 @@
   <data name="lbBasicProxyLink.Text" xml:space="preserve">
     <value>http://127.0.0.1:3001/pac/</value>
   </data>
+  <data name="btnBasicBrowseCustomPac.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 150</value>
+  </data>
   <data name="tabTun.Size" type="System.Drawing.Size, System.Drawing">
     <value>657, 326</value>
   </data>
@@ -2162,8 +2172,8 @@
   <data name="&gt;&gt;tboxTunaProxy.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxTunaTunIpv4.ToolTip" xml:space="preserve">
-    <value />
+  <data name="panel3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2171,41 +2181,44 @@
   <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkBasicUseAlt.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="chkTunaAutorun.ToolTip" xml:space="preserve">
     <value>Start tun automatically.</value>
   </data>
   <data name="btnTunaBrowseExe.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>17</value>
+  <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
+    <value>Auto</value>
   </data>
-  <data name="chkBasicUseAlt.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="cboxBasicSysProxyMode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="tboxBasicHotkey.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 49</value>
-  </data>
-  <data name="tableLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="&gt;&gt;tboxTunaTunIpv6.Parent" xml:space="preserve">
+    <value>tabTun</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="btnSave.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;cboxBasicPacMode.Name" xml:space="preserve">
+    <value>cboxBasicPacMode</value>
   </data>
-  <data name="chkBasicUseCustomPac.Text" xml:space="preserve">
-    <value>Custom PAC</value>
+  <data name="cboxBasicPacMode.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkBasicUseHotkey.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="rtboxTunaDns.Size" type="System.Drawing.Size, System.Drawing">
     <value>255, 50</value>
+  </data>
+  <data name="chkBasicUseCustomPac.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -2228,11 +2241,8 @@
   <data name="tabUsage.Size" type="System.Drawing.Size, System.Drawing">
     <value>657, 326</value>
   </data>
-  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;chkTunaEnableIpv6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 116</value>
@@ -2252,23 +2262,20 @@
   <data name="label3.ToolTip" xml:space="preserve">
     <value>PAC server port.</value>
   </data>
-  <data name="chkBasicUseCustomPac.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;tboxUsageReadMe.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cboxBasicPacMode.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tableLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
   </data>
   <data name="tableLayoutPanel2.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="chkBasicAutoUpdateSysProxy.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;tabTun.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="lbBasicCurPacServerStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 24</value>
-  </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.Name" xml:space="preserve">
-    <value>chkTunaEnableIpv6</value>
+  <data name="btnSave.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="btnTunaStop.Text" xml:space="preserve">
     <value>Stop</value>
@@ -2276,8 +2283,8 @@
   <data name="&gt;&gt;btnTunaStart.Parent" xml:space="preserve">
     <value>tabTun</value>
   </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>TUN Name</value>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2285,17 +2292,17 @@
   <data name="btnTunaStop.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="lbBasicCurPacServerStatus.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="tboxTunaProxy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
   </data>
-  <data name="tboxTunaNicIpv4.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkTunaAutorun.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="cboxBasicSysProxyMode.Items2" xml:space="preserve">
     <value>System</value>
   </data>
-  <data name="chkBasicPacAlwaysOn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tboxBasicGlobalPort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 21</value>
   </data>
   <data name="btnBasicBrowseCustomPac.ToolTip" xml:space="preserve">
     <value>Browse custom PAC file.</value>
@@ -2309,17 +2316,20 @@
   <data name="&gt;&gt;chkBasicUseAlt.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="btnPacModifyList.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
   </data>
-  <data name="btnBasicDebugPacServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="btnBasicStartPacServer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>225, 20</value>
   </data>
   <data name="lbTunaStatus.Text" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 6</value>
+    <value>347, 6</value>
   </data>
   <data name="tboxTunaTunIpv6.Location" type="System.Drawing.Point, System.Drawing">
     <value>70, 89</value>
@@ -2327,17 +2337,17 @@
   <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="tabUsage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;btnPacModifyList.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="label7.Text" xml:space="preserve">
+    <value>NIC IPv4</value>
   </data>
   <data name="&gt;&gt;btnTunaStop.Parent" xml:space="preserve">
     <value>tabTun</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel2</value>
+  <data name="cboxBasicPacMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 20</value>
   </data>
   <data name="cboxBasicSysProxyMode.Items3" xml:space="preserve">
     <value>Direct</value>
@@ -2357,7 +2367,7 @@
   <data name="btnBasicStopPacServer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        vAAADrwBlbxySQAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
         jpx4AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -2373,8 +2383,8 @@
   <data name="tboxBaiscPacPort.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 21</value>
   </data>
-  <data name="chkTunaAutorun.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="btnTunaStart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>493, 294</value>
   </data>
   <data name="chkTunaAutorun.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 16</value>
@@ -2382,8 +2392,8 @@
   <data name="tboxTunaTunIpv4.Size" type="System.Drawing.Size, System.Drawing">
     <value>255, 21</value>
   </data>
-  <data name="btnBaiscCopyProxyLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
+  <data name="&gt;&gt;chkTunaEnableIpv6.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="btnBasicBrowseCustomPac.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

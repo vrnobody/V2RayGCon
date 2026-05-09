@@ -29,11 +29,13 @@ namespace VgcApis.WinForms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInput));
             this.tboxContent = new System.Windows.Forms.TextBox();
             this.btnOk = new VgcApis.UserControls.RoundButton();
             this.btnCancel = new VgcApis.UserControls.RoundButton();
             this.lbTitle = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // tboxContent
@@ -83,5 +85,6 @@ namespace VgcApis.WinForms
         private VgcApis.UserControls.RoundButton btnOk;
         private VgcApis.UserControls.RoundButton btnCancel;
         private System.Windows.Forms.Label lbTitle;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

@@ -74,28 +74,33 @@
             // 
             resources.ApplyResources(this.chkInIP, "chkInIP");
             this.chkInIP.Name = "chkInIP";
+            this.toolTip1.SetToolTip(this.chkInIP, resources.GetString("chkInIP.ToolTip"));
             this.chkInIP.UseVisualStyleBackColor = true;
             // 
             // tboxInPort
             // 
             resources.ApplyResources(this.tboxInPort, "tboxInPort");
             this.tboxInPort.Name = "tboxInPort";
+            this.toolTip1.SetToolTip(this.tboxInPort, resources.GetString("tboxInPort.ToolTip"));
             // 
             // chkInPort
             // 
             resources.ApplyResources(this.chkInPort, "chkInPort");
             this.chkInPort.Name = "chkInPort";
+            this.toolTip1.SetToolTip(this.chkInPort, resources.GetString("chkInPort.ToolTip"));
             this.chkInPort.UseVisualStyleBackColor = true;
             // 
             // tboxInIP
             // 
             resources.ApplyResources(this.tboxInIP, "tboxInIP");
             this.tboxInIP.Name = "tboxInIP";
+            this.toolTip1.SetToolTip(this.tboxInIP, resources.GetString("tboxInIP.ToolTip"));
             // 
             // chkMark
             // 
             resources.ApplyResources(this.chkMark, "chkMark");
             this.chkMark.Name = "chkMark";
+            this.toolTip1.SetToolTip(this.chkMark, resources.GetString("chkMark.ToolTip"));
             this.chkMark.UseVisualStyleBackColor = true;
             // 
             // chkInMode
@@ -107,6 +112,7 @@
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.chkIncrement);
             this.groupBox1.Controls.Add(this.chkShareOverLAN);
             this.groupBox1.Controls.Add(this.cboxInName);
@@ -115,9 +121,9 @@
             this.groupBox1.Controls.Add(this.tboxInIP);
             this.groupBox1.Controls.Add(this.chkInPort);
             this.groupBox1.Controls.Add(this.chkInIP);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // chkIncrement
             // 
@@ -136,6 +142,7 @@
             // 
             // cboxInName
             // 
+            resources.ApplyResources(this.cboxInName, "cboxInName");
             this.cboxInName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInName.FormattingEnabled = true;
             this.cboxInName.Items.AddRange(new object[] {
@@ -143,14 +150,15 @@
             resources.GetString("cboxInName.Items1"),
             resources.GetString("cboxInName.Items2"),
             resources.GetString("cboxInName.Items3")});
-            resources.ApplyResources(this.cboxInName, "cboxInName");
             this.cboxInName.Name = "cboxInName";
+            this.toolTip1.SetToolTip(this.cboxInName, resources.GetString("cboxInName.ToolTip"));
             // 
             // cboxMark
             // 
-            this.cboxMark.FormattingEnabled = true;
             resources.ApplyResources(this.cboxMark, "cboxMark");
+            this.cboxMark.FormattingEnabled = true;
             this.cboxMark.Name = "cboxMark";
+            this.toolTip1.SetToolTip(this.cboxMark, resources.GetString("cboxMark.ToolTip"));
             // 
             // btnModify
             // 
@@ -166,11 +174,13 @@
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnCancel.Name = "btnCancel";
+            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.btnTemplates);
             this.groupBox2.Controls.Add(this.cboxUntrack);
             this.groupBox2.Controls.Add(this.cboxCustomCoreName);
@@ -194,14 +204,14 @@
             this.groupBox2.Controls.Add(this.chkAutorun);
             this.groupBox2.Controls.Add(this.chkMark);
             this.groupBox2.Controls.Add(this.cboxMark);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // btnTemplates
             // 
-            this.btnTemplates.BackColor = System.Drawing.SystemColors.ControlLight;
             resources.ApplyResources(this.btnTemplates, "btnTemplates");
+            this.btnTemplates.BackColor = System.Drawing.SystemColors.ControlLight;
             this.btnTemplates.Name = "btnTemplates";
             this.toolTip1.SetToolTip(this.btnTemplates, resources.GetString("btnTemplates.ToolTip"));
             this.btnTemplates.UseVisualStyleBackColor = false;
@@ -209,83 +219,94 @@
             // 
             // cboxUntrack
             // 
+            resources.ApplyResources(this.cboxUntrack, "cboxUntrack");
             this.cboxUntrack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxUntrack.FormattingEnabled = true;
             this.cboxUntrack.Items.AddRange(new object[] {
             resources.GetString("cboxUntrack.Items"),
             resources.GetString("cboxUntrack.Items1")});
-            resources.ApplyResources(this.cboxUntrack, "cboxUntrack");
             this.cboxUntrack.Name = "cboxUntrack";
+            this.toolTip1.SetToolTip(this.cboxUntrack, resources.GetString("cboxUntrack.ToolTip"));
             // 
             // cboxCustomCoreName
             // 
+            resources.ApplyResources(this.cboxCustomCoreName, "cboxCustomCoreName");
             this.cboxCustomCoreName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCustomCoreName.FormattingEnabled = true;
             this.cboxCustomCoreName.Items.AddRange(new object[] {
             resources.GetString("cboxCustomCoreName.Items"),
             resources.GetString("cboxCustomCoreName.Items1")});
-            resources.ApplyResources(this.cboxCustomCoreName, "cboxCustomCoreName");
             this.cboxCustomCoreName.Name = "cboxCustomCoreName";
+            this.toolTip1.SetToolTip(this.cboxCustomCoreName, resources.GetString("cboxCustomCoreName.ToolTip"));
             // 
             // cboxSendThrough
             // 
+            resources.ApplyResources(this.cboxSendThrough, "cboxSendThrough");
             this.cboxSendThrough.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSendThrough.FormattingEnabled = true;
             this.cboxSendThrough.Items.AddRange(new object[] {
             resources.GetString("cboxSendThrough.Items"),
             resources.GetString("cboxSendThrough.Items1")});
-            resources.ApplyResources(this.cboxSendThrough, "cboxSendThrough");
             this.cboxSendThrough.Name = "cboxSendThrough";
+            this.toolTip1.SetToolTip(this.cboxSendThrough, resources.GetString("cboxSendThrough.ToolTip"));
             // 
             // cboxInject
             // 
+            resources.ApplyResources(this.cboxInject, "cboxInject");
             this.cboxInject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInject.FormattingEnabled = true;
             this.cboxInject.Items.AddRange(new object[] {
             resources.GetString("cboxInject.Items"),
             resources.GetString("cboxInject.Items1")});
-            resources.ApplyResources(this.cboxInject, "cboxInject");
             this.cboxInject.Name = "cboxInject";
+            this.toolTip1.SetToolTip(this.cboxInject, resources.GetString("cboxInject.ToolTip"));
             // 
             // cboxAutorun
             // 
+            resources.ApplyResources(this.cboxAutorun, "cboxAutorun");
             this.cboxAutorun.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxAutorun.FormattingEnabled = true;
             this.cboxAutorun.Items.AddRange(new object[] {
             resources.GetString("cboxAutorun.Items"),
             resources.GetString("cboxAutorun.Items1")});
-            resources.ApplyResources(this.cboxAutorun, "cboxAutorun");
             this.cboxAutorun.Name = "cboxAutorun";
+            this.toolTip1.SetToolTip(this.cboxAutorun, resources.GetString("cboxAutorun.ToolTip"));
             // 
             // tboxTemplates
             // 
             resources.ApplyResources(this.tboxTemplates, "tboxTemplates");
             this.tboxTemplates.Name = "tboxTemplates";
+            this.toolTip1.SetToolTip(this.tboxTemplates, resources.GetString("tboxTemplates.ToolTip"));
             // 
             // tboxTag3
             // 
             resources.ApplyResources(this.tboxTag3, "tboxTag3");
             this.tboxTag3.Name = "tboxTag3";
+            this.toolTip1.SetToolTip(this.tboxTag3, resources.GetString("tboxTag3.ToolTip"));
             // 
             // tboxTag2
             // 
             resources.ApplyResources(this.tboxTag2, "tboxTag2");
             this.tboxTag2.Name = "tboxTag2";
+            this.toolTip1.SetToolTip(this.tboxTag2, resources.GetString("tboxTag2.ToolTip"));
             // 
             // tboxTag1
             // 
             resources.ApplyResources(this.tboxTag1, "tboxTag1");
             this.tboxTag1.Name = "tboxTag1";
+            this.toolTip1.SetToolTip(this.tboxTag1, resources.GetString("tboxTag1.ToolTip"));
             // 
             // tboxRemark
             // 
             resources.ApplyResources(this.tboxRemark, "tboxRemark");
             this.tboxRemark.Name = "tboxRemark";
+            this.toolTip1.SetToolTip(this.tboxRemark, resources.GetString("tboxRemark.ToolTip"));
             // 
             // chkTag3
             // 
             resources.ApplyResources(this.chkTag3, "chkTag3");
             this.chkTag3.Name = "chkTag3";
+            this.toolTip1.SetToolTip(this.chkTag3, resources.GetString("chkTag3.ToolTip"));
             this.chkTag3.UseVisualStyleBackColor = true;
             // 
             // chkUntrack
@@ -299,6 +320,7 @@
             // 
             resources.ApplyResources(this.chkTag2, "chkTag2");
             this.chkTag2.Name = "chkTag2";
+            this.toolTip1.SetToolTip(this.chkTag2, resources.GetString("chkTag2.ToolTip"));
             this.chkTag2.UseVisualStyleBackColor = true;
             // 
             // chkTemplates
@@ -312,6 +334,7 @@
             // 
             resources.ApplyResources(this.chkTag1, "chkTag1");
             this.chkTag1.Name = "chkTag1";
+            this.toolTip1.SetToolTip(this.chkTag1, resources.GetString("chkTag1.ToolTip"));
             this.chkTag1.UseVisualStyleBackColor = true;
             // 
             // chkSendThough
@@ -325,6 +348,7 @@
             // 
             resources.ApplyResources(this.chkRemark, "chkRemark");
             this.chkRemark.Name = "chkRemark";
+            this.toolTip1.SetToolTip(this.chkRemark, resources.GetString("chkRemark.ToolTip"));
             this.chkRemark.UseVisualStyleBackColor = true;
             // 
             // chkInject
@@ -345,6 +369,7 @@
             // 
             resources.ApplyResources(this.chkAutorun, "chkAutorun");
             this.chkAutorun.Name = "chkAutorun";
+            this.toolTip1.SetToolTip(this.chkAutorun, resources.GetString("chkAutorun.ToolTip"));
             this.chkAutorun.UseVisualStyleBackColor = true;
             // 
             // FormBatchModifyServerSetting
@@ -359,6 +384,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormBatchModifyServerSetting";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FormBatchModifyServerInfo_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

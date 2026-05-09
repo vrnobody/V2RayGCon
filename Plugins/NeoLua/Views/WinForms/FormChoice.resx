@@ -125,11 +125,23 @@
     <value>Flat</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnOk.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACWSURBVDhPpZO7DYAwDEQpGYIxKNgCiS1YhQ1oEMswRWho
+        GSCt8Uk5BBEfB55kJXH8TlAkE5Ff9QnvfR626ajcajmtIrTsQF7WRcZpEN3PSSGUm76WqisZ4sL183/F
+        Mlac0edAgbS9ccAqz/ik04XyKgM9OMjxgEkGd4MmmVyFmGUShyTJ5BiSLBOGfJIJRLN89UTtJdkGa1WJ
+        /Fn56XwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnOk.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 171</value>
+    <value>93, 171</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>89, 23</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
@@ -183,11 +195,23 @@
   <data name="btnCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC2SURBVDhPY0AG3759M4AycQKcaoASFUD8H4gzoUIYACQH
+        VVMBFYIAkMCrm1f/b4t0///2/h2shoDEQHJbQhz+P794FmEIkGEAxGDNC9V4/6911sUwBKYZJAdSAzIE
+        pAekF6sCZEPwyYE1wwAuhURphgFshhCtGQbQDSFJMwhQZAC6ZhCNzMZrCDbNID42MQxDcGkGieOTg2mm
+        SkIiPynDAEgAiLFqhgGQHFQNqmYYAEqQmJ0ZGACo07laBZF+MgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnCancel.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 171</value>
+    <value>205, 171</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>89, 23</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

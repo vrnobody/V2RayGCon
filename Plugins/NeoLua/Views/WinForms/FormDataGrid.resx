@@ -156,14 +156,26 @@
   <data name="btnCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC2SURBVDhPY0AG3759M4AycQKcaoASFUD8H4gzoUIYACQH
+        VVMBFYIAkMCrm1f/b4t0///2/h2shoDEQHJbQhz+P794FmEIkGEAxGDNC9V4/6911sUwBKYZJAdSAzIE
+        pAekF6sCZEPwyYE1wwAuhURphgFshhCtGQbQDSFJMwhQZAC6ZhCNzMZrCDbNID42MQxDcGkGieOTg2mm
+        SkIiPynDAEgAiLFqhgGQHFQNqmYYAEqQmJ0ZGACo07laBZF+MgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnCancel.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 273</value>
+    <value>317, 273</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>90, 23</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -189,14 +201,26 @@
   <data name="btnOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btnOk.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACWSURBVDhPpZO7DYAwDEQpGYIxKNgCiS1YhQ1oEMswRWho
+        GSCt8Uk5BBEfB55kJXH8TlAkE5Ff9QnvfR626ajcajmtIrTsQF7WRcZpEN3PSSGUm76WqisZ4sL183/F
+        Mlac0edAgbS9ccAqz/ik04XyKgM9OMjxgEkGd4MmmVyFmGUShyTJ5BiSLBOGfJIJRLN89UTtJdkGa1WJ
+        /Fn56XwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnOk.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="btnOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 273</value>
+    <value>85, 273</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>90, 23</value>
   </data>
   <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -249,14 +273,26 @@
   <data name="btnCopy.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btnCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACVSURBVDhPtdBBCoAgEEBRb9Vel+Laa3icWtQRNVu4nZpg
+        wMa0hBI+ETUPVQCASClBpXg0iNYiQEpZ5JwD7/3WRHJgDfHSMi/PSAvIkRDC/ZFqgLUWjDGgtW4fqQbg
+        MH+fxqlEegB8FvfSC2CEHHOxC6DoXnDuNcD7B8i3qZS6HaQKgMd3xOMA7xvgKfzvBPjCD+9KsAN4ldKh
+        Io9kBwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnCopy.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="btnCopy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>211, 273</value>
+    <value>201, 273</value>
   </data>
   <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>90, 23</value>
   </data>
   <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

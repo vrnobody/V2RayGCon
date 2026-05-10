@@ -160,7 +160,7 @@
             // 
             // btnTemplates
             // 
-            this.btnTemplates.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnTemplates.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnTemplates, "btnTemplates");
             this.btnTemplates.Name = "btnTemplates";
             this.toolTip1.SetToolTip(this.btnTemplates, resources.GetString("btnTemplates.ToolTip"));
@@ -255,7 +255,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOK.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnOK, "btnOK");
             this.btnOK.Name = "btnOK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -322,7 +322,7 @@
             // 
             // btnSaveQrcode
             // 
-            this.btnSaveQrcode.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSaveQrcode.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnSaveQrcode, "btnSaveQrcode");
             this.btnSaveQrcode.Name = "btnSaveQrcode";
             this.btnSaveQrcode.UseVisualStyleBackColor = false;
@@ -330,7 +330,7 @@
             // 
             // btnCopyShareLink
             // 
-            this.btnCopyShareLink.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCopyShareLink.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnCopyShareLink, "btnCopyShareLink");
             this.btnCopyShareLink.Name = "btnCopyShareLink";
             this.btnCopyShareLink.UseVisualStyleBackColor = false;

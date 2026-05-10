@@ -56,7 +56,7 @@
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);

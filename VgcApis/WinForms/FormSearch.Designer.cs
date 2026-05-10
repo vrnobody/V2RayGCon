@@ -49,7 +49,7 @@
             // btnNext
             // 
             resources.ApplyResources(this.btnNext, "btnNext");
-            this.btnNext.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnNext.BackColor = System.Drawing.SystemColors.Control;
             this.btnNext.Name = "btnNext";
             this.btnNext.UseVisualStyleBackColor = false;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -57,7 +57,7 @@
             // btnPrevious
             // 
             resources.ApplyResources(this.btnPrevious, "btnPrevious");
-            this.btnPrevious.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnPrevious.BackColor = System.Drawing.SystemColors.Control;
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.UseVisualStyleBackColor = false;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
@@ -75,7 +75,7 @@
             // btnReplaceOne
             // 
             resources.ApplyResources(this.btnReplaceOne, "btnReplaceOne");
-            this.btnReplaceOne.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnReplaceOne.BackColor = System.Drawing.SystemColors.Control;
             this.btnReplaceOne.Name = "btnReplaceOne";
             this.btnReplaceOne.UseVisualStyleBackColor = false;
             this.btnReplaceOne.Click += new System.EventHandler(this.btnReplaceOne_Click);
@@ -83,7 +83,7 @@
             // btnReplaceAll
             // 
             resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
-            this.btnReplaceAll.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnReplaceAll.BackColor = System.Drawing.SystemColors.Control;
             this.btnReplaceAll.Name = "btnReplaceAll";
             this.btnReplaceAll.UseVisualStyleBackColor = false;
             this.btnReplaceAll.Click += new System.EventHandler(this.btnReplaceAll_Click);
@@ -144,7 +144,7 @@
             // btnNewSearch
             // 
             resources.ApplyResources(this.btnNewSearch, "btnNewSearch");
-            this.btnNewSearch.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnNewSearch.BackColor = System.Drawing.SystemColors.Control;
             this.btnNewSearch.Name = "btnNewSearch";
             this.btnNewSearch.UseVisualStyleBackColor = false;
             this.btnNewSearch.Click += new System.EventHandler(this.btnNewSearch_Click);

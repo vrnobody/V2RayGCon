@@ -168,7 +168,7 @@
             // btnSubsInvertSelection
             // 
             resources.ApplyResources(this.btnSubsInvertSelection, "btnSubsInvertSelection");
-            this.btnSubsInvertSelection.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSubsInvertSelection.BackColor = System.Drawing.SystemColors.Control;
             this.btnSubsInvertSelection.Name = "btnSubsInvertSelection";
             this.toolTip1.SetToolTip(this.btnSubsInvertSelection, resources.GetString("btnSubsInvertSelection.ToolTip"));
             this.btnSubsInvertSelection.UseVisualStyleBackColor = false;
@@ -176,7 +176,7 @@
             // btnSubsUseAll
             // 
             resources.ApplyResources(this.btnSubsUseAll, "btnSubsUseAll");
-            this.btnSubsUseAll.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSubsUseAll.BackColor = System.Drawing.SystemColors.Control;
             this.btnSubsUseAll.Name = "btnSubsUseAll";
             this.toolTip1.SetToolTip(this.btnSubsUseAll, resources.GetString("btnSubsUseAll.ToolTip"));
             this.btnSubsUseAll.UseVisualStyleBackColor = false;
@@ -191,7 +191,7 @@
             // btnUpdateViaSubscription
             // 
             resources.ApplyResources(this.btnUpdateViaSubscription, "btnUpdateViaSubscription");
-            this.btnUpdateViaSubscription.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnUpdateViaSubscription.BackColor = System.Drawing.SystemColors.Control;
             this.btnUpdateViaSubscription.Name = "btnUpdateViaSubscription";
             this.toolTip1.SetToolTip(this.btnUpdateViaSubscription, resources.GetString("btnUpdateViaSubscription.ToolTip"));
             this.btnUpdateViaSubscription.UseVisualStyleBackColor = false;
@@ -199,7 +199,7 @@
             // btnAddSubsUrl
             // 
             resources.ApplyResources(this.btnAddSubsUrl, "btnAddSubsUrl");
-            this.btnAddSubsUrl.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnAddSubsUrl.BackColor = System.Drawing.SystemColors.Control;
             this.btnAddSubsUrl.Name = "btnAddSubsUrl";
             this.toolTip1.SetToolTip(this.btnAddSubsUrl, resources.GetString("btnAddSubsUrl.ToolTip"));
             this.btnAddSubsUrl.UseVisualStyleBackColor = false;
@@ -239,7 +239,7 @@
             // 
             // btnSetBrowseDebugFile
             // 
-            this.btnSetBrowseDebugFile.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSetBrowseDebugFile.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnSetBrowseDebugFile, "btnSetBrowseDebugFile");
             this.btnSetBrowseDebugFile.Name = "btnSetBrowseDebugFile";
             this.toolTip1.SetToolTip(this.btnSetBrowseDebugFile, resources.GetString("btnSetBrowseDebugFile.ToolTip"));
@@ -290,7 +290,7 @@
             // 
             // btnSetOpenStartupFolder
             // 
-            this.btnSetOpenStartupFolder.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSetOpenStartupFolder.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnSetOpenStartupFolder, "btnSetOpenStartupFolder");
             this.btnSetOpenStartupFolder.Name = "btnSetOpenStartupFolder";
             this.toolTip1.SetToolTip(this.btnSetOpenStartupFolder, resources.GetString("btnSetOpenStartupFolder.ToolTip"));
@@ -565,7 +565,7 @@
             // 
             // btnDefImportLinkTypes
             // 
-            this.btnDefImportLinkTypes.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnDefImportLinkTypes.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnDefImportLinkTypes, "btnDefImportLinkTypes");
             this.btnDefImportLinkTypes.Name = "btnDefImportLinkTypes";
             this.toolTip1.SetToolTip(this.btnDefImportLinkTypes, resources.GetString("btnDefImportLinkTypes.ToolTip"));
@@ -710,7 +710,7 @@
             // btnCoresSettingAdd
             // 
             resources.ApplyResources(this.btnCoresSettingAdd, "btnCoresSettingAdd");
-            this.btnCoresSettingAdd.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCoresSettingAdd.BackColor = System.Drawing.SystemColors.Control;
             this.btnCoresSettingAdd.Name = "btnCoresSettingAdd";
             this.toolTip1.SetToolTip(this.btnCoresSettingAdd, resources.GetString("btnCoresSettingAdd.ToolTip"));
             this.btnCoresSettingAdd.UseVisualStyleBackColor = false;
@@ -740,7 +740,7 @@
             // btnCustomTemplatesAdd
             // 
             resources.ApplyResources(this.btnCustomTemplatesAdd, "btnCustomTemplatesAdd");
-            this.btnCustomTemplatesAdd.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCustomTemplatesAdd.BackColor = System.Drawing.SystemColors.Control;
             this.btnCustomTemplatesAdd.Name = "btnCustomTemplatesAdd";
             this.toolTip1.SetToolTip(this.btnCustomTemplatesAdd, resources.GetString("btnCustomTemplatesAdd.ToolTip"));
             this.btnCustomTemplatesAdd.UseVisualStyleBackColor = false;
@@ -772,7 +772,7 @@
             // btnRefreshPluginsPanel
             // 
             resources.ApplyResources(this.btnRefreshPluginsPanel, "btnRefreshPluginsPanel");
-            this.btnRefreshPluginsPanel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnRefreshPluginsPanel.BackColor = System.Drawing.SystemColors.Control;
             this.btnRefreshPluginsPanel.Name = "btnRefreshPluginsPanel";
             this.toolTip1.SetToolTip(this.btnRefreshPluginsPanel, resources.GetString("btnRefreshPluginsPanel.ToolTip"));
             this.btnRefreshPluginsPanel.UseVisualStyleBackColor = false;
@@ -791,7 +791,7 @@
             // btnOptionSave
             // 
             resources.ApplyResources(this.btnOptionSave, "btnOptionSave");
-            this.btnOptionSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOptionSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnOptionSave.Name = "btnOptionSave";
             this.toolTip1.SetToolTip(this.btnOptionSave, resources.GetString("btnOptionSave.ToolTip"));
             this.btnOptionSave.UseVisualStyleBackColor = false;
@@ -800,7 +800,7 @@
             // btnOptionExit
             // 
             resources.ApplyResources(this.btnOptionExit, "btnOptionExit");
-            this.btnOptionExit.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOptionExit.BackColor = System.Drawing.SystemColors.Control;
             this.btnOptionExit.Name = "btnOptionExit";
             this.btnOptionExit.UseVisualStyleBackColor = false;
             this.btnOptionExit.Click += new System.EventHandler(this.btnOptionExit_Click);
@@ -850,8 +850,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageSubscribe;
         private System.Windows.Forms.FlowLayoutPanel flySubsUrlContainer;
-        private System.Windows.Forms.Button btnAddSubsUrl;
-        private System.Windows.Forms.Button btnUpdateViaSubscription;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TabPage tabPageSetting;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -887,9 +885,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tboxDefSpeedtestTimeout;
-        private System.Windows.Forms.Button btnSetOpenStartupFolder;
-        private System.Windows.Forms.Button btnSubsInvertSelection;
-        private System.Windows.Forms.Button btnSubsUseAll;
         private System.Windows.Forms.TextBox tboxSettingsMaxCoreNum;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -902,7 +897,6 @@
         private System.Windows.Forms.CheckBox chkSetSelfSignedCert;
         private System.Windows.Forms.CheckBox chkSetEnableDebugFile;
         private System.Windows.Forms.TextBox tboxSetDebugFilePath;
-        private System.Windows.Forms.Button btnSetBrowseDebugFile;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkSetCheckV2RayCoreUpdateWhenStart;
         private System.Windows.Forms.ComboBox cboxSettingsUtlsFingerprint;
@@ -916,21 +910,27 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox chkIsUseCustomUserAgent;
         private System.Windows.Forms.CheckBox chkIsLoad3rdPartyPlugins;
-        private System.Windows.Forms.Button btnRefreshPluginsPanel;
         private System.Windows.Forms.TabPage tabPageCustomCoresSetting;
-        private System.Windows.Forms.Button btnCoresSettingAdd;
         private System.Windows.Forms.FlowLayoutPanel flyCoresSetting;
         private System.Windows.Forms.ComboBox cboxDefImportCoreName;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPageConfigTemplates;
-        private System.Windows.Forms.Button btnCustomTemplatesAdd;
         private System.Windows.Forms.FlowLayoutPanel flyCustomTemplates;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RichTextBox rtboxCustomFilterKeywords;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Button btnDefImportLinkTypes;
-        private System.Windows.Forms.Button btnOptionSave;
-        private System.Windows.Forms.Button btnOptionExit;
+        private VgcApis.UserControls.RoundButton btnAddSubsUrl;
+        private VgcApis.UserControls.RoundButton btnUpdateViaSubscription;
+        private VgcApis.UserControls.RoundButton btnSetOpenStartupFolder;
+        private VgcApis.UserControls.RoundButton btnSubsInvertSelection;
+        private VgcApis.UserControls.RoundButton btnSubsUseAll;
+        private VgcApis.UserControls.RoundButton btnSetBrowseDebugFile;
+        private VgcApis.UserControls.RoundButton btnRefreshPluginsPanel;
+        private VgcApis.UserControls.RoundButton btnCoresSettingAdd;
+        private VgcApis.UserControls.RoundButton btnCustomTemplatesAdd;
+        private VgcApis.UserControls.RoundButton btnDefImportLinkTypes;
+        private VgcApis.UserControls.RoundButton btnOptionSave;
+        private VgcApis.UserControls.RoundButton btnOptionExit;
     }
 }

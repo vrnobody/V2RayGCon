@@ -32,15 +32,24 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMultiLineInput));
             this.lbTitle = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.rtboxContent = new VgcApis.UserControls.ExRichTextBox();
             this.btnCancel = new VgcApis.UserControls.RoundButton();
-            this.btnOk = new VgcApis.UserControls.RoundButton();
             this.SuspendLayout();
             // 
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
+            // 
+            // btnOk
+            // 
+            resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackColor = System.Drawing.SystemColors.Control;
+            this.btnOk.Name = "btnOk";
+            this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
+            this.btnOk.UseVisualStyleBackColor = false;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // rtboxContent
             // 
@@ -52,19 +61,10 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnOk
-            // 
-            resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnOk.Name = "btnOk";
-            this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
-            this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // FormMultiLineInput
             // 

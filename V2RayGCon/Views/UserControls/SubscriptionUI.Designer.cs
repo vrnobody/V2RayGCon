@@ -80,7 +80,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnDelete.BackColor = System.Drawing.SystemColors.Control;
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Name = "btnDelete";

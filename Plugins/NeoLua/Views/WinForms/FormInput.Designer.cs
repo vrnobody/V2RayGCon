@@ -40,7 +40,7 @@
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOk.BackColor = System.Drawing.SystemColors.Control;
             this.btnOk.Name = "btnOk";
             this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
             this.btnOk.UseVisualStyleBackColor = false;
@@ -54,7 +54,7 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);

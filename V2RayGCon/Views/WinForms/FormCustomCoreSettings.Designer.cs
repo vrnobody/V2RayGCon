@@ -70,7 +70,7 @@ namespace V2RayGCon.Views.WinForms
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -113,7 +113,7 @@ namespace V2RayGCon.Views.WinForms
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -127,7 +127,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             // btnDir
             // 
-            this.btnDir.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnDir.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnDir, "btnDir");
             this.btnDir.Name = "btnDir";
             this.toolTip1.SetToolTip(this.btnDir, resources.GetString("btnDir.ToolTip"));

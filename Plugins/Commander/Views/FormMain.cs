@@ -32,7 +32,7 @@ namespace Commander.Views
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            formTitle = Properties.Resources.Name + " v" + Properties.Resources.Version;
+            formTitle = $"{Properties.Resources.Name} v{Properties.Resources.Version}";
             logUpdater = new VgcApis.Libs.Tasks.Routine(UpdateLog, 1000);
         }
 

@@ -83,7 +83,7 @@
             // btnClose
             // 
             resources.ApplyResources(this.btnClose, "btnClose");
-            this.btnClose.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnClose.BackColor = System.Drawing.SystemColors.Control;
             this.btnClose.Name = "btnClose";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -91,7 +91,7 @@
             // btnCopySelected
             // 
             resources.ApplyResources(this.btnCopySelected, "btnCopySelected");
-            this.btnCopySelected.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCopySelected.BackColor = System.Drawing.SystemColors.Control;
             this.btnCopySelected.Name = "btnCopySelected";
             this.btnCopySelected.UseVisualStyleBackColor = false;
             this.btnCopySelected.Click += new System.EventHandler(this.btnCopy_Click);
@@ -99,7 +99,7 @@
             // btnCopyAll
             // 
             resources.ApplyResources(this.btnCopyAll, "btnCopyAll");
-            this.btnCopyAll.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCopyAll.BackColor = System.Drawing.SystemColors.Control;
             this.btnCopyAll.Name = "btnCopyAll";
             this.btnCopyAll.UseVisualStyleBackColor = false;
             this.btnCopyAll.Click += new System.EventHandler(this.btnCopyAll_Click);

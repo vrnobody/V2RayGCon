@@ -57,7 +57,7 @@
             // 
             // btnRefreshVer
             // 
-            this.btnRefreshVer.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnRefreshVer.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnRefreshVer, "btnRefreshVer");
             this.btnRefreshVer.Name = "btnRefreshVer";
             this.toolTip1.SetToolTip(this.btnRefreshVer, resources.GetString("btnRefreshVer.ToolTip"));
@@ -66,7 +66,7 @@
             // 
             // btnDownload
             // 
-            this.btnDownload.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnDownload.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnDownload, "btnDownload");
             this.btnDownload.Name = "btnDownload";
             this.toolTip1.SetToolTip(this.btnDownload, resources.GetString("btnDownload.ToolTip"));
@@ -75,7 +75,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
@@ -84,7 +84,7 @@
             // 
             // btnCheckVersion
             // 
-            this.btnCheckVersion.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCheckVersion.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnCheckVersion, "btnCheckVersion");
             this.btnCheckVersion.Name = "btnCheckVersion";
             this.toolTip1.SetToolTip(this.btnCheckVersion, resources.GetString("btnCheckVersion.ToolTip"));
@@ -108,7 +108,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnExit.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
             this.btnExit.UseVisualStyleBackColor = false;

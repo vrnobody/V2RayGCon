@@ -113,7 +113,7 @@
             // btnExportToFile
             // 
             resources.ApplyResources(this.btnExportToFile, "btnExportToFile");
-            this.btnExportToFile.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnExportToFile.BackColor = System.Drawing.SystemColors.Control;
             this.btnExportToFile.Name = "btnExportToFile";
             this.toolTip1.SetToolTip(this.btnExportToFile, resources.GetString("btnExportToFile.ToolTip"));
             this.btnExportToFile.UseVisualStyleBackColor = false;
@@ -121,7 +121,7 @@
             // btnImportFromFile
             // 
             resources.ApplyResources(this.btnImportFromFile, "btnImportFromFile");
-            this.btnImportFromFile.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnImportFromFile.BackColor = System.Drawing.SystemColors.Control;
             this.btnImportFromFile.Name = "btnImportFromFile";
             this.toolTip1.SetToolTip(this.btnImportFromFile, resources.GetString("btnImportFromFile.ToolTip"));
             this.btnImportFromFile.UseVisualStyleBackColor = false;
@@ -129,7 +129,7 @@
             // btnDeleteAllScripts
             // 
             resources.ApplyResources(this.btnDeleteAllScripts, "btnDeleteAllScripts");
-            this.btnDeleteAllScripts.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnDeleteAllScripts.BackColor = System.Drawing.SystemColors.Control;
             this.btnDeleteAllScripts.Name = "btnDeleteAllScripts";
             this.toolTip1.SetToolTip(this.btnDeleteAllScripts, resources.GetString("btnDeleteAllScripts.ToolTip"));
             this.btnDeleteAllScripts.UseVisualStyleBackColor = false;
@@ -137,7 +137,7 @@
             // btnStopAllScript
             // 
             resources.ApplyResources(this.btnStopAllScript, "btnStopAllScript");
-            this.btnStopAllScript.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnStopAllScript.BackColor = System.Drawing.SystemColors.Control;
             this.btnStopAllScript.Name = "btnStopAllScript";
             this.toolTip1.SetToolTip(this.btnStopAllScript, resources.GetString("btnStopAllScript.ToolTip"));
             this.btnStopAllScript.UseVisualStyleBackColor = false;
@@ -145,7 +145,7 @@
             // btnOpenEditor
             // 
             resources.ApplyResources(this.btnOpenEditor, "btnOpenEditor");
-            this.btnOpenEditor.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOpenEditor.BackColor = System.Drawing.SystemColors.Control;
             this.btnOpenEditor.Name = "btnOpenEditor";
             this.toolTip1.SetToolTip(this.btnOpenEditor, resources.GetString("btnOpenEditor.ToolTip"));
             this.btnOpenEditor.UseVisualStyleBackColor = false;
@@ -154,7 +154,7 @@
             // btnKillAllScript
             // 
             resources.ApplyResources(this.btnKillAllScript, "btnKillAllScript");
-            this.btnKillAllScript.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnKillAllScript.BackColor = System.Drawing.SystemColors.Control;
             this.btnKillAllScript.Name = "btnKillAllScript";
             this.toolTip1.SetToolTip(this.btnKillAllScript, resources.GetString("btnKillAllScript.ToolTip"));
             this.btnKillAllScript.UseVisualStyleBackColor = false;

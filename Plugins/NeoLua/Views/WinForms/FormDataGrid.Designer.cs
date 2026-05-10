@@ -63,7 +63,7 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -71,7 +71,7 @@
             // btnOk
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOk.BackColor = System.Drawing.SystemColors.Control;
             this.btnOk.Name = "btnOk";
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -89,7 +89,7 @@
             // btnCopy
             // 
             resources.ApplyResources(this.btnCopy, "btnCopy");
-            this.btnCopy.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCopy.BackColor = System.Drawing.SystemColors.Control;
             this.btnCopy.Name = "btnCopy";
             this.toolTip1.SetToolTip(this.btnCopy, resources.GetString("btnCopy.ToolTip"));
             this.btnCopy.UseVisualStyleBackColor = false;

@@ -42,7 +42,7 @@
             // btnClient
             // 
             resources.ApplyResources(this.btnClient, "btnClient");
-            this.btnClient.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnClient.BackColor = System.Drawing.SystemColors.Control;
             this.btnClient.Name = "btnClient";
             this.toolTip1.SetToolTip(this.btnClient, resources.GetString("btnClient.ToolTip"));
             this.btnClient.UseVisualStyleBackColor = false;
@@ -51,7 +51,7 @@
             // btnServer
             // 
             resources.ApplyResources(this.btnServer, "btnServer");
-            this.btnServer.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnServer.BackColor = System.Drawing.SystemColors.Control;
             this.btnServer.Name = "btnServer";
             this.toolTip1.SetToolTip(this.btnServer, resources.GetString("btnServer.ToolTip"));
             this.btnServer.UseVisualStyleBackColor = false;
@@ -60,7 +60,7 @@
             // btnExit
             // 
             resources.ApplyResources(this.btnExit, "btnExit");
-            this.btnExit.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnExit.BackColor = System.Drawing.SystemColors.Control;
             this.btnExit.Name = "btnExit";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);

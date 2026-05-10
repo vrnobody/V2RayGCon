@@ -23,6 +23,7 @@ namespace Composer.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             this.settings = settings;
             this.packageItems = settings.GetPackageItems();
+            this.Text = $"{Properties.Resources.Name} v{Properties.Resources.Version}";
         }
 
         private void FormMain_Load(object sender, EventArgs e)

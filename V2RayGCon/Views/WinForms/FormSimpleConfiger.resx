@@ -132,7 +132,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnClient.Location" type="System.Drawing.Point, System.Drawing">
-    <value>56, 545</value>
+    <value>61, 545</value>
   </data>
   <data name="btnClient.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 24</value>
@@ -204,7 +204,7 @@
   <data name="btnExit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
+        DwAACw8BkvkDpQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
         GyCLE2UASLNu4dr/MRP2gdR9QDaEKAOev/nwH2QAQ/AcDEMwDADR2DAuQ7AaAFJECMMMoY0B2DDRXsCG
         SQpEbJjiaARhaEJC0QzCKAYQi7EaQCzGagCpGGHAfwYAY+QSRF2yUJsAAAAASUVORK5CYII=
 </value>
@@ -216,7 +216,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 545</value>
+    <value>253, 545</value>
   </data>
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 24</value>
@@ -258,7 +258,7 @@
     <value>SimpleConfigerUI1</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.2.8.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.2.8.3, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>

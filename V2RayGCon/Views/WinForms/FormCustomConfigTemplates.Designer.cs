@@ -61,7 +61,7 @@ namespace V2RayGCon.Views.WinForms
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -75,14 +75,14 @@ namespace V2RayGCon.Views.WinForms
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnFormat
             // 
-            this.btnFormat.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnFormat.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnFormat, "btnFormat");
             this.btnFormat.Name = "btnFormat";
             this.toolTip1.SetToolTip(this.btnFormat, resources.GetString("btnFormat.ToolTip"));
@@ -110,7 +110,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             // btnTest
             // 
-            this.btnTest.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnTest.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnTest, "btnTest");
             this.btnTest.Name = "btnTest";
             this.btnTest.UseVisualStyleBackColor = false;

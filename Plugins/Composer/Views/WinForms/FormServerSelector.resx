@@ -312,7 +312,7 @@
   <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
+        DwAACw8BkvkDpQAAAItJREFUOE9j+Pbt239SMBAwIGOwAU5OTkRhvAbAbCCE8RqALomMn73+8BGo5gEQ
         GyCLE2UASLNu4dr/MRP2gdR9QDaEKAOev/nwH2QAQ/AcDEMwDADR2DAuQ7AaAFJECMMMoY0B2DDRXsCG
         SQpEbJjiaARhaEJC0QzCKAYQi7EaQCzGagCpGGHAfwYAY+QSRF2yUJsAAAAASUVORK5CYII=
 </value>
@@ -321,7 +321,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>242, 404</value>
+    <value>234, 404</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 23</value>
@@ -407,7 +407,7 @@
   <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        wAAADsABataJCQAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
         F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
         AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
 </value>
@@ -416,7 +416,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>117, 404</value>
+    <value>125, 404</value>
   </data>
   <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 23</value>

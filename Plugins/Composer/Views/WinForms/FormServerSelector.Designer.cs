@@ -76,7 +76,7 @@
             // 
             // btnPullServers
             // 
-            this.btnPullServers.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnPullServers.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnPullServers, "btnPullServers");
             this.btnPullServers.Name = "btnPullServers";
             this.toolTip1.SetToolTip(this.btnPullServers, resources.GetString("btnPullServers.ToolTip"));
@@ -86,7 +86,7 @@
             // btnRefreshTotal
             // 
             resources.ApplyResources(this.btnRefreshTotal, "btnRefreshTotal");
-            this.btnRefreshTotal.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnRefreshTotal.BackColor = System.Drawing.SystemColors.Control;
             this.btnRefreshTotal.Name = "btnRefreshTotal";
             this.toolTip1.SetToolTip(this.btnRefreshTotal, resources.GetString("btnRefreshTotal.ToolTip"));
             this.btnRefreshTotal.UseVisualStyleBackColor = false;
@@ -95,7 +95,7 @@
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -119,7 +119,7 @@
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);

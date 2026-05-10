@@ -127,11 +127,11 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnOk.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACWSURBVDhPpZO7DYAwDEQpGYIxKNgCiS1YhQ1oEMswRWho
-        GSCt8Uk5BBEfB55kJXH8TlAkE5Ff9QnvfR626ajcajmtIrTsQF7WRcZpEN3PSSGUm76WqisZ4sL183/F
-        Mlac0edAgbS9ccAqz/ik04XyKgM9OMjxgEkGd4MmmVyFmGUShyTJ5BiSLBOGfJIJRLN89UTtJdkGa1WJ
-        /Fn56XwAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAAJZJREFUOE+lk7sNgDAMRCkZgjEo2AKJLViFDWgQyzBFaGgZIK3xSTkEER8HnmQl
+        cfxOUCQTkV/1Ce99HrbpqNxqOa0itOxAXtZFxmkQ3c9JIZSbvpaqKxniwvXzf8UyVpzR50CBtL1xwCrP
+        +KTThfIqAz04yPGASQZ3gyaZXIWYZRKHJMnkGJIsE4Z8kglEs3z1RO0l2QZrVYn8WfnpfAAAAABJRU5E
+        rkJggg==
 </value>
   </data>
   <data name="btnOk.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
@@ -141,7 +141,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 51</value>
+    <value>96, 51</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 23</value>
@@ -151,7 +151,7 @@
     <value>1</value>
   </data>
   <data name="btnOk.Text" xml:space="preserve">
-    <value>OK(s)</value>
+    <value>OK (S)</value>
   </data>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -209,11 +209,11 @@
   </data>
   <data name="btnCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC2SURBVDhPY0AG3759M4AycQKcaoASFUD8H4gzoUIYACQH
-        VVMBFYIAkMCrm1f/b4t0///2/h2shoDEQHJbQhz+P794FmEIkGEAxGDNC9V4/6911sUwBKYZJAdSAzIE
-        pAekF6sCZEPwyYE1wwAuhURphgFshhCtGQbQDSFJMwhQZAC6ZhCNzMZrCDbNID42MQxDcGkGieOTg2mm
-        SkIiPynDAEgAiLFqhgGQHFQNqmYYAEqQmJ0ZGACo07laBZF+MgAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
+        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
+        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
+        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="btnCancel.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
@@ -223,7 +223,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 51</value>
+    <value>201, 51</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 23</value>

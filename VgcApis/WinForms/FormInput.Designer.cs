@@ -46,7 +46,7 @@ namespace VgcApis.WinForms
             // 
             // btnOk
             // 
-            this.btnOk.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnOk.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnOk, "btnOk");
             this.btnOk.Name = "btnOk";
             this.btnOk.UseVisualStyleBackColor = false;
@@ -54,7 +54,7 @@ namespace VgcApis.WinForms
             // 
             // btnCancel
             // 
-            this.btnCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCancel.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = false;

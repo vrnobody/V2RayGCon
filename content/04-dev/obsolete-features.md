@@ -9,7 +9,7 @@ weight: 20
 
 Pacman 插件，由 Composer 插件取代。
 
-##### 预计 2026-10-01 删除以下功能
+##### 2026-10-02 已删除以下功能
 
 userSetting.json 里面的配置项：  
 CompressedUnicodeLocalStorage  
@@ -17,8 +17,6 @@ CompressedUnicodeCoreInfoList
 CompressedUnicodePluginsSetting  
 CompressedUnicodeCustomConfigTemplates  
 _注：替换为对应的 Zstd..._
-
-##### 预计 2026-06-01 删除以下功能
 
 Settings service 从 Properties 加载配置功能
 

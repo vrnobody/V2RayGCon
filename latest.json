@@ -1,8 +1,10 @@
 {
-  "version": "2.2.9.0",
-  "md5": "454DBFD47F32C6EAC3DD4496A444500F",
+  "version": "2.2.9.1",
+  "md5": "C0D1C48645F6F7DF682275AD67F147AB",
   "warnings": [],
   "changes": [
-    "微调各界面"
+    "NeoLuna 插件删除 std.Misc:EncodeToShareLinkMetaData(config) 函数",
+    "移除从 Properties 加载用户配置功能",
+    "删除 userSettings.json 里面 CompressedUnicoce 开头的已弃用配置项"
   ]
 }

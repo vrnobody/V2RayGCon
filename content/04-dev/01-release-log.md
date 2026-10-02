@@ -5,6 +5,12 @@ draft: false
 weight: 10
 ---
 
+##### `v2.2.9.1` 20261002
+
+NeoLuna 插件删除 std.Misc:EncodeToShareLinkMetaData(config) 函数  
+移除从 Properties 加载用户配置功能  
+删除 userSettings.json 里面 CompressedUnicoce 开头的已弃用配置项
+
 ##### `v2.2.9.0` 20260510
 
 微调各界面

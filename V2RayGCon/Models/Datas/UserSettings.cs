@@ -13,8 +13,6 @@ namespace V2RayGCon.Models.Datas
 
         public bool isLoad3rdPartyPlugins { get; set; }
 
-        // obsolete delete after 2026-10
-        public string CompressedUnicodeLocalStorage { get; set; } = "";
         public string ZstdLocalStorage { get; set; } = "";
 
         public bool isUseCustomUserAgent { get; set; }
@@ -67,15 +65,9 @@ namespace V2RayGCon.Models.Datas
 
         public string PluginInfoItems { get; set; }
 
-        // obsolete delete after 2026-10
-        public string CompressedUnicodePluginsSetting { get; set; } = "";
-
         public string ZstdPluginsSetting { get; set; } = "";
 
         public string Culture { get; set; }
-
-        // obsolete delete after 2026-10
-        public string CompressedUnicodeCoreInfoList { get; set; } = "";
 
         public string ZstdCoreInfoList { get; set; } = "";
 
@@ -88,8 +80,6 @@ namespace V2RayGCon.Models.Datas
 
         public List<CustomCoreSettings> CustomCoreSettings = null;
 
-        // obsolete delete after 2026-10
-        public string CompressedUnicodeCustomConfigTemplates { get; set; } = "";
         public string ZstdCustomConfigTemplates { get; set; } = "";
         #endregion
 
@@ -157,10 +147,7 @@ namespace V2RayGCon.Models.Datas
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
 
-            if (
-                string.IsNullOrEmpty(CompressedUnicodeCustomConfigTemplates) // obsolete delete after 2026-10
-                && string.IsNullOrEmpty(ZstdCustomConfigTemplates)
-            )
+            if (string.IsNullOrEmpty(ZstdCustomConfigTemplates))
             {
                 ZstdCustomConfigTemplates =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToZstdBase64(

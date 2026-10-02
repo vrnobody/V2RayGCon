@@ -159,18 +159,6 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            // obsolete delete after 2026-10
-            if (tpl == null)
-            {
-                try
-                {
-                    tpl =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            List<Models.Datas.CustomConfigTemplate>
-                        >(userSettings.CompressedUnicodeCustomConfigTemplates);
-                }
-                catch { }
-            }
             configTemplateCache = tpl ?? new List<Models.Datas.CustomConfigTemplate>();
         }
 
@@ -1095,18 +1083,6 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            // obsolete delete after 2026-10
-            if (ls == null)
-            {
-                try
-                {
-                    ls =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            ConcurrentDictionary<string, string>
-                        >(userSettings.CompressedUnicodeLocalStorage);
-                }
-                catch { }
-            }
             localStorageCache = ls ?? new ConcurrentDictionary<string, string>();
         }
 
@@ -1122,19 +1098,6 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            // fallback
-            // obsolete delete after 2026-10
-            if (coreInfos == null)
-            {
-                try
-                {
-                    coreInfos =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            List<VgcApis.Models.Datas.CoreInfo>
-                        >(userSettings.CompressedUnicodeCoreInfoList);
-                }
-                catch { }
-            }
             coreInfoCache = coreInfos ?? new List<VgcApis.Models.Datas.CoreInfo>();
         }
 
@@ -1188,16 +1151,9 @@ namespace V2RayGCon.Services
 
         void ReplaceLargeStringsWithPlaceHolder()
         {
-            userSettings.CompressedUnicodeLocalStorage = "";
             userSettings.ZstdLocalStorage = placeHolderTable[PlaceHolders.LocalStorage];
-
-            userSettings.CompressedUnicodeCoreInfoList = "";
             userSettings.ZstdCoreInfoList = placeHolderTable[PlaceHolders.CoreInfoList];
-
-            userSettings.CompressedUnicodePluginsSetting = "";
             userSettings.ZstdPluginsSetting = placeHolderTable[PlaceHolders.PluginsSetting];
-
-            userSettings.CompressedUnicodeCustomConfigTemplates = "";
             userSettings.ZstdCustomConfigTemplates = placeHolderTable[
                 PlaceHolders.CustomConfigTemplates
             ];
@@ -1304,19 +1260,6 @@ namespace V2RayGCon.Services
                 >(userSettings.ZstdPluginsSetting);
             }
             catch { }
-
-            // obsolete delete after 2026-10
-            if (pluginsSetting == null)
-            {
-                try
-                {
-                    pluginsSetting =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            Dictionary<string, string>
-                        >(userSettings.CompressedUnicodePluginsSetting);
-                }
-                catch { }
-            }
 
             pluginsSettingCache = pluginsSetting ?? new Dictionary<string, string>();
         }
@@ -1439,30 +1382,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        // obsolete! delete after 2026-06-01
-        Models.Datas.UserSettings LoadUserSettingsFromPorperties()
-        {
-            VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromPorperties() begin");
-            try
-            {
-                var serializedUserSettings = Properties.Settings.Default.UserSettings;
-                var us = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(
-                    serializedUserSettings
-                );
-                if (us != null)
-                {
-                    VgcApis.Misc.Logger.Debug("Read user settings from Properties.Usersettings");
-                    return us;
-                }
-            }
-            catch { }
-            finally
-            {
-                VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettingsFromPorperties() done");
-            }
-            return null;
-        }
-
         Models.Datas.UserSettings LoadUserSettingsFromFile(
             string mainFilename,
             string bakFilename,
@@ -1514,8 +1433,7 @@ namespace V2RayGCon.Services
 
             var result =
                 LoadUserSettingsFromFile(cmdArgs.userSettings, cmdArgs.userSettingsBak, false)
-                ?? LoadUserSettingsFromFile(appDataUsFiles[0], appDataUsFiles[1], true)
-                ?? LoadUserSettingsFromPorperties();
+                ?? LoadUserSettingsFromFile(appDataUsFiles[0], appDataUsFiles[1], true);
             VgcApis.Libs.Sys.FileLogger.Info("Settings.LoadUserSettings() done");
 
             var appVer = Misc.Utils.GetAssemblyVersion().ToString();

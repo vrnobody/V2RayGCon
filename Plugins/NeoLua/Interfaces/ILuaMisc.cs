@@ -518,14 +518,6 @@ namespace NeoLuna.Interfaces
 
         byte[] Base64DecodeToBytes(string b64Str);
 
-        // obsolete! delete in 20260601
-        /// <summary>
-        /// 从json类型的config中提取分享链接元数据
-        /// </summary>
-        /// <param name="config">json类型的config</param>
-        /// <returns>分享链接元数据</returns>
-        VgcApis.Models.Datas.SharelinkMetaData EncodeToShareLinkMetaData(string config);
-
         /// <summary>
         /// 从json类型的config中提取分享链接元数据
         /// </summary>

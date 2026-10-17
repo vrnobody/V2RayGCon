@@ -1,23 +1,24 @@
 {
-    "outbounds": [
-        {
-            "tag": "agentout",
-            "proxySettings": {
-                "tag": "fragment",
-                "transportLayer": true
-            }
-        },
-        {
-            "tag": "fragment",
-            "protocol": "freedom",
-            "settings": {
-                "fragment": {
-                    "packets": "1-3",
-                    "length": "100-200",
-                    "interval": "10-20",
-                    "maxSplit": "100-200"
-                }
-            }
+  "outbounds": [
+    {
+      "tag": "agentout",
+      "streamSettings": {
+        "sockopt": {
+          "dialerProxy": "fragment"
         }
-    ]
+      }
+    },
+    {
+      "tag": "fragment",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "1-3",
+          "length": "100-200",
+          "interval": "10-20",
+          "maxSplit": "100-200"
+        }
+      }
+    }
+  ]
 }

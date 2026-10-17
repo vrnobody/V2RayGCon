@@ -164,8 +164,8 @@ namespace V2RayGCon.Services
                     p["tag"] = tag;
                     if (prev != null)
                     {
-                        prev["proxySettings"] = JObject.Parse(@"{tag: '',transportLayer: true}");
-                        prev["proxySettings"]["tag"] = tag;
+                        prev["streamSettings"]["sockopt"] = JObject.Parse(@"{dialerProxy: ''}");
+                        prev["streamSettings"]["sockopt"]["dialerProxy"] = tag;
                         outbounds.Add(prev);
                     }
                     prev = p;
@@ -194,9 +194,7 @@ namespace V2RayGCon.Services
             // parse outbounds
             var outbounds = new List<string>();
 
-            JObject proxySettingsTpl = JObject.Parse(
-                "{\"tag\": \"my-tag\",\"transportLayer\": true}"
-            );
+            JObject sockopt = JObject.Parse(@"{dialerProxy: ''}");
 
             var i = isProxyChain ? tags.Count - 1 : 0;
             var end = isProxyChain ? 0 : tags.Count - 1;
@@ -216,8 +214,8 @@ namespace V2RayGCon.Services
                     counter += di;
                     if (isProxyChain && !string.IsNullOrEmpty(prevTag))
                     {
-                        proxySettingsTpl["tag"] = prevTag;
-                        outb["proxySettings"] = proxySettingsTpl;
+                        sockopt["dialerProxy"] = prevTag;
+                        outb["streamSettings"]["sockopt"] = sockopt;
                     }
                     prevTag = $"{tags[i]}{num}";
                     outb["tag"] = prevTag;
